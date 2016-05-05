@@ -1,0 +1,4 @@
+/* Add here all your CSS customizations */
+.document_link { float:left; padding-right:10px; }
+.mandatory:after{ content:'*'; color:red; padding-left:5px; }
+.deleteBtn { color:#fff !important; }
