@@ -19,13 +19,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -98,5 +99,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function roles()
     {
         return $this->hasMany('App\Role');
+    }
+    
+    public function roleName()
+    {
+        return $this->belongsTo('App\Role', 'role');
+    }
+    
+    public function userDetail()
+    {
+        return $this->hasOne('App\UserDetail', 'user_id');
+    }
+    
+    public function doctorDetail()
+    {
+        return $this->hasOne('App\Doctor', 'user_id');
+    }
+    
+    public function patientDetail()
+    {
+        return $this->hasOne('App\Patient', 'user_id');
     }
 }

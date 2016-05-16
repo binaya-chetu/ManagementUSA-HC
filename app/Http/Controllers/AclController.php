@@ -12,6 +12,8 @@ use App\Role;
 use App\User;
 use App\PermissionRole;
 use View;
+use App;
+use Auth;
 
 class AclController extends Controller {
 
@@ -43,7 +45,7 @@ class AclController extends Controller {
     public function saveRole(Request $request) {
 
         $this->validate($request, [
-            'role_title' => 'required'
+            'role_title' => 'required|unique:roles',
         ]);
 
         $roleData = new Role();
@@ -102,7 +104,7 @@ class AclController extends Controller {
     }
 
     public function updateRole($id = null, Request $request) {
-         if (!($role = Role::find($id))) {
+        if (!($role = Role::find($id))) {
             App::abort(404, 'Page not found.');
         }
         
@@ -152,7 +154,9 @@ class AclController extends Controller {
                 die;
             }
         } else {
-            $delete = PermissionRole::where('permission_id', $permissionId)->where('role_id', $roleId)->delete();
+            $delete = PermissionRole::where('permission_id', $permissionId)
+                    ->where('role_id', $roleId)
+                    ->delete();
             if ($delete) {
                 echo $this->success;
                 die;

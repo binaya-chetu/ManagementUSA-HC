@@ -10,44 +10,35 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
-*/
-
-use App\Task;
-use Illuminate\Http\Request;
-
-/**
- * Show Task Dashboard
- */
-Route::get('/', function () {
-
-    return view('auth.login');
-});
 
 Route::group(['middleware' => 'web'], function () {
-	Route::get('/', 'HomeController@index');
     Route::auth();
+    Route::get('/', 'HomeController@index');
+    
 
     Route::get('/homes', 'HomeController@index');
 	
-    Route::get('/appointment/{id}', 'AppointmentController@index');
-    Route::get('/listappointment', 'AppointmentController@listappointment');
-    Route::get('/viewappointment', 'AppointmentController@viewappointment');
-    Route::post('/addappointment', 'AppointmentController@addappointment');
-    Route::get('/show', 'AppointmentController@viewappointment');
-    Route::post('/editappointment', 'AppointmentController@editappointment');
-    Route::post('/saveappointment', 'AppointmentController@saveappointment');
-    Route::post('/deleteappointment', 'AppointmentController@deleteappointment');
-    Route::post('/editpatientappointment', 'AppointmentController@editpatientappointment');
-    Route::post('/uniquePatientEmail', 'AppointmentController@uniquePatientEmail');
+    Route::get('/appointment/newAppointment/{id?}', 'AppointmentController@index');
+    Route::get('/appointment/listappointment', 'AppointmentController@listappointment');
+    Route::get('/appointment/viewappointment', 'AppointmentController@viewappointment');
+    Route::post('/appointment/addappointment', 'AppointmentController@addappointment');
+    Route::get('/appointment/show', 'AppointmentController@viewappointment');
+    Route::post('/appointment/editappointment', 'AppointmentController@editappointment');
+    Route::post('/appointment/saveappointment', 'AppointmentController@saveappointment');
+    Route::get('/appointment/delete/{id}', 'AppointmentController@deleteappointment');
+    Route::post('/appointment/editpatientappointment', 'AppointmentController@editpatientappointment');
+    Route::get('/appointment/uniquePatientEmail/{email?}', 'AppointmentController@uniquePatientEmail');
+    Route::post('/appointment/addPatAppointment', 'AppointmentController@addPatAppointment'); 
+    Route::post('/appointment/saveAppointmentFolloup', 'AppointmentController@saveAppointmentFolloup');
     
+    Route::get('/appointment/followup', 'AppointmentController@followup');
+    Route::get('/appointment/viewFollowup/{id}', 'AppointmentController@viewfollowup');
+    	Route::post('/getdoctorschedule', [
+		'uses' => 'AppointmentController@getdoctorschedule',
+		'as' => 'doctor.getSchedule',
+		//'middleware' => ['acl:save_patient']
+	]);		
+
     // route for ACL
     Route::get('/listRole', 'AclController@listRoles');
     Route::get('/addRole', 'AclController@addRole');
@@ -67,13 +58,7 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'patient',
 		//'middleware' => ['acl:patient']
 	]);	
-	Route::get('/patient/addpatient', [
-		'as' => 'patient.add', 
-		function(){
-			return View::make('patient.addpatient');
-		},
-		//'middleware'=> ['acl:add_patient']		
-	]);
+	Route::get('/patient/addpatient', 'PatientController@addPatient');
 	
 	Route::get('/patient/edit/{id}', [
 		'uses' => 'PatientController@edit',
@@ -107,16 +92,25 @@ Route::group(['middleware' => 'web'], function () {
         // Doctor route
         
         Route::get('/doctor', 'DoctorController@index');
-        Route::get('/doctor/addDoctor', ['as' => 'doctor.add', function(){ return View::make('doctor.add_doctor');
-                    }	]);
+        Route::get('/doctor/addDoctor', 'DoctorController@addDoctor');
         Route::post('/doctor/saveDoctor', 'DoctorController@create');
         Route::get('/doctor/edit/{id}', 'DoctorController@edit');
         Route::post('/doctor/updateDoctor/{id}', 'DoctorController@update');
         Route::get('/doctor/delete/{id}', 'DoctorController@delete');
         Route::get('/doctor/view/{id}', 'doctorController@view');
+        
+        
+        // route for User
+        
+        Route::get('/user/addUser', 'UserController@addUser');
+        Route::post('/user/saveUser', 'UserController@saveUser');
+        Route::get('/user/listUsers', 'UserController@listUsers');
+        Route::post('/user/updateUserStatus', 'UserController@updateUserStatus');
+        Route::get('/user/deleteUser/{id}', 'UserController@deleteUser');
+        Route::get('/user/editUser/{id}', 'UserController@editUser');
+        Route::post('/user/updatedUser/{id}', 'UserController@updateUser');
+        Route::get('/user/viewUser/{id}', 'UserController@viewUser');
 });
-Route::auth();
-Route::get('/home', 'HomeController@index');
 
 
 
