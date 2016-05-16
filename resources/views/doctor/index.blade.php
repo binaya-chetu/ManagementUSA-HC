@@ -61,7 +61,7 @@
                         <td><a class="defaultColor" href="/doctor/view/{{ base64_encode($doctor->id) }}">{{ $doctor->email }}</a></td>
                         <td>{{ $doctor['doctorDetail']->phone }}</td>
                         <td>{{ $doctor['doctorDetail']->city }}</td>                      
-                        <td>{{ $doctor['doctorDetail']['doctorStateName']->name }}</td>  
+                        <td>{{ $doctor['doctorDetail']['doctorStateName'] ? $doctor['doctorDetail']['doctorStateName']->name : '' }}</td>  
                         <td class="actions">
                             <a href="/doctor/edit/{{ base64_encode($doctor->id) }}" class="on-default edit-row" title="Edit"><i class="fa fa-pencil"></i></a> | 
                             <a href="javascript:void(0)" data-href="/doctor/delete/{{ base64_encode($doctor->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
