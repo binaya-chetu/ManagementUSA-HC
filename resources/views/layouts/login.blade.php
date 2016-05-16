@@ -40,6 +40,7 @@
 
 		<!-- JavaScripts -->
 		<!-- Vendor -->
+               
 		<script src="{{ URL::asset('vendor/jquery/jquery.js') }}"></script>
 		<script src="{{ URL::asset('vendor/jquery-browser-mobile/jquery.browser.mobile.js') }}"></script>
 		<script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.js') }}"></script>
@@ -47,15 +48,19 @@
 		<script src="{{ URL::asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 		<script src="{{ URL::asset('vendor/magnific-popup/magnific-popup.js') }}"></script>
 		<script src="{{ URL::asset('vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
+                <script src="{{ URL::asset('vendor/jquery-validation/jquery.validate.js') }}"></script>
 
 
 		<!-- Theme Base, Components and Settings -->
 		<script src="{{ URL::asset('js/theme.js') }}"></script>
-
-		<!-- Theme Custom -->
-		<script src="{{ URL::asset('js/theme.custom.js') }}"></script>
+		
 
 		<!-- Theme Initialization Files -->
 		<script src="{{ URL::asset('js/theme.init.js') }}"></script>
+                <script>
+                    $('#login').validate({
+                        
+                    });
+                </script>
     </body>
 </html>

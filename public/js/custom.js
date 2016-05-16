@@ -3,496 +3,437 @@
  Written by: 	Okler Themes - (http://www.okler.net)
  Theme Version: 	1.4.1
  */
-$(document).ready(function() {
-    $('#external-events').hide();
-    $('select.chosen').chosen();
-    /*
-     * Below functions are called for add appointment.
-     */
-    $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
-    var i = 1;
-    var j = 1;
-    $("#addAppPatient").click(function() {
-        if (i == 1)
-        {
-//                    $('#patient_come').append('  <div class="form-group"> <label for="firstName" class="col-sm-4 control-label">First Name</label>  <div class="col-sm-6"> <input type="hidden" name="id"> <input type="text" name="firstName" id="first-name" class="form-control" placeholder="First Name" value="{{ old('firstName') }}"> <span class="help-block firstName"></span>	 </div> </div> <div class="form-group"> <label for="lastName" class="col-sm-4 control-label">Last Name</label> <div class="col-sm-6"> <input type="text" name="lastName" id="last-name" class="form-control" placeholder="Last Name" value="{{ old('lastName') }}"> <span class="help-block lastName"></span>	</div> </div> <div class="form-group"> <label for="email" class="col-sm-4 control-label">Email</label> <div class="col-sm-6"> <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{ old('email') }}"> <span class="help-block email"></span>	 </div> </div> <div class="form-group"> <label for="status" class="col-sm-4 control-label">Status</label> <div class="col-sm-6"> <input type="text" name="status" id="status" class="form-control" placeholder="Status" value="{{ old('status') }}"> </div> </div> <div class="form-group"> <label for="phone" class="col-sm-4 control-label">Phone</label> <div class="col-sm-6"> <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}"> </div> </div> <div class="form-group"> <label for="phone" class="col-sm-4 control-label">Date</label> <div class="col-md-6"> <div class="input-group"> <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span> <input type="text" name="dob" data-plugin-datepicker class="form-control" value="{{ old('dob') }}"> </div> @if ($errors->has('dob')) <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> </span> @endif </div> </div> <div class="form-group"> <label class="col-sm-4 control-label">Gender</label> <div class="col-sm-6"> <div class="col-sm-3"> <div class="radio-custom radio-primary"> <input id="awesome" name="gender" type="radio" value="awesome" checked="true" required /> <label for="awesome">Male</label> </div> </div> <div class="col-sm-3"> <div class="radio-custom radio-primary"> <input id="very-awesome" name="gender" type="radio" value="very-awesome" /> <label for="very-awesome">Female</label> </div> </div> </div> </div> <div class="form-group"> <label for="address1" class="col-sm-4 control-label">Primary Address</label> <div class="col-sm-6"> <textarea name="address1" id="address1" class="form-control" rows="3" placeholder="Primary Address">{{ old('address1') }}</textarea> </div> </div> <div class="form-group"> <label for="address2" class="col-sm-4 control-label">Secondary Address</label> <div class="col-sm-6"> <textarea name="address2" id="address2" class="form-control" rows="3" placeholder="Primary Address">{{ old('address2') }}</textarea> </div> </div> <div class="form-group"> <label for="city" class="col-sm-4 control-label">City</label> <div class="col-sm-6"> <input type="text" name="city" id="city" class="form-control" placeholder="City" value="{{ old('city') }}"> </div> </div> <div class="form-group"> <label for="state" class="col-sm-4 control-label">State</label> <div class="col-sm-6"> <input type="text" name="state" id="state" class="form-control" placeholder="State" value="{{ old('state') }}"> </div> </div> <div class="form-group"> <label for="zipCode" class="col-sm-4 control-label">Zip Code</label> <div class="col-sm-6"> <input type="text" name="zipCode" id="zipCode" class="form-control" placeholder="Zip Code" value="{{ old('zipCode') }}"> </div> </div> <div class="form-group"> <label for="employer" class="col-sm-4 control-label">Employer</label> <div class="col-sm-6"> <input type="text" name="employer" id="employer" class="form-control" placeholder="Employer" value="{{ old('text') }}"> </div> </div> <div class="form-group"> <label for="occupation" class="col-sm-4 control-label">Occupation</label> <div class="col-sm-6"> <input type="text" name="occupation" id="occupation" class="form-control" placeholder="Occupation" value="{{ old('occupation') }}"> </div> </div>');
-            //$('#patient_come').append('  <div class="form-group"> <label for="firstName" class="col-sm-4 control-label">First Name</label> <div class="col-sm-6"> <input type="hidden" name="id"> <input type="text" name="firstName" id="first-name" class="form-control" placeholder="First Name" value="{{ old('firstName') }}"> <span class="help-block firstName"></span> </div> </div> <div class="form-group"> <label for="lastName" class="col-sm-4 control-label">Last Name</label> <div class="col-sm-6"> <input type="text" name="lastName" id="last-name" class="form-control" placeholder="Last Name" value="{{ old('lastName') }}"> <span class="help-block lastName"></span></div> </div> <div class="form-group"> <label for="email" class="col-sm-4 control-label">Email</label> <div class="col-sm-6"> <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{ old('email') }}"> <span class="help-block email"></span> </div> </div> <div class="form-group"> <label for="phone" class="col-sm-4 control-label">Phone</label> <div class="col-sm-6"> <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}"> </div> </div> <div class="form-group"> <label for="phone" class="col-sm-4 control-label">Date</label> <div class="col-md-6"> <div class="input-group"> <span class="input-group-addon"> <i class="fa fa-calendar"></i> </span> <input type="text" name="dob" data-plugin-datepicker class="form-control" value="{{ old('dob') }}"> </div> @if ($errors->has('dob')) <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> </span> @endif </div> </div> <div class="form-group"> <label class="col-sm-4 control-label">Gender</label> <div class="col-sm-6"> <div class="col-sm-3"> <div class="radio-custom radio-primary"> <input id="awesome" name="gender" type="radio" value="Male" checked="true" required /> <label for="awesome">Male</label> </div> </div> <div class="col-sm-3"> <div class="radio-custom radio-primary"> <input id="very-awesome" name="gender" type="radio" value="Female" /> <label for="very-awesome">Female</label> </div> </div> </div> </div> <div class="form-group"> <label for="address1" class="col-sm-4 control-label">Primary Address</label> <div class="col-sm-6"> <textarea name="address1" id="address1" class="form-control" rows="3" placeholder="Primary Address">{{ old('address1') }}</textarea> </div> </div> ');
-            $('#patient_come').show();
-            $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
-            $('#patient_id').val('');
-            $('#addAppPatient').html('Del Patient <i class="fa fa-minus"></i>');
-            $('.patient_id').hide();
-            i = 2;
-        } else
-        {
-            $('#patient_come').hide();
-            $('.patient_id').show();
-            $("#patient_id").prop("selectedIndex", 1);
-            $('#addAppPatient').html('Add Patient <i class="fa fa-plus"></i>');
-            //$("#patient_id option:first").attr('selected','selected');
-            i = 1;
-        }
-        return false;
-    });
 
-    $(".add-appointment").on("submit", function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+//(function($) {
+
+//  'use strict';
+
+var initCalendarDragNDrop = function() {
+$('#external-events div.external-event').each(function() {
+
+// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+// it doesn't need to have a start or end
+var eventObject = {
+title: $.trim($(this).text()) // use the element's text as the event title
+};
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+zIndex: 999,
+        revert: true, // will cause the event to go back to its
+        revertDuration: 0  //  original position after the drag
         });
-        if ($("#patient_id").val() === null)
-        {
-            if ($("#first-name").val() === "" || $("#last-name").val() === "" || $("#email").val() === "" || $("#commentid").val().trim() === "")
-            {
-                if ($("#first-name").val() === "")
-                {
-                    $(".firstName").html('<strong style="color:#a94442;">The First Name field is required.</strong>');
-                    $("#first-name").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-                if ($("#last-name").val() === "")
-                {
-                    $(".lastName").html('<strong style="color:#a94442;">The Last Name field is required.</strong>');
-                    $("#last-name").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-                if ($("#email").val() === "")
-                {
-                    $(".email").html('<strong style="color:#a94442;">The Email field is required.</strong>');
-                    $("#email").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-
-                if ($("#commentid").val().trim() === "")
-                {
-                    if (j == 1 && $("#commentid").val().trim() === "")
-                    {
-                        $(".commentdiv").append('<span class="help-block comment"><strong style="color:#a94442;">The Comment field is required.</strong></span>');
-                        $("#commentid").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                        j = 2;
-                    }
-
-                }
-                return false;
-            } else
-            {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "../uniquePatientEmail",
-                    data: {'email': $("#email").val()},
-                    success: function(response) {
-                        if (response === "Found")
-                        {
-                            $(".email").html('<strong style="color:#a94442;">The Email already exist.</strong>');
-                            $("#email").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                            return false;
-                        } else {
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $.ajax({
-                                type: "POST",
-                                url: "../editpatientappointment",
-                                data: $('form.form-horizontal').serialize(),
-                                success: function(response) {
-                                    //console.log("Come");    
-                                    //console.log(response);
-                                    var url = document.location.href;
-                                    shortURL = url.substring(0, url.lastIndexOf("/"));
-                                    lastURL  = shortURL.substring(0, shortURL.lastIndexOf("/")) + '/listappointment';
-                                    window.location.href = lastURL;
-                                    return false;
-                                }
-                            });
+        });
+        };
+        var initCalendar = function(events, inputDate = null, defaultView = "month") {
+        var $calendar = $('#calendar');
+                var date = (inputDate == null)? new Date() : new Date(inputDate);
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                $calendar.fullCalendar({
+                header: {
+                left: 'title',
+                        right: 'prev,today,next,agendaDay,agendaWeek,month'
+                },
+                        timeFormat: 'h:mm A',
+                        titleFormat: {
+                        month: 'MMMM YYYY', // September 2009
+                                week: "MMM D YYYY", // Sep 13 2009
+                                day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
+                        },
+                        themeButtonIcons: {
+                        prev: 'fa fa-caret-left',
+                                next: 'fa fa-caret-right'
+                        },
+                        editable: true,
+                        timezone: 'local',
+                        defaultView: 'agendaDay',
+                        'slotEventOverlap': false,
+                        'minTime':'9:30',
+                        'slotDuration':'00:30:00',
+                        //slotDuration: '00:15:00',
+                        'slotLabelInterval': 30,
+                        'slotLabelFormat': 'h(:mm)a',
+                        'maxTime':'18:30',
+                        allDaySlot: false,
+                        'firstDay':moment().format('MM/DD/YYYY'),
+                        droppable: false, // this allows things to be dropped onto the calendar !!!
+                        drop: function(date, allDay) { // this function is called when something is dropped
+                        var $externalEvent = $(this);
+                                // retrieve the dropped element's stored Event Object
+                                var originalEventObject = $externalEvent.data('eventObject');
+                                // we need to copy it, so that multiple events don't have a reference to the same object
+                                var copiedEventObject = $.extend({}, originalEventObject);
+                                // assign it the date that was reported
+                                copiedEventObject.start = date;
+                                copiedEventObject.allDay = allDay;
+                                copiedEventObject.className = $externalEvent.attr('data-event-class');
+                                // render the event on the calendar
+                                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                                // is the "remove after drop" checkbox checked?
+                                if ($('#RemoveAfterDrop').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
                         }
-                    }
+
+                        },
+                        events: events,
+//                        viewRender: function(view, element) {
+//                        if (view.start.isBefore(moment())){  //if view start is before now
+//                        $('#calendar').fullCalendar('gotoDate', moment().format('MM/DD/YYYY')); //go to now
+//                        }
+//                        },
+                        businessHours: [
+                        {
+                        start: '09:00',
+                                end: '17:00',
+                                dow: [1, 2, 3, 5, 6]
+                        },
+                        {
+                        start: '09:00',
+                                end: '19:00',
+                                dow: [4]
+                        }
+                        ]
                 });
-            }
-            return false;
-        } else
+                // FIX INPUTS TO BOOTSTRAP VERSIONS
+                var $calendarButtons = $calendar.find('.fc-header-right > span');
+                $calendarButtons
+                .filter('.fc-button-prev, .fc-button-today, .fc-button-next')
+                .wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
+                .parent()
+                .after('<br class="hidden"/>');
+                $calendarButtons
+                .not('.fc-button-prev, .fc-button-today, .fc-button-next')
+                .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
+                $calendarButtons
+                .attr({'class': 'btn btn-sm btn-default'});
+        };
+        var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes = 30, start = '00:00:00', end = '24:00:00') {
+        var $calendar = $('#calendar');
+                var date = (inputDate == null || inputDate == "" || inputDate == undefined)? new Date() : new Date(inputDate);
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                $calendar.fullCalendar({
+                height: "700",
+                        defaultDate:moment(date),
+                        slotEventOverlap: false,
+                        defaultTimedEventDuration: '00:30:00',
+                        defaultView: 'agendaWeek',
+                        header: {
+                        left: 'title',
+                                right: 'prev,next'
+                        },
+                        allDaySlot: false,
+                        slotMinutes: slotMinutes,
+                        minTime: "00:09:00",
+                        maxTime: "00:17:00",
+                        timeFormat: 'h:mm A',
+                        titleFormat: {
+                        month: 'MMMM YYYY', // September 2009
+                                week: "MMM D YYYY", // Sep 13 2009
+                                day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
+                        },
+                        themeButtonIcons: {
+                        prev: 'fa fa-caret-left',
+                                next: 'fa fa-caret-right',
+                        },
+                        editable: true,
+                        droppable: false, // this allows things to be dropped onto the calendar !!!
+                        eventStartEditable: false, // this allows things to be dropped onto the calendar !!!
+                        selectable: true,
+                        select: function(start, end, allDay, event) {
+                        $(event.target).css('background-color', '#0088CC');
+                                var today = new Date();
+                                if (start < today){
+                        apptDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
+                        } else{
+                        apptDate = start.format('MM/DD/YYYY');
+                        }
+
+                        apptTime = start.format('hh:mm A');
+                                $('input[data-plugin-datepicker]').datepicker('setDate', apptDate);
+                                $('input[data-plugin-timepicker]').timepicker('setTime', apptTime);
+                                $.magnificPopup.close();
+                        },
+                        eventRender: function (event, element) {
+                        element.find('.fc-event-title').html(event.title);
+                                element.find('.fc-event-title').prop('title', event.title);
+                                element.find('.fc-event-inner').css('padding', '0 2px');
+                                element.find('.fc-event-time').remove();
+                        },
+                        events: events
+                });
+                // FIX INPUTS TO BOOTSTRAP VERSIONS
+                var $calendarButtons = $calendar.find('.fc-header-right > span');
+                $calendarButtons
+                .filter('.fc-button-prev, .fc-button-today, .fc-button-next')
+                .wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
+                .parent()
+                .after('<br class="hidden"/>');
+                $calendarButtons
+                .not('.fc-button-prev, .fc-button-today, .fc-button-next')
+                .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
+                $calendarButtons
+                .attr({'class': 'btn btn-sm btn-default'});
+        };
+        $(document).ready(function() {
+$('#external-events').hide();
+        $('select.chosen').chosen();
+        $('.add-appointment-submit').submit(function(event) {
+event.preventDefault();
+        });
+        $.validator.setDefaults({ignore: ":hidden:not(select)"});
+        $.validator.addMethod("aFunction",
+                function(value, element) {
+                if (value === "none")
+                        return false;
+                        else
+                        return true;
+                },
+                "Please select a value");
+        /*
+         * Below functions are called for add appointment.
+         */
+       // $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
+        var i = 1;
+        var j = 1;
+        $("#addAppPatient").click(function() {
+if (i === 1)
         {
+        $('#patient_come').show();
+                $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
+                $('#patient_id').val('');
+                $('#addAppPatient').html('Del Patient<i class="fa fa-minus"></i>');
+                $('.patient_id').hide();
+                i = 2;
+                } else
+        {
+        $('#patient_come').hide();
+                $('.patient_id').show();
+                $('#addAppPatient').html('<i class="fa fa-plus"></i>Add Patient');
+                i = 1;
+                }
+return false;
+        });
+        /*
+         * End of Functions for Add appointment.
+         */
 
+        $(document).on("click", ".edit-row", function(ev) {
+$.ajaxSetup({
+headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-
-        //Code: Action (like ajax...)
-    });
-
-    /*
-     * End of Functions for Add appointment.
-     */
-
-    $(document).on("click", ".edit-row", function(ev) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
+});
+        var appointmentId = $(this).attr('rel');
         $.ajax({
-            type: "POST",
-            url: "./editappointment",
-            data: {"id": $(this).parent().siblings(":first").text()},
-            success: function(response) {
+        type: "POST",
+                url: ajax_url + "/appointment/editappointment",
+                data: {"id": appointmentId },
+                success: function(response) {
                 var combine = JSON.parse(response);
+                        if (combine.appointment.status < 2){
+                $('.followButton').show();
+                } else{
+                $('.followButton').hide();
+                }
                 $('#appointment_id').val(combine.appointment.id);
-                $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
-                ;
+                        $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
+                        if (combine.doctor){
                 $("#doctor_id").val(combine.doctor.id).attr('selected', 'selected').trigger("chosen:updated");
-                ;
-                $('input[name=doctor_id]').val(combine.doctor.id);
+                        $('input[name=doctor_id]').val(combine.doctor.id);
+                } else{
+                $("#doctor_id").val('').trigger("chosen:updated");
+                        $('input[name=doctor_id]').val('0');
+                }
                 $('input[name=patient_id]').val(combine.patient.id);
-                $('textarea[name="comment"]').val(combine.appointment.comment);
-                $('#first-name').val(combine.patient.firstName);
-                $('#last-name').val(combine.patient.lastName);
-                $('#email').val(combine.patient.email);
-                $('#phone').val(combine.patient.phone);
-                $('#address1').val(combine.patient.address1);
-                $('input:radio[name="gender"][value="' + combine.patient.gender + '"]').prop('checked', true);
-                $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
-                $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
-                $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
-
-            }
+                        $('#appointmentComment').val(combine.appointment.comment);
+                        $('#first-name').val(combine.patient.first_name);
+                        $('#last-name').val(combine.patient.last_name);
+                        $('#email').val(combine.patient.email);
+                        $('#phone').val(combine.patient.patient_detail.phone);
+                        $('#address1').val(combine.patient.patient_detail.address1);
+                        $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
+                        $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
+                        $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
+                        $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
+                        $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+                }
         });
-
         $.magnificPopup.open({
-            items: {
-                src: '#modalForm',
+        items: {
+        src: '#modalForm',
                 type: 'inline'
-            }
+        }
         });
-
-    });
-
-    $('.list-edit').on('change', function() {
-        alert(this.value);
+        });
+        $('.list-edit').on('change', function() {
+alert(this.value);
         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
         });
+        });
+        /*
+         * Below Function are Called for View Appointment.
+         */
 
-    })
-
-    $(document).on("click", ".remove-row", function(ev) {
+        $(document).on("click", "#add-view-appointment", function(ev) {
+$.magnificPopup.open({
+items: {
+src: '#modal-add-view-appointment',
+        type: 'inline'
+        }
+});
+        });
+        $(document).on("click", ".fc-event-inner", function(ev) {
+var text = $(this).text().substring($(this).text().indexOf('#') + 1);
         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#dialogConfirm').val($(this).parent().siblings(":first").text());
-
-
-        $.magnificPopup.open({
-            items: {
-                src: '#dialog',
-                type: 'inline'
-            }
-        });
-
-    });
-
-    $('#dialogCancel').click(function()
-    {
-        location.reload();
-    });
-
-    $(document).on("click", "#dialogConfirm", function(ev) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
         });
         $.ajax({
-            type: "POST",
-            url: "./deleteappointment",
-            data: {"id": $('#dialogConfirm').val()},
-            success: function(response) {
-                console.log(response);
-                location.reload();
-            }
-        });
-    });
-
-    /*
-     * Below Function are Called for View Appointment.
-     */
-
-    $(document).on("click", "#add-view-appointment", function(ev) {
-        $.magnificPopup.open({
-            items: {
-                src: '#modal-add-view-appointment',
-                type: 'inline'
-            }
-        });
-
-    });
-
-    $(document).on("click", ".fc-event-inner", function(ev) {
-        var text = $(this).text().substring($(this).text().indexOf('#') + 1);
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "./editappointment",
-            data: {"id": text},
-            success: function(response) {
+        type: "POST",
+                url: "./editappointment",
+                data: {"id": text},
+                success: function(response) {
                 var combine = JSON.parse(response);
-                $('#appointment_id').val(combine.appointment.id);
-                $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
-                ;
+                        if (combine.appointment.status < 2){
+                $('.followButton').show();
+                } else{
+                $('.followButton').hide();
+                }
+
+                if (combine.doctor){
                 $("#doctor_id").val(combine.doctor.id).attr('selected', 'selected').trigger("chosen:updated");
-                ;
-                $('input[name=doctor_id]').val(combine.doctor.id);
-                $('input[name=patient_id]').val(combine.patient.id);
-                $('textarea[name="comment"]').val(combine.appointment.comment);
-                $('#first-name').val(combine.patient.firstName);
-                $('#last-name').val(combine.patient.lastName);
-                $('#email').val(combine.patient.email);
-                $('#phone').val(combine.patient.phone);
-                $('#address1').val(combine.patient.address1);
-                $('input:radio[name="gender"][value="' + combine.patient.gender + '"]').prop('checked', true);
-                $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
-                $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
-                $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
-            }
-        })
-        //alert(text);
-
-        $.magnificPopup.open({
-            items: {
-                src: '#modalForm',
-                type: 'inline'
-            }
+                        $('input[name=doctor_id]').val(combine.doctor.id);
+                } else{
+                $("#doctor_id").val('').trigger("chosen:updated");
+                        $('input[name=doctor_id]').val('0');
+                }
+                $('#appointment_id').val(combine.appointment.id);
+                    $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
+                    $('input[name=patient_id]').val(combine.patient.id);
+                    $('#appointmentComment').val(combine.appointment.comment);
+                    $('#first-name').val(combine.patient.first_name);
+                    $('#last-name').val(combine.patient.last_name);
+                    $('#email').val(combine.patient.email);
+                    $('#phone').val(combine.patient.patient_detail.phone);
+                    $('#address1').val(combine.patient.patient_detail.address1);
+                    $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
+                    $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
+                    $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
+                    $('#dob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                    $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+                }
         });
-
-    });
-
-    $(".modal-confirm").click(function(event) {
-        event.preventDefault();
-
+        $.magnificPopup.open({
+        items: {
+        src: '#modalForm',
+                type: 'inline'
+        }
+        });
+        });
+	$("#addAppointment #doctor_id, #editAppointment #doctor_id").on('change', function(e){
+		var doctor_id 	= $(this).val();
+		if(doctor_id == ''){
+			$(".showDocScheddulerLInk a").remove();
+			return false;
+		}
+		$(".showDocScheddulerLInk").html('<a href="#" data-link = "'+doctor_id+'">Show scheduler</a>');
+	});
+	$(document).on('click', '.showDocScheddulerLInk a', function(e){
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
-
-        $.ajax({
+        });		
+		var doctor_id 	= $(this).data('link');
+		var date 		= $("#appDate").val();
+		var slotMinutes = $("input[name='apptSlotDuration']").val();  // span of each appointment in minutes
+		var start 		= $("input[name='clinicOpeningTime']").val(); // clinic open time
+		var end 		= $("input[name='clinicClosingTime']").val(); // clinic closing time 
+		var modalId		= $(this).closest('.modal-block').attr('id');
+		$.ajax({
             type: "POST",
-            url: "../saveappointment",
-            data: $('form.form-horizontal').serialize(),
-            success: function(msg) {
-                //alert(msg);
+            url: "/getdoctorschedule",
+            data: {'doctor_id': doctor_id},
+			dataType: "json",
+            success: function(data) {
+				$("#docApptSchedule").find("#calendar").remove()
+ 				//$('#doctor_id').closest('.form-group').append('<div class="col-md-12" id="calendar"></div>');
+ 				$("#docApptSchedule").find('.panel-body').append('<div class="col-md-12" id="calendar"></div>');
 
-                $("#form-content").modal('hide');
-                $.magnificPopup.close({
-                    items: {
-                        src: '#modalForm',
-                        type: 'inline'
-                    }
-                });
-                location.reload();
+				$.magnificPopup.instance.close = function(){
+					$.magnificPopup.proto.close.call(this);
+					if($('#'+modalId).length > 0){
+						$.magnificPopup.open({
+							items: {
+								src: '#'+modalId,
+								type: 'inline'
+							}
+						});
+						$.magnificPopup.instance.close = function(){
+							$.magnificPopup.proto.close.call(this);
+						}					
+					}
+				};				
+				
+				$.magnificPopup.open({
+									items: {
+										src: '#docApptSchedule',
+										type: 'inline',
+									},
+								});
+				initDoctorSchedulrCalendar(data, date, slotMinutes, start, end);
+				//initCalendarDragNDrop(); 
             },
             error: function() {
                 alert("failure");
             }
-        });
-    });
-
-    /*
-     * Add Patient From View
-     */
-    $(".modal-add-appointment").click(function(event) {
-        event.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        if ($("#patient_id").val() === null)
-        {
-            if ($("#first-name").val() === "" || $("#last-name").val() === "" || $("#email").val() === "" || $("#commentid").val().trim() === "")
-            {
-                if ($("#first-name").val() === "")
-                {
-                    $(".firstName").html('<strong style="color:#a94442;">The First Name field is required.</strong>');
-                    $("#first-name").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-                if ($("#last-name").val() === "")
-                {
-                    $(".lastName").html('<strong style="color:#a94442;">The Last Name field is required.</strong>');
-                    $("#last-name").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-                if ($("#email").val() === "")
-                {
-                    $(".email").html('<strong style="color:#a94442;">The Email field is required.</strong>');
-                    $("#email").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                }
-
-                if ($("#commentid").val().trim() === "")
-                {
-                    if (j == 1 && $("#commentid").val().trim() === "")
-                    {
-                        $(".commentdiv").append('<span class="help-block comment"><strong style="color:#a94442;">The Comment field is required.</strong></span>');
-                        $("#commentid").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                        j = 2;
-                    }
-
-                }
-                return false;
-            } else
-            {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "./uniquePatientEmail",
-                    data: {'email': $("#email").val()},
-                    success: function(response) {
-                        if (response === "Found")
-                        {
-                            $(".email").html('<strong style="color:#a94442;">The Email already exist.</strong>');
-                            $("#email").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                            return false;
-                        } else {
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $.ajax({
-                                type: "POST",
-                                url: "./editpatientappointment",
-                                data: $('form.add-appointment-submit').serialize(),
-                                success: function(msg) {
-                                    //alert(msg);
-
-                                    $("#form-content").modal('hide');
-                                    $.magnificPopup.close({
-                                        items: {
-                                            src: '#modal-add-view-appointment',
-                                            type: 'inline'
-                                        }
-                                    });
-                                    location.reload();
-                                },
-                                error: function() {
-                                    alert("failure");
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-            return false;
-        } else
-        {
-            if ($("#commentid").val().trim() === "")
-                {
-                    if (j == 1 && $("#commentid").val().trim() === "")
-                    {
-                        $(".commentdiv").append('<span class="help-block comment"><strong style="color:#a94442;">The Comment field is required.</strong></span>');
-                        $("#commentid").css({"border-color": "#a94442", "border-width": "1px", "border-style": "solid"});
-                        j = 2;
-                    }
-                    return false;
-                }
-            else    
-            $(".add-appointment-submit").submit();
-        }
-
-
-        /*
-         $.ajaxSetup({
-         headers: {
-         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         }
-         });
-         
-         $.ajax({
-         type: "POST",
-         url: "./saveappointment",
-         data: $('form.form-horizontal').serialize(),
-         success: function(msg) {
-         //alert(msg);
-         
-         $("#form-content").modal('hide');
-         $.magnificPopup.close({
-         items: {
-         src: '#modalForm',
-         type: 'inline'
-         }
-         });
-         location.reload();
-         },
-         error: function() {
-         alert("failure");
-         }
-         }); */
-    });
-
-
-
-    $(".modal-dismiss").click(function(event) {
-        event.preventDefault();
-        location.reload();
-    });
-
-
+        });	 
+	})
 
 });
+        (function($) {
 
-
-(function($) {
-
-    'use strict';
-
-    var datatableInit = function() {
-        var $table = $('#datatable-tabletools');
-
-        $table.dataTable({
-            sDom: "<'text-right mb-md'T>" + $.fn.dataTable.defaults.sDom,
-            oTableTools: {
-                sSwfPath: $table.data('swf-path'),
-                aButtons: [
-                    {
-                        sExtends: 'pdf',
-                        sButtonText: 'PDF'
-                    },
-                    {
-                        sExtends: 'csv',
-                        sButtonText: 'CSV'
-                    },
-                    {
-                        sExtends: 'xls',
-                        sButtonText: 'Excel'
-                    },
-                    {
-                        sExtends: 'print',
-                        sButtonText: 'Print',
-                        sInfo: 'Please press CTR+P to print or ESC to quit'
-                    }
-                ]
-            }
-        });
-
-    };
-
-    $(function() {
-        datatableInit();
-    });
-
-}).apply(this, [jQuery]);
+        'use strict';
+                var datatableInit = function() {
+                var $table = $('#datatable-tabletools');
+                        $table.dataTable({
+                        sDom: "<'text-right mb-md'T>" + $.fn.dataTable.defaults.sDom,
+                                oTableTools: {
+                                sSwfPath: $table.data('swf-path'),
+                                        aButtons: [
+                                        {
+                                        sExtends: 'pdf',
+                                                sButtonText: 'PDF'
+                                        },
+                                        {
+                                        sExtends: 'csv',
+                                                sButtonText: 'CSV'
+                                        },
+                                        {
+                                        sExtends: 'xls',
+                                                sButtonText: 'Excel'
+                                        },
+                                        {
+                                        sExtends: 'print',
+                                                sButtonText: 'Print',
+                                                sInfo: 'Please press CTR+P to print or ESC to quit'
+                                        }
+                                        ]
+                                }
+                        });
+                };
+                $(function() {
+                datatableInit();
+                });
+        }).apply(this, [jQuery]);

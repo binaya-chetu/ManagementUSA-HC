@@ -34,6 +34,11 @@ class Role extends Model
     {
         return $this->belongsToMany('App\User');
     }
+    
+    public function roleId()
+    {
+        return $this->hasMany('App\User', 'role');
+    }
 
     /**
      * many-to-many relationship method.

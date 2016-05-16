@@ -6,22 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Doctor extends Model
 {
-    //
+    protected $table = 'doctor_details';
     protected $fillable =
     [
-        'firstName',
-        'lastName',
-        'email',
-        'status',
+        'user_id',
+	'dob',
+	'gender',
         'phone',
-		'dob',
-		'gender',
         'address1',
         'address2',
         'city',
         'state',
         'zipCode',
+        'image',
         'employer',
-        'occupation'
+        'specialization'
     ];
+    
+    public function doctor()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    
+    public function doctorStateName()
+    {
+        return $this->belongsTo('App\State', 'state');
+    }
 }

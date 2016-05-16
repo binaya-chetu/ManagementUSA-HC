@@ -3,7 +3,7 @@
 @section('content')
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>View Doctor :  {{ $doctor->firstName }} {{ $doctor->lastName }}</h2>
+        <h2>View Doctor :  {{ $doctor->first_name }} {{ $doctor->last_name }}</h2>
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -37,7 +37,7 @@
                                 <label>First Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $doctor->firstName }}
+                                {{ $doctor->first_name }}
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                                 <label>Last Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $doctor->lastName }}
+                                {{ $doctor->last_name }}
                             </div>
                         </div>
                         <div class="row">
@@ -57,13 +57,20 @@
                                 {{ $doctor->email }}
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-2 col-sm-offset-1">
+                                <label>Role :</label>
+                            </div>
+                            <div class="col-sm-9">
+                                {{ $doctor['roleName']->role_title }}
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
                                 <label>Gender :</label>
                             </div>
                             <div class="col-md-9">         
-                                {{ $doctor->gender }}
+                                {{ $doctor['doctorDetail']->gender }}
                             </div>
                         </div>
                         <div class="row">
@@ -71,7 +78,7 @@
                                 <label>Dob :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ date('d F Y', strtotime($doctor->dob)) }}
+                                {{ date('d F Y', strtotime($doctor['doctorDetail']->dob)) }}
                             </div>
                         </div>
                         <div class="row">
@@ -79,15 +86,15 @@
                                 <label>Employer :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->employer or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->employer or 'N/A' }}}
                             </div>
                         </div>					
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Occupation :</label>
+                                <label>Specialization :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->occupation or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->specialization or 'N/A' }}}
                             </div>
                         </div>
 
@@ -100,7 +107,7 @@
                                 <label>Phone :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->phone or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->phone or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -108,7 +115,7 @@
                                 <label>Primary Address :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->address1 or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->address1 or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -116,7 +123,7 @@
                                 <label>Secondary Address :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->address2 or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->address2 or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -124,7 +131,7 @@
                                 <label>City :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->city or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->city or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -132,7 +139,7 @@
                                 <label>State :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->state or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']['doctorStateName']->name or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -140,7 +147,7 @@
                                 <label>Zip Code :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor->zipCode or 'N/A' }}}
+                                {{{ $doctor['doctorDetail']->zipCode or 'N/A' }}}
                             </div>
                         </div>	
                     </div>

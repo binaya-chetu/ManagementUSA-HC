@@ -1,3 +1,4 @@
+
 /**
  * Accept one checkbox input field, and convert it into iOS style switch UI.
  */
@@ -61,45 +62,12 @@ Switch.hasClass = function(el, className) {
  */
 
 Switch.prototype.toggle = function() {
-	var url = window.location.href;
-	arrData = url.split('/');
-	var roleId = arrData.slice(-1).pop();
-	var permissionId = $(this.input).attr('permission_id');
+
 	
   if( Switch.hasClass(this.el, 'on') ){
- 
     this.turnOff();
-	$.ajaxSetup({
-	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	}
-	});
-	
-        $.post("./updatePermission",
-        {
-          data: {"status": 0, "roleId": roleId, "permissionId": permissionId},
-        },
-         function(data,status){
-           
-        });
-       
   } else {
-  
     this.turnOn();
-	
-	$.ajaxSetup({
-	headers: {
-		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	}
-	});
-
-	 $.post("./updatePermission",
-        {
-            data: {"status": 1, "roleId": roleId, "permissionId": permissionId},
-        },
-         function(data,status){
-           
-        });
   }
 
   this.triggerChange();
