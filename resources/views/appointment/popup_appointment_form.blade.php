@@ -1,12 +1,12 @@
 {{ Form::open(array('url' => '/appointment/addappointment', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'addAppointment')) }}  
 {!! csrf_field() !!}
 <div id="docApptSchedule" class="modal-block modal-block-primary mfp-hide">
-                <section class="panel">
-                                <button title="Close (Esc)" type="button" class="mfp-close" style="color: #333!important;">×</button>
-                                <div class="panel-body">
+    <section class="panel">
+        <button title="Close (Esc)" type="button" class="mfp-close" >×</button>
+        <div class="panel-body">
 
-                                </div>
-                </section>
+        </div>
+    </section>
 </div>
 
 <section class="panel panel-primary">
@@ -36,7 +36,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </span>
-                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker']) }}
+                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker', 'placeholder' => 'Choose Date', 'id' =>'calendarDate']) }}
                 </div>
                 @if ($errors->has('appDate'))
                 <span class="help-block">
@@ -50,7 +50,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-clock-o"></i>
                     </span>
-                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required', 'data-plugin-timepicker']) }}
+                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required', 'data-plugin-timepicker', 'placeholder' => 'Choose Date']) }}
                 </div>
             </div>
             {{ Form::hidden('marketer', 1) }}
@@ -64,6 +64,7 @@
         <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">        
             {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-5 patient_id commentdiv" id="patientMainDiv">
+                
                 <select  class="form-control chosen" name="patient_id" id="patient_id">
                     <option value="">Choose Patient</option>
                     @foreach ($patients as $patient)
@@ -149,13 +150,13 @@
             </div> 
 
             <div class="form-group"> 
-                {{ Form::label('dob', 'Date of birth', ['class' => 'col-sm-4 control-label']) }}
+                {{ Form::label('dob', 'Date of Birth', ['class' => 'col-sm-4 control-label']) }}
                 <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        {{ Form::text('dob', old('dob'), ['class' => 'form-control', 'data-plugin-datepicker']) }}
+                        {{ Form::text('dob', null, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
                     </div>
                 </div>
                 @if ($errors->has('dob')) 
@@ -188,9 +189,9 @@
             </div> 
 
             <div class="form-group"> 
-                {{ Form::label('address1', 'Primary Address', ['class' => 'col-sm-4 control-label']) }}
+                {{ Form::label('address1', 'Address', ['class' => 'col-sm-4 control-label']) }}
                 <div class="col-sm-6"> 
-                    {{ Form::textarea('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1', 'rows' => 3]) }}
+                    {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1']) }}
                 </div> 
             </div>
 

@@ -119,14 +119,14 @@
                         <div class="form-group">
                             {{ Form::label('address1', 'Address Line 1', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-6">
-                                {{ Form::textarea('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1', 'rows' => 3]) }}
+                                {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1']) }}
                             </div>
                         </div>
 
                         <div class="form-group">
                             {{ Form::label('address2', 'Address Line 2', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-6">
-                                {{ Form::textarea('address2', null, ['class' => 'form-control', 'placeholder' => 'Secondary Address', 'id' => 'address2', 'rows' => 3]) }}
+                                {{ Form::text('address2', null, ['class' => 'form-control', 'placeholder' => 'Secondary Address', 'id' => 'address2']) }}
                             </div>
                         </div>
 

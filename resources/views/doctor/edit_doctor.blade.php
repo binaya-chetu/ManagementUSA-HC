@@ -185,7 +185,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='/patient' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                                <a href='/doctor' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>
