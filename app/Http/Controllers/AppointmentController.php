@@ -29,6 +29,7 @@ class AppointmentController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index($id = null) {
         $patients = User::where('role', $this->patient_role)->get(['id', 'first_name', 'last_name']);
         $doctors = User::where('role', $this->doctor_role)->get(['id', 'first_name', 'last_name']);
