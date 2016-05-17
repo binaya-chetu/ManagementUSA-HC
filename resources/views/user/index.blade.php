@@ -64,7 +64,7 @@
                             </div></td>
                         
                         <td class="actions">
-                            <a href="/user/editUser/{{ base64_encode($user->id) }}" class="on-default edit-row" title="Edit"><i class="fa fa-pencil"></i></a> |
+                            <a href="/user/editUser/{{ base64_encode($user->id) }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a> |
                             <a href="javascript:void(0)" data-href="/user/deleteUser/{{ base64_encode($user->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>

@@ -62,7 +62,7 @@
         </div>   
 
         <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">        
-            {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-4 control-label mandatory')) }}
+            {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-md-5 patient_id commentdiv" id="patientMainDiv">
                 
                 <select  class="form-control chosen" name="patient_id" id="patient_id">
@@ -89,7 +89,7 @@
             <div class="col-sm-3">
                 <div class="mb-md">
                     {{ Form::button(
-                                    '<i class="fa fa-plus"></i>Add Patient',
+                                    '<i class="fa fa-plus"></i> Add Patient',
                                         ['class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'id' => 'addAppPatient', 'data-token' => csrf_token() ]) 
                     }}
