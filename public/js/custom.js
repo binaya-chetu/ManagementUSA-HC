@@ -199,7 +199,7 @@ event.preventDefault();
         /*
          * Below functions are called for add appointment.
          */
-       // $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
+        $('#calendarDate').datepicker('setDate', moment().format('MM/DD/YYYY'));
         var i = 1;
         var j = 1;
         $("#addAppPatient").click(function() {

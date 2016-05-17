@@ -63,7 +63,7 @@
                         <td>{{ $doctor['doctorDetail']->city }}</td>                      
                         <td>{{{ $doctor['doctorDetail']['doctorStateName']->name or 'N/A' }}}</td>  
                         <td class="actions">
-                            <a href="/doctor/edit/{{ base64_encode($doctor->id) }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a> | 
+                            <a href="/doctor/edit/{{ base64_encode($doctor->id) }}" title="Edit"><i class="fa fa-pencil"></i></a> | 
                             <a href="javascript:void(0)" data-href="/doctor/delete/{{ base64_encode($doctor->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>
