@@ -26,7 +26,7 @@ zIndex: 999,
         });
         });
         };
-        var initCalendar = function(events, inputDate = null, defaultView = "month") {
+        var initCalendar = function(events, start = "00:00:00", end="24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt="00:00:00", inputDate = null, defaultView = "month") {
         var $calendar = $('#calendar');
                 var date = (inputDate == null)? new Date() : new Date(inputDate);
                 var d = date.getDate();
@@ -50,15 +50,14 @@ zIndex: 999,
                         editable: true,
                         timezone: 'local',
                         defaultView: 'agendaDay',
-                        'slotEventOverlap': false,
-                        'minTime':'9:30',
-                        'slotDuration':'00:30:00',
-                        //slotDuration: '00:15:00',
-                        'slotLabelInterval': 30,
-                        'slotLabelFormat': 'h(:mm)a',
-                        'maxTime':'18:30',
+                        slotEventOverlap: false,
+                        minTime: start,
+                        slotMinutes: defaultApptTime,
+                        slotLabelInterval: 30,
+                        slotLabelFormat: 'h(:mm)a',
+                        maxTime: end,
                         allDaySlot: false,
-                        'firstDay':moment().format('MM/DD/YYYY'),
+                        firstDay:moment().format('MM/DD/YYYY'),
                         droppable: false, // this allows things to be dropped onto the calendar !!!
                         drop: function(date, allDay) { // this function is called when something is dropped
                         	var $externalEvent = $(this);

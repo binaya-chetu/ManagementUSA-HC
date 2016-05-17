@@ -93,11 +93,15 @@
 
 <script>
     (function($) {
-
+		var clinicOpenTime = "{{ @config('constants.CLINIC_OPEN_TIME') }}";
+		var clinicCloseTime = "{{ @config('constants.CLINIC_CLOSE_TIME') }}";
+		var defaultApptTime = "{{ @config('constants.DEFAULT_APPOINTMENT_TIME_SPAN') }}";
+		var gapBetweenAppt = "{{ @config('constants.GAP_BETWEEN_APPOINTMENTS') }}";
+		
         'use strict';
 
         $(function() {
-            initCalendar(<?php echo json_encode($appointments, true); ?>);
+            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt);
             //initCalendarDragNDrop();
         });
 
