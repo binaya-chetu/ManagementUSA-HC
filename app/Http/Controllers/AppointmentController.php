@@ -31,9 +31,8 @@ class AppointmentController extends Controller {
      */
     public function index($id = null) {
         
-        $patients = User::where('role', $this->patient_role)->get(['id', 'first_name', 'last_name']);
-
-        
+        $patients = User::with('patientDetail')->where('role', $this->patient_role)->get();
+                
         $doctors = User::where('role', $this->doctor_role)->get(['id', 'first_name', 'last_name']);
         if (empty($id)) {
             return view('appointment.new_appointment', [

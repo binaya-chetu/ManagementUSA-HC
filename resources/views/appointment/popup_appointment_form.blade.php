@@ -64,6 +64,7 @@
         <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">        
             {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-5 patient_id commentdiv" id="patientMainDiv">
+                
                 <select  class="form-control chosen" name="patient_id" id="patient_id">
                     <option value="">Choose Patient</option>
                     @foreach ($patients as $patient)
@@ -190,7 +191,7 @@
             <div class="form-group"> 
                 {{ Form::label('address1', 'Primary Address', ['class' => 'col-sm-4 control-label']) }}
                 <div class="col-sm-6"> 
-                    {{ Form::textarea('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1', 'rows' => 3]) }}
+                    {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1']) }}
                 </div> 
             </div>
 
