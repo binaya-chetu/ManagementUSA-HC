@@ -146,7 +146,7 @@
                         <div class="form-group">
                             {{ Form::label('state', 'State', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-6">
-                                {{ Form::select('state', $states, $user['userDetail']->state, ['class' => 'form-control input', 'id' => 'state']) }}
+                                {{ Form::select('state', array_merge(['0' => 'Please Select State'], $states), $user['userDetail']->state, ['class' => 'form-control input', 'id' => 'state']) }}
                             </div>
                         </div>
 

@@ -27,7 +27,7 @@
                         <img src="{{ URL::asset('images/!logged-user.jpg')}}" alt="Joseph Junior" class="img-circle" data-lock-picture="{{ URL::asset('images/!logged-user.jpg')}}" />
                     </figure>
                     <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-                            <span class="name">{{ Auth::user()->name }}</span>
+                            <span class="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
                     </div>
 
                     <i class="fa custom-caret"></i>

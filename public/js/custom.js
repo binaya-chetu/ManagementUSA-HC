@@ -210,16 +210,15 @@ event.preventDefault();
 if (i === 1)
         {
         $('#patient_come').show();
-                $('input[data-plugin-datepicker]').datepicker('setDate', moment().format('MM/DD/YYYY'));
                 $('#patient_id').val('');
-                $('#addAppPatient').html('Del Patient<i class="fa fa-minus"></i>');
+                $('#addAppPatient').html('Del Patient <i class="fa fa-minus"></i>');
                 $('.patient_id').hide();
                 i = 2;
                 } else
         {
         $('#patient_come').hide();
                 $('.patient_id').show();
-                $('#addAppPatient').html('<i class="fa fa-plus"></i>Add Patient');
+                $('#addAppPatient').html('<i class="fa fa-plus"></i> Add Patient');
                 i = 1;
                 }
 return false;
