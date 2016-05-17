@@ -1,0 +1,7 @@
+<?php
+return [
+	'CLINIC_OPEN_TIME' => '09:00:00',
+	'CLINIC_CLOSE_TIME' => '18:00:00',
+	'DEFAULT_APPOINTMENT_TIME_SPAN' => 30, // 30 min
+	'GAP_BETWEEN_APPOINTMENTS' => 0,
+];
