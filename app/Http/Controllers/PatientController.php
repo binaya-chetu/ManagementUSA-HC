@@ -52,7 +52,7 @@ class PatientController extends Controller {
     public function index($id = null) {
         if ($id == null) {
             $patients = User::with('patientDetail', 'PatientDetail.patientStateName')->where('role', $this->role)->get();
-            
+           
             return view('patient.patients', ['patients' => $patients]);
         } else {
             $patient = Patient::find($id);

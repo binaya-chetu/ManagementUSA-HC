@@ -35,15 +35,12 @@ class AppointmentController extends Controller {
 
         
         $doctors = User::where('role', $this->doctor_role)->get(['id', 'first_name', 'last_name']);
-        if (empty($id)) {
-            return view('appointment.new_appointment', [
-                'patients' => $patients, 'doctors' => $doctors, 'appointments' => array()
-            ]);
-        } else {
-            return view('appointment.patientNewAppointment', [
+         if (empty($id)) {
+            $id = '';
+        } 
+        return view('appointment.new_appointment', [
                 'patients' => $patients, 'doctors' => $doctors, 'appointments' => array(), 'id' => base64_decode($id)
             ]);
-        }
     }
 
     public function fetchDoctorSchedule($doctor_id) {
