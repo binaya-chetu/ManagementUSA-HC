@@ -78,7 +78,9 @@
                                 <label>Dob :</label>
                             </div>
                             <div class="col-sm-9">
+                                @if($doctor['doctorDetail']->dob)
                                 {{ date('d F Y', strtotime($doctor['doctorDetail']->dob)) }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">

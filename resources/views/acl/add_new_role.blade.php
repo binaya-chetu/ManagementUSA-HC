@@ -51,7 +51,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                             }}                               
-                            <a href="{{ url('/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                            <a href="{{ url('/acl/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                         </div>
                     </div>
                     {{ Form::close() }}

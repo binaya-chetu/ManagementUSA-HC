@@ -57,7 +57,7 @@ class AclController extends Controller {
 
         $validator = Validator::make($roleData, $this->rules);
         if ($validator->fails()) {
-            return redirect('/listRole')
+            return redirect('/acl/listRole')
                             ->withInput()
                             ->withErrors($validator);
         } else {
@@ -65,11 +65,11 @@ class AclController extends Controller {
             $role = new Role;
             if ($role::create($roleData)) {
                 \Session::flash('flash_message', 'Role Created successfully.');
-                return redirect('/listRole')
+                return redirect('/acl/listRole')
                                 ->withInput()
                                 ->withErrors($validator);
             } else {
-                return redirect('/listRole')
+                return redirect('/acl/listRole')
                                 ->withInput()
                                 ->withErrors($validator);
             }
@@ -115,9 +115,9 @@ class AclController extends Controller {
         $input = $request->all();
         if ($role->fill($input)->save()) {
             \Session::flash('flash_message', 'Role updated successfully.');
-            return redirect('/listRole');
+            return redirect('/acl/listRole');
         } else {
-            return redirect('/editRole');
+            return redirect('/acl/editRole');
         }
     }
 
