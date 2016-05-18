@@ -60,7 +60,6 @@
             {{ Form::hidden('clinicOpeningTime', config('constants.CLINIC_OPEN_TIME')) }}
             {{ Form::hidden('clinicClosingTime', config('constants.CLINIC_CLOSE_TIME')) }}
         </div>   
-
         <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">        
             {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-md-5 patient_id commentdiv" id="patientMainDiv">
@@ -68,13 +67,12 @@
                 <select  class="form-control chosen" name="patient_id" id="patient_id">
                     <option value="">Choose Patient</option>
                     @foreach ($patients as $patient)
-                         @if(isset($id))     
+                         @if(!empty($id))
                             @if($id == $patient->id)
                                 <option  selected value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
                             @endif
-                             
-                            @else
-                                <option  value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>  
+                        @else
+                                <option  value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
                         @endif
                    @endforeach
                    
