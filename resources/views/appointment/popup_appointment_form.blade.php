@@ -20,7 +20,7 @@
                 <select  class="form-control chosen" name="doctor_id" id="doctor_id">
                     <option value="">Choose Doctor</option>
                     @foreach ($doctors as $doctor)
-                    <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->last_name }}</option>
+                    <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected="selected"' :'' }}>{{ $doctor->first_name }} {{ $doctor->last_name }}</option>
                     @endforeach
                 </select>    
                 
@@ -69,10 +69,11 @@
                     @foreach ($patients as $patient)
                          @if(!empty($id))
                             @if($id == $patient->id)
-                                <option  selected value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
+                                <option  {{ old('patient_id') == $patient->id ? 'selected="selected"' :'' }} value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
                             @endif
-                        @else
-                                <option  value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
+                             
+                            @else
+                                <option {{ old('patient_id') == $patient->id ? 'selected="selected"' :'' }} value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>  
                         @endif
                    @endforeach
                    
