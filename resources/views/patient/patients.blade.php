@@ -60,12 +60,15 @@
                         <td><a class="defaultColor" href="/patient/view/{{ base64_encode($patient->id) }}">{{ $patient->first_name }} {{ $patient->last_name }}</a></td>
                         <td><a class="defaultColor" href="/patient/view/{{ base64_encode($patient->id) }}">{{ $patient->email }}</a></td>
                         <td>{{ $patient['patientDetail']->phone }}</td>
-                        <td>{{ $patient['patientDetail']->city }}</td>                      
+                        <td>{{{ $patient['patientDetail']->city or 'N/A' }}}</td>                      
                         <td>{{{ $patient['patientDetail']['patientStateName']->name or 'N/A' }}}</td>  
                         <td class="actions">
                             <a href="/patient/edit/{{ base64_encode($patient->id) }}"  title="Edit"><i class="fa fa-pencil"></i></a> | 
-                           <a data-href="/patient/delete/{{ base64_encode($patient->id) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" ><i class="fa fa-trash-o"></i></a> |
-                            <a href="/appointment/newAppointment/{{ base64_encode($patient->id) }}" class="on-default" title="Add Appointment"><i class="fa fa-calendar"></i></a>
+                           <a data-href="/patient/delete/{{ base64_encode($patient->id) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" ><i class="fa fa-trash-o"></i></a> 
+                           @if(!($patient['patientDetail']->never_treat_status)) 
+                           |
+                           <a href="/appointment/newAppointment/{{ base64_encode($patient->id) }}" class="on-default" title="Add Appointment"><i class="fa fa-calendar"></i></a>
+                           @endif
                         </td>
                     </tr>
                     @endforeach 

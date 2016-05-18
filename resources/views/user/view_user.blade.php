@@ -80,7 +80,9 @@
                                 <label>Dob :</label>
                             </div>
                             <div class="col-sm-9">
+                                @if($user['userDetail']->dob)
                                 {{ date('d F Y', strtotime($user['userDetail']->dob)) }}
+                                @endif
                             </div>
                         </div>
                     </div>

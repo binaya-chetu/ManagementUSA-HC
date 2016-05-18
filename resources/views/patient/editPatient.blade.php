@@ -30,7 +30,7 @@
                         <a href="#attachment" data-toggle="tab">Attachments</a>
                     </li>
                 </ul>
-                {!! Form::model($patient, ['method' => 'post','url' => ['updatePatient', $patient->id], 'id' => 'patient', 'files' => true]) !!}
+                {!! Form::model($patient, ['method' => 'post','url' => ['patient/updatePatient', $patient->id], 'id' => 'patient', 'files' => true]) !!}
                 {{ csrf_field() }}
                 <div class="tab-content">
                     <div id="personal" class="tab-pane active">
@@ -101,7 +101,14 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    {{ Form::text('dob', date('m/d/Y', strtotime($patient['patientDetail']->dob)), ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                    <?php 
+                                        $dob = ''; 
+                                        if($patient['patientDetail']->dob)
+                                        {
+                                            $dob = date('m/d/Y', strtotime($patient['patientDetail']->dob));
+                                        }
+                                    ?>
+                                    {{ Form::text('dob', $dob, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
                                 </div>
                             </div>
                         </div>

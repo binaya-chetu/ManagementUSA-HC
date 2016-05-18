@@ -118,37 +118,34 @@
                             </li>-->
                         </ul>
                     </li>
-                    <li class="nav-parent {{ Request::segment(1) === 'listRole' || 
-                                Request::segment(1) === 'addRole' || 
-                                Request::segment(1) === 'editRole' ||
-                                Request::segment(1) === 'listPermission' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>ACL Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ Request::segment(1) === 'listRole' || 
-                                Request::segment(1) === 'addRole' || 
-                                Request::segment(1) === 'editRole' ||
-                                Request::segment(1) === 'listPermission' ? 'nav-active' : null }}">
-                                <a href="{{ url('/listRole') }}">
+                            <li class="{{ Request::segment(2) === 'listRole' || 
+                                Request::segment(2) === 'addRole' || 
+                                Request::segment(2) === 'editRole' ||
+                                Request::segment(2) === 'listPermission' ? 'nav-active' : null }}">
+                                <a href="{{ url('/acl/listRole') }}">
                                     Roles
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-parent">
+                    <li class="nav-parent {{ Request::segment(1) === 'user' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>User Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li>
+                            <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/addUser') }}">
                                     Add User
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/listUsers') }}">
                                     All User
                                 </a>

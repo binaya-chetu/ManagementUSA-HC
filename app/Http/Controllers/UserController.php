@@ -105,7 +105,6 @@ class UserController extends Controller
     }
     
      public function listUsers() {
-        
         $users = User::with('roleName')->where('role','!=',5)
                 ->where('role','!=',6)
                 ->get();

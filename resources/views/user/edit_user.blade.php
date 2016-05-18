@@ -102,7 +102,14 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                     {{ Form::text('dob', date('m/d/Y', strtotime($user['userDetail']->dob)), ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                     <?php 
+                                        $dob = ''; 
+                                        if($user['userDetail']->dob)
+                                        {
+                                            $dob = date('m/d/Y', strtotime($user['userDetail']->dob));
+                                        }
+                                    ?>
+                                     {{ Form::text('dob', $dob, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
 
                                 </div>
                             </div>

@@ -196,7 +196,7 @@ class PatientController extends Controller {
         $patient->city = $request->city;
         $patient->state = $request->state;
         $patient->zipCode = $request->zipCode;
-        $patient->employer = $request->zipCode;
+        $patient->employer = $request->employer;
         $patient->occupation = $request->occupation;
 
         if ($patient->save()) {

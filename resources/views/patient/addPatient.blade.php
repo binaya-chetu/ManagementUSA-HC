@@ -27,7 +27,7 @@
                     </div>
                     <h2 class="panel-title"><strong>Add Patient </strong> </h2>
                 </header>	
-                 {{ Form::open(array('url' => 'savePatient', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patient')) }}
+                 {{ Form::open(array('url' => 'patient/savePatient', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patient')) }}
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
                    

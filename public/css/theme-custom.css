@@ -7,3 +7,7 @@
 .cancl-btn {
     float: right;
 }
+
+a.sidebar-right-toggle > i {
+ display:none !important;
+}
