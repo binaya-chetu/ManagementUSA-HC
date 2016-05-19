@@ -146,6 +146,7 @@ class AppointmentController extends Controller {
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
+            $events ['id'] = $appointment->id;
             $events ['title'] = 'Appointment#' . $appointment->id;
             $events ['patientName'] = 'Patient:' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
             $events ['mobile'] = 'Phone:' . $appointment->patient->phone;
@@ -165,6 +166,7 @@ class AppointmentController extends Controller {
 
     public function editappointment(Request $request) {
         $appointment = Appointment::with('patient.patientDetail')->find($request['id']);
+//ECHO '<pre>';	print_r($request['id']); die;	
         $patient = $appointment->patient;       
         $doctor = $appointment->doctor;       
         $combine = array();

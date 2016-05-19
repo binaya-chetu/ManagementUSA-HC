@@ -1,205 +1,195 @@
-/*
- Name: 			Theme Base
- Written by: 	Okler Themes - (http://www.okler.net)
- Theme Version: 	1.4.1
- */
-
-//(function($) {
-
-//  'use strict';
-
 var initCalendarDragNDrop = function() {
-$('#external-events div.external-event').each(function() {
-
-// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-// it doesn't need to have a start or end
-var eventObject = {
-title: $.trim($(this).text()) // use the element's text as the event title
+	$('#external-events div.external-event').each(function() {
+		var eventObject = {
+			title: $.trim($(this).text()) // use the element's text as the event title
+		};
+		// store the Event Object in the DOM element so we can get to it later
+		$(this).data('eventObject', eventObject);
+		// make the event draggable using jQuery UI
+		$(this).draggable({
+			zIndex: 999,
+			revert: true, // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
+	});
 };
-	        // store the Event Object in the DOM element so we can get to it later
-	        $(this).data('eventObject', eventObject);
-   // make the event draggable using jQuery UI
-        $(this).draggable({
-zIndex: 999,
-        revert: true, // will cause the event to go back to its
-        revertDuration: 0  //  original position after the drag
-        });
-        });
-        };
-        var initCalendar = function(events, start = "00:00:00", end="24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt="00:00:00", inputDate = null, defaultView = "month") {
-        var $calendar = $('#calendar');
-                var date = (inputDate == null)? new Date() : new Date(inputDate);
-                var d = date.getDate();
-                var m = date.getMonth();
-                var y = date.getFullYear();
-                $calendar.fullCalendar({
-                header: {
-                left: 'title',
-                        right: 'prev,today,next,agendaDay,agendaWeek,month'
-                },
-                        timeFormat: 'h:mm A',
-                        titleFormat: {
-                        month: 'MMMM YYYY', // September 2009
-                                week: "MMM D YYYY", // Sep 13 2009
-                                day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
-                        },
-                        themeButtonIcons: {
-                        prev: 'fa fa-caret-left',
-                                next: 'fa fa-caret-right'
-                        },
-                        editable: true,
-                        timezone: 'local',
-                        defaultView: 'agendaDay',
-                        slotEventOverlap: false,
-                        minTime: start,
-                        slotMinutes: defaultApptTime,
-                        slotLabelInterval: 30,
-                        slotLabelFormat: 'h(:mm)a',
-                        maxTime: end,
-                        allDaySlot: false,
-                        firstDay:moment().format('MM/DD/YYYY'),
-                        droppable: false, // this allows things to be dropped onto the calendar !!!
-                        drop: function(date, allDay) { // this function is called when something is dropped
-                        	var $externalEvent = $(this);
-                            // retrieve the dropped element's stored Event Object
-                            var originalEventObject = $externalEvent.data('eventObject');
-                            
-							// we need to copy it, so that multiple events don't have a reference to the same object
-                            var copiedEventObject = $.extend({}, originalEventObject);
 
-                            // assign it the date that was reported
-                            copiedEventObject.start = date;
-                            copiedEventObject.allDay = allDay;
-                            copiedEventObject.className = $externalEvent.attr('data-event-class');
+var initCalendar = function(events, start = "00:00:00", end="24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt="00:00:00", inputDate = null, defaultView = "month") {
+	var $calendar = $('#calendar');
+	var date = (inputDate == null)? new Date() : new Date(inputDate);
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+	
+	$calendar.fullCalendar({
+		header: {
+			left: 'title',
+			right: 'prev,today,next,agendaDay,agendaWeek,month'
+		},
+		timeFormat: 'h:mm A',
+		titleFormat: {
+			month: 'MMMM YYYY', // September 2009
+			week: "MMM D YYYY", // Sep 13 2009
+			day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
+		},
+		themeButtonIcons: {
+			prev: 'fa fa-caret-left',
+			next: 'fa fa-caret-right'
+		},
+		editable: true,
+		timezone: 'local',
+		defaultView: 'agendaDay',
+		slotEventOverlap: false,
+		minTime: start,
+		maxTime: end,
+		
+		slotLabelInterval: 30,
+		slotLabelFormat: 'h(:mm)a',
+		allDaySlot: false,
+		firstDay:moment().format('MM/DD/YYYY'),
+		droppable: false, // this allows things to be dropped onto the calendar !!!
+		drop: function(date, allDay) { // this function is called when something is dropped
+			var $externalEvent = $(this);
+			// retrieve the dropped element's stored Event Object
+			var originalEventObject = $externalEvent.data('eventObject');
+			
+			// we need to copy it, so that multiple events don't have a reference to the same object
+			var copiedEventObject = $.extend({}, originalEventObject);
 
-                            // render the event on the calendar
-                            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+			// assign it the date that was reported
+			copiedEventObject.start = date;
+			copiedEventObject.allDay = allDay;
+			copiedEventObject.className = $externalEvent.attr('data-event-class');
 
-                            // is the "remove after drop" checkbox checked?
-                            if ($('#RemoveAfterDrop').is(':checked')) {
-                        		// if so, remove the element from the "Draggable Events" list
-                        		$(this).remove();
-                       		 }
+			// render the event on the calendar
+			// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+			$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
-                        },
-                        events: events,
-//                        viewRender: function(view, element) {
-//                        if (view.start.isBefore(moment())){  //if view start is before now
-//                        $('#calendar').fullCalendar('gotoDate', moment().format('MM/DD/YYYY')); //go to now
-//                        }
-//                        },
-                        businessHours: [
-                        {
-                        start: '09:00',
-                                end: '17:00',
-                                dow: [1, 2, 3, 5, 6]
-                        },
-                        {
-                        start: '09:00',
-                                end: '19:00',
-                                dow: [4]
-                        }
-                        ]
-                });
-                // FIX INPUTS TO BOOTSTRAP VERSIONS
-                var $calendarButtons = $calendar.find('.fc-header-right > span');
-                $calendarButtons
-                .filter('.fc-button-prev, .fc-button-today, .fc-button-next')
-                .wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
-                .parent()
-                .after('<br class="hidden"/>');
-                $calendarButtons
-                .not('.fc-button-prev, .fc-button-today, .fc-button-next')
-                .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
-                $calendarButtons
-                .attr({'class': 'btn btn-sm btn-default'});
-        };
+			// is the "remove after drop" checkbox checked?
+			if ($('#RemoveAfterDrop').is(':checked')) {
+				// if so, remove the element from the "Draggable Events" list
+				$(this).remove();
+			}
+		},
+		events: events,
+		viewRender: function(view, element) {
+			if (view.start.isBefore(moment())){  //if view start is before now
+				$('#calendar').fullCalendar('gotoDate', moment().format('MM/DD/YYYY')); //go to now
+			}
+		},
+		eventRender: function (event, element) {
+			element.find('.fc-event-inner').attr('data-id', event.id);
+		},		
+		businessHours: [
+		{
+			start: '09:00',
+			end: '17:00',
+			dow: [1, 2, 3, 5, 6]
+		},
+		{
+			start: '09:00',
+			end: '19:00',
+			dow: [4]
+		}
+		]
+	});
+	// FIX INPUTS TO BOOTSTRAP VERSIONS
+	var $calendarButtons = $calendar.find('.fc-header-right > span');
+	$calendarButtons
+		.filter('.fc-button-prev, .fc-button-today, .fc-button-next')
+		.wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
+		.parent()
+		.after('<br class="hidden"/>');
+	$calendarButtons
+		.not('.fc-button-prev, .fc-button-today, .fc-button-next')
+		.wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
+	$calendarButtons
+		.attr({'class': 'btn btn-sm btn-default'});
+};
 
-        var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes = 30, start = '00:00:00', end = '24:00:00') {
-        var $calendar = $('#calendar');
-                var date = (inputDate == null || inputDate == "" || inputDate == undefined)? new Date() : new Date(inputDate);
-                var d = date.getDate();
-                var m = date.getMonth();
-                var y = date.getFullYear();
-                $calendar.fullCalendar({
-                height: "700",
-                        defaultDate:moment(date),
-                        slotEventOverlap: false,
-                        defaultTimedEventDuration: '00:30:00',
-                        defaultView: 'agendaWeek',
-                        header: {
-                        left: 'title',
-                                right: 'prev,next'
-                        },
-                        allDaySlot: false,
-                        slotMinutes: slotMinutes,
-                        minTime: start,
-                        maxTime: end,
-                        timeFormat: 'h:mm A',
-                        titleFormat: {
-                        month: 'MMMM YYYY', // September 2009
-                                week: "MMM D YYYY", // Sep 13 2009
-                                day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
-                        },
-                        themeButtonIcons: {
-                        prev: 'fa fa-caret-left',
-                                next: 'fa fa-caret-right',
-                        },
-                        editable: true,
-                        droppable: false, // this allows things to be dropped onto the calendar !!!
-                        eventStartEditable: false, // this allows things to be dropped onto the calendar !!!
-                        selectable: true,
-                        select: function(start, end, allDay, event) {
-                        $(event.target).css('background-color', '#0088CC');
-                                var today = new Date();
-                                if (start < today){
-                        apptDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
-                        } else{
-                        apptDate = start.format('MM/DD/YYYY');
-                        }
+var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes = 30, start = '00:00:00', end = '24:00:00') {
+	var $calendar = $('#calendar');
+	var date = (inputDate == null || inputDate == "" || inputDate == undefined)? new Date() : new Date(inputDate);
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+	
+	$calendar.fullCalendar({
+		height: "700",
+		defaultDate:moment(date),
+		slotEventOverlap: false,
+		defaultTimedEventDuration: '00:30:00',
+		defaultView: 'agendaWeek',
+		header: {
+			left: 'title',
+			right: 'prev,next'
+		},
+		allDaySlot: false,
+		slotMinutes: slotMinutes,
+		minTime: start,
+		maxTime: end,
+		timeFormat: 'h:mm A',
+		titleFormat: {
+		month: 'MMMM YYYY', // September 2009
+			week: "MMM D YYYY", // Sep 13 2009
+			day: 'dddd, MMM D, YYYY' // Tuesday, Sep 8, 2009
+		},
+		themeButtonIcons: {
+			prev: 'fa fa-caret-left',
+			next: 'fa fa-caret-right',
+		},
+		editable: true,
+		droppable: false, // this allows things to be dropped onto the calendar !!!
+		eventStartEditable: false, // this allows things to be dropped onto the calendar !!!
+		selectable: true,
+		select: function(start, end, allDay, event) {
+			$(event.target).css('background-color', '#0088CC');
+			var today = new Date();
+			if (start < today){
+				apptDate = today.getMonth() + 1 + '/' + today.getDate() + '/' + today.getFullYear();
+			} else{
+				apptDate = start.format('MM/DD/YYYY');
+			}
 
-                        apptTime = start.format('hh:mm A');
-                                $('input[data-plugin-datepicker]').datepicker('setDate', apptDate);
-                                $('input[data-plugin-timepicker]').timepicker('setTime', apptTime);
-                                $.magnificPopup.close();
-                        },
-                        eventRender: function (event, element) {
-                        element.find('.fc-event-title').html(event.title);
-                                element.find('.fc-event-title').prop('title', event.title);
-                                element.find('.fc-event-inner').css('padding', '0 2px');
-                                element.find('.fc-event-time').remove();
-                        },
-                        events: events
-                });
-                // FIX INPUTS TO BOOTSTRAP VERSIONS
-                var $calendarButtons = $calendar.find('.fc-header-right > span');
-                $calendarButtons
-                .filter('.fc-button-prev, .fc-button-today, .fc-button-next')
-                .wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
-                .parent()
-                .after('<br class="hidden"/>');
-                $calendarButtons
-                .not('.fc-button-prev, .fc-button-today, .fc-button-next')
-                .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
-                $calendarButtons
-                .attr({'class': 'btn btn-sm btn-default'});
-        };
-        $(document).ready(function() {
-$('#external-events').hide();
-        $('select.chosen').chosen();
-        $('.add-appointment-submit').submit(function(event) {
-event.preventDefault();
-        });
-        $.validator.setDefaults({ignore: ":hidden:not(select)"});
-        $.validator.addMethod("aFunction",
-                function(value, element) {
-                if (value === "none")
-                        return false;
-                        else
-                        return true;
-                },
-                "Please select a value");
+			apptTime = start.format('hh:mm A');
+			$('input[data-plugin-datepicker]').datepicker('setDate', apptDate);
+			$('input[data-plugin-timepicker]').timepicker('setTime', apptTime);
+			$.magnificPopup.close();
+		},
+		eventRender: function (event, element) {
+			element.find('.fc-event-title').html(event.title);
+			element.find('.fc-event-title').prop('title', event.title);
+			element.find('.fc-event-inner').css('padding', '0 2px');
+			element.find('.fc-event-time').remove();
+		},
+		events: events
+	});
+	// FIX INPUTS TO BOOTSTRAP VERSIONS
+	var $calendarButtons = $calendar.find('.fc-header-right > span');
+	$calendarButtons.filter('.fc-button-prev, .fc-button-today, .fc-button-next')
+		.wrapAll('<div class="btn-group mt-sm mr-md mb-sm ml-sm"></div>')
+		.parent()
+		.after('<br class="hidden"/>');
+	$calendarButtons
+		.not('.fc-button-prev, .fc-button-today, .fc-button-next')
+		.wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
+	$calendarButtons
+		.attr({'class': 'btn btn-sm btn-default'});
+};
+		
+$(document).ready(function() {
+	$('#external-events').hide();
+	$('select.chosen').chosen();
+	$('.add-appointment-submit').submit(function(event) {
+		event.preventDefault();
+	});
+    $.validator.setDefaults({ignore: ":hidden:not(select)"});
+    $.validator.addMethod("aFunction", function(value, element) {
+		if (value === "none")
+				return false;
+				else
+				return true;
+		}, "Please select a value");
         /*
          * Below functions are called for add appointment.
          */
@@ -296,7 +286,8 @@ src: '#modal-add-view-appointment',
 });
         });
         $(document).on("click", ".fc-event-inner", function(ev) {
-var text = $(this).text().substring($(this).text().indexOf('#') + 1);
+//var text = $(this).text().substring($(this).text().indexOf('#') + 1);
+var text =  $(this).data('id');
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -304,7 +295,7 @@ var text = $(this).text().substring($(this).text().indexOf('#') + 1);
         });
         $.ajax({
         type: "POST",
-                url: "./editappointment",
+                url: "/appointment/editappointment",
                 data: {"id": text},
                 success: function(response) {
                 var combine = JSON.parse(response);
@@ -405,6 +396,7 @@ var text = $(this).text().substring($(this).text().indexOf('#') + 1);
 	})
 
 });
+
         (function($) {
 
         'use strict';
