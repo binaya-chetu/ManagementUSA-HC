@@ -157,7 +157,6 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 			$.magnificPopup.close();
 		},
 		eventRender: function (event, element) {
-			element.find('.fc-event-title').html(event.title);
 			element.find('.fc-event-title').prop('title', event.title);
 			element.find('.fc-event-inner').css('padding', '0 2px');
 			element.find('.fc-event-time').remove();
