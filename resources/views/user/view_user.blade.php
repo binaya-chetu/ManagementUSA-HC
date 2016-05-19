@@ -82,6 +82,8 @@
                             <div class="col-sm-9">
                                 @if($user['userDetail']->dob)
                                 {{ date('d F Y', strtotime($user['userDetail']->dob)) }}
+                                @else 
+                                {{ 'N/A' }}
                                 @endif
                             </div>
                         </div>
@@ -94,23 +96,35 @@
                                 <label>Phone :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $user['userDetail']->phone or 'N/A' }}}
+                                @if($user['userDetail']->phone)
+                                {{ $user['userDetail']->phone }}
+                                @else 
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Primary Address :</label>
+                                <label>Address Line 1 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $user['userDetail']->address1 or 'N/A' }}}
+                                @if($user['userDetail']->address1)
+                                {{ $user['userDetail']->address1 }}
+                                @else 
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Secondary Address :</label>
+                                <label>Address Line 2 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $user['userDetail']->address2 or 'N/A' }}}
+                                @if($user['userDetail']->address2)
+                                {{ $user['userDetail']->address2 }}
+                                @else 
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -118,7 +132,11 @@
                                 <label>City :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $user['userDetail']->city or 'N/A' }}}
+                                @if($user['userDetail']->city)
+                                {{ $user['userDetail']->city }}
+                                @else 
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -134,7 +152,11 @@
                                 <label>Zip Code :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $user['userDetail']->zipCode or 'N/A' }}}
+                                 @if($user['userDetail']->zipCode)
+                                {{ $user['userDetail']->zipCode }}
+                                @else 
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>	
                     </div>

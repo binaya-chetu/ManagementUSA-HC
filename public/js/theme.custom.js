@@ -53,6 +53,7 @@ $(function() {
           }
     });
     
+   
     // Set the calendar start date as today Date
     $('.selectDate').datepicker({
         startDate: today

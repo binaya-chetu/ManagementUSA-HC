@@ -84,7 +84,7 @@
         <div class="form-group">             
             {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
-                {{ Form::text('phone', old('phone'), ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '12', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                {{ Form::text('phone', old('phone'), ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
             </div> 
         </div> 
         <div class="form-group"> 
