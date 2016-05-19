@@ -266,7 +266,6 @@ headers: {
         });
         });
         $('.list-edit').on('change', function() {
-alert(this.value);
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -286,15 +285,14 @@ src: '#modal-add-view-appointment',
 });
         });
         $(document).on("click", ".fc-event-inner", function(ev) {
-//var text = $(this).text().substring($(this).text().indexOf('#') + 1);
-var text =  $(this).data('id');
+		var text =  $(this).data('id');
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
         });
         $.ajax({
-        type: "POST",
+			type: "POST",
                 url: "/appointment/editappointment",
                 data: {"id": text},
                 success: function(response) {
@@ -308,6 +306,7 @@ var text =  $(this).data('id');
                 if (combine.doctor){
                 $("#doctor_id").val(combine.doctor.id).attr('selected', 'selected').trigger("chosen:updated");
                         $('input[name=doctor_id]').val(combine.doctor.id);
+						$(".showDocScheddulerLInk").html('<a href="#" data-link = "'+combine.doctor.id+'">Show scheduler</a>');
                 } else{
                 $("#doctor_id").val('').trigger("chosen:updated");
                         $('input[name=doctor_id]').val('0');
@@ -330,8 +329,8 @@ var text =  $(this).data('id');
         });
         $.magnificPopup.open({
         items: {
-        src: '#modalForm',
-                type: 'inline'
+			src: '#modalForm',
+			type: 'inline'
         }
         });
         });

@@ -166,7 +166,6 @@ class AppointmentController extends Controller {
 
     public function editappointment(Request $request) {
         $appointment = Appointment::with('patient.patientDetail')->find($request['id']);
-//ECHO '<pre>';	print_r($request['id']); die;	
         $patient = $appointment->patient;       
         $doctor = $appointment->doctor;       
         $combine = array();
