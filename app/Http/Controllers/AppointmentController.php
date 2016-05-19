@@ -85,12 +85,10 @@ class AppointmentController extends Controller {
         $messages = [
             'after' => ':attribute cannot be a past date',
             'future_date' => 'Appointment cannot be set for past',
-            'patient_id.required' => 'Please select patient or add new patient',
             'doctor_availability' => 'Sorry this time slot is not available'
         ];
 
         $validator = Validator::make($data, [
-                    'patient_id' => 'required',
                     'appDate' => 'required|date|future_date:' . $time . '|doctor_availability:' . $time . ',' . $doctor_id,
                     'comment' => 'required',
                         ], $messages);
@@ -100,8 +98,9 @@ class AppointmentController extends Controller {
         }
 
         if (empty($request->patient_id)) {
+            
             $controller = new PatientController();
-            if (!($request->patient_id = $controller->savePatientDetail($request))) {
+            if (!($request->patient_id = $controller->saveAppointmentPatient($request))) {
                 \Session::flash('flash_message', 'some occur occcured in patient detail.');
                 return Redirect::action('AppointmentController@newAppointment');
             }
@@ -140,15 +139,15 @@ class AppointmentController extends Controller {
     }
 
     public function viewappointment() {
-        $appointment = new Appointment;
-        $appointments = $appointment->whereIn('status', [1, 4])->get();
+        $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
+            
             $events ['title'] = 'Appointment#' . $appointment->id;
-            $events ['patientName'] = 'Patient:' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
-            $events ['mobile'] = 'Phone:' . $appointment->patient->phone;
+            $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
+            $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;
             $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
             $events ['color'] = '#0088cc';

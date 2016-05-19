@@ -8,6 +8,9 @@
     float: right;
 }
 
-a.sidebar-right-toggle > i {
- display:none !important;
+.mfp-close { color: #000 !important; }
+
+.page-header a.sidebar-right-toggle i {
+    display: none;
 }
+
