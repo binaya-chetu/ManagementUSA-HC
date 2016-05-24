@@ -8,6 +8,7 @@ use App\Appointment;
 use App\Doctor;
 use App\User;
 use App\Followup;
+use App\State;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -314,7 +315,13 @@ class AppointmentController extends Controller {
         return view('appointment.followup', ['followup' => $followup]);
     }
 
-    // Function to view the particular appointment followup
+    /**
+     * View the followup for the appointment 
+     * 
+     * @param $id
+     *
+     * @return \Illuminate\View\View
+     */
     public function viewFollowup($id = null) {
         $id = base64_decode($id);
         $followup = Followup::with(['appointment', 'appointment.patient' => function($query) {
@@ -324,4 +331,23 @@ class AppointmentController extends Controller {
         return view('appointment.view_followup', ['followup' => $followup]);
     }
 
+    /**
+     * Edit the patient for the filling the details for the medical 
+     * 
+     * @param $id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function patientMedical($id = null){
+        $id = base64_decode($id);
+        if (!($patient = User::with('patientDetail')->find($id))) {
+            App::abort(404, 'Page not found.');
+        }
+        $states = State::lists('name', 'id')->toArray();
+         return view('appointment.patient_medical', [
+            'patient' => $patient,
+            'states' => $states
+        ]);
+       
+    }
 }

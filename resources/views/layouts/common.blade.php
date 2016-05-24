@@ -82,6 +82,7 @@
         <script src="{{ URL::asset('vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>	
         <script src="{{ URL::asset('vendor/fullcalendar/lib/moment.min.js') }}"></script>
         <script src="{{ URL::asset('vendor/fullcalendar/fullcalendar.js') }}"></script>   
+        <script src="{{ URL::asset('vendor/bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>
 
         <script src="{{ URL::asset('js/chosen/chosen.jquery.min.js') }}"></script>
         <script src="{{ URL::asset('js/chosen/chosen.order.jquery.min.js') }}"></script>
@@ -95,6 +96,7 @@
         <!-- Theme Custom -->
         <script src="{{ URL::asset('js/theme.custom.js') }}"></script>
         <script src="{{ URL::asset('js/custom.js') }}"></script>
+        
 
         <!-- Theme Initialization Files -->
         <script src="{{ URL::asset('js/theme.init.js') }}"></script>
