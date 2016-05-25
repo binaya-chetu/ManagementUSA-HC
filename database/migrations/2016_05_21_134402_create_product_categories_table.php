@@ -21,6 +21,7 @@ class CreateProductCategoriesTable extends Migration
             $table->integer('category_type_id');
             $table->timestamps();
         });
+        
     }
 
     /**
