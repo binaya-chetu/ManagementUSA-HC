@@ -23,7 +23,8 @@ class Categories extends Model
           return $this->hasMany('App\productCategories', 'category_id');
           
     }
-  
-    
+    public function CategoryAddOns() {  
+        return $this->belongsTo('App\CategoryAddOns', 'category_id');
+    }
     
 }

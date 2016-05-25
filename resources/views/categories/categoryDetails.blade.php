@@ -22,6 +22,7 @@
 
         <div class="col-md-12">
            <?php 
+           echo "<pre>";
        
                 foreach($details AS $key){
                   
