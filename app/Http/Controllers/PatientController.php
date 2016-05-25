@@ -25,6 +25,8 @@ class PatientController extends Controller {
      *
      * @return void
      */
+     
+ 
     public function __construct() {
         $this->middleware('auth');
     }
@@ -184,7 +186,6 @@ class PatientController extends Controller {
     // Fucntion for the common save for the patient Detail
     public function savePatientDetail($request, $userId) {
         $patient = new Patient;
-        
         $patient->user_id = $userId;
         $patient->phone = $request->phone;
         $patient->gender = $request->gender;

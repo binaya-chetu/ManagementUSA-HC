@@ -260,6 +260,18 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'user.viewUser',
             'middleware' => ['acl:user_read']
         ]);
+		// Route for categories
+	Route::get('/categories/listCategories', [
+            'uses' => 'CategoriesController@listCategories',
+            'as' => 'categories.listCategories',
+			'middleware' => ['acl:user_write']
+        ]);
+		
+	Route::get('/categories/categoryDetails/{id}', [
+            'uses' => 'CategoriesController@categoryDetails',
+            'as' => 'categories.categoryDetails',
+			'middleware' => ['acl:user_write']
+        ]);
 });
 
 

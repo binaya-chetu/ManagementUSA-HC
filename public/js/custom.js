@@ -276,7 +276,7 @@ headers: {
         });
         });
         $('.list-edit').on('change', function() {
-alert(this.value);
+        alert(this.value);
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
