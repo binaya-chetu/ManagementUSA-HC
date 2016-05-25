@@ -8,6 +8,14 @@
     float: right;
 }
 
-a.sidebar-right-toggle > i {
- display:none !important;
+.mfp-close { color: #000 !important; }
+
+.page-header a.sidebar-right-toggle i {
+    display: none;
 }
+/*  CSS for the toggle form radio buttom */
+.toggle-content .inputRow { padding-bottom: 15px; } 
+.toggle-content .inputRow label { color: #777; } 
+.toggle-content .inputRow .toggle-radio-custom { padding-top: 7px; }
+.toggle-content .inputRow .toggle-radio-custom .radio-custom { padding-right: 35px; }
+.medicalTitle { padding-bottom: 10px; }

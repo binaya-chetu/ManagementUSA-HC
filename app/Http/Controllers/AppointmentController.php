@@ -8,6 +8,7 @@ use App\Appointment;
 use App\Doctor;
 use App\User;
 use App\Followup;
+use App\State;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -85,12 +86,10 @@ class AppointmentController extends Controller {
         $messages = [
             'after' => ':attribute cannot be a past date',
             'future_date' => 'Appointment cannot be set for past',
-            'patient_id.required' => 'Please select patient or add new patient',
             'doctor_availability' => 'Sorry this time slot is not available'
         ];
 
         $validator = Validator::make($data, [
-                    'patient_id' => 'required',
                     'appDate' => 'required|date|future_date:' . $time . '|doctor_availability:' . $time . ',' . $doctor_id,
                     'comment' => 'required',
                         ], $messages);
@@ -100,8 +99,9 @@ class AppointmentController extends Controller {
         }
 
         if (empty($request->patient_id)) {
+            
             $controller = new PatientController();
-            if (!($request->patient_id = $controller->savePatientDetail($request))) {
+            if (!($request->patient_id = $controller->saveAppointmentPatient($request))) {
                 \Session::flash('flash_message', 'some occur occcured in patient detail.');
                 return Redirect::action('AppointmentController@newAppointment');
             }
@@ -140,15 +140,15 @@ class AppointmentController extends Controller {
     }
 
     public function viewappointment() {
-        $appointment = new Appointment;
-        $appointments = $appointment->whereIn('status', [1, 4])->get();
+        $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
+            $events ['id'] = $appointment->id;
             $events ['title'] = 'Appointment#' . $appointment->id;
-            $events ['patientName'] = 'Patient:' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
-            $events ['mobile'] = 'Phone:' . $appointment->patient->phone;
+            $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
+            $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;
             $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
             $events ['color'] = '#0088cc';
@@ -315,7 +315,13 @@ class AppointmentController extends Controller {
         return view('appointment.followup', ['followup' => $followup]);
     }
 
-    // Function to view the particular appointment followup
+    /**
+     * View the followup for the appointment 
+     * 
+     * @param $id
+     *
+     * @return \Illuminate\View\View
+     */
     public function viewFollowup($id = null) {
         $id = base64_decode($id);
         $followup = Followup::with(['appointment', 'appointment.patient' => function($query) {
@@ -325,4 +331,23 @@ class AppointmentController extends Controller {
         return view('appointment.view_followup', ['followup' => $followup]);
     }
 
+    /**
+     * Edit the patient for the filling the details for the medical 
+     * 
+     * @param $id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function patientMedical($id = null){
+        $id = base64_decode($id);
+        if (!($patient = User::with('patientDetail')->find($id))) {
+            App::abort(404, 'Page not found.');
+        }
+        $states = State::lists('name', 'id')->toArray();
+         return view('appointment.patient_medical', [
+            'patient' => $patient,
+            'states' => $states
+        ]);
+       
+    }
 }

@@ -60,7 +60,12 @@
                         <td><a class="defaultColor" href="/doctor/view/{{ base64_encode($doctor->id) }}">{{ $doctor->first_name }} {{ $doctor->last_name }}</a></td>
                         <td><a class="defaultColor" href="/doctor/view/{{ base64_encode($doctor->id) }}">{{ $doctor->email }}</a></td>
                         <td>{{ $doctor['doctorDetail']->phone }}</td>
-                        <td>{{ $doctor['doctorDetail']->city }}</td>                      
+                        <td> 
+                            @if($doctor['doctorDetail']->city)
+                            {{ $doctor['doctorDetail']->city }}
+                            @else
+                            {{ 'N/A' }}
+                            @endif</td>                      
                         <td>{{{ $doctor['doctorDetail']['doctorStateName']->name or 'N/A' }}}</td>  
                         <td class="actions">
                             <a href="/doctor/edit/{{ base64_encode($doctor->id) }}" title="Edit"><i class="fa fa-pencil"></i></a> | 
