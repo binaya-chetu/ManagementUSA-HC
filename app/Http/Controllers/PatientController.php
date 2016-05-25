@@ -63,7 +63,6 @@ class PatientController extends Controller {
     }
 
     public function save(Request $request) {
-
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -72,12 +71,12 @@ class PatientController extends Controller {
             'zipCode' => 'required|min:6|max:15'
         ]);
         
-       $userData = new User;
+        $userData = new User;
         $userData->first_name = $request->first_name;
         $userData->last_name = $request->last_name;
         $userData->email = $request->email;
         $userData->role = $this->role;
-       
+        
         if ($userData->save()) 
         {
             $userId = $userData->id;
@@ -92,6 +91,36 @@ class PatientController extends Controller {
         else
         {
              return redirect('/patient/addPatient');
+        }
+    }
+    
+     public function saveAppointmentPatient(Request $request) {
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required',
+        ]);
+        
+        $userData = new User;
+        $userData->first_name = $request->first_name;
+        $userData->last_name = $request->last_name;
+        $userData->email = $request->email;
+        $userData->role = $this->role;
+        //print_r($userData);die;
+        if ($userData->save()) 
+        {
+            $userId = $userData->id;
+            $saveResult = $this->savePatientDetail($request, $userId);
+            if ($saveResult != 0) {
+               return $userId;
+            } else {
+                return 0;
+            }
+        }
+        else
+        {
+             return 0;
         }
     }
 
@@ -199,7 +228,6 @@ class PatientController extends Controller {
         $patient->zipCode = $request->zipCode;
         $patient->employer = $request->employer;
         $patient->occupation = $request->occupation;
-
         if ($patient->save()) {
             return $patient->id;
         } else {

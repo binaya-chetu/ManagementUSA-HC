@@ -88,6 +88,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.viewFollowup',
             'middleware' => ['acl:followupappointment_read']
         ]);
+    Route::get('/appointment/patientMedical/{id}', [
+            'uses' => 'AppointmentController@patientMedical',
+            'as' => 'appointment.patientMedical',
+            'middleware' => ['acl:followupappointment_read']
+        ]);
     Route::post('/getdoctorschedule', [
             'uses' => 'AppointmentController@getdoctorschedule',
             'as' => 'doctor.getSchedule',

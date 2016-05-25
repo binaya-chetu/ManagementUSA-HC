@@ -193,6 +193,18 @@
                     {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1']) }}
                 </div> 
             </div>
+            
+            <div class="form-group{{ $errors->has('zipCode') ? ' has-error' : '' }}">
+                {{ Form::label('zipCode', 'Zip Code', array('class' => 'col-sm-4 control-label mandatory')) }}
+                <div class="col-sm-6">
+                    {{ Form::text('zipCode', null, ['class' => 'form-control required', 'placeholder' => 'Zip Code', 'id' => 'zipCode', 'maxlength' => '15', 'minlength' => '6', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                    @if ($errors->has('zipCode'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('zipCode') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
 
         </div><br/>
         <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">

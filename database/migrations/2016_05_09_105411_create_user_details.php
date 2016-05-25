@@ -18,12 +18,12 @@ class CreateUserDetailsTable extends Migration
 			$table->date('dob')->nullable();
 			$table->enum('gender', ['Male', 'Female'])->default('Male');
 			$table->string('phone', 15);			
-			$table->string('address1');
-			$table->string('address2');
-			$table->string('city');
+			$table->string('address1')->nullable();
+			$table->string('address2')->nullable();
+			$table->string('city')->nullable();
 			$table->integer('state');
 			$table->string('zipCode', 11);
-			$table->string('image');
+			$table->string('image')->nullable();
             $table->timestamps();
         });
     }

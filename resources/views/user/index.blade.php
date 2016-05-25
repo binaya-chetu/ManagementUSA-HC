@@ -47,7 +47,9 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
+                        @if( Auth::user()->role == 1 )
                         <th>Status</th>
+                        @endif
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -59,10 +61,13 @@
                         <td><a class="defaultColor" href="/user/viewUser/{{ base64_encode($user->id) }}">{{ $user->first_name }} {{ $user->last_name }}</a></td>
                         <td><a class="defaultColor" href="/user/viewUser/{{ base64_encode($user->id) }}">{{ $user->email }}</a></td>
                         <td> {{ $user['roleName']->role_title }}</td>
-                        <td><div class="switch switch-sm switch-primary user_status" >
+                        @if( Auth::user()->role == 1 )
+                        <td>
+                            <div class="switch switch-sm switch-primary user_status" >
                                 <input type="checkbox" name="switch" <?php if($user->status === 1) { echo "checked"; }  ?> class="check_div" data-plugin-ios-switch user_id ="{{ $user->id }}" />
-                            </div></td>
-                        
+                            </div>
+                        </td>
+                        @endif
                         <td class="actions">
                             <a href="/user/editUser/{{ base64_encode($user->id) }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a> |
                             <a href="javascript:void(0)" data-href="/user/deleteUser/{{ base64_encode($user->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 

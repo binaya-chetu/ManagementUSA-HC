@@ -35,6 +35,7 @@ class HomeController extends Controller
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
+			$events ['id'] = $appointment->id;
             $events ['title'] = 'Appointment#' . $appointment->id;
             $events ['patientName'] = 'Patient:' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
             $events ['mobile'] = 'Phone:' . $appointment->patient->phone;

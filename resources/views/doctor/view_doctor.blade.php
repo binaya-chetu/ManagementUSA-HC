@@ -80,6 +80,8 @@
                             <div class="col-sm-9">
                                 @if($doctor['doctorDetail']->dob)
                                 {{ date('d F Y', strtotime($doctor['doctorDetail']->dob)) }}
+                                @else
+                                {{ 'N/A' }}
                                 @endif
                             </div>
                         </div>
@@ -88,7 +90,11 @@
                                 <label>Employer :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor['doctorDetail']->employer or 'N/A' }}}
+                                @if($doctor['doctorDetail']->employer)
+                                {{ $doctor['doctorDetail']->employer }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>					
                         <div class="row">
@@ -96,7 +102,11 @@
                                 <label>Specialization :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor['doctorDetail']->specialization or 'N/A' }}}
+                                 @if($doctor['doctorDetail']->specialization)
+                                {{ $doctor['doctorDetail']->specialization }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
 
@@ -114,18 +124,26 @@
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Primary Address :</label>
+                                <label>Address Line 1 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor['doctorDetail']->address1 or 'N/A' }}}
+                                 @if($doctor['doctorDetail']->address1)
+                                {{ $doctor['doctorDetail']->address1 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Secondary Address :</label>
+                                <label>Address Line 2 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor['doctorDetail']->address2 or 'N/A' }}}
+                                @if($doctor['doctorDetail']->address2)
+                                {{ $doctor['doctorDetail']->address2 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -133,7 +151,11 @@
                                 <label>City :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $doctor['doctorDetail']->city or 'N/A' }}}
+                                 @if($doctor['doctorDetail']->city)
+                                {{ $doctor['doctorDetail']->city }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
