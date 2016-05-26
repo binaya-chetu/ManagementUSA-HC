@@ -152,6 +152,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                        <a href="{{ url('categories/listCategories') }}">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Product Categories</span>
+                        </a>
+                    </li>                    
                 </ul>
             </nav>
         </div>
