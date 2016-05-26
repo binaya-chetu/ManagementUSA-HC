@@ -59,7 +59,7 @@ class CategoriesController extends Controller
                 $category_info[$pck_type]['total_price'] += $cat->spl_price;
             }
             
-            return view('categories.categoryDetails',['category' => $category, 'details' => $category_details]);            
+            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info]);            
         } catch(\Exception $e){
             //App::abort(404, $e->getMessage());
             echo $e->getMessage(); die;            
