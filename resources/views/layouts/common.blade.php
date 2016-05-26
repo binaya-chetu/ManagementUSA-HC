@@ -87,6 +87,7 @@
         <script src="{{ URL::asset('js/chosen/chosen.order.jquery.min.js') }}"></script>
         <script src="{{ URL::asset('vendor/jquery-validation/jquery.validate.js') }}"></script>
         <script src="{{ URL::asset('vendor/jquery-validation/additional-methods.js') }}"></script>
+       
         
         <script src="{{ URL::asset('js/jquery.usphone.js') }}"></script>
         <!-- Theme Base, Components and Settings -->
@@ -98,6 +99,12 @@
 
         <!-- Theme Initialization Files -->
         <script src="{{ URL::asset('js/theme.init.js') }}"></script>
+        
+         <script src="{{ URL::asset('vendor/bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>
+        <script src="{{ URL::asset('js/forms/examples.wizard.js') }}"></script>
+        <script src="{{ URL::asset('js/forms/examples.validation.js') }}"></script>
+        <script src="{{ URL::asset('js/forms/examples.advanced.form.js') }}"></script>
+        
 
     </body>
 </html>

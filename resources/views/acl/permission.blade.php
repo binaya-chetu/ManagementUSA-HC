@@ -116,41 +116,6 @@
     </div>
 </section>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<script>
- $(document).ready(function(){
-            $(".permission_status").click(function(){ 
-                
-                var roleId = $(this).find('.check_permission').attr('role_id');
-                var permissionId = $(this).find('.check_permission').attr('permission_id');
-                var status;
-                
-                if($(this).find('.check_permission').is(':checked'))
-                {
-                     status = 1;
-                }
-                else
-                {
-                     status = 0;
-                }
-                
-                $.ajaxSetup({
-                    headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.post("./updatePermission",
-                {
-                   data: {"status": status, "roleId": roleId, "permissionId": permissionId},
-                },
-               function(data, status){    
-                   
-                });
-              
-              //$(this).toggleClass("on");
-            })
-          });
-</script>
 @endsection
 
 

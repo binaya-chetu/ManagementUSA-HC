@@ -61,6 +61,7 @@ class PatientController extends Controller {
     }
 
     public function save(Request $request) {
+       
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -71,6 +72,7 @@ class PatientController extends Controller {
         
         $userData = new User;
         $userData->first_name = $request->first_name;
+        $userData->middle_name = $request->middle_name;
         $userData->last_name = $request->last_name;
         $userData->email = $request->email;
         $userData->role = $this->role;
@@ -105,7 +107,7 @@ class PatientController extends Controller {
         $userData->last_name = $request->last_name;
         $userData->email = $request->email;
         $userData->role = $this->role;
-        //print_r($userData);die;
+        
         if ($userData->save()) 
         {
             $userId = $userData->id;
@@ -163,21 +165,27 @@ class PatientController extends Controller {
             'last_name' => 'required|max:255',
             'phone' => 'required',
             'zipCode' => 'required|min:6|max:15',
-            'payment_bill' => 'mimes:jpg,png,jpeg,doc,docx,pdf,csv,xls'
+            'payment_bill' => 'mimes:jpg,png,jpeg,doc,docx,pdf,csv,xls',
+            'driving_license' => 'mimes:jpg,png,jpeg'
         ]);
        
         $userInput['first_name'] = $request->first_name;
+        $userInput['middle_name'] = $request->middle_name;
         $userInput['last_name'] = $request->last_name;
         
         $patientData = Patient::where('user_id',$id)->get();
         
-        $file = $request->file('payment_bill');
-        $oldImagePath = public_path('uploads/patient_documents/' . $patientData[0]->payment_bill);
+        $documentFile = $request->file('payment_bill');
+        $oldDocumentPath = public_path('uploads/patient_documents/' . $patientData[0]->payment_bill);
+        
+        $drivingLicense = $request->file('driving_license');
+        $oldLicensePath = public_path('uploads/patient_documents/' . $patientData[0]->driving_license);
         
         if($request->dob)
         {
             $patientInput['dob'] = date('Y-m-d', strtotime($request->dob));
         }
+        
         $patientInput['gender'] = $request->gender;
         $patientInput['phone'] = $request->phone;
         $patientInput['address1'] = $request->address1;
@@ -188,19 +196,47 @@ class PatientController extends Controller {
         $patientInput['employer'] = $request->employer;
         $patientInput['occupation'] = $request->occupation;  
         
-        if (isset($file)) {
-            $extension = $file->getClientOriginalExtension();
+        $patientInput['marital_status'] = $request->marital_status;
+        $patientInput['mobile'] = $request->mobile;
+        $patientInput['call_time'] = $request->call_time;
+        $patientInput['driving_license'] = $request->driving_license;
+        $patientInput['work'] = $request->work;
+        $patientInput['height'] = $request->height;
+        $patientInput['weight'] = $request->weight;
+        $patientInput['primary_physician'] = $request->primary_physician;
+        $patientInput['physician_phone'] = $request->physician_phone;
+        
+        $patientInput['never_treat_status'] = ($request->never_treat_status == 'on') ? 1 : 0; 
+        
+              
+        if (isset($documentFile)) {
+            $extension = $documentFile->getClientOriginalExtension();
             
             $filename = mt_rand(0, 99999999) . '.' . $extension;
             $uploads = 'uploads\patient_documents';
 
-            if ($file->move($uploads, $filename)) {
+            if ($documentFile->move($uploads, $filename)) {
                 $patientInput['payment_bill'] = $filename;
                 if (!empty($patientData[0]->payment_bill)) {
-                    unlink($oldImagePath);
+                    unlink($oldDocumentPath);
                 }
             }
         }
+        
+        if (isset($drivingLicense)) {
+            $extension = $drivingLicense->getClientOriginalExtension();
+            
+            $filename = mt_rand(0, 99999999) . '.' . $extension;
+            $uploads = 'uploads\patient_documents';
+
+            if ($drivingLicense->move($uploads, $filename)) {
+                $patientInput['driving_license'] = $filename;
+                if (!empty($patientData[0]->driving_license)) {
+                    unlink($oldLicensePath);
+                }
+            }
+        }
+        
         if ($userData->fill($userInput)->save() && $patientData[0]->fill($patientInput)->save()) {
             \Session::flash('flash_message', 'Patient details updated successfully.');
            
@@ -227,6 +263,34 @@ class PatientController extends Controller {
         $patient->zipCode = $request->zipCode;
         $patient->employer = $request->employer;
         $patient->occupation = $request->occupation;
+        
+        $patient->marital_status = $request->marital_status;
+        $patient->mobile = $request->mobile;
+        $patient->call_time = $request->call_time;
+        $patient->driving_license = $request->driving_license;
+        $patient->work = $request->work;
+        $patient->height = $request->height;
+        $patient->weight = $request->weight;
+        $patient->primary_physician = $request->primary_physician;
+        $patient->physician_phone = $request->physician_phone;
+        
+        $drivingLicense = $request->file('driving_license');
+        $oldLicensePath = public_path('uploads/patient_documents/' . $patientData[0]->driving_license);
+        
+        if (isset($drivingLicense)) {
+            $extension = $drivingLicense->getClientOriginalExtension();
+            
+            $filename = mt_rand(0, 99999999) . '.' . $extension;
+            $uploads = 'uploads\patient_documents';
+
+            if ($drivingLicense->move($uploads, $filename)) {
+                $patient->driving_license = $filename;
+                if (!empty($patientData[0]->driving_license)) {
+                    unlink($oldLicensePath);
+                }
+            }
+        }
+        
         if ($patient->save()) {
             return $patient->id;
         } else {

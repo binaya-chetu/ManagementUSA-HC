@@ -13,8 +13,9 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+    Route::get('/home', 'HomeController@index');
     Route::get('/', 'HomeController@index');
-    Route::get('/homes', 'HomeController@index');
+    
     
     // route for appointment module
     Route::get('/appointment/newAppointment/{id?}', [
@@ -261,6 +262,4 @@ Route::group(['middleware' => 'web'], function () {
             'middleware' => ['acl:user_read']
         ]);
 });
-
-
 

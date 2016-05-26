@@ -22,6 +22,28 @@ class Permission extends Model
         'parent_id',
         'status',
     ];
+    
+    
+    public static function getPermissionForLoggedUser($role = null)
+    {
+        $permissions = PermissionRole::with('permissionId')->where('role_id', $role)->get();
+        
+        $permissions = $permissions->toArray();
+        
+        $permissionsArr = array();
+        foreach($permissions as $permission)
+        {
+            $permissionsArr[] = $permission['permission_id'];
+        }
+        
+        $permissionSlugArr = array();
+       foreach($permissionsArr as $permission)
+       {
+           $permissionSlugArr[] = $permission['permission_slug'];
+       }
+      
+       return $permissionSlugArr;
+    }
 
     /*
     |--------------------------------------------------------------------------

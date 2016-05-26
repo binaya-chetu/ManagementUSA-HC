@@ -29,16 +29,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $appointment = new Appointment;
-        $appointments = $appointment->whereIn('status', [1, 4])->get();
+        $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
-			$events ['id'] = $appointment->id;
+            $events ['id'] = $appointment->id;
             $events ['title'] = 'Appointment#' . $appointment->id;
-            $events ['patientName'] = 'Patient:' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
-            $events ['mobile'] = 'Phone:' . $appointment->patient->phone;
+            $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
+            $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;
             $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
             $events ['color'] = '#0088cc';

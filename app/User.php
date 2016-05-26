@@ -8,6 +8,9 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use App\Role;
+use App\Permission;
+
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -26,7 +29,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'role', 'status'];
+    protected $fillable = ['first_name', 'middle_name', 'last_name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -70,7 +73,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @return Array of permission slugs
      */
-    protected function getAllPernissionsFormAllRoles()
+    public function getAllPernissionsFormAllRoles()
     {
         $permissionsArray = [];
 
@@ -85,6 +88,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
        }
        return $permissionSlugArr;
     }
+    
 
     /*
     |--------------------------------------------------------------------------

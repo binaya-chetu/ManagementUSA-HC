@@ -80,37 +80,4 @@
     </section>
 </section>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<script>
- $(document).ready(function(){
-            $(".user_status").click(function(){ 
-                
-                var userId = $(this).find('.check_div').attr('user_id');
-                var status;
-                if($(this).find('.check_div').is(':checked'))
-                {
-                     status = 1;
-                }
-                else
-                {
-                     status = 0;
-                }
-                
-                $.ajaxSetup({
-                    headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.post("./updateUserStatus",
-                {
-                    data: { "status": status, "userId": userId },
-                },
-               function(data, status){    
-                    
-                });
-              
-              //$(this).toggleClass("on");
-            })
-          });
-</script>
 @endsection
