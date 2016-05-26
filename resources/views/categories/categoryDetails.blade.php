@@ -21,8 +21,8 @@
     <div class="row">
 
         <div class="col-md-12">
-           <?php 
-           echo "<pre>";
+           <?php echo "<pre>"; print_r($category); echo '</pre>';
+           echo "<pre>"; print_r($details); die;
        
                 foreach($details AS $key){
                   
