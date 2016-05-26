@@ -2,6 +2,7 @@
 
 @section('content')
 <section role="main" class="content-body">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <header class="page-header">
         <h2>Edit patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
         <div class="right-wrapper pull-right">
@@ -23,7 +24,7 @@
                     <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
                 </div>
 
-                <h2 class="panel-title">Form Wizard</h2>
+                <h2 class="panel-title">{{ $patient->first_name }} {{ $patient->last_name }}</h2>
             </header>
             <div class="panel-body">
                 <div class="wizard-progress">
@@ -35,195 +36,530 @@
                             <a href="#w3-account" data-toggle="tab"><span>1</span>Profile Info</a>
                         </li>
                         <li>
-                            <a href="#w3-profile" data-toggle="tab"><span>2</span>Medical History</a>
+                            <a href="#w3-billing" data-toggle="tab"><span>2</span>Adam Questionaires</a>
                         </li>
                         <li>
-                            <a href="#w3-billing" data-toggle="tab"><span>3</span>Billing Info</a>
-                        </li>
-                        <li>
-                            <a href="#w3-confirm" data-toggle="tab"><span>4</span>Confirmation</a>
+                            <a href="#w3-medical" data-toggle="tab"><span>3</span>Medical History</a>
                         </li>
                     </ul>
                 </div>
-                {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->id], 'id' => 'patient', 'files' => true, 'class'=>'form-horizontal']) !!}
+                {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->id], 'id' => 'patientMedical', 'files' => true, 'class'=>'form-horizontal']) !!}
                 {!! csrf_field() !!}
                 <div class="tab-content">
                     <div id="w3-account" class="tab-pane active">
-                        <div class="form-group">
-                            {{ Form::label('w3-first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-middle_name', 'Middle Name', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('middle_name', null, ['class' => 'form-control input-sm', 'id' => 'w3-middle_name', 'placeholder' => 'Middle Name']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-last_name', 'Last Name', array('class' => 'col-sm-4 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('last_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-middle_name', 'placeholder' => 'Last Name']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('email', null, ['class' => 'form-control input-sm required', 'id' => 'w3-email', 'placeholder' => 'example@mail.com']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                <div class="radio">
-                                    <?php
-                                    if ($patient['patientDetail']->gender === 'Female') {
-                                        $female = true;
-                                        $male = false;
-                                    } else {
-                                        $male = true;
-                                        $female = false;
-                                    }
-                                    ?>
-                                    <label>
-                                        {{ Form::radio('gender', 'Male', $male, ['id' => 'optionsRadios1']) }}
-                                        Male
-                                    </label>
+                        <div class="row customFormRow">
+                            <div class="col-sm-6" >
+                                <div class="form-group">
+                                    {{ Form::label('w3-first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
+                                    </div>
                                 </div>
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('gender', 'Female', $female, ['id' => 'optionsRadios2']) }}
-                                        Female
-                                    </label>
+                            </div>
+                            <div class="col-sm-6" >
+                                <div class="form-group">
+                                    {{ Form::label('w3-middle_name', 'Middle Name', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('middle_name', null, ['class' => 'form-control input-sm', 'id' => 'w3-middle_name', 'placeholder' => 'Middle Name']) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-marital', 'Marital Status', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; ?>
-                                {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, null, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
+                        <div class="row customFormRow">
+                            <div class="col-sm-6" >
+                                <div class="form-group">
+                                    {{ Form::label('w3-last_name', 'Last Name', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('last_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-middle_name', 'placeholder' => 'Last Name']) }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-dob', 'Date of Birth', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    <?php
-                                    $dob = '';
-                                    if ($patient['patientDetail']->dob) {
-                                        $dob = date('m/d/Y', strtotime($patient['patientDetail']->dob));
-                                    }
-                                    ?>
-                                    {{ Form::text('dob', $dob, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                            <div class="col-sm-6" >
+                                <div class="form-group">
+                                    {{ Form::label('w3-email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('email', null, ['class' => 'form-control input-sm required', 'id' => 'w3-email', 'placeholder' => 'example@mail.com']) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-address', 'Address Line 1', array('class' => 'col-sm-4 control-label')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('address1', $patient['patientDetail']->address1, ['class' => 'form-control input-sm', 'id' => 'w3-address1', 'placeholder' => 'Primary Address']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        <div class="radio">
+                                            <?php
+                                            if ($patient['patientDetail']->gender === 'Female') {
+                                                $female = true;
+                                                $male = false;
+                                            } else {
+                                                $male = true;
+                                                $female = false;
+                                            }
+                                            ?>
+                                            <label>
+                                                {{ Form::radio('gender', 'Male', $male, ['id' => 'optionsRadios1']) }}
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                {{ Form::radio('gender', 'Female', $female, ['id' => 'optionsRadios2']) }}
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('w3-marital', 'Marital Status', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; ?>
+                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, null, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-address2', 'Address Line 2', array('class' => 'col-sm-4 control-label')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('address2', $patient['patientDetail']->address2, ['class' => 'form-control input-sm', 'id' => 'w3-address2', 'placeholder' => 'Secondary Address']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-dob', 'Date of Birth', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <?php
+                                            $dob = '';
+                                            if ($patient['patientDetail']->dob) {
+                                                $dob = date('m/d/Y', strtotime($patient['patientDetail']->dob));
+                                            }
+                                            ?>
+                                            {{ Form::text('dob', $dob, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('w3-address', 'Address Line 1', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('address1', $patient['patientDetail']->address1, ['class' => 'form-control input-sm', 'id' => 'w3-address1', 'placeholder' => 'Primary Address']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-city', 'City', array('class' => 'col-sm-4 control-label')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('city', $patient['patientDetail']->city, ['class' => 'form-control input-sm', 'id' => 'w3-city', 'placeholder' => 'City']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-address2', 'Address Line 2', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('address2', $patient['patientDetail']->address2, ['class' => 'form-control input-sm', 'id' => 'w3-address2', 'placeholder' => 'Secondary Address']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('w3-city', 'City', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('city', $patient['patientDetail']->city, ['class' => 'form-control input-sm', 'id' => 'w3-city', 'placeholder' => 'City']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-state', 'State', array('class' => 'col-sm-4 control-label')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::select('state', ['' => 'Please Select State'] + $states, $patient['patientDetail']->state, ['class' => 'form-control input', 'id' => 'state']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-state', 'State', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::select('state', ['' => 'Please Select State'] + $states, $patient['patientDetail']->state, ['class' => 'form-control input', 'id' => 'state']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('w3-zip', 'Zip Code', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('zip', $patient['patientDetail']->zipCode, ['class' => 'form-control input required', 'id' => 'zipCode', 'placeholder' => 'Zip Code', 'maxlength' => '15', 'minlength' => '6']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-zip', 'Zip Code', array('class' => 'col-sm-4 control-label mandatory')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('zip', $patient['patientDetail']->zipCode, ['class' => 'form-control input required', 'id' => 'zipCode', 'placeholder' => 'Zip Code', 'maxlength' => '15', 'minlength' => '6']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-homePhone', 'Home Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('phone', $patient['patientDetail']->phone, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('w3-mobile', 'Mobile', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('mobile', null, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-homePhone', 'Home Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('phone', $patient['patientDetail']->phone, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-call', 'Best Time To Call', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        <?php $patientCallHour = callHourTime(); ?>
+                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, null, ['class' => 'form-control input', 'id' => 'bestTime']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    {{ Form::label('driving_license', 'Driving License', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">                                   
+                                        {{ Form::file('driving_license', null, ['class' => 'form-control']) }}
+                                    </div>
+                                </div>	
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-mobile', 'Mobile', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('mobile', null, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
+                        <div class="row customFormRow">
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    {{ Form::label('w3-work', 'Work', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('work', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    {{ Form::label('w3-employment', 'Place of Employment', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('employment_place', null, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row customFormRow">
+                            <div class="col-sm-6">  
+                                <div class="form-group">
+                                    {{ Form::label('w3-occupation', 'Occupation', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('occupation', null, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            {{ Form::label('w3-call', 'Best Time To Call', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                <?php $patientCallHour = callHourTime(); ?>
-                                {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, null, ['class' => 'form-control input', 'id' => 'bestTime']) }}
+                        <div class="row customFormRow">  
+                            <div class="form-group">
+                                {{ Form::label('w3-height', 'Height & Weight', array('class' => 'col-sm-2 control-label')) }}
+                                <div class="col-sm-4">
+                                    <?php $commonHeight = commonHeight(); ?>
+                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, null, ['class' => 'form-control input', 'id' => 'height']) }}
+                                </div>
+                                <div class="col-sm-4">
+                                    <?php $commonWeight = commonWeight(); ?>
+                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, null, ['class' => 'form-control input', 'id' => 'weight']) }}
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            {{ Form::label('driving_license', 'Driving License', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">                                   
-                                {{ Form::file('driving_license', null, ['class' => 'form-control']) }}
-                            </div>
-                        </div>	
-                        <div class="form-group">
-                            {{ Form::label('w3-work', 'Work', array('class' => 'col-sm-4 control-label')) }}
+                        <div class="row customFormRow">
                             <div class="col-sm-6">
-                                {{ Form::text('work', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-physician', 'Primary Physician', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('primary_physician', null, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-employment', 'Place of Employment', array('class' => 'col-sm-4 control-label')) }}
                             <div class="col-sm-6">
-                                {{ Form::text('employment_place', null, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-occupation', 'Occupation', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('occupation', null, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-height', 'Height & Weight', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-3">
-                                <?php $commonHeight = commonHeight(); ?>
-                                {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, null, ['class' => 'form-control input', 'id' => 'height']) }}
-                            </div>
-                            <div class="col-sm-3">
-                                <?php $commonWeight = commonWeight(); ?>
-                                {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, null, ['class' => 'form-control input', 'id' => 'weight']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-physician', 'Primary Physician', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('primary_physician', null, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('w3-physician_phone', 'Physician Phone', array('class' => 'col-sm-4 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm', 'id' => 'phone', 'placeholder' => 'Physician Phone']) }}
+                                <div class="form-group">
+                                    {{ Form::label('w3-physician_phone', 'Physician Phone', array('class' => 'col-sm-4 control-label')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm', 'id' => 'phone', 'placeholder' => 'Physician Phone']) }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div id="w3-billing" class="tab-pane">
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('libido_rate', 'How would you rate your libido (sex drive)?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('libido_rate', '1', false, ['id' => 'libido_rate1']) }}
+                                        {{ Form::label('libido_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('libido_rate', '2', false, ['id' => 'libido_rate2']) }}
+                                        {{ Form::label('libido_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('libido_rate', '3', false, ['id' => 'libido_rate3']) }}
+                                        {{ Form::label('libido_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('libido_rate', '4', false, ['id' => 'libido_rate4']) }}
+                                        {{ Form::label('libido_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('libido_rate', '5', false, ['id' => 'libido_rate5']) }}
+                                        {{ Form::label('libido_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div>  
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('energy_rate', 'How are you rate your energy level?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('energy_rate', '1', false, ['id' => 'energy_rate1']) }}
+                                        {{ Form::label('energy_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('energy_rate', '2', false, ['id' => 'energy_rate2']) }}
+                                        {{ Form::label('energy_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('energy_rate', '3', false, ['id' => 'energy_rate3']) }}
+                                        {{ Form::label('energy_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('energy_rate', '4', false, ['id' => 'energy_rate4']) }}
+                                        {{ Form::label('energy_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('energy_rate', '5', false, ['id' => 'energy_rate5']) }}
+                                        {{ Form::label('energy_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('strength_rate', 'How are you rate your strength/endurance?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('strength_rate', '1', false, ['id' => 'strength_rate1']) }}
+                                        {{ Form::label('strength_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('strength_rate', '2', false, ['id' => 'strength_rate2']) }}
+                                        {{ Form::label('strength_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('strength_rate', '3', false, ['id' => 'strength_rate3']) }}
+                                        {{ Form::label('strength_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('strength_rate', '4', false, ['id' => 'strength_rate4']) }}
+                                        {{ Form::label('strength_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('strength_rate', '5', false, ['id' => 'strength_rate5']) }}
+                                        {{ Form::label('strength_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('enjoy_rate', 'How are you rate your enjoyment of life?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('enjoy_rate', '1', false, ['id' => 'enjoy_rate1']) }}
+                                        {{ Form::label('enjoy_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('enjoy_rate', '2', false, ['id' => 'enjoy_rate2']) }}
+                                        {{ Form::label('enjoy_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('enjoy_rate', '3', false, ['id' => 'enjoy_rate3']) }}
+                                        {{ Form::label('enjoy_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('enjoy_rate', '4', false, ['id' => 'enjoy_rate4']) }}
+                                        {{ Form::label('enjoy_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('enjoy_rate', '5', false, ['id' => 'enjoy_rate5']) }}
+                                        {{ Form::label('enjoy_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('happiness_rate', 'How are you at your happiness level?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('happiness_rate', '1', false, ['id' => 'happiness_rate1']) }}
+                                        {{ Form::label('happiness_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('happiness_rate', '2', false, ['id' => 'happiness_rate2']) }}
+                                        {{ Form::label('happiness_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('happiness_rate', '3', false, ['id' => 'happiness_rate3']) }}
+                                        {{ Form::label('happiness_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('happiness_rate', '4', false, ['id' => 'happiness_rate4']) }}
+                                        {{ Form::label('happiness_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('happiness_rate', '5', false, ['id' => 'happiness_rate5']) }}
+                                        {{ Form::label('happiness_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('erection_rate', 'How strong are your erections?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('erection_rate', '1', false, ['id' => 'erection_rate1']) }}
+                                        {{ Form::label('erection_rate1', 'Poor') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('erection_rate', '2', false, ['id' => 'erection_rate2']) }}
+                                        {{ Form::label('erection_rate2', 'Weak') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('erection_rate', '3', false, ['id' => 'erection_rate3']) }}
+                                        {{ Form::label('erection_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('erection_rate', '4', false, ['id' => 'erection_rate4']) }}
+                                        {{ Form::label('erection_rate4', 'Strong') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('erection_rate', '5', false, ['id' => 'erection_rate5']) }}
+                                        {{ Form::label('erection_rate5', 'Very Strong') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('performance_rate', 'How are you at your work performance over the last four weeks?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('performance_rate', '1', false, ['id' => 'performance_rate1']) }}
+                                        {{ Form::label('performance_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('performance_rate', '2', false, ['id' => 'performance_rate2']) }}
+                                        {{ Form::label('performance_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('performance_rate', '3', false, ['id' => 'performance_rate3']) }}
+                                        {{ Form::label('performance_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('performance_rate', '4', false, ['id' => 'performance_rate4']) }}
+                                        {{ Form::label('performance_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('performance_rate', '5', false, ['id' => 'performance_rate5']) }}
+                                        {{ Form::label('performance_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('sleep_rate', 'How often do you fall asleep after dinner?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sleep_rate', '1', false, ['id' => 'sleep_rate1']) }}
+                                        {{ Form::label('sleep_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sleep_rate', '2', false, ['id' => 'sleep_rate2']) }}
+                                        {{ Form::label('sleep_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sleep_rate', '3', false, ['id' => 'sleep_rate3']) }}
+                                        {{ Form::label('sleep_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sleep_rate', '4', false, ['id' => 'sleep_rate']) }}
+                                        {{ Form::label('sleep_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sleep_rate', '5', false, ['id' => 'sleep_rate5']) }}
+                                        {{ Form::label('sleep_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('sport_rate', 'How would you rate your sports ability over the past four weeks?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sport_rate', '1', false, ['id' => 'sport_rate1']) }}
+                                        {{ Form::label('sport_rate1', 'Terrible') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sport_rate', '2', false, ['id' => 'sport_rate2']) }}
+                                        {{ Form::label('sport_rate2', 'Poor') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sport_rate', '3', false, ['id' => 'sport_rate3']) }}
+                                        {{ Form::label('sport_rate3', 'Average') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sport_rate', '4', false, ['id' => 'sport_rate4']) }}
+                                        {{ Form::label('sport_rate4', 'Good') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('sport_rate', '5', false, ['id' => 'sport_rate5']) }}
+                                        {{ Form::label('sport_rate5', 'Exellent') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
+                        <div class="col-sm-12 questionRadio">                           
+                            <div class="form-group">
+                                {{ Form::label('lost_height_rate', 'How much height have you lost?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('lost_height_rate', '1', false, ['id' => 'lost_height_rate1']) }}
+                                        {{ Form::label('lost_height_rate1', '2" or More') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('lost_height_rate', '2', false, ['id' => 'lost_height_rate2']) }}
+                                        {{ Form::label('lost_height_rate2', '1.5 - 1.9"') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('lost_height_rate', '3', false, ['id' => 'lost_height_rate3']) }}
+                                        {{ Form::label('lost_height_rate3', '1 - 1.4"') }}                                                            
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('lost_height_rate', '4', false, ['id' => 'lost_height_rate4']) }}
+                                        {{ Form::label('lost_height_rate4', '.5 - .9"') }}
+                                    </div>
+                                    <div class="col-sm-2 radio-custom radio-primary">
+                                        {{ Form::radio('lost_height_rate', '5', false, ['id' => 'lost_height_rate5']) }}
+                                        {{ Form::label('lost_height_rate5', '0 - .4"') }}                                                            
+                                    </div>
+                                </div>
+                            </div>                                                                                        
+                        </div> 
 
-                    <div id="w3-profile" class="tab-pane">
+                    </div>
+                    <div id="w3-medical" class="tab-pane">
                         <div class="form-group">
                             {{ Form::label('medical_title', 'Why are you coming to see us, or why are you today?', array('class' => 'col-sm-5 control-label medicalTitle')) }}
                             <div class="col-sm-12">
@@ -270,44 +606,29 @@
                             </div>                            
                         </div>                
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section class="panel panel-primary">
-                                    <header class="panel-heading">
-                                        <div class="panel-actions">
-                                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                                            <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
-                                        </div>
-
-                                        <h2 class="panel-title">Title</h2>
-                                    </header>
-                                    <div class="panel-body">
-                                        <div class="tabs tabs-primary">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active">
-                                                    <a href="#popular1" data-toggle="tab"><i class="fa fa-star"></i> Popularss</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#recent1" data-toggle="tab">Recent</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div id="popular1" class="tab-pane active">
-                                                    <p>Popular</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                                </div>
-                                                <div id="recent1" class="tab-pane">
-                                                    <p>Recent</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
+                        <div class="row" id="ed_pd_form" >
+                            @include('appointment.medical.ed_pd')
                         </div>
 
+                        <div class="row" id="weight_loss_form">
+                            @include('appointment.medical.weight_loss')
+                        </div>
 
+                        <div class="row" id="priapus_form">
+                            @include('appointment.medical.priapus')
+                        </div>
+
+                        <div class="row" id="testosterone_form">
+                            @include('appointment.medical.testosterone')
+                        </div>
+
+                        <div class="row" id="vitamin_form">
+                            @include('appointment.medical.vitamin')
+                        </div>  
+
+                        <div id="cosmetic_form">
+                            @include('appointment.medical.cosmetic')
+                        </div> 
 
                         <div class="row">
                             <div class="col-md-12">
@@ -337,11 +658,11 @@
                                                         {{ Form::label('hypertension', 'Hypertension', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('Hypertension', '1', false, ['id' => 'hyper1']) }}
+                                                                {{ Form::radio('hypertension', '1', false, ['id' => 'hyper1']) }}
                                                                 {{ Form::label('hyper1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('Hypertension', '0', false, ['id' => 'hyper2']) }}
+                                                                {{ Form::radio('hypertension', '0', false, ['id' => 'hyper2']) }}
                                                                 {{ Form::label('hyper2', 'No') }}
                                                             </div>                                                           
                                                         </div>
@@ -696,7 +1017,7 @@
                                                         {{ Form::label('surgeries', 'Major Surgeries', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('surgeries', '1', false, ['id' => 'surgeries1']) }}
+                                                                {{ Form::radio('surgeries', '1', false, ['id' => 'surgeries1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('surgeries1', 'Yes') }}                                                                
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
@@ -743,7 +1064,7 @@
                                                         {{ Form::label('allergies', 'Allergies to Medications', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('allergies', '1', false, ['id' => 'allergies1']) }}
+                                                                {{ Form::radio('allergies', '1', false, ['id' => 'allergies1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('allergies1', 'Yes') }}                                                                 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
@@ -875,11 +1196,11 @@
                                                         {{ Form::label('Hypertention', 'Hypertention(High Blood Pressure)', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertention', '1', false, ['id' => 'hypertention1']) }}
+                                                                {{ Form::radio('hypertention_hbp', '1', false, ['id' => 'hypertention1']) }}
                                                                 {{ Form::label('hypertention1', 'Yes') }}   
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertention', '0', false, ['id' => 'hypertention2']) }}
+                                                                {{ Form::radio('hypertention_hbp', '0', false, ['id' => 'hypertention2']) }}
                                                                 {{ Form::label('hypertention2', 'No') }}  
                                                             </div>
                                                         </div>
@@ -892,7 +1213,7 @@
                                                         {{ Form::label('illness', 'Other Illnesses', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('other_illness', '1', false, ['id' => 'illness1']) }}
+                                                                {{ Form::radio('other_illness', '1', false, ['id' => 'illness1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('illness1', 'yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
@@ -956,7 +1277,6 @@
                                                     <div class="col-sm-6">
                                                         <?php $bloodTestTime = ['1 Month' => '1 Month', '3 Months' => '3 Months', '6 Months' => '6 Months', '>1' => '1 Year or Longer', 'Never' => 'Never']; ?>
                                                         {{ Form::select('state', ['' => 'Please Select'] + $bloodTestTime, null, ['class' => 'form-control input', 'id' => 'state']) }}
-
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -992,7 +1312,7 @@
                                                         {{ Form::label('medication', 'Are you Currently Taking Any Medications?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('medication', '1', false, ['id' => 'medication1']) }}
+                                                                {{ Form::radio('medication', '1', false, ['id' => 'medication1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('medication1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
@@ -1009,63 +1329,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="w3-billing" class="tab-pane">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="w3-cc">Card Number</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control input-sm" name="cc-number" id="w3-cc" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="inputSuccess">Expiration</label>
-                            <div class="col-sm-4">
-                                <select class="form-control input-sm" name="exp-month" required>
-                                    <option>January</option>
-                                    <option>February</option>
-                                    <option>March</option>
-                                    <option>April</option>
-                                    <option>May</option>
-                                    <option>June</option>
-                                    <option>July</option>
-                                    <option>August</option>
-                                    <option>September</option>
-                                    <option>October</option>
-                                    <option>November</option>
-                                    <option>December</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <select class="form-control input-sm" name="exp-year" required>
-                                    <option>2014</option>
-                                    <option>2015</option>
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
-                                    <option>2021</option>
-                                    <option>2022</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="w3-confirm" class="tab-pane">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="w3-email">Email</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control input-sm" name="email" id="w3-email" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-9">
-                                <div class="checkbox-custom">
-                                    <input type="checkbox" name="terms" id="w3-terms" required>
-                                    <label for="w3-terms">I agree to the terms of service</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 </form>
             </div>
@@ -1075,7 +1338,7 @@
                         <a><i class="fa fa-angle-left"></i> Previous</a>
                     </li>
                     <li class="finish hidden pull-right">
-                        <a>Finish</a>
+                        <a>Submit</a>
                     </li>
                     <li class="next">
                         <a>Next <i class="fa fa-angle-right"></i></a>
@@ -1086,30 +1349,100 @@
 
     </div>
     <div id="common_modal" class="modal-block modal-block-primary mfp-hide">
-        <section class="panel panel-primary">
-            <header class="panel-heading">
-                <h2 class="panel-title"></h2>
-            </header>
-            <div class="panel-body">
-
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">                        
-                        <button class="btn btn-default closePop">Cancel</button>
-                    </div>
-                </div>
-            </footer>
+        <section class="panel panel-primary" id="listContent">
+           
+                    
+                
         </section>
     </div>
+ 
 </section>
 <script>
     $(document).ready(function() {
+
         $('.selectSmoke').hide();
         $('.selectDrink').hide();
         $('.selectExercise').hide();
+        $('.selectSex').hide();
+        $('#ed_pd_form').hide();
+        $('#weight_loss_form').hide();
+        $('#priapus_form').hide();
+        $('#testosterone_form').hide();
+        $('#vitamin_form').hide();
+        $('#cosmetic_form').hide();
         /** 
-         * If Smoke Status is true then show the regarding fields
+         * Checked the Checkbox for the ED/PD
+         *  */
+        $("input[name='ed_pd']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#ed_pd_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#ed_pd_form').hide();
+            }
+        });
+        /** 
+         * Checked the Checkbox for the Weight Loss
+         *  */
+        $("input[name='weight_loss']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#weight_loss_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#weight_loss_form').hide();
+            }
+        });
+        /** 
+         * Checked the Checkbox for the PRP
+         *  */
+        $("input[name='prp']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#priapus_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#priapus_form').hide();
+            }
+        });
+        /** 
+         * Checked the Checkbox for the testosterone therapy
+         *  */
+        $("input[name='testosterone_therapy']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#testosterone_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#testosterone_form').hide();
+            }
+        });
+        /** 
+         * Checked the Checkbox for the Vitamin therapy
+         *  */
+        $("input[name='vitamin_therapy']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#vitamin_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#vitamin_form').hide();
+            }
+        });
+        /** 
+         * Checked the Checkbox for the Cosmetics
+         *  */
+        $("input[name='cosmetics']").click(function() {
+            if ($(this).prop("checked") == true) {
+                $('#cosmetic_form').show();
+            } else if ($(this).prop("checked") == false) {
+                $('#cosmetic_form').hide();
+            }
+        });
+        /** 
+         * If Patient Drink Status is true then show the corresponding fields
+         *  */
+        $("input[name='drink_status']").click(function() {
+            var drink_status = $(this).val();
+            if (drink_status == 1) {
+                $('.selectDrink').show();
+            } else {
+                $('.selectDrink').hide();
+            }
+        });
+        /** 
+         * If Smoke Status is true then show the corresponding fields
          *  */
         $("input[name='smoke_status']").click(function() {
             var smoke_status = $(this).val();
@@ -1120,46 +1453,62 @@
             }
         });
         /** 
-         * If Patient Drink Status is true then show the regarding fields
-         *  */
-        $("input[name='drink_status']").click(function() {
-            var smoke_status = $(this).val();
-            if (smoke_status == 1) {
-                $('.selectDrink').show();
-            } else {
-                $('.selectDrink').hide();
-            }
-        });
-        /** 
-         * If Patient Exercise Status is true then show the regarding fields
+         * If Patient Exercise Status is true then show the corresponding fields
          *  */
         $("input[name='exercise_status']").click(function() {
-            var smoke_status = $(this).val();
-            if (smoke_status == 1) {
+            var exercise_status = $(this).val();
+            if (exercise_status == 1) {
                 $('.selectExercise').show();
             } else {
                 $('.selectExercise').hide();
             }
         });
-
-    });
-
-    /** 
-     * Click on the Major surgeries then a pop-up will show regarding that
-     * */
-    $(document).on("click", "#surgeries1", function(ev) {
-        $('#common_modal .panel-title').text('List of Sergeries');
-        $.magnificPopup.open({
-            items: {
-                src: '#common_modal',
-                type: 'inline'
+        /** 
+         * If Sex Status is true in ED/PD then show the corresponding fields
+         *  */
+        $("input[name='sex_status']").click(function() {
+            var sex_status = $(this).val();
+            if (sex_status == 1) {
+                $('.selectSex').show();
+            } else {
+                $('.selectSex').hide();
             }
         });
+
     });
+
     /** 
-     * Click on the Allergies then a pop-up will show regarding that
+     * Click on the Major surgeries then a pop-up will show corresponding that
      * */
-    $(document).on("click", "#allergies1", function(ev) {
+//    $(document).on("click", "#surgeries1", function(ev) {
+//        $('#common_modal .panel-title').text('List of Sergeries');
+//        $.magnificPopup.open({
+//            items: {
+//                src: '#common_modal',
+//                type: 'inline'
+//            }
+//        });
+//    });
+    /** 
+     * Click on the the radio button to show the medicine list with corresponding id in the pop-up
+     * */
+    
+    $(document).on("click", ".modelShow", function(ev) {
+       
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var radioId = $(this).attr('id');
+        $.ajax({
+        type: "POST",
+                url: ajax_url + "/appointment/checkList",
+                data: {"id": radioId },
+                success: function(response) {
+                    $('#listContent').html(response);
+                }
+            }); 
         $('#common_modal .panel-title').text('List of Medications');
         $.magnificPopup.open({
             items: {
@@ -1169,29 +1518,42 @@
         });
     });
     /** 
-     * Click on the Other Illness then a pop-up will show regarding that
+     * Click on the Other Illness then a pop-up will show corresponding that
      * */
-    $(document).on("click", "#illness1", function(ev) {
-        $('#common_modal .panel-title').text('List of Other Illness');
-        $.magnificPopup.open({
-            items: {
-                src: '#common_modal',
-                type: 'inline'
-            }
-        });
-    });
+//    $(document).on("click", "#illness1", function(ev) {
+//        $('#common_modal .panel-title').text('List of Other Illness');
+//        $.magnificPopup.open({
+//            items: {
+//                src: '#common_modal',
+//                type: 'inline'
+//            }
+//        });
+//    });
     /** 
-     * Click on the Medication then a pop-up will show regarding that
+     * Click on the Medication then a pop-up will show corresponding that
      * */
-    $(document).on("click", "#medication1", function() {
-        $('#common_modal .panel-title').text('List of Medication');
-        $.magnificPopup.open({
-            items: {
-                src: '#common_modal',
-                type: 'inline'
-            }
-        });
-    });
+//    $(document).on("click", "#medication1", function() {
+//        $('#common_modal .panel-title').text('List of Medication');
+//        $.magnificPopup.open({
+//            items: {
+//                src: '#common_modal',
+//                type: 'inline'
+//            }
+//        });
+//    });
+
+    /** 
+     * Click on the Allergies then a pop-up will show corresponding that
+     * */
+//    $(document).on("click", "#vitamin_taken1", function(ev) {
+//        $('#common_modal .panel-title').text('List of Vitamins');
+//        $.magnificPopup.open({
+//            items: {
+//                src: '#common_modal',
+//                type: 'inline'
+//            }
+//        });
+//    });
 
 </script>
 @endsection

@@ -350,4 +350,18 @@ class AppointmentController extends Controller {
         ]);
        
     }
+    /**
+     * open the pop-up for the list of medicine when checked on radio button at pateint medical form
+     *
+     * @return \Illuminate\View\View
+     */
+    public function checkList(Request $request) {
+        if(!empty($request['id'])){
+            $id = $request['id'];
+            return view('appointment.medical.medicine_list', [
+                'id' => $id
+            ]);
+            die;
+        }           
+    }
 }

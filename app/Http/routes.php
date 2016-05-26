@@ -77,6 +77,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.saveAppointmentFolloup',
             'middleware' => ['acl:appointment_write']
         ]);
+    Route::post('/appointment/checkList', [
+            'uses' => 'AppointmentController@checkList',
+            'as' => 'appointment.checkList',
+            'middleware' => ['acl:appointment_write']
+        ]);
     
     Route::get('/appointment/followup', [
             'uses' => 'AppointmentController@followup',
