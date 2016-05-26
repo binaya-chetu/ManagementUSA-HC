@@ -57,7 +57,7 @@
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
-                        <td class="table-text"><div>{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</div></td>
+                        <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
                         <td class="table-text"><div>{{ $appointment->comment }}</div></td>
                         <td class="table-text"><div>
                                 <?php
@@ -88,14 +88,5 @@
         </div>
     </section>
 </section>
-<!-- Modal Form -->
-<div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
-            @include('appointment.edit_appointment')   
-</div>
 
-<div id="modal-add-view-appointment" class="modal-block modal-block-primary mfp-hide">  
-    @include('appointment.popup_appointment_form')              
-</div>
- <!-- Model for the Follow up Status -->
-   @include('appointment.followup_popup') 
 @endsection

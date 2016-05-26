@@ -78,6 +78,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.saveAppointmentFolloup',
             'middleware' => ['acl:appointment_write']
         ]);
+    Route::post('/appointment/checkList', [
+            'uses' => 'AppointmentController@checkList',
+            'as' => 'appointment.checkList',
+            'middleware' => ['acl:appointment_write']
+        ]);
     
     Route::get('/appointment/followup', [
             'uses' => 'AppointmentController@followup',
@@ -87,6 +92,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/appointment/viewFollowup/{id}', [
             'uses' => 'AppointmentController@viewfollowup',
             'as' => 'appointment.viewFollowup',
+            'middleware' => ['acl:followupappointment_read']
+        ]);
+    Route::get('/appointment/patientMedical/{id}', [
+            'uses' => 'AppointmentController@patientMedical',
+            'as' => 'appointment.patientMedical',
             'middleware' => ['acl:followupappointment_read']
         ]);
     Route::post('/getdoctorschedule', [
@@ -260,6 +270,18 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'UserController@viewUser',
             'as' => 'user.viewUser',
             'middleware' => ['acl:user_read']
+        ]);
+		// Route for categories
+	Route::get('/categories/listCategories', [
+            'uses' => 'CategoriesController@listCategories',
+            'as' => 'categories.listCategories',
+			'middleware' => ['acl:user_write']
+        ]);
+		
+	Route::get('/categories/categoryDetails/{id}', [
+            'uses' => 'CategoriesController@categoryDetails',
+            'as' => 'categories.categoryDetails',
+			'middleware' => ['acl:user_write']
         ]);
 });
 
