@@ -19,13 +19,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -60,9 +61,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected function checkPermission($perm)
     {
         $permissions = $this->getAllPernissionsFormAllRoles();
-        
         $permissionArray = is_array($perm) ? $perm : [$perm];
-
         return count(array_intersect($permissions, $permissionArray));
     }
 
@@ -75,13 +74,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $permissionsArray = [];
 
-        $permissions = $this->roles->load('permissions')->fetch('permissions')->toArray();
+        $permissions = $this->roles->load('permissions');
+        $permissions = $permissions->toArray();
         
-        return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
-
-            return array_fetch($permission, 'permission_slug');
-
-        }, $permissions))));
+        $permissions = $permissions['permissions'];
+        $permissionSlugArr = array();
+       foreach($permissions as $permission)
+       {
+           $permissionSlugArr[] = $permission['permission_slug'];
+       }
+       return $permissionSlugArr;
     }
 
     /*
@@ -97,6 +99,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->hasMany('App\Role');
+        return $this->belongsTo('App\Role', 'role');
+    }
+    
+    public function roleName()
+    {
+        return $this->belongsTo('App\Role', 'role');
+    }
+    
+    public function userDetail()
+    {
+        return $this->hasOne('App\UserDetail', 'user_id');
+    }
+    
+    public function doctorDetail()
+    {
+        return $this->hasOne('App\Doctor', 'user_id');
+    }
+    
+    public function patientDetail()
+    {
+        return $this->hasOne('App\Patient', 'user_id');
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>View patient :  {{ $patient->firstName }} {{ $patient->lastName }}</h2>
+        <h2>View patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -30,7 +30,7 @@
                         <a href="#attachment" data-toggle="tab">Attachments</a>
                     </li>
                 </ul>
-                <!--                {{ Form::open(array('url' => 'savePatient', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'addPatient')) }}-->
+               
                 <div class="tab-content">
                     <div id="personal" class="tab-pane active">
                         <p>Personal Information</p>
@@ -39,7 +39,7 @@
                                 <label>First Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $patient->firstName }}
+                                {{ $patient->first_name }}
                             </div>
                         </div>
 
@@ -48,7 +48,7 @@
                                 <label>Last Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $patient->lastName }}
+                                {{ $patient->last_name }}
                             </div>
                         </div>
                         <div class="row">
@@ -59,13 +59,20 @@
                                 {{ $patient->email }}
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-2 col-sm-offset-1">
+                                <label>Role :</label>
+                            </div>
+                            <div class="col-sm-9">
+                                {{ $patient['roleName']->role_title }}
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
                                 <label>Gender :</label>
                             </div>
                             <div class="col-md-9">         
-                                {{ $patient->gender }}
+                                {{ $patient['patientDetail']->gender }}
                             </div>
                         </div>
                         <div class="row">
@@ -73,7 +80,11 @@
                                 <label>Dob :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ date('d F Y', strtotime($patient->dob)) }}
+                                @if($patient['patientDetail']->dob)
+                                {{ date('d F Y', strtotime($patient['patientDetail']->dob)) }}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -81,7 +92,11 @@
                                 <label>Employer :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->employer or 'N/A' }}}
+                                @if($patient['patientDetail']->employer)
+                                {{ $patient['patientDetail']->employer }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>					
                         <div class="row">
@@ -89,7 +104,11 @@
                                 <label>Occupation :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->occupation or 'N/A' }}}
+                                @if($patient['patientDetail']->occupation)
+                                {{ $patient['patientDetail']->occupation }}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         
@@ -102,23 +121,31 @@
                                 <label>Phone :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->phone or 'N/A' }}}
+                                {{{ $patient['patientDetail']->phone or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Primary Address :</label>
+                                <label>Address Line 1 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->address1 or 'N/A' }}}
+                                 @if($patient['patientDetail']->address1)
+                                {{ $patient['patientDetail']->address1 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Secondary Address :</label>
+                                <label>Address Line 2 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->address2 or 'N/A' }}}
+                                @if($patient['patientDetail']->address2)
+                                {{ $patient['patientDetail']->address2 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -126,7 +153,11 @@
                                 <label>City :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->city or 'N/A' }}}
+                                @if($patient['patientDetail']->city)
+                                {{ $patient['patientDetail']->city }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -134,7 +165,7 @@
                                 <label>State :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->state or 'N/A' }}}
+                                {{{ $patient['patientDetail']['patientStateName']->name or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -142,7 +173,7 @@
                                 <label>Zip Code :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->zipCode or 'N/A' }}}
+                                {{{ $patient['patientDetail']->zipCode or 'N/A' }}}
                             </div>
                         </div>	
                     </div>
@@ -154,8 +185,8 @@
                                 <label>Payment Bill :</label>
                             </div>
                             <div class="col-sm-9">
-                                @if(isset($patient->payment_bill) && !empty($patient->payment_bill)) 
-                                    <a href="{{ URL::asset('uploads/patient_documents/'.$patient->payment_bill) }}" download="myimage" class="document_link" ><img src="{{ URL::asset('images/pdf_icon.png') }}" ></a>
+                                @if(isset($patient['patientDetail']->payment_bill) && !empty($patient['patientDetail']->payment_bill)) 
+                                    <a href="{{ URL::asset('uploads/patient_documents/'.$patient['patientDetail']->payment_bill) }}" download="myimage" class="document_link" ><img src="{{ URL::asset('images/pdf_icon.png') }}" ></a>
                                 @else
                                     {{ 'N/A' }}
                                 @endif
@@ -167,7 +198,7 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-sm-9">
-                           <a href="/patient" class="btn btn-default">Back</a>
+                           <a href="javascript::void(0);" class="btn btn-default" onclick="window.history.go(-1); return false;">Back</a>
                         </div>
                     </div>
                 </footer>

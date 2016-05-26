@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassificationsTable extends Migration
+class CreateStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateClassificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classifications', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code');
 			$table->string('name');
-			$table->integer('status');
-            $table->timestamps();
         });
     }
 
@@ -27,6 +26,6 @@ class CreateClassificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('classifications');
+        Schema::drop('states');
     }
 }

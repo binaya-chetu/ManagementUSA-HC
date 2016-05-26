@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDoctorsTable extends Migration
+class CreateDoctorDetails extends Migration
 {
     /**
      * Run the migrations.
@@ -12,22 +12,20 @@ class CreateDoctorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('doctor_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('firstName', 255);
-            $table->string('lastName', 255);
-            $table->integer('status'); 
-			$table->string('email', 255);
-			$table->date('dob');
+			$table->integer('user_id')->unique();
+			$table->date('dob')->nullable();
 			$table->enum('gender', ['Male', 'Female'])->default('Male');
 			$table->string('phone', 15);			
-			$table->text('address1');
-			$table->text('address2');
-			$table->string('city', 255);
-			$table->string('state', 255);
+			$table->string('address1')->nullable();
+			$table->string('address2')->nullable();
+			$table->string('city')->nullable();
+			$table->integer('state');
 			$table->string('zipCode', 11);
-			$table->string('employer', 255);
-			$table->string('occupation', 255);
+			$table->string('image')->nullable();
+			$table->string('employer')->nullable();
+			$table->string('specialization')->nullable();
             $table->timestamps();
         });
     }
@@ -39,6 +37,6 @@ class CreateDoctorsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('doctor_details');
     }
 }

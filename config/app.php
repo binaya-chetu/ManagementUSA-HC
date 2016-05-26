@@ -155,6 +155,7 @@ Collective\Html\HtmlServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\Validation\ValidationServiceProvider::class
 
     ],
 

@@ -20,9 +20,7 @@
                     </li>
                     <li class="nav-parent {{ Request::segment(1) === 'patient' || 
                                 Request::segment(1) === 'doctor' || 
-                                Request::segment(1) === 'appointment' ||
-                                Request::segment(1) === 'listappointment' ||
-                                Request::segment(1) === 'viewappointment' ? 'nav-active nav-expanded' : null }}">
+                                Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>POS System</span>
@@ -64,33 +62,33 @@
 
                                 </ul>
                            </li>
-                            <li class="nav-parent {{ Request::segment(1) === 'appointment' ||
-                                        Request::segment(1) === 'listappointment' ||
-                                        Request::segment(1) === 'viewappointment' ? 'nav-expanded' : null }}">
+                            <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
+                                        Request::segment(2) === 'listappointment' ||
+                                        Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
                                 <a>
                                     Appointments
                                 </a>
                                 <ul class="nav nav-children">
 
-                                    <li class="{{ Request::segment(1) === 'appointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointment/1') }}">
+                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointment/newAppointment') }}">
                                             New Appointment
                                         </a>
                                     </li>
-                                    <li class="{{ Request::segment(1) === 'listappointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/listappointment') }}">
+                                    <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
+                                        <a href="{{ url('appointment/listappointment') }}">
                                             List Appointments
                                         </a>
                                     </li>
-                                    <li class="{{ Request::segment(1) === 'viewappointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/viewappointment') }}">
+                                    <li class="{{ Request::segment(2) === 'viewappointment' ? 'nav-active' : null }}">
+                                        <a href="{{ url('appointment/viewappointment') }}">
                                             View Appointments
                                         </a>
                                     </li>
 
                                 </ul>
                             </li>
-                            <li class="nav-parent">
+<!--                            <li class="nav-parent">
                                 <a>
                                     Sales
                                 </a>
@@ -106,9 +104,9 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="nav-parent">
-                                <a>
+                            </li>-->
+                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment
                                 </a>
                             </li>
@@ -120,18 +118,36 @@
                             </li>-->
                         </ul>
                     </li>
-                    <li class="nav-parent {{ Request::segment(1) === 'listRole' || 
-                                Request::segment(1) === 'addRole' || 
-                                Request::segment(1) === 'editRole' ||
-                                Request::segment(1) === 'listPermission' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>ACL Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ Request::segment(1) === 'listRole' ? 'nav-active' : null }}">
-                                <a href="{{ url('/listRole') }}">
+                            <li class="{{ Request::segment(2) === 'listRole' || 
+                                Request::segment(2) === 'addRole' || 
+                                Request::segment(2) === 'editRole' ||
+                                Request::segment(2) === 'listPermission' ? 'nav-active' : null }}">
+                                <a href="{{ url('/acl/listRole') }}">
                                     Roles
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-parent {{ Request::segment(1) === 'user' ? 'nav-active nav-expanded' : null }}">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>User Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/user/addUser') }}">
+                                    Add User
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' ? 'nav-active' : null }}">
+                                <a href="{{ url('/user/listUsers') }}">
+                                    All User
                                 </a>
                             </li>
                         </ul>

@@ -15,8 +15,12 @@ class Appointment extends Model {
         'patient_id',
         'status',
         'appointment_time',
+        'apptTime',
+        'doctor_id',
+        'createdBy',
+        'lastUpdatedBy'
     ];
-    
+
     /**
      * Get the user that set the appointment.
      */
@@ -28,11 +32,15 @@ class Appointment extends Model {
      * Get the patient the aappointment was set for.
      */
     public function patient() {
-        return $this->belongsTo('App\Patient');
+        return $this->belongsTo('App\User', 'patient_id');
     }
 
     public function doctor() {
-        return $this->belongsTo('App\Doctor', 'doctor_id');
+        return $this->belongsTo('App\User', 'doctor_id');
+    }
+
+    public function followup() {
+        return $this->hasOne('App\Followup');
     }
 
 }

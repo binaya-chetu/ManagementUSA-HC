@@ -58,9 +58,4 @@ class Permission extends Model
     {
         return $this->hasOne('App\PermissionRole', 'role_id');
     }
-    
-    public function permission_role1($roleid)
-    {
-        return $this->hasMany('App\PermissionRole', 'permission_id');
-    }
 }
