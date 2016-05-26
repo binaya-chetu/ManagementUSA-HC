@@ -12,7 +12,7 @@
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/resources/views/layouts/common.blade.php</file>
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/public/css/theme.css</file>
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/public/js/theme.custom.js</file>
-            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/resources/views/appointment/addAppointmentForm.blade.php</file>
+            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/app/Http/Controllers/CategoriesController.php</file>
         </group>
     </open-files>
 </project-private>

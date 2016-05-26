@@ -14,6 +14,7 @@ use View;
 use App;
 use DB;
 use App\Categories;
+use Exception;
 
 class CategoriesController extends Controller
 {
@@ -28,10 +29,42 @@ class CategoriesController extends Controller
             'categories' => $categories
         ]);
     }
-     public function categoryDetails( $id = null, Request $request){
-         $category_details = Categories::with('category')->where('id', base64_decode($id))->get();
-         return view('categories.categoryDetails',['details' => $category_details->toArray()]);
-     }
+    public function categoryDetails( $id = null, Request $request){
+        try{
+            $id = base64_decode($id);
+            $category = DB::table('categories')->where('id', $id)->get();
+            if(empty($category)){
+                throw new Exception('Requested product category not found');
+            }
+       
+            $category_details = DB::table('packages')
+                ->leftJoin('products', 'packages.product_id', '=', 'products.id')            
+                ->leftJoin('category_types', 'packages.category_type', '=', 'category_types.id')
+                ->select('packages.product_count as p_count', 'packages.product_price as spl_price',
+                        'products.*',
+                        'category_types.name as package_type'
+                )
+                ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
+            
+            $category_info = [];
+            $pck_type = '';
+            $total_price = 0;
+            foreach($category_details as $cat){
+                if($pck_type != $cat->package_type){
+                    $pck_type = $cat->package_type;
+                    $category_info[$pck_type] = [];
+                    $category_info[$pck_type]['total_price'] = 0;
+                }
+                $category_info[$pck_type][] = $cat;
+                $category_info[$pck_type]['total_price'] += $cat->spl_price;
+            }
+            
+            return view('categories.categoryDetails',['category' => $category, 'details' => $category_details]);            
+        } catch(\Exception $e){
+            //App::abort(404, $e->getMessage());
+            echo $e->getMessage(); die;            
+        }
+    }
     
     public function updateUserStatus(Request $request)
     {
