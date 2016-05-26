@@ -13,9 +13,16 @@
 .page-header a.sidebar-right-toggle i {
     display: none;
 }
-/*  CSS for the toggle form radio buttom */
+/*  CSS for the Patient medical record form wizard */
 .toggle-content .inputRow { padding-bottom: 15px; } 
 .toggle-content .inputRow label { color: #777; } 
-.toggle-content .inputRow .toggle-radio-custom { padding-top: 7px; }
-.toggle-content .inputRow .toggle-radio-custom .radio-custom { padding-right: 35px; }
+.inputRow .toggle-radio-custom { padding-top: 6px; }
+.inputRow .toggle-radio-custom .radio-custom { padding-right: 35px; }
+.inputRow .toggle-radio-custom { padding-top: 6px; }
+.questionRadio .toggle-radio-custom .radio-custom { margin-right: 25px; }
 .medicalTitle { padding-bottom: 10px; }
+/* End */
+#w3-medical .control-label {   margin-bottom: 0; padding-top: 6px; text-align: left; }
+.customFormRow { margin-bottom: 10px; }
+#testo_treatment .checkbox-custom { margin-bottom: 15px; }
+#w3-billing .control-label {   margin-bottom: 0; padding-top: 6px; text-align: left; }

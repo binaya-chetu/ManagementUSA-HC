@@ -42,3 +42,15 @@ function commonWeight()
     }
     return $weight;
 }
+/**
+ * Function to find the Erection Strength in the ED/PD
+ *
+ * @return array()
+ */
+function commonScale()
+{
+    for ($i = 1; $i <= 10; $i++){
+        $strength[$i] = $i; 
+    }
+    return $strength;
+}
