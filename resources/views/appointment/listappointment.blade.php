@@ -88,5 +88,12 @@
         </div>
     </section>
 </section>
+<!-- Modal Form -->
+<div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
+            @include('appointment.edit_appointment')   
+</div>
 
+<div id="modal-add-view-appointment" class="modal-block modal-block-primary mfp-hide">  
+    @include('appointment.popup_appointment_form')              
+</div>
 @endsection
