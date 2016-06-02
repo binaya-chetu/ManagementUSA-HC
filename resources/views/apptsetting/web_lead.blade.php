@@ -48,56 +48,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                     <?php $i=1; ?>
+                    @foreach ($webLeads as $web)
                     <tr>
-                        <td class="table-text table-text-id"><div>1</div></td>
-                        <td class="table-text">Maria</td>
-                        <td class="table-text">maria@gmail.com</td>
-                        <td class="table-text">+1-678-456-787</td>                        
-                        <td class="table-text">Oklahoma City</td>
-                        <td class="table-text"> 03-06-2016 02:00pm</td>
+                        <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
+                        <td class="table-text">{{ $web->first_name }} {{ $web->last_name }}</td>
+                        <td class="table-text">{{ $web->email }}</td>
+                        <td class="table-text">{{ $web->phone }}</td>                        
+                        <td class="table-text">{{ $web->location }}</td>
+                        <td class="table-text"> {{ date('Y-m-d h:ia', strtotime($web->requested_date)) }}</td>
                         <td class="actions">
                             <a href="#modalCall" class="on-editing save-row" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
                         </td>
                     </tr>
-                    <tr>
-                        <td class="table-text table-text-id"><div>1</div></td>
-                        <td class="table-text">Neo</td>
-                        <td class="table-text">neo@gmail.com</td>
-                        <td class="table-text">+1-678-467-767</td>                        
-                        <td class="table-text">Tulsa</td>
-                        <td class="table-text"> 02-06-2016 04:00pm</td>
-                        <td class="actions">
-                            <a href="#modalCall" class="on-editing save-row" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text table-text-id"><div>1</div></td>
-                        <td class="table-text">philip</td>                        
-                        <td class="table-text">philip@gmail.com</td>
-                        <td class="table-text">+1-355-464-756</td>
-                        <td class="table-text">Tulsa</td>
-                        <td class="table-text"> 01-06-2016 03:00pm</td>
-                        <td class="actions">
-                            <a href="#modalCall" class="on-editing save-row" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text table-text-id"><div>1</div></td>
-                        <td class="table-text">xyz</td>                        
-                        <td class="table-text">xyz@gmail.com</td>
-                        <td class="table-text">+1-456-234-423</td>
-                        <td class="table-text">Oklahoma City</td>
-                        <td class="table-text"> 31-05-2016 11:00am</td>
-                        <td class="actions">
-                            <a href="#modalCall" class="on-editing save-row" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>
-                    </tr>
-
-
+                    @endforeach                    
                 </tbody>
             </table>
         </div>

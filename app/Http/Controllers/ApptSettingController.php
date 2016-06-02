@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Patient;
-use App\Appointment;
-use App\User;
+use App\WebLead;
+use App\ReasonCode;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +45,11 @@ class ApptSettingController extends Controller
      * @return \resource\view\apptsetting\call_list
      */
     public function webLead() {        
-        return view('apptsetting.web_lead');
+
+        $webLeads = WebLead::get();
+        $reasonCode = ReasonCode::get();
+        return view('apptsetting.web_lead', [
+            'webLeads' => $webLeads, 'reason' => $reasonCode
+        ]);
     }
 }
