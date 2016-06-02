@@ -32,6 +32,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.webLead',
             //'middleware' => ['acl:appointment_read']
         ]);
+    Route::post('/apptsetting/saveApptFollowup', [
+            'uses' => 'ApptSettingController@saveApptFollowup',
+            'as' => 'apptsetting.saveApptFollowup',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
     
     // route for appointment module
     Route::get('/appointment/newAppointment/{id?}', [
