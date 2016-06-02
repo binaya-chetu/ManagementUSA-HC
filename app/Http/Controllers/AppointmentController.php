@@ -434,5 +434,7 @@ class AppointmentController extends Controller {
             die;
         }
     }
-
+    
+    
+    
 }
