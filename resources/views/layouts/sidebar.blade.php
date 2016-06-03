@@ -22,6 +22,29 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting'  ? 'nav-active nav-expanded' : null }}">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Appt. Settings</span>
+                        </a>
+                        <ul class="nav nav-children">                       
+                            <li class="{{ Request::segment(2) === 'callList' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/callList') }}">
+                                    Call List
+                                </a>
+                            </li>   
+                            <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/missedCall') }}">
+                                    Missed Call
+                                </a>
+                            </li>  
+                            <li class="{{ Request::segment(2) === 'webLead' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/webLead') }}">
+                                    Web Leads
+                                </a>
+                            </li>  
+                        </ul>
+                    </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
                     <li class="nav-parent {{ Request::segment(1) === 'patient' || 
                                 Request::segment(1) === 'doctor' || 
@@ -71,6 +94,15 @@
                                 </ul>
                            </li>
                             @endif
+                            
+                            @if(in_array('follow_up_appointment_module', $permissions))
+                            <li class="{{ Request::segment(2) === 'callList' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/callList') }}">
+                                    Call List
+                                </a>
+                            </li>
+                            @endif
+                            
                             @if(in_array('appointment_module', $permissions))
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||

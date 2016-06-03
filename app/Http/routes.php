@@ -16,6 +16,27 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     Route::get('/', 'HomeController@index');
     
+    // route for the appointment setting
+    Route::get('/apptsetting/callList', [
+            'uses' => 'ApptSettingController@callList',
+            'as' => 'apptsetting.callList',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::get('/apptsetting/missedCall', [
+            'uses' => 'ApptSettingController@missedCall',
+            'as' => 'apptsetting.missedCall',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::get('/apptsetting/webLead', [
+            'uses' => 'ApptSettingController@webLead',
+            'as' => 'apptsetting.webLead',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::post('/apptsetting/saveApptFollowup', [
+            'uses' => 'ApptSettingController@saveApptFollowup',
+            'as' => 'apptsetting.saveApptFollowup',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
     
     // route for appointment module
     Route::get('/appointment/newAppointment/{id?}', [
@@ -104,7 +125,8 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'doctor.getSchedule',
             'middleware' => ['acl:appointment_write']
     ]);		
-
+    
+    
     // route for ACL
     Route::get('/acl/listRole', [
             'uses' => 'AclController@listRoles',
