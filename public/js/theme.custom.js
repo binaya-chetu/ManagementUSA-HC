@@ -114,6 +114,77 @@ $(function() {
     });
     /* --------------------------------- End of Appointment Followup Code ------------------------------------ */
     
+    
+    /* -------------- Ajax Code for permission settiing-------------------------------------- */
+    
+     $(".permission_status").click(function(){ 
+                
+                var roleId = $(this).find('.check_permission').attr('role_id');
+                var permissionId = $(this).find('.check_permission').attr('permission_id');
+                var status;
+                
+                if($(this).find('.check_permission').is(':checked'))
+                {
+                     status = 1;
+                }
+                else
+                {
+                     status = 0;
+                }
+                
+                $.ajaxSetup({
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.post("./updatePermission",
+                {
+                   data: {"status": status, "roleId": roleId, "permissionId": permissionId},
+                },
+               function(data, status){    
+                   
+                });
+            });
+            
+            $('.panel-custom').on('click', function(){
+               $(this).find('.fa').toggleClass('fa-minus'); 
+            });
+            
+            /* ---------------------End Here ------------------------*/
+            
+        /*----------------------------Ajax Code for change user status -------------------------*/
+         $(".user_status").click(function(){ 
+                
+                var userId = $(this).find('.check_div').attr('user_id');
+                var status;
+                if($(this).find('.check_div').is(':checked'))
+                {
+                     status = 1;
+                }
+                else
+                {
+                     status = 0;
+                }
+                
+                $.ajaxSetup({
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.post("./updateUserStatus",
+                {
+                    data: { "status": status, "userId": userId },
+                },
+               function(data, status){    
+                    
+                });
+              
+              //$(this).toggleClass("on");
+            });
+            /* ----------------------- End Here ------------------------------*/
+    
 });
 // Code for the common default-datatables
 (function($) {

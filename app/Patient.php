@@ -21,7 +21,17 @@ class Patient extends Model
         'image',
         'employer',
         'occupation',
-        'payment_bill'
+        'marital_status',
+        'mobile',
+        'call_time',
+        'driving_license',
+        'work',
+        'height',
+        'weight',
+        'primary_physician',
+        'physician_phone',
+        'payment_bill',
+        'never_treat_status'
         
     ];
 	

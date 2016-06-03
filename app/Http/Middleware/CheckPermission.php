@@ -19,8 +19,13 @@ class CheckPermission
             if ($request->user()->can($permission)) {
                 return $next($request);
             }
+			else
+			{
+				return response()->view('errors.403', [], 500);
+			}
         }
-        return response()->view('errors.403', [], 500);
+		return redirect()->guest('login');
+        
     }
 
 }

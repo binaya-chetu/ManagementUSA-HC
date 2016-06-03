@@ -1,8 +1,5 @@
 <aside id="sidebar-left" class="sidebar-left">
     <div class="sidebar-header">
-        <div class="sidebar-title">
-            Navigation
-        </div>
         <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
             <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
         </div>
@@ -10,6 +7,13 @@
 
     <div class="nano">
         <div class="nano-content">
+            <?php 
+            $permissions = [];
+                if(Auth::user())
+                {
+                    $permissions =  \App\Permission::getPermissionForLoggedUser(Auth::user()->role);
+                }
+            ?>
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
                     <li class="{{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
@@ -18,6 +22,30 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting'  ? 'nav-active nav-expanded' : null }}">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Appt. Settings</span>
+                        </a>
+                        <ul class="nav nav-children">                       
+                            <li class="{{ Request::segment(2) === 'callList' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/callList') }}">
+                                    Call List
+                                </a>
+                            </li>   
+                            <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/missedCall') }}">
+                                    Missed Call
+                                </a>
+                            </li>  
+                            <li class="{{ Request::segment(2) === 'webLead' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/webLead') }}">
+                                    Web Leads
+                                </a>
+                            </li>  
+                        </ul>
+                    </li>
+                    <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
                     <li class="nav-parent {{ Request::segment(1) === 'patient' || 
                                 Request::segment(1) === 'doctor' || 
                                 Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
@@ -26,6 +54,7 @@
                             <span>POS System</span>
                         </a>
                         <ul class="nav nav-children">
+                            @if(in_array('patient_module', $permissions))
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
                                 <a>
                                     Patients
@@ -43,6 +72,8 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endif
+                            @if(in_array('doctor_module', $permissions)) 
 				<li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
                                 <a>
                                     Doctor
@@ -62,6 +93,17 @@
 
                                 </ul>
                            </li>
+                            @endif
+                            
+                            @if(in_array('follow_up_appointment_module', $permissions))
+                            <li class="{{ Request::segment(2) === 'callList' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/callList') }}">
+                                    Call List
+                                </a>
+                            </li>
+                            @endif
+                            
+                            @if(in_array('appointment_module', $permissions))
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
                                         Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
@@ -85,31 +127,16 @@
                                             View Appointments
                                         </a>
                                     </li>
-
                                 </ul>
                             </li>
-<!--                            <li class="nav-parent">
-                                <a>
-                                    Sales
-                                </a>
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a href="#">
-                                            New Sale
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            List Sales
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>-->
+                            @endif
+                            @if(in_array('follow_up_appointment_module', $permissions))
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment
                                 </a>
                             </li>
+                            @endif
                             <!--<li class="nav-parent">
                                 <a>
                                     Follow-up Sale
@@ -118,6 +145,8 @@
                             </li>-->
                         </ul>
                     </li>
+                    <?php } ?>
+                    @if(in_array('role_module', $permissions))
                     <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -134,6 +163,8 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                     @if(in_array('user_module', $permissions))
                     <li class="nav-parent {{ Request::segment(1) === 'user' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -158,6 +189,7 @@
                             <span>Product Categories</span>
                         </a>
                     </li>                    
+                    @endif
                 </ul>
             </nav>
         </div>

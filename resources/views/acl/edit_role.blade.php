@@ -42,8 +42,10 @@
                                 @endif
                             </div>
                         </div>
-                    <!-- Add Patient Button -->
-                    <div class="form-group">
+                    </div>
+                    
+                   <footer class="panel-footer">
+                    <div class="row">
                         <div class="col-sm-offset-3 col-sm-6">
                             {{ Form::button(
                                     '<i class="fa fa-plus"></i> Edit Role',
@@ -52,10 +54,10 @@
                                         'type'=>'submit')) 
                             }}                               
                             <a href="{{ url('/acl/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
-                        </div>
+                         </div>
                     </div>
-                    {{ Form::close() }}
-                </div>
+                </footer>
+                {{ Form::close() }}
             </section>
         </div>
     </div>

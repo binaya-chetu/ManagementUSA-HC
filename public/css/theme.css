@@ -3649,16 +3649,16 @@ span.error {
 
 /* Form - Bordered */
 .form-bordered .form-group {
-	border-bottom: 1px solid #eff2f7;
+	//border-bottom: 1px solid #eff2f7;
 	padding-bottom: 15px;
 	margin-bottom: 15px;
 }
 
-.form-bordered .form-group:last-child, .form-bordered .form-group:last-of-type {
+/*.form-bordered .form-group:last-child, .form-bordered .form-group:last-of-type {
 	border-bottom: none !important;
 	padding-bottom: 0px !important;
 	margin-bottom: 0px !important;
-}
+}*/
 
 /* Dark - Form - Bordered */
 html.dark .form-bordered .form-group {
@@ -9455,7 +9455,7 @@ html.dark .modal-footer {
 	font-family: "Open Sans", Arial, sans-serif;
 	font-weight: 600;
 	font-size: 22px;
-	color: #fff !important;
+	
 }
 
 /* No Margins */

@@ -32,170 +32,178 @@
                     <!-- Display Validation Errors -->
                    
                         {{ csrf_field() }}
-                        <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                           {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::hidden('id') }}
-                                {{ Form::text('first_name', null, ['class' => 'form-control required', 'id' => 'first-name', 'placeholder' => 'First Name']) }}
-                                @if ($errors->has('first_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('first_name') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                            {{ Form::label('last_name', 'Last Name', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('last_name', null, ['class' => 'form-control required', 'id' => 'last-name', 'placeholder' => 'Last Name']) }}
-                                @if ($errors->has('last_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('last_name') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                           
-                            {{ Form::label('email', 'Email', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                 <div class="input-group">
-                                    <span class="input-group-addon">@</span>
-                                {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email', 'placeholder' => 'example@mail.com']) }}
-                                 </div>
-                                @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            {{ Form::label('password', 'Password', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                 <div class="input-group">
-                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                {{ Form::password('password', ['class' => 'form-control input required', 'id' => 'password', 'placeholder' => 'Password']) }}
-                                 </div>
-                                @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            {{ Form::label('passwordcnf', 'Confirm Password', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                 <div class="input-group">
-                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                {{ Form::password('password_confirmation', ['class' => 'form-control input required', 'id' => 'password_confirmation', 'placeholder' => 'Confirm Password']) }}
-                                 </div>
-                                @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ Form::label('gender', 'Gender', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-md-6">
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('gender', 'Male', 'true', ['id' => 'optionsRadios1']) }}
-                                        Male
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('gender', 'Female', 'false', ['id' => 'optionsRadios2']) }}
-                                       
-                                        Female
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {{ Form::label('dob', 'Date of Birth', ['class' => 'col-sm-3 control-label', 'id' => 'form']) }}
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                               {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::hidden('id') }}
+                                    {{ Form::text('first_name', null, ['class' => 'form-control required', 'id' => 'first-name', 'placeholder' => 'First Name']) }}
+                                    @if ($errors->has('first_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
-                                     {{ Form::text('dob', null, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                {{ Form::label('last_name', 'Last Name', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('last_name', null, ['class' => 'form-control required', 'id' => 'last-name', 'placeholder' => 'Last Name']) }}
+                                    @if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                {{ Form::label('email', 'Email', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                     <div class="input-group">
+                                        <span class="input-group-addon">@</span>
+                                    {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email', 'placeholder' => 'example@mail.com']) }}
+                                     </div>
+                                    @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('gender', 'Gender', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-md-9">
+                                    <div class="radio">
+                                        <label>
+                                            {{ Form::radio('gender', 'Male', 'true', ['id' => 'optionsRadios1']) }}
+                                            Male
+                                        </label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <label>
+                                            {{ Form::radio('gender', 'Female', 'false', ['id' => 'optionsRadios2']) }}
 
-                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                             {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('phone', null, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
-                                @if ($errors->has('phone'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('phone') }}</strong>
-                                </span>
-                                @endif
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            {{ Form::label('address1', 'Address Line 1', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1', 'rows' => 3]) }}
+                        
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                {{ Form::label('password', 'Password', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                     <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    {{ Form::password('password', ['class' => 'form-control input required', 'id' => 'password', 'placeholder' => 'Password']) }}
+                                     </div>
+                                    @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6 form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                {{ Form::label('passwordcnf', 'Confirm Password', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                     <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    {{ Form::password('password_confirmation', ['class' => 'form-control input required', 'id' => 'password_confirmation', 'placeholder' => 'Confirm Password']) }}
+                                     </div>
+                                    @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('dob', 'Date of Birth', ['class' => 'col-sm-3 control-label', 'id' => 'form']) }}
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                         {{ Form::text('dob', null, ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            {{ Form::label('address2', 'Address Line 2', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('address2', null, ['class' => 'form-control', 'placeholder' => 'Secondary Address', 'id' => 'address2', 'rows' => 3]) }}
+                            <div class="col-sm-6 form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                 {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('phone', null, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                    @if ($errors->has('phone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            {{ Form::label('city', 'City', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('city', null, ['class' => 'form-control', 'placeholder' => 'City', 'id' => 'city']) }}
+                        
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('address1', 'Address Line 1', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('address1', null, ['class' => 'form-control', 'placeholder' => 'Primary Address', 'id' => 'address1', 'rows' => 3]) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('address2', 'Address Line 2', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('address2', null, ['class' => 'form-control', 'placeholder' => 'Secondary Address', 'id' => 'address2', 'rows' => 3]) }}
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            {{ Form::label('state', 'State', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::select('state', array_merge(['' => 'Please Select State'], $states), null, ['class' => 'form-control input', 'id' => 'state']) }}
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('city', 'City', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('city', null, ['class' => 'form-control', 'placeholder' => 'City', 'id' => 'city']) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('state', 'State', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::select('state', array_merge(['' => 'Please Select State'], $states), null, ['class' => 'form-control input', 'id' => 'state']) }}
+                                </div>
                             </div>
                         </div>
-
-                         <div class="form-group{{ $errors->has('zipCode') ? ' has-error' : '' }}">
-                            {{ Form::label('zipCode', 'Zip Code', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('zipCode', null, ['class' => 'form-control required', 'placeholder' => 'Zip Code', 'id' => 'zipCode', 'maxlength' => '15', 'minlength' => '6', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
-                            @if ($errors->has('zipCode'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('zipCode') }}</strong>
-                                </span>
-                                @endif
+                        <div class="row">    
+                            <div class="col-sm-6 form-group{{ $errors->has('zipCode') ? ' has-error' : '' }}">
+                                {{ Form::label('zipCode', 'Zip Code', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('zipCode', null, ['class' => 'form-control required', 'placeholder' => 'Zip Code', 'id' => 'zipCode', 'maxlength' => '15', 'minlength' => '6', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                                @if ($errors->has('zipCode'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('zipCode') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>				
-
-                        <div class="form-group">
-                            {{ Form::label('employer', 'Employer', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('employer', null, ['class' => 'form-control', 'placeholder' => 'Employer', 'id' => 'employer']) }}
-                            </div>
-                        </div>					
-
-                        <div class="form-group">
-                            {{ Form::label('specialization', 'Specialization', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('specialization', null, ['class' => 'form-control', 'placeholder' => 'Specialization', 'id' => 'specialization']) }}
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('employer', 'Employer', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('employer', null, ['class' => 'form-control', 'placeholder' => 'Employer', 'id' => 'employer']) }}
+                                </div>
+                            </div>					
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                {{ Form::label('specialization', 'Specialization', array('class' => 'col-sm-3 control-label')) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('specialization', null, ['class' => 'form-control', 'placeholder' => 'Specialization', 'id' => 'specialization']) }}
+                                </div>
                             </div>
                         </div>
                 </div>

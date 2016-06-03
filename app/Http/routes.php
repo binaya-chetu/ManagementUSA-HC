@@ -13,8 +13,30 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+    Route::get('/home', 'HomeController@index');
     Route::get('/', 'HomeController@index');
-    Route::get('/homes', 'HomeController@index');
+    
+    // route for the appointment setting
+    Route::get('/apptsetting/callList', [
+            'uses' => 'ApptSettingController@callList',
+            'as' => 'apptsetting.callList',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::get('/apptsetting/missedCall', [
+            'uses' => 'ApptSettingController@missedCall',
+            'as' => 'apptsetting.missedCall',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::get('/apptsetting/webLead', [
+            'uses' => 'ApptSettingController@webLead',
+            'as' => 'apptsetting.webLead',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+    Route::post('/apptsetting/saveApptFollowup', [
+            'uses' => 'ApptSettingController@saveApptFollowup',
+            'as' => 'apptsetting.saveApptFollowup',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
     
     // route for appointment module
     Route::get('/appointment/newAppointment/{id?}', [
@@ -77,6 +99,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.saveAppointmentFolloup',
             'middleware' => ['acl:appointment_write']
         ]);
+    Route::post('/appointment/checkList', [
+            'uses' => 'AppointmentController@checkList',
+            'as' => 'appointment.checkList',
+            'middleware' => ['acl:appointment_write']
+        ]);
     
     Route::get('/appointment/followup', [
             'uses' => 'AppointmentController@followup',
@@ -98,7 +125,8 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'doctor.getSchedule',
             'middleware' => ['acl:appointment_write']
     ]);		
-
+    
+    
     // route for ACL
     Route::get('/acl/listRole', [
             'uses' => 'AclController@listRoles',
@@ -285,6 +313,4 @@ Route::group(['middleware' => 'web'], function () {
 			//'middleware' => ['acl:user_write']
         ]);
 });
-
-
 
