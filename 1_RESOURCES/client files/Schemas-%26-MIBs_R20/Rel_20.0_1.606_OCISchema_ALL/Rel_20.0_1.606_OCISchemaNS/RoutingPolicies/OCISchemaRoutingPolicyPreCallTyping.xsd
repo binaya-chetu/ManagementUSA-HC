@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- P R E   C A L L   T Y P I N G  P O L I C Y                             -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- P R E   C A L L   T Y P I N G    R E Q U E S T S  A N D  R E S P O N S E S         -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyPreCallTypingAddInstanceRequest    
+    RoutingPolicyPreCallTypingDeleteInstanceRequest    
+    RoutingPolicyPreCallTypingGetInstanceRequest    
+    RoutingPolicyPreCallTypingModifyInstanceRequest    
+    RoutingPolicyPreCallTypingAddDialPlanRequest    
+    RoutingPolicyPreCallTypingDeleteDialPlanRequest    
+    RoutingPolicyPreCallTypingGetDialPlanEntryRequest    
+    RoutingPolicyPreCallTypingGetDialPlanListRequest    
+    RoutingPolicyPreCallTypingModifyDialPlanRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyPreCallTypingAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="allowLocalCallingAreaBasedNormalization" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyPreCallTypingGetInstanceResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyPreCallTypingGetInstanceRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="allowLocalCallingAreaBasedNormalization" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="allowLocalCallingAreaBasedNormalization" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingAddDialPlanRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a dial plan entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="countryCode" type="CountryCode"/>
+          <xs:element name="dialPlan" type="DialPlanName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="matchClause" type="DialPlanMatchClause"/>
+          <xs:element name="minLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="maxLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="prefixLength" type="PrefixLength"/>
+          <xs:element name="action" type="DialPlanAction" minOccurs="0"/>
+          <xs:element name="alternateCallIndicator" type="DialPlanAlternateCallIndicator" minOccurs="0"/>
+          <xs:element name="description" type="DialPlanDescription" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingDeleteDialPlanRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a dial plan entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="countryCode" type="CountryCode"/>
+          <xs:element name="dialPlan" type="DialPlanName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="matchClause" type="DialPlanMatchClause"/>
+          <xs:element name="minLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="maxLength" type="DialPlanDNLengthLimit"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetDialPlanEntryRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties for a given dial plan entry.
+        The response is either a RoutingPolicyPreCallTypingGetDialPlanEntryResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="countryCode" type="CountryCode"/>
+          <xs:element name="dialPlan" type="DialPlanName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="matchClause" type="DialPlanMatchClause"/>
+          <xs:element name="minLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="maxLength" type="DialPlanDNLengthLimit"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetDialPlanEntryResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyPreCallTypingGetDialPlanEntryRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="prefixLength" type="PrefixLength"/>
+          <xs:element name="action" type="DialPlanAction" nillable="true"/>
+          <xs:element name="alternateCallIndicator" type="DialPlanAlternateCallIndicator" nillable="true"/>
+          <xs:element name="description" type="DialPlanDescription" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetDialPlanListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of dial plan entries.
+        The response is either a RoutingPolicyPreCallTypingGetDialPlanListResponse or
+        an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="countryCode" type="CountryCode"/>
+          <xs:element name="searchCriteriaExactDialPlanName" type="SearchCriteriaExactDialPlanName" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactFrom" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTo" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDialPlanMatchClause" type="SearchCriteriaExactDialPlanMatchClause" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactMinDNLength" type="SearchCriteriaExactDialPlanDNLengthLimit" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactMaxDNLength" type="SearchCriteriaExactDialPlanDNLengthLimit" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactCallType" type="SearchCriteriaExactCallType" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactPrefixLength" type="SearchCriteriaExactPrefixLength" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDialPlanAction" type="SearchCriteriaExactDialPlanAction" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDialPlanAlternateCallIndicator" type="SearchCriteriaExactDialPlanAlternateCallIndicator" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDialPlanDescription" type="SearchCriteriaExactDialPlanDescription" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingGetDialPlanListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyPreCallTypingGetDialPlanListRequest.
+        Contains a table of dial plan entries.
+        The columns headings are: "Country Code", "Dial Plan", "From", "To", "Match",
+        "Min", "Max", "Call Type", "Prefix Length", "Action", "Alternate Call Indicator", "Description".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="dialPlanTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyPreCallTypingModifyDialPlanRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify a dial plan entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="countryCode" type="CountryCode"/>
+          <xs:element name="dialPlan" type="DialPlanName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="matchClause" type="DialPlanMatchClause"/>
+          <xs:element name="minLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="maxLength" type="DialPlanDNLengthLimit"/>
+          <xs:element name="callType" type="CallType" minOccurs="0"/>
+          <xs:element name="prefixLength" type="PrefixLength" minOccurs="0"/>
+          <xs:element name="action" type="DialPlanAction" minOccurs="0" nillable="true"/>
+          <xs:element name="alternateCallIndicator" type="DialPlanAlternateCallIndicator" minOccurs="0" nillable="true"/>
+          <xs:element name="description" type="DialPlanDescription" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

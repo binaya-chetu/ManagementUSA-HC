@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Center User Service interface in the                                -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="CallCenter">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the user's CallCenter's settings.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="agentACDState" type="AgentState" minOccurs="0"/>
+        <xs:element name="agentUnavailableCode" type="AgentUnavailableCode" nillable="true" minOccurs="0"/>
+        <xs:element name="useDefaultGuardTimer" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="enableGuardTimer" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="guardTimerSeconds" type="ACDGuardTimerSeconds" minOccurs="0"/>
+        <xs:element name="useSystemDefaultUnavailableSettings" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="forceAgentUnavailableOnDNDActivation" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="forceUnavailableOnPersonalCalls" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="forceAgentUnavailableOnBouncedCallLimit" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="numberConsecutiveBouncedCallsToForceAgentUnavailable" type="ACDConsecutiveBouncedCallsToForceAgentUnavailable" minOccurs="0"/>
+        <xs:element name="makeOutgoingCallsAsCallCenter" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="outgoingCallDNIS" type="DNISKey" nillable="true" minOccurs="0"/>
+        <xs:element name="callCenterList" type="CallCenterList" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+
+  <xs:complexType name="CallCenterList">
+    <xs:annotation>
+      <xs:documentation> List of the CallCenters
+        which are joined/unjoined.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="callCenterDetails"
+        type="CallCenterDetails" minOccurs="0"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CallCenterDetails">
+      <xs:annotation>
+        <xs:documentation> 
+          Basic information about a CallCenter.
+          Change History:
+            Rel 19.0 - Added skill level of an agent in 
+                       Skill-Based call center.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="serviceUserId" type="UserId" minOccurs="0">
+          <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="available" type="xs:boolean" minOccurs="0" />
+        <xs:element name="phoneNumber" type="xs:string" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="extension" type="xs:string" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="type" type="xs:string" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="priority" type="xs:string" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="isLogOffAllowed" type="xs:boolean" minOccurs="0">
+         <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="skillLevel" type="SkillLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Element is Read Only
+          </xs:documentation>
+        </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+  </xs:complexType>  
+      
+  <xs:element name="AgentCallCenterAssignedStatus">
+    <xs:annotation>
+      <xs:documentation>
+        Request to get the detail information of a Call Center Agent. Administrator, supervisor and agent itself can send this command.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element name="isCallCenterBasicAssigned" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="isCallCenterStandardAssigned" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="isCallCenterPremiumAssigned" type="xs:boolean" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+      
+</xs:schema>

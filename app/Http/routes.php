@@ -277,6 +277,13 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'categories.categoryDetails',
 			'middleware' => ['acl:user_write']
         ]);
+
+
+	Route::get('/clientapi', [
+            'uses' => 'ClientapiController@getApiResponse',
+            'as' => 'clientapi.getApiResponse',
+			//'middleware' => ['acl:user_write']
+        ]);
 });
 
 

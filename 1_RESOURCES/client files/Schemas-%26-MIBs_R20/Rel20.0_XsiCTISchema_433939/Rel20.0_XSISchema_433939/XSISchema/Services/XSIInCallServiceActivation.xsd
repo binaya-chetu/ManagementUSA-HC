@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- In Call Service Activation User Service interface in the                 -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="InCallServiceActivation" type ="InCallServiceActivation">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with In-Call Service Activation service.
+        
+        In-Call Service Activation allows BroadWorks users to activate 
+        mid-call services transparently.
+          
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!-- ******************************************************************** -->
+  <!-- I N-C A L L  S E R V I C E  A C T I V A T I O N  D A T A  T Y P E S  -->
+  <!--                                                                      -->
+  <!-- Data types for In-Call Service Activation..............              -->
+  <!-- ******************************************************************** -->
+    
+  <xs:complexType name="InCallServiceActivation">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the In-Call Service Activation service configuration data.
+        
+        In-Call Service Activation allows BroadWorks users to activate 
+        mid-call services transparently.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ActivatableServiceInfo">
+        <xs:sequence>
+          <xs:element name="flashActivationDigits" 
+                      type="InCallServiceActivationDigits" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                This field is present only while retrieving the 
+                information and cannot be updated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="callTransferActivationDigits" 
+                      type="InCallServiceActivationDigits" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                This field is present only while retrieving the 
+                information and cannot be updated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:simpleType name="InCallServiceActivationDigits">
+    <xs:annotation>
+      <xs:documentation>
+        In Call Service Activation DigitMap.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************  -->
+    <!--     Copyright (c) 2013 BroadSoft, Inc.  All rights reserved.              -->
+    <!-- ************************************************************************  -->
+    <!--                XSI  X M L  S C H E M A                                    -->
+    <!--               *************************                                   -->
+    <!-- This file defines the schema types and elements required by the           -->
+    <!-- Voice Messaging Messages interface in the http://schema.broadsoft.com/xsi -->
+    <!-- namespace.                                                                -->
+    <!-- ************************************************************************  -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+<xs:element name="VoiceMessagingMessages">
+    <xs:annotation>
+      <xs:documentation>
+        Contains a list of any messages currently present 
+        in the user's voice mailbox.
+        
+        Change History:
+        R20.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+         <xs:element name="messageInfoList" type="MessageInfoList">
+          <xs:annotation>
+            <xs:documentation>
+              A list of information about each of the user's voice 
+              messages. If no messages are present for the user, 
+              the list is empty.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="VoiceMessage">
+    <xs:annotation>
+      <xs:documentation>
+        The content for an individual voice message.
+        
+        Change History:
+        R20.0 - Added              
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="messageInfo" type="MessageInfo"/>
+        <xs:element name="messageMediaContent" type="MessageMediaContent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- **************************************************************-->
+  <!--   Complex Types in Alphabetical Order.                        -->
+  <!-- **************************************************************-->
+  
+  <xs:complexType name="MessageInfoList">
+    <xs:annotation>
+      <xs:documentation>
+        A list containing information about all of a user's 
+        voice messages.
+        
+        Change History:
+        R20.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="messageInfo" type="MessageInfo"
+        minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="MessageMediaContent">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the contents of a message to transfer with a description.
+        
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="description" type="FileDescription"/>
+      <xs:element name="mediaType" type="MessageMediaFileType"/>
+      <xs:element name="content" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MessageInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Detailed summary information for an individual voice message.
+        
+        Change History:
+        R20.0 - Added              
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="duration" type="NonNegativeInt" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The duration of the message, in milliseconds.
+
+            Not present for fax messages.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="callingPartyInfo" type="VoiceMailPartyInformation" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The information of the calling party who left the message.
+
+            Not present if no calling party information is available.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="read" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+               When present, indicates that the message has been 
+               read. When not present, indicates that the message has 
+               not previously been read.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="urgent" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+               When present, indicates that the voice message is marked 
+               urgent. When not present, the message is not urgent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="confidential" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+               When present, indicates that the voice message is marked 
+               confidential. When not present, the message is not
+               confidential.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="video" type="EmptyContent" minOccurs="0"> 
+        <xs:annotation>
+          <xs:documentation>
+               When present, indicates that the voice mail is a video 
+               message. When not present, the message is voice only.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="fax" type="EmptyContent" minOccurs="0"> 
+        <xs:annotation>
+          <xs:documentation>
+               When present, indicates that the message is a fax message. 
+               When not present, the message is not a fax message.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="time" type="Timestamp">
+        <xs:annotation>
+          <xs:documentation>
+               The time the message was created.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="faxPageCount" type="PositiveInt" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+               The number of pages in this fax.
+               
+               Only present for fax messages.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageId" type="xs:string" minOccurs="0">      
+        <xs:annotation>
+          <xs:documentation>
+               The URI to access the message for downloading, 
+               marking as read/unread or deletion.
+               This is not present for messages created prior to Release 
+               20. 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:simpleType name="MessageMediaFileType">
+    <xs:annotation>
+      <xs:documentation>
+        The media type of message data.
+        
+        TIF - Tagged Image File Format
+        WAV - A WAV file
+        MOV - A MOV file.
+                
+        Change History:
+        R20.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="TIF" />
+      <xs:enumeration value="WAV" />
+      <xs:enumeration value="MOV" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="VoiceMailPartyInformation">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the general information for a party who left a voice mail.
+        
+        Change History:
+        R20.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="NonEmptyString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The name of the party.  Not present when there is no name or the
+            user/application is not allowed to see it (the appropriate CLIP/COLP
+            service is not enabled, or privacy is restricted and the application
+            is not trusted).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="userId" type="UserId" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The subscriber Id of the party. Only present
+            when the party is in the same Group/Enterprise as
+            the local user. 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="address" type="Address" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The address of the party. 
+            Only present when the party is in the same Group/Enterprise as the 
+            local user. Not present when there is no address available.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="privacy" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that privacy is restricted.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

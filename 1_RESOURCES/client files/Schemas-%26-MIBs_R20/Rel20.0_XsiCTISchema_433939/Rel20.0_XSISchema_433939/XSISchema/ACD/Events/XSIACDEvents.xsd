@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!--************************************************************************* -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- ACD Event interface in the http://schema.broadsoft.com/xsi               -->
+    <!-- name space.                                                              -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+    
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIACD.xsd" />
+  <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Complex type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+  <xs:complexType name="ACDCallAbandonedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Abandoned event is sent after a call has been abandoned by
+        a remote application (e.g. BroadWorks client).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="entrancePlaying" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates, when present, that the entrance message was playing at the time
+                the call was abandoned.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallAddedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Added event is sent when a new call is added to the ACD
+        queue.
+        
+        Change History:
+        17.sp3 - "redirections" element added                          
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="position" type="PositiveInt">
+            <xs:annotation>
+              <xs:documentation>
+                The location in the queue where the call was added.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+           <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the call. 
+                These are the details of other parties that have redirected
+                this call.
+            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallAnsweredByAgentEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Answered event is sent after a call has been offered to an
+        agent, the agent has decided to accept the call, and the call
+        has been removed from the queue
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallBouncedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Bounced event is sent after a call is bounced. When a call
+        is bounced, the bounced parameter is added to the ACDQueueEntry
+        reported in the event.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="position" type="PositiveInt"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The new position in the queue. Only present if the call was
+                reordered in the processed of being bounced.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallEscapedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Escaped event is sent when the caller dial the configured
+        escape digits while being in the queue. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallForwardedEvent">
+    <xs:annotation>
+      <xs:documentation>
+       The ACD Call Forwarded event is sent when the Forced Forwarding 
+       policy is triggered.
+       
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added      
+                 "redirect" element made optional
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect when the local user has redirected the
+                call. Note that these details can be replaced in some
+                scenarios (e.g. BroadWorks Anywhere is used for a
+                terminating call, and then the call is forwarded).
+                Only present when not playing treatment.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the  details of other parties that have
+                redirected  this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallForwardedTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+       The ACDCallForwardedTreatmentCompletedEvent is sent when the annoucement
+       is completed for a call treated according to the Forced Forwarding policy.
+       
+       Change History:
+       17.sp3 - Added        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect when the local user has redirected the
+                call. Note that these details can be replaced in some
+                scenarios (e.g. BroadWorks Anywhere is used for a
+                terminating call, and then the call is forwarded).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDCallOfferedToAgentEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Offered event is sent when the ACD distributes the call to
+        an agent. This event indicates that the call is offered to the
+        agent but remains in the queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallOverflowedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDCallOverflowedEvent is sent when the Overflow policy is 
+        triggered. The overFlowReason specifies the cause of the
+        overflow.
+        
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added                 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="overflowReason" type="OverflowReason">
+            <xs:annotation>
+              <xs:documentation>
+                Specify the reason for overflow.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on call
+                overflowed policy. This happens when the policy action
+                is set to transfer.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+            <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the  details of other parties that have
+                redirected  this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallOverflowedTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDCallOverflowedTreatmentCompletedEvent is sent when the 
+        annoucement is completed for a call treated according to the 
+        Overflow policy.
+        
+        Change History:
+        17.sp3 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="overflowReason" type="OverflowReason">
+            <xs:annotation>
+              <xs:documentation>
+                Specify the reason for overflow.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on call
+                overflowed policy. This happens when the policy action
+                is set to transfer.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>                    
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallPromotedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Promoted event is sent when a call has been promoted to
+        another priority either manually (e.g. through an ACD Promote
+        Call) or automatically. The ACDPriority parameter is set to the
+        new priority. The position parameter is set to the new location
+        of the call in the queue. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="position" type="PositiveInt">
+            <xs:annotation>
+              <xs:documentation>
+                The new location of the call in the queue.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallReleasedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Released event is generated following an ACD Call Released
+        request
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallReorderedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Reordered event is sent when a call is reordered (e.g.
+        through an ACD Call Reorder).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="position" type="PositiveInt">
+            <xs:annotation>
+              <xs:documentation>
+                The new location of the call in the queue
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallStrandedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Stranded event is sent when a call is identified as
+        stranded. The call is removed from the queue and is handled as
+        per policay configuration.
+        
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the  details of other parties that have
+                redirected  this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallStrandedTreatementCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDCallStrandedTreatementCompletedEvent is sent when 
+        the annoucement is completed for a call treated according to the 
+        Stranded call policy.
+        
+        Change History:
+        17.sp3 - Added        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDCallStrandedUnavailableEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Stranded Unavailable event is sent when a call is
+        identified as stranded due to agent unavailablilty.  The call is
+        removed from the queue and is handled as per the Stranded Calls -
+        Unavailable routing policy configuration.
+        
+        Change History:
+        19.0 - Event Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallStrandedUnavailableTreatementCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDCallStrandedUnavailableTreatementCompletedEvent is sent
+        when the annoucement is completed for a call treated according to
+        the Stranded - Unavailable call policy.
+        
+        Change History:
+        19.0 - Event Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallTransferredEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Transferred event is sent when the call was removed from
+        the queue as it is transferred to a new destination following an
+        ACD Blind Transfer. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDCallUpdatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Call Updated event is generated when the remote party
+        attributes are modified while being in the queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent">
+        <xs:sequence>
+          <xs:element name="reason" type="CallUpdateReason" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present when the update is triggered by a changing
+                remote party. 
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDConfigurationSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Initial event sent for the CallCenterConfiguration event package.
+        Change History:
+        R17.sp3 - Added forceNightService element. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="forcedForwarding" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that Call Center Forced Forwarding is
+                active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="holidayService" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that Call Center Holiday Service is active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="nightService" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that Call Center Night Service is active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="forceNightService" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that ACD's Night Service was manually activated, overriding its normal schedule.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>                    
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The base event for ACD Events
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="queueEntry" type="ACDQueueEntry">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the ACDQueueEntry. An ACDQueueEntry contains
+                information about a call in the ACD queue.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDForcedForwardingEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification with the configuration status of Forced Forwarding for the ACD.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="active" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that ACD's Forced Forwarding is active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDHolidayPolicyAppliedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDHolidayPolicyAppliedEvent is sent when the Holiday 
+        policy is triggered. 
+        
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added                
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is redirected per the
+                Holiday Service policy.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the  details of other parties that have
+                redirected  this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDHolidayPolicyTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDHolidayPolicyTreatmentCompletedEvent is sent when the 
+        annoucement is completed for a call treated according to the 
+        Holiday policy. 
+        
+        Change History:
+        17.sp3 - Added        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is redirected per the
+                Holiday Service policy.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDHolidayServiceEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification with the activation status of Holiday Service for the ACD.
+        Activation occurs when the holiday period starts and
+        de-activation occurs when the holiday period ends.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="active" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that ACD's Holiday Service is active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDNightPolicyAppliedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDNightPolicyAppliedEvent is sent when the Night policy 
+        is triggered. 
+        
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added                
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is redirected per the
+                Night Service policy.
+             </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the  details of other parties that have
+                redirected  this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDNightPolicyTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDNightPolicyTreatmentCompletedEvent is sent when the 
+        annoucement is completed for a call treated according to the 
+        Night policy. 
+        
+        Change History:
+        17.sp3 - Added                
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD name associated with the RP number the call was
+                received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="acdNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the ACD number(DNIS) the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is redirected per the
+                Night Service policy.
+             </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDNightServiceEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification with the configuration status of Night Service for the ACD.
+        Change History:
+        R17.sp3 - Added forceNightService element.                        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="active" type="ActivatableServiceInfo"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that ACD's Night Service is active.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="forceNightService" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that ACD's Night Service was manually activated, overriding its normal schedule.                
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:complexType name="ACDSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Subscription event is issued immediately after a subscription
+        is added or refreshed, provided that the subscription target is
+        not a collection of subscriber (e.g. a group).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="queueEntries" type="ACDQueueEntryList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Contains the list of ACDQueueEntry maintained by the ACD. Only present
+                if there is at least one ACDQueueEntry maintained by the
+                ACD.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDSubscriptionResyncEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACDSubscriptionResyncEvent is generated when a situation arises that causes a loss of updates and a resync is needed.
+        Change History:
+        Release Added: R19.sp1 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDSubscriptionEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ACDWhisperStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The ACD Whisper Started event is sent when the agent answers an offered
+        call and the whisper announcement is started.
+
+        The call remains in the queue, but subsequent actions on the call are
+        rejected. The ACD Call Answered By Agent is sent once the
+        whisper announcement completes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ACDEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="CallCenterMonitoringEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Call Center Monitoring event is sent when
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="monitoringStatus" type="CallCenterMonitoringStatus">
+            <xs:annotation>
+              <xs:documentation>
+                The Call Center Monitoring event is sent when:
+                1) An agent is assigned/unassigned from the call center
+                2) An agent's staffed status changes
+                3) A staffed agent's idle status changes
+                4) A staffed agent transition to/from the unavailable state
+                5) An ACD call is added to the queue
+                6) An ACD call is removed from the queue
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- O R I G I N A T O R   R E D I R E C T  P O L I C Y                     -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- O R I G I N A T O R   R E D I R E C T    R E Q U E S T S  A N D  R E S P O N S E S  -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyOriginatorRedirectAddInstanceRequest17sp4    
+    RoutingPolicyOriginatorRedirectDeleteInstanceRequest    
+    RoutingPolicyOriginatorRedirectGetInstanceRequest17sp4    
+    RoutingPolicyOriginatorRedirectModifyInstanceRequest17sp4    
+    RoutingPolicyOriginatorRedirectAddDMIRequest    
+    RoutingPolicyOriginatorRedirectDeleteDMIRequest    
+    RoutingPolicyOriginatorRedirectGetDMIRequest    
+    RoutingPolicyOriginatorRedirectGetDMIListRequest    
+    RoutingPolicyOriginatorRedirectModifyDMIRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyOriginatorRedirectAddInstanceRequest17sp4">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="applyAccessSideRules" type="xs:boolean"/>
+          <xs:element name="supportTrunkGroupLookups" type="PolicySupportLookupsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetInstanceRequest17sp4">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyOriginatorRedirectGetInstanceResponse17sp4 or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetInstanceResponse17sp4">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a RoutingPolicyOriginatorRedirectGetInstanceRequest17sp4.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="applyAccessSideRules" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="supportTrunkGroupLookups" type="PolicySupportLookupsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectModifyInstanceRequest17sp4">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="applyAccessSideRules" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="supportTrunkGroupLookups" type="PolicySupportLookupsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectAddDMIRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add an orig DMI entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectDeleteDMIRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete an orig DMI entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetDMIRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given orig DMI entry.
+        The response is either a RoutingPolicyOriginatorRedirectGetDMIResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetDMIResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyOriginatorRedirectGetDMIRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetDMIListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of orig DMI entries.
+        The response is either a RoutingPolicyOriginatorRedirectGetDMIListResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactFrom" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTo" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDigitManipulationIndex" type="SearchCriteriaExactDigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetDMIListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyOriginatorRedirectGetDMIListRequest.
+        Contains the OriginatorDMI data defined for a policy instance.
+        The column headings are: "From", "To", "DMI".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="origDMITable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectModifyDMIRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify an orig DMI entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

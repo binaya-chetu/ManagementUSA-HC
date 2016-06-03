@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- *****************************************************************-->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.     -->
+    <!-- **************************************************************   -->
+    <!--                XSI  X M L  S C H E M A                           -->
+    <!--               *************************                          -->
+    <!-- This file defines the schema types and elements required for the  -->
+    <!-- System level DataTypes interface in the                          -->  
+    <!--  http://schema.broadsoft.com/xsi name space.                     -->
+    <!--                                                                  -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with-->
+    <!-- grouping at the Element, Complex and Simple level respectively.  -->
+    <!-- *****************************************************************-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Elements in Alphabetical Order.                             -->
+  <!-- **************************************************************-->
+
+  <xs:element name="ApplicationController">
+    <xs:annotation>
+      <xs:documentation>
+        The Application Controller state details.
+        The application controller is associated to an event channel set
+        through configuration. If the event channel set is empty, then
+        BroadWorks rejects any attempt to set the state to "ready". The
+        remote application must create event channels for the associated
+        event channel set hand as synchronized all subscribed resources
+        related to the application controller before setting the state
+        to "ready".
+        A Route Point external system is associated with a list of
+        Application Controllers via configuration
+        (applicationControllerList option). A Route Point external
+        system state depends on the state of the Application Controllers
+        it is associated with. The external system state is said to be
+        "ready" when at least one of its Application Controllers is in
+        the "ready" state. The external system is said to be "not ready"
+        when all of its configured Application Controllers are in the
+        "not ready" state.         
+	
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="state" type="ApplicationControllerState">
+          <xs:annotation>
+            <xs:documentation>
+              The requested state, either "ready" or "not ready".
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- **************************************************************-->
+  <!--   Simple Types in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+  <xs:simpleType name="ApplicationControllerState">
+    <xs:annotation>
+      <xs:documentation>
+        The current/set state of the application controller. The Application
+        Controller state is in either "ready" or "not ready"
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="ready" />
+      <xs:enumeration value="not ready" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

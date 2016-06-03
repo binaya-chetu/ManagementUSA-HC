@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Forwarding Busy User Service interface in the                       -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+ 
+  <xs:complexType name="CallForwardingBusy">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Call Forwarding No Answer service configuration data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CallForwarding">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="CallForwardingBusy" type="CallForwardingBusy">
+    <xs:annotation>
+      <xs:documentation>
+        User Call Forward Busy (CFB) properties. Call Forwarding Busy allows you
+        to forward all your
+        incoming calls to a different phone number or SIP-URI if your phone is
+        currently busy. Use this
+        service when you would rather have a secretary or co-worker receive the
+        call instead of the
+        caller being sent to your voice messaging box. Note that the address
+        (phone number or SIP-URI)
+        you forward your calls to must be permitted by your outgoing calling
+        plan. You can also set the
+        phone number or SIP-URI to forward to using the feature access code.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+</xs:schema>

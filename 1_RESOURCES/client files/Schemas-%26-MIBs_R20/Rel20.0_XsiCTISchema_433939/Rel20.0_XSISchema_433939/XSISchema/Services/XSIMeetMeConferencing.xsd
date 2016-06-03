@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- MeetMe Conferencing Service interface in the                             -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  <xs:include schemaLocation="../Profile/XSIProfile.xsd" />
+
+  <xs:element name="MeetMeConferencingConference" type="MeetMeConferencingConference">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the details to create/modify the MeetMe conference.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferencingConferenceInfo" type="MeetMeConferencingConferenceInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the information of a MeetMe conferencing Passcodes.
+        There can be 2 types of passcodes, Conference Id and Moderator Pin
+        Release Added: R18.0
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferencingUserBridges" type="MeetMeConferencingUserBridges">
+        <xs:annotation>
+          <xs:documentation>
+            Contains the details of all the MeetMe conference bridges for a particular user as host.
+            Release Added: R17.sp3
+          </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+  
+    <xs:element name="MeetMeConferencingUserConferences" type="MeetMeConferencingUserConferences">
+        <xs:annotation>
+          <xs:documentation>
+            Contains the details of all the MeetMe conferences on a particular bridge for a given user.
+            Release Added: R17.sp3
+          </xs:documentation>
+        </xs:annotation>
+  </xs:element>
+  
+  <!-- ******************************************************************** -->
+  <!--          MEET ME CONFERENCE  D A T A  T Y P E S                      -->
+  <!--                                                                      -->
+  <!-- Data types for MeetMeconfernce service.                              -->
+  <!-- ******************************************************************** -->
+
+  <xs:complexType name="MeetMeConferencingConferenceSchedule">
+    <xs:annotation>
+      <xs:documentation>
+        MeetMe Conference Schedule types. There are 3 types possible
+        1. Reservationless
+        2. One time 
+        3. Recurring
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="scheduleReservationless">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="startTime" type="xs:dateTime"/>
+              <xs:element name="endTime" type="xs:dateTime" nillable="true"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="scheduleOneTime">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="startTime" type="xs:dateTime"/>
+              <xs:element name="duration" type="MeetMeConferencingConferenceDuration"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="scheduleRecurring">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="startTime" type="xs:dateTime"/>
+              <xs:element name="duration" type="MeetMeConferencingConferenceDuration"/>
+              <xs:element name="recurrence" type="Recurrence"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferencingConferenceDuration">
+    <xs:annotation>
+      <xs:documentation>
+        MeetMe Conference duration.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hours" type="Hour"/>
+      <xs:element name="minutes" type="MeetMeConferencingConferenceDurationMinutes"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="MeetMeConferencingConferenceDurationMinutes">
+    <xs:annotation>
+      <xs:documentation>
+        MeetMe Conference duration in minutes.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:pattern value="0|15|30|45"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="MeetMeConferencingConference">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the details to create/modify the MeetMe conference.
+        Release 19: Optional parameters "requireSecurityPin", "securityPin" added. 
+                    accountCode element made nillable.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="conferenceTitle" type="MeetMeConferencingConferenceTitle" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Title of a MeetMe conferencing. This element must be present when creating a conference. It is optional when modifying the conference.
+         </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="estimatedParticipants" type="MeetMeConferencingNumberOfParticipants" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Estimated number of participants in a MeetMe conferencing.
+            This element is not required if the conference does not
+            need to pre-allocate the conference ports at the 
+            start of the conference. 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+ 
+      <xs:choice minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              One of the choices have to be present when creating a conference. When modifying it is not mandatory to send this value.
+            </xs:documentation>
+          </xs:annotation>
+        <xs:element name="restrictParticipants" type="xs:boolean" fixed="false">
+          <xs:annotation>
+            <xs:documentation>
+              This parameter decide whether to restrict the 
+              number of participants in a conference.
+              If present, no value is set for maxParticipants else it is considered that the value of maxParticipants is to be restricted and hence the value of maxParticipants is set.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="maxParticipants" type="MeetMeConferencingNumberOfParticipants">
+          <xs:annotation>
+            <xs:documentation>
+              If present, this element decide the upper limit
+              on the number of participants in a conference.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="accountCode" type="MeetMeConferencingConferenceAccountCode" minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            Account code for MeetMe conferencing
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="muteAllAttendeesOnEntry" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter to define whether all the partcipants are muted on entry. Participants can
+            unmute only after the moderator switchefd off the lecture mode. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="endConferenceOnModeratorExit" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines whether to terminate the conference when the last moderator 
+            in the call terminate the call. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="moderatorRequired" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines whether moderator is required to start the conference. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requireSecurityPin" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines whether security PIN is required to start the conference. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="allowUniqueIdentifier " type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines whether attendee self identification is required when joining the conference. This element must be present when creating a conference. It is optional when modifying 
+            the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="attendeeNotification" type="MeetMeConferencingConferenceAttendeeNotification" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines the kind of notification needs to be given when a new participant join the conference. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conferenceSchedule" type="MeetMeConferencingConferenceSchedule" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Parameter defines Schedule details of the conference. This element must be present when creating a conference. It is optional when modifying the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="moderatorPin" type="MeetMeConferencingConferencePassCode" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Moderator PIN for the conference. 
+            This will not be present while updating
+            the conference information.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityPin" type="MeetMeConferencingConferenceSecurityPin" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Security PIN for the conference. 
+            This will not be present while updating
+            the conference information.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>      
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferencingBridgeHostList">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the information of a MeetMe conferencing hosts who
+        Can create conferences on a bridge.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hostUserIdList" type="UserId" minOccurs="0" maxOccurs="unbounded"/> 
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferencingConferencePorts">
+    <xs:annotation>
+      <xs:documentation>
+        Number of conference ports. Can either be unlimited or limited to a value between 0 and 999999.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="unlimited" type="xs:boolean" default="true"/>
+      <xs:element name="quantity">
+      <xs:simpleType> 
+        <xs:restriction base="xs:int">
+        <xs:minInclusive value="0"/>
+        <xs:maxInclusive value="999999"/>
+        </xs:restriction>
+      </xs:simpleType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferencingConferenceInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the information of a MeetMe conferencing Passcodes.
+        There can be 2 types of passcodes, Conference Id and Moderator Pin     
+        Release 19: Optional passcode "Security Pin" added.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="conferenceId" type="MeetMeConferencingConferencePassCode"/>
+      <xs:element name="moderatorPin" type="MeetMeConferencingConferencePassCode"/>
+      <xs:element name="securityPin" type="MeetMeConferencingConferenceSecurityPin" minOccurs="0"/> 
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferencingUserBridge">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the information of a MeetMe conferencing bridge.
+        Change History:
+        Release 18.0 : The elements "phoneNumber", "extension" types have changed and 
+                       made them as optional.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="bridgeId" type="UserId">
+        <xs:annotation>
+          <xs:documentation>
+            Bridge Id.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Name.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="phoneNumber" type="DN" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This is present when a pone number is assigned to the bridge. Phone Number in E.164 format.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extension" type="Extension" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This is present when an extension is assigned to the bridge.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ports" type="MeetMeConferencingConferencePorts">
+        <xs:annotation>
+          <xs:documentation>
+            Number of ports allocated to the bridge.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isActive" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>
+            Flag defines whether the bridge is active or not.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="allowIndividualOutDial" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Defines whether the outdial is enabled for the bridge on which
+            the conference is hosted. This field is present only
+            while retrieving the information and cannot be updated.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bridgeUri" type="URL" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This is used to provide relative link for viewing
+            Bridge related details through Http.
+            This is always ignored with Modify request.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferencingUserBridges">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the list of bridges for a given user.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="userBridge" type="MeetMeConferencingUserBridge" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:complexType name="MeetMeConferencingUserConference">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the basic information of a MeetMe conferencing.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="bridgeId" type="UserId">
+        <xs:annotation>
+          <xs:documentation>
+            Bridge Id.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conferenceId" type="MeetMeConferencingConferencePassCode">
+        <xs:annotation>
+          <xs:documentation>
+            Conference Id.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="title" type="MeetMeConferencingConferenceTitle">
+        <xs:annotation>
+          <xs:documentation>
+            Title of the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bridgeName" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Bridge Name.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="status" type="MeetMeConferencingConferenceStatus">
+        <xs:annotation>
+          <xs:documentation>
+            Current status of the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="type" type="MeetMeConferencingConferenceType">
+        <xs:annotation>
+          <xs:documentation>
+            Type of the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="startTime" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>
+            Scheduled start time.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isActive" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>
+            If the Bridge active
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conferenceUri" type="URL" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This is used to provide relative link for viewing
+            Conference details through Http.
+            This is always ignored with Modify request.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferencingUserConferences">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the List of MeetMe Confrerences.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="userConference" type="MeetMeConferencingUserConference" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            An array of MeetMe Conferences.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="MeetMeConferencingNumberOfParticipants">
+    <xs:annotation>
+      <xs:documentation>
+        Number of participants in a MeetMe conference.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferencingConferenceAttendeeNotification">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for the notification when attendees join or leave the conferecne.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Play Tone"/>
+      <xs:enumeration value="Play Recorded Name"/>
+      <xs:enumeration value="No Notification"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferencingConferenceAccountCode">
+    <xs:annotation>
+      <xs:documentation>
+        MeetMe Conference Account code.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="50"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferencingConferencePassCode">
+    <xs:annotation>
+      <xs:documentation>
+        Conference Id or Moderator pin of a MeetMe conference.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="6"/>
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferencingConferenceTitle">
+    <xs:annotation>
+      <xs:documentation>
+        Title of the MeetMe conference.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="80"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MeetMeConferencingConferenceStatus">
+    <xs:annotation>
+      <xs:documentation>
+        All MeetMe Conference will be in one of the following states.
+        1. Active
+        2. Inactive
+        3. Expired
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Active"/>
+      <xs:enumeration value="Inactive"/>
+      <xs:enumeration value="Expired"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MeetMeConferencingConferenceType">
+    <xs:annotation>
+      <xs:documentation>
+        MeetMe Conference will be of one of the following type.
+        1. Reservationless (Conference active for a long duration)
+        2. One time
+        3. Daily Recurring
+        4. Weekly Recurring
+        5. Monthly Recurring
+        6. Yearly Recurring
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Reservationless"/>
+      <xs:enumeration value="One Time"/>
+      <xs:enumeration value="Recurring Daily"/>
+      <xs:enumeration value="Recurring Weekly"/>
+      <xs:enumeration value="Recurring Monthly"/>
+      <xs:enumeration value="Recurring Yearly"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferencingConferenceSecurityPin">
+    <xs:annotation>
+      <xs:documentation>
+        Security PIN of a MeetMe conference.
+        Release Added:  R19
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="4"/>
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  
+</xs:schema>

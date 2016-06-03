@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Executive Assistant User Service interface in the                        -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="ExecutiveAssistant" type="ExecutiveAssistant">
+    <xs:annotation>
+      <xs:documentation>
+        Data associated with a user assigned the Executive Assistant service.
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:complexType name="ExecutiveAssistant">
+    <xs:annotation>
+      <xs:documentation>
+        Provides details for a user assigned the Executive Assistant Service.
+        Contains the executive assistant setting and a table of executives this assistant has been assigned to.
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+          <xs:element name="enableDivert" type="xs:boolean"/>
+          <xs:element name="divertToPhoneNumber" type="OutgoingDNorSIPURI" minOccurs="0"/>
+          <xs:element name="executives" type="ExecutiveDetailsList"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ExecutiveDetailsList">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of executives the executive assistant has been assigned to.
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+      <xs:sequence>
+        <xs:element name="executiveDetails" type="ExecutiveDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ExecutiveDetails">
+    <xs:annotation>
+      <xs:documentation>
+        Details regarding an executive. 
+        Column headings are: "User Id", "Last Name", "First Name" and "Opt In".
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="executiveUserId" type="UserId"/>
+      <xs:element name="executiveLastName" type="LastName" minOccurs="0"/>
+      <xs:element name="executiveFirstName" type="FirstName" minOccurs="0"/>
+      <xs:element name="optIn" type="xs:boolean"/>
+      <xs:element name="executiveUri" type="URL" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The URI for accessing the other details of
+            this Executive.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ExecutiveAssistantEndpoint">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the details related to a Executive Assistant endpoint. This is used to detail the endpoint in the Call type.      
+        Change History:
+        R20.0 – Added.
+     </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="NetworkEndpoint" />
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

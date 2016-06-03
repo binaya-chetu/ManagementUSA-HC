@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Anonymous Call Rejection User Service interface in the                   -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="AnonymousCallRejection">
+    <xs:annotation>
+      <xs:documentation>
+        User Anonymous Call Rejection (ACR) properties. Anonymous Call Rejection
+        allows you to reject
+        calls from callers who have blocked the display of their number. Only
+        deliberate anonymous
+        numbers are rejected. Callers whose numbers are unavailable are not
+        rejected. Callers that are
+        rejected are informed that you are not accepting calls from unidentified
+        callers. Your phone
+        does not ring and you do not receive any indication that they called.
+        However, this does not
+        apply to calls within your group.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="active" type="xs:boolean"
+          minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+</xs:schema>

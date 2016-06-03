@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the Channel  -->
+    <!-- Registration interface in the http://schema.broadsoft.com/xsi namespace. -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  <xs:include schemaLocation="../XSIBaseEvent.xsd" />
+
+  <!-- **************************************************************-->
+  <!--        Element Types Used in Alphabetical Order.              -->
+  <!-- **************************************************************-->
+
+
+  <xs:element name="Channel" type="Channel">
+    <xs:annotation>
+      <xs:documentation>
+        A Channel is a logical path between the remote application and the
+        BroadWorks core. The channel is created by the remote
+        application and is bound to a specific TCP connection. The
+        channel is characterized by a priority and a weight, which
+        allows the remote application to control event routing from the
+        BroadWorks core, specifically when multiple channels constitute
+        the channel set.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="ChannelHeartBeat">
+    <xs:annotation>
+      <xs:documentation>
+        The Client shall send an heart beat message periodically over the
+        established channel as a chunked message data to keep the
+        channel alive.
+        The ChannelHeartBeat message should be send before a period of
+        inactivity which is defined by the socket.soTimeout in the
+        Tomcat's server.xml file.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+
+  <xs:element name="ChannelSet">
+    <xs:annotation>
+      <xs:documentation>
+        ChannelSet enlist all the Channels for a channel set id.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="channel" type="Channel" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              Identifies the event channel id created by AS.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <!-- **************************************************************-->
+  <!--        Complex  Data Types in Alphabetical Order.             -->
+  <!-- **************************************************************-->
+
+
+
+
+  <xs:complexType name="Channel">
+    <xs:annotation>
+      <xs:documentation>
+        A Channel is a logical path between the remote application and the
+        BroadWorks core. The channel is created by the remote
+        application and is bound to a specific TCP connection. The
+        channel is characterized by a priority and a weight, which
+        allows the remote application to control event routing from the
+        BroadWorks core, specifically when multiple channels constitute
+        the channel set..
+        
+        Change History:
+        19.0 - Modified to add applicationId element        
+        19.0 - changed expires element type to ChannelExpiration
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="channelId" type="ChannelId" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            A system generated unique id for identifying the Channel in the
+            Broadworks System.
+            The ChannelId is mandatory while modifying a ChannelInformation.
+            The ChannelId should not be provided while creation of the Channel,
+            else ignored. 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="channelSetId" type="ChannelSetId" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Identifies the event channel set to which this event channel will belong to.
+            
+            The ChannelSetId should not be provided while modifying the channel, 
+            else ignored.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priority" type="PositiveInt"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The priority for the event channel. If not present, then the event
+            channel has the default priority of 1.
+            
+            The priority should not be provided while modifying the channel, 
+            else ignored.
+		  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="weight" type="PositiveInt" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The weight for the event channel. If not present, then the event
+            channel has the default weight of 50.
+            
+            The priority should not be provided while modifying the channel, 
+            else ignored.
+		  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expires" type="ChannelExpiration" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The relative expiration time for the registered event channel in
+            seconds.
+            
+            The expires is the only element in Channel that can be modified after 
+            creation of Channel. When not present, treated as if 
+            the default minimum (3600) was specified.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="applicationId" type="ExternalApplicationId" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The application may include the ExternalApplicationId element
+            to enforce the limit of a single channel set per application.
+            If a second channel set is created for the same application,
+            then BroadWorks terminates all channels associated with the 
+            first channel set (effectively terminating the channel set
+            itself).
+            
+            Change History:
+            R19.0 - Added                       
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>      
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="ChannelTerminatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        This event is used to report that the specified channel has been
+        terminated. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BaseEvent">
+        <xs:sequence>
+          <xs:element name="channelId" type="ChannelId">
+            <xs:annotation>
+              <xs:documentation>
+                The ID for event channel that is being terminated
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="ChannelTerminatedReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the reason for channel termination.
+                
+                Change History:
+                R19.0 - Added                     
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>                     
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+
+  </xs:complexType>
+  
+  <xs:simpleType name="ChannelExpiration">
+    <xs:annotation>
+      <xs:documentation>
+        The expiration value is the relative time (delta from the current 
+        time) in seconds until the expiration of the event channel. The value 
+        2147483647 (max int) is a special value and means that the 
+        channel never expires.
+ 
+        
+        Note that for a new expiration value (channel add or modify), the
+        minimum value is 3600 seconds (1 hour).  Anything received less than
+        3600 is treated as 3600.  
+        
+        The value 2147483647 (max int or 2^31) is the maximum allowed expires
+        value.  In addition, the maximum value is subject to
+        policies on the AS.  Anything received above the maximum allowed value
+        per the AS policies is treated as the maximum allowed value.
+        
+        For an existing channel, a value of 0 means the channel has
+        expired.
+        
+        Change History:
+        19.0 - added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonNegativeInt"/>
+  </xs:simpleType>
+</xs:schema>

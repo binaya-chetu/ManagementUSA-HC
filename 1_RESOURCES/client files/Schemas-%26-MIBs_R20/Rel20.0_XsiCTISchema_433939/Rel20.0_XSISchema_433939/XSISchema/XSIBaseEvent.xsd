@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI Events X M L  S C H E M A                             -->
+    <!--               *************************                                  -->
+    <!-- This file defines the common and elementary schema types and elements    -->
+    <!-- (xs:complexType and xs:simpleType and xs:element)  required by the       -->
+    <!-- Provisioning(User/Subscriber Service Configuration)  Events and          -->
+    <!-- Execution (CallControl, Conference, ACD, RoutePoint etc) Events          -->
+    <!-- interface in the http://schema.broadsoft.com/xsi name space.              -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+
+  <xs:include schemaLocation="XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--         Common Elements Used For Events Across XSI            -->
+  <!-- **************************************************************-->
+
+  <xs:element name="Event" type="BaseEvent" />
+
+  <xs:element name="EventResponse" type="EventResponse">
+    <xs:annotation>
+      <xs:documentation>
+        This is the response for an event. The application receiving an event
+        must send a response.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!-- ****************************************************************-->
+  <!--    Common Complex Type Used For Events Across XSI namespace     -->
+  <!--                    in Alphabetical Order.                       -->
+  <!-- ****************************************************************-->
+
+
+  <xs:complexType name="BaseEvent" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        This is an abstract type for Xsi events.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+
+  <xs:complexType name="EventData" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Event is an abstract type from which all other Events are derived.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+  
+  <xs:complexType name="ErrorEvent">
+    <xs:annotation>
+      <xs:documentation>
+        This events is sent from XSi-Events over a channel 
+        when the remote client sends any content other than
+        EventResponse and ChannelHeartBeat xml over the 
+        established channel.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BaseEvent">
+        <xs:sequence>
+          <xs:element name="errorCode" type="xs:int" />
+          <xs:element name="errorMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="EventResponse">
+    <xs:sequence>
+      <xs:element name="eventID" type="EventId">
+        <xs:annotation>
+          <xs:documentation>
+            The EventId of the Event which is associated with this Event
+            Response. This identifies the Event
+            for which this response has been sent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="statusCode" type="EventResponseStatusCode">
+        <xs:annotation>
+          <xs:documentation>
+            The response code provided by the remote application.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reason" type="NonEmptyString">
+        <xs:annotation>
+          <xs:documentation>
+            The reason value. The remote application includes the reason
+            for information purposes.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="ServiceEvent" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Abstract type for service notification.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="unassigned" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When present, indicates that the service is
+                unassigned. No other element should be present in
+                the notification
+                when "unassigned" is present.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        This represents event for a particular subscription.
+        
+        Change History:
+        19.0 - added targetSubId element.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BaseEvent">
+        <xs:sequence>
+          <xs:element name="eventID" type="EventId">
+            <xs:annotation>
+              <xs:documentation>
+                A UUID for the Event.
+                This should be returned in the corresponding EventResponse.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sequenceNumber" type="PositiveInt">
+            <xs:annotation>
+              <xs:documentation>
+                The sequenceNumber element contains the sequence number for the
+                notification.
+                This can be used to detect the Events received out of order or
+                missed events
+                which may occur of many reasons such as Network outages.
+
+                In such a case where the Event in Sequence are critical, the
+                application
+                may wait for the re-delivery of the missed event or Event which is
+                yet to be received
+                or may start afresh with a new Subscription and destroying the
+                current one.
+
+                For subscriptions that always send full notifications, the
+                sequenceNumber can always be ignored.
+
+                If the sequenceNumber reaches its max value of
+                2147483647, then it wraps around to 1 in the immediate next event.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="userId" type="UserId">
+            <xs:annotation>
+              <xs:documentation>
+                The user ID of the user that owns the subscription for
+                which the EventData is being sent.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="externalApplicationId" type="ExternalApplicationId">
+            <xs:annotation>
+              <xs:documentation>
+                The external application ID of the subscription for
+                which the EventData is being sent.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+          <xs:element name="subscriptionId" type="SubscriptionId">
+            <xs:annotation>
+              <xs:documentation>
+                The unique ID of the Subscription for which this event has been
+                generated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sharedSubscriptionId" type="SubscriptionId"
+          	minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The ID of the shared subscription for which this event has been generated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:annotation>
+              <xs:documentation>
+                Events are delivered either through a plain TCP/IP
+                sockets (Called Channel) represented by a channelId or through a
+                Http Post to a predefined URL.                               
+              </xs:documentation>
+            </xs:annotation>
+            <xs:element name="channelId" type="ChannelId"
+              minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  The channelID identifies the channel used. Only
+                  present when using contact event channel for
+                  notification.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="httpContact" type="ContactURL">
+              <xs:annotation>
+                <xs:documentation>
+                  The callback URI for the events to be delivered
+                  through Http Post.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="targetId" type="UserId"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The ID of the target user for which the subscription
+                applies.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="targetSubId" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Used by specific event packages to provide a second level of 
+                granularity to the  targetId.
+                E.g. A targetUserId for a MeetMeConference bridge can have
+                a targetSubId which identifies a specific conference which 
+                belongs to the bridge.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="eventData" type="EventData">
+            <xs:annotation>
+              <xs:documentation>
+                Contains all the required details of the Event.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="ChannelId">
+    <xs:annotation>
+      <xs:documentation>
+        The identifier for an event channel within an event channel set. For a
+        new AddChannelRequest, the
+        ChannelId should not be included as it is assigned by the
+        AS and returned in the
+        AddChannelResponse. The Channel ID is currently a UUID
+        (Universally Unique
+        Identifier) which always has a String length of 36, but the type
+        does not limit the
+        Channel ID to 36 characters in order to allow for future expansion
+        should it be
+        necessary.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyString">
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ChannelSetId">
+    <xs:annotation>
+      <xs:documentation>
+        Identifies a grouping of event channels. This
+        identifier must be
+        globally unique for a subscriber. Uniqueness
+        is necessary to avoid
+        interactions with other applications that
+        may be creating event
+        subscriptions for the subscriber on
+        distinct event channels.
+        One way to ensure global uniqueness is
+        for the channel set ID
+        to be a URI (similar to an XML namespace)
+        that is owned by the
+        application's creator. For example:
+
+        http://www.broadsoft.com/channelSet/route-point.
+
+        An application
+        may want to use the same identifier as the
+        extApplicationId
+        (refer to the ExternalApplicationId) defined
+        for subscriptions
+        using this channel set
+
+        If a user needs to have multiple instances
+        of the same application
+        running, then the channel set ID must
+        also include information
+        that is unique to each instance. This
+        can be done by adding a
+        unique identifier to the end of URI. For
+        example:
+
+        http://www.broadsoft.com/channelSet/route-point/routePoint@broadsoft.com.
+
+        Another way to ensure global uniqueness is for the Channel Set
+        ID to be a UUID (Universally Unique Identifier). Using a UUID as
+        the
+        channel set ID can make debugging more difficult however
+        since
+        it hides the identity of the application using the channel
+        set
+        (i.e. a person cannot determine which application by simply
+        looking at the channel set ID).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyString">
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EventId">
+    <xs:annotation>
+      <xs:documentation>
+        A universally unique ID(UUID) for an Event.
+        This should be returned in the corresponding EventResponse.
+        EventId should be same and unique for a pair of Event(Notification) and
+        EventResponse.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyString">
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EventResponseStatusCode">
+    <xs:annotation>
+      <xs:documentation>
+        Defines the possible status codes that can be used by remote
+        application receiving the event.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="200">
+        <xs:annotation>
+          <xs:documentation>
+            The event was successfully received by the remote application.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="404">
+        <xs:annotation>
+          <xs:documentation>
+            The channelId in the event is unknown by the remote
+            application. BroadWorks deletes the event
+            channel and sends the event over
+            the next event channel in the set.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="481">
+        <xs:annotation>
+          <xs:documentation>
+            The subscriptionId in the event notification is unknown to the
+            remote application. BroadWorks
+            deletes the subscription and drops the event.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="500">
+        <xs:annotation>
+          <xs:documentation>
+            The remote application encountered an unexpected condition
+            that prevents it from handling the
+            event. BroadWorks sends the event to the
+            next event channel in the set.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="400">
+        <xs:annotation>
+          <xs:documentation>
+            The remote application could not process this specific event.
+            BroadWorks drops the event.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SubscriptionId">
+    <xs:annotation>
+      <xs:documentation>
+        A Universally Unique ID(UUID) for a Subscription created for
+        receiving Events notification.
+                </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyString">
+      <xs:maxLength value="256" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Me Now User Service interface in the                                -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="CallMeNow">
+    <xs:annotation>
+      <xs:documentation>
+        User level data associated with Call Me Now
+        service.
+
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+          <xs:sequence>
+            <xs:element name="answerConfirmation" type="CallMeNowAnswerConfirmation" minOccurs="0"/>
+            <xs:element name="criteriaActivations" type="CriteriaActivationList" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  The criteria set for the location. 
+                  This call me now criteria defines when calls are to be rejected or allowed. Optionally calls can 
+                  be rejected or allowed for specific numbers.        
+                  This is present when at least one criterion is "set".
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="CallMeNowCriteria">
+    <xs:annotation>
+      <xs:documentation>
+        Call Me Now Criteria Details
+         
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="blackListed" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              When true, reject the call according to the criteria.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element> 
+        <xs:element name="criteria" type="CriteriaWithToDn" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation>
+               The criteria for each Call Me Now entry can be a list of up to 12 phone numbers or digit patterns, 
+               a specified time schedule, and a specified holiday schedule. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+</xs:schema>

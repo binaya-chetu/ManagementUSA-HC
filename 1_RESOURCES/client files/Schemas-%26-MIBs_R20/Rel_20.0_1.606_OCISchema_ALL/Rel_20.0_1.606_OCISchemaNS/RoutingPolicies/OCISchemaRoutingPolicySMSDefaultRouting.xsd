@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- S   M   S   D E F A U L T   R O U T I N G  P O L I C Y                 -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- S   M   S   D E F A U L T   R O U T I N G                                          -->
+  <!-- R E Q U E S T S  A N D  R E S P O N S E S                                          -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicySMSDefaultRoutingAddInstanceRequest    
+    RoutingPolicySMSDefaultRoutingDeleteInstanceRequest    
+    RoutingPolicySMSDefaultRoutingGetInstanceRequest    
+    RoutingPolicySMSDefaultRoutingModifyInstanceRequest    
+    RoutingPolicySMSDefaultRoutingAddRouteRequest    
+    RoutingPolicySMSDefaultRoutingDeleteRouteRequest    
+    RoutingPolicySMSDefaultRoutingGetRouteRequest    
+    RoutingPolicySMSDefaultRoutingGetRouteListRequest    
+    RoutingPolicySMSDefaultRoutingModifyRouteRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicySMSDefaultRoutingGetInstanceResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicySMSDefaultRoutingGetInstanceRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingAddRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="routingNE" type="RoutingNE"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingDeleteRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="routingNE" type="RoutingNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given route entry.
+        The response is either a RoutingPolicySMSDefaultRoutingGetRouteResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="routingNE" type="RoutingNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetRouteResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicySMSDefaultRoutingGetRouteRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetRouteListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of route entries.
+        The response is either a RoutingPolicySMSDefaultRoutingGetRouteListResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactCallType" type="SearchCriteriaExactCallType" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDigitManipulationIndex" type="SearchCriteriaExactDigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingGetRouteListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicySMSDefaultRoutingGetRouteListRequest.
+        The column headings are: "Call Type", "Routing Network Element", "Cost", "Weight", "Digit Manipulation Index".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="routeTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicySMSDefaultRoutingModifyRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="routingNE" type="RoutingNE"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

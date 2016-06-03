@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- PushToTalk User Service interface in the http://schema.broadsoft.com/xsi -->
+    <!-- namespace.                                                               -->
+    <!-- ************************************************************************ -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="PushToTalk">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with Push To Talk service.
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:annotation>
+        <xs:documentation>
+          Contains the Push to Talk service configuration data.
+          
+          Push to Talk allows people to call each other and have 
+          the call answered automatically. You can control which users
+          are allowed to call you in this way.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="allowAutoAnswer" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether to automatically answer 
+              Push To Talk calls, or not.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="outgoingConnectionSelection" type="PushToTalkOutgoingConnectionSelection" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether to establish either:
+              a one-way path, where the originator of the call can 
+              talk to the party receiving the call, but the party 
+              receiving the call cannot talk to the originator of 
+              the call, or a two-way path, where both the originator 
+              of the call, and the party receiving the call can talk 
+              to each other.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="accessListSelection" type="PushToTalkAccessListSelection" minOccurs="0" nillable="true">
+         <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether to accept Push To Talk calls 
+              only from the Selected Users, or to accept Push To Talk 
+              calls from everyone except the Selected Users.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="allowedUsers" type="UserIdList" minOccurs="0" nillable="true">
+          <xs:annotation>
+            <xs:documentation>
+              A list of selected users who can either initiate Push to 
+              Talk calls to the user, or who are excluded from initiating 
+              Push To Talk calls to them, depending on the type of access 
+              List the user has chosen.
+              If set to nil will clear the configured selected users 
+              list.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<!-- ******************************************************************** -->
+<!--             P U S H  T O  T A L K   D A T A  T Y P E S               -->
+<!--                                                                      -->
+<!-- Data types for Push To Talk.                                         -->
+<!-- ******************************************************************** -->
+
+  <xs:simpleType name="PushToTalkOutgoingConnectionSelection">
+    <xs:annotation>
+      <xs:documentation>
+        Push to talk outgoing connection type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="One Way"/>
+      <xs:enumeration value="Two Way"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PushToTalkAccessListSelection">
+    <xs:annotation>
+      <xs:documentation>
+        Push to talk access list.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Allow Calls From Selected Users"/>
+      <xs:enumeration value="Allow Calls From Everyone Except Selected Users"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

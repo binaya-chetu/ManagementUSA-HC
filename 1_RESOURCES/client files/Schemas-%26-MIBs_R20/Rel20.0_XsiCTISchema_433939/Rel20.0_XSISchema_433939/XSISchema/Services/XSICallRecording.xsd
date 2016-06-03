@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Recording User Service interface in the                             -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="CallRecording">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with the Call Recording service.
+
+        Change History:
+        17.sp4 - Added.
+        20.0 - Modified - added pauseResumeNotifyMethod element.
+               Modified - recordingMode element is now optional.
+               Modified - added the End User Notification elements
+               Modified - added recordVoiceMessaging element
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="recordingMode" type="CallRecordingMode" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+            The Call Recording service can be set to: 
+            ALWAYS, ALWAYS-PAUSE-RESUME, NEVER, ON-DEMAND or ON-DEMAND-USER-START.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="pauseResumeNotifyMethod" type="PauseResumeNotifyMethod" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+            The Pause Resume Notify Method can be set to:
+            NONE, ANNOUNCEMENT, or BEEPONLY
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="recordVoiceMessaging" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+             When this value is true, calls routed to the user's voice messaging
+             system are recorded. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>       
+        <xs:element name="playCallRecordingStartStopAnnouncement" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+            This element indicates whether an announcement is played to   
+            both parties when call recording is started and stopped for a call.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCallRecordingWarningTone" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+            This element indicates whether a warning tone is played to   
+            both parties when call recording is in effect for a call.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCallRecordingWarningToneSeconds" type="RecordCallRepeatWarningToneTimerSeconds" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+            This element indicates how often the warning tone is played.
+            This element only applies when the "playCallRecordingWarningTone" 
+            element is set to true.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element> 
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+
+  <xs:simpleType name="CallRecordingMode">
+    <xs:annotation>
+      <xs:documentation>
+        The Call Recording mode can be set to:
+        ALWAYS indicates calls originated by or received by the user are always recorded and saved;
+        NEVER indicates calls are never recorded;
+        ON-DEMAND indicates that calls can be selectively recorded and saved on an on-demand basis. The user also has the ability to pause and resume recordings.
+        ALWAYS-PAUSE-RESUME indicates that calls originated or received by the user are always recorded and saved. The user also has the ability to pause and resume recordings.
+        ON-DEMAND-USER-START indicates that the call recording does not start until initiated by the user. The user also has the ability to pause, resume and stop recordings.
+       
+        Change History:
+        17.sp4 - Added.
+        20.0   - Modified - added two new recording modes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="always" />
+      <xs:enumeration value="never" />
+      <xs:enumeration value="on-demand" />
+      <xs:enumeration value="always-pause-resume"/>
+      <xs:enumeration value="on-demand-user-start"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="PauseResumeNotifyMethod">
+    <xs:annotation>
+      <xs:documentation>
+        The Pause/Resume Notify method can be set to:
+        NONE indicates that nothing is done to alert the users to the call recording being paused or resumed.
+        ANNOUNCEMENT indicates that an announcement is played to alert the users to the call recording being paused or resumed.
+        BEEPONLY indicates that a beep/tone is played to alert the users to the call recording being paused or resumed.
+
+        Change History:
+        20.0   - Added.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="announcement" />
+      <xs:enumeration value="beeponly" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="RecordCallRepeatWarningToneTimerSeconds">
+    <xs:annotation>
+      <xs:appinfo>
+      </xs:appinfo>
+      <xs:documentation>
+        The value in seconds specifying how often the end user
+        receives the warning tone that call is being recorded.
+        
+        Change History:
+        20.0   - Added.
+        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="10"/>
+      <xs:maxInclusive value="1800"/>
+    </xs:restriction>
+  </xs:simpleType>   
+  
+</xs:schema>

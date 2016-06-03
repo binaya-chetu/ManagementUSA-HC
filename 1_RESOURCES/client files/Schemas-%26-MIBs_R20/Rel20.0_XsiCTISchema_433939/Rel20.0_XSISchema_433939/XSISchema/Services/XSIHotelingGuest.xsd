@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Hotelling Guest interface in the http://schema.broadsoft.com/xsi         -->
+<!-- namespace.                                                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="HotelingGuest" type="HotelingGuest">
+    <xs:annotation>
+      <xs:documentation>
+        User Remote Office (RO) properties. Remote Office
+        allows you to use your
+        home phone, your cell
+        phone or even a hotel
+        phone as your business phone. By using a call
+        client application, you
+        can
+        make phone calls from this remote phone and have them billed to
+        your
+        business. This service also
+        directs all calls coming to your
+        business phone to ring the remote office
+        phone.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element> 
+  
+  <!-- ******************************************************************** -->
+  <!--           H O T E L I N G  G U E S T   D A T A  T Y P E S            -->
+  <!--                                                                      -->
+  <!-- Data types for Hoteling Guest service subscription.                  -->
+  <!-- ******************************************************************** -->
+
+  <xs:complexType name="HotelingGuest">
+    <xs:annotation>
+      <xs:documentation>
+        User Hoteling Guest properties. Hoteling Guest allows a user to
+  associate their service profile
+  with a Hoteling Host user. This allows the guest user to use the host's
+  device with the guest
+  user's service profile. This is useful for transient employees. The Xsi
+  provides for association
+  of a Hoteling Host user to a Hoteling Guest, as well as control of
+  Hoteling Guest settings. The
+  list of Hoteling Host users can be retrieved as well. However, control
+  of Hoteling Host settings
+  is not provided at this time.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ActivatableServiceInfo">
+        <xs:sequence>
+        <xs:element name="enableAssociationLimit" type="xs:boolean"
+            minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    When true, indicates that association is limited to
+                    the number of hours configured.
+                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="associationLimitHours" type="HotelingAssociationLimitHours"
+            minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    The number of hours the host-guest association is
+                    valid. This value is only valid when
+                    enableAssocationLimit is
+                    present.
+                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostUserId" type="UserId" nillable="true" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    The hoteling host user ID for the hoteling guest. Only
+                    present when hoteling association is active.
+                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostLastName" type="LastName" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostFirstName" type="FirstName" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostAssociationDateTime" type="xs:dateTime"
+            minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostEnforcesAssociationLimit" type="xs:boolean"
+            minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                                  </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="hostAssociationLimitHours" type="HotelingAssociationLimitHours"
+            minOccurs="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Element is Read Only
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,1614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  N E T W O R K   E L E M E N T  P A R T  -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="./OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypesNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- N E T W O R K   E L E M E N T  P A R T                                             -->
+  <!-- R E Q U E S T S  A N D  R E S P O N S E S                                          -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingNEAddRequest    
+    RoutingNEDeleteRequest    
+    RoutingNEGetListRequest    
+    RoutingNEGetRequest    
+    RoutingNEModifyRequest    
+    RoutingNEAddressAddRequest    
+    RoutingNEAddressDeleteRequest    
+    RoutingNEAddressGetListRequest    
+    RoutingNEAddressGetRequest    
+    RoutingNEAddressModifyRequest    
+    RoutingNEMediaAddRequest20    
+    RoutingNEMediaDeleteRequest    
+    RoutingNEMediaModifyRequest20    
+    RoutingNEMediaGetSupportedMediaListRequest    
+    RoutingNEMediaGetListRequest20    
+    RoutingNEMediaClearRequest    
+    RoutingNERoutingAddRequest    
+    RoutingNERoutingDeleteRequest    
+    RoutingNERoutingGetListRequest    
+    RoutingNERoutingGetRequest    
+    RoutingNERoutingModifyRequest    
+    WebServerFarmAddRequest    
+    WebServerFarmDeleteRequest    
+    WebServerFarmGetListRequest    
+    WebServerFarmGetRequest    
+    WebServerFarmModifyRequest    
+    WebServerFarmNodeAddRequest    
+    WebServerFarmNodeDeleteRequest    
+    WebServerFarmNodeGetListRequest    
+    WebServerFarmNodeGetRequest    
+    WebServerFarmNodeModifyRequest    
+    WebServerFarmAddressAddRequest    
+    WebServerFarmAddressDeleteRequest    
+    WebServerFarmAddressGetListRequest    
+    WebServerFarmAddressGetRequest    
+    WebServerFarmAddressModifyRequest    
+    XSPServerFarmAddRequest    
+    XSPServerFarmDeleteRequest    
+    XSPServerFarmGetListRequest    
+    XSPServerFarmGetRequest    
+    XSPServerFarmModifyRequest    
+    XSPServerFarmNodeAddRequest    
+    XSPServerFarmNodeDeleteRequest    
+    XSPServerFarmNodeGetListRequest    
+    XSPServerFarmNodeGetRequest    
+    XSPServerFarmNodeModifyRequest    
+    XSPServerFarmAddressAddRequest    
+    XSPServerFarmAddressDeleteRequest    
+    XSPServerFarmAddressGetListRequest    
+    XSPServerFarmAddressGetRequest    
+    XSPServerFarmAddressModifyRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingNEAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a Routing NE.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="location" type="DN"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="profile" type="RoutingProfile"/>
+          <xs:element name="poll" type="xs:boolean"/>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="signaling" type="RoutingNESignalingAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a Routing NE.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of Routing NEs.
+        The response is either RoutingNeGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest"/>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNeGetListRequest.
+        The column headings are: "Routing NE", "Location", "Cost", "Weight",
+        "Profile", "Poll", "State", "Operational State", "Signaling Attributes".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="routingNEListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a Routing NE.
+        The response is either RoutingNeGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNeGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="location" type="DN"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="profile" type="RoutingProfile"/>
+          <xs:element name="poll" type="xs:boolean"/>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="signaling" type="RoutingNESignalingAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a Routing NE.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="location" type="DN" minOccurs="0"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="profile" type="RoutingProfile" minOccurs="0"/>
+          <xs:element name="poll" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="state" type="DeviceState" minOccurs="0"/>
+          <xs:element name="signaling" type="RoutingNESignalingAttribute" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a Routing NE Address.
+        If usePort is set to false, the port specified is not used and is reset to 0.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="port" type="RoutingNEAddressPort"/>
+          <xs:element name="usePort" type="xs:boolean"/>
+          <xs:element name="transport" type="RoutingNEAddressTransportType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a Routing NE Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of Routing NE Addresses.
+        The response is either RoutingNEAddressGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest"/>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEAddressGetListRequest.
+        The column headings are: "Routing NE", "Address", "Cost", "Weight",
+        "Port", "Transport".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="routingNEAddressListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a Routing NE Address.
+        The response is either RoutingNEAddressGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEAddressGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="port" type="RoutingNEAddressPort"/>
+          <xs:element name="usePort" type="xs:boolean"/>
+          <xs:element name="transport" type="RoutingNEAddressTransportType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEAddressModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a Routing NE Address.
+        If usePort is set to false, the port specified is not used and is reset to 0.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="port" type="RoutingNEAddressPort" minOccurs="0"/>
+          <xs:element name="usePort" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="transport" type="RoutingNEAddressTransportType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaAddRequest20">
+    <xs:annotation>
+      <xs:documentation>
+        Add a Routing NE Media.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="mediaCodec" type="MediaCodec" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a Routing NE Media.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="mediaCodec" type="MediaName" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaModifyRequest20">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a Routing NE Media.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="mediaCodecs" type="ReplacementMediaNameList20" minOccurs="0"/>
+          <xs:element name="codecBasedRtg" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetSupportedMediaListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of supported Routing NE Media codecs.
+        The response is either RoutingNEMediaGetSupportedMediaListResponse or ErrorResponse.
+        Replaced by: RoutingNEMediaGetSupportedMediaListRequest20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest"/>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetSupportedMediaListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEMediaGetSupportedMediaListRequest.
+        Replaced by: RoutingNEMediaGetSupportedMediaListResponse20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="mediaCodec" type="MediaName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetListRequest20">
+    <xs:annotation>
+      <xs:documentation>
+        Get media codecs for a given routing NE.
+        The response is either RoutingNEMediaGetListResponse20 or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetListResponse20">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEMediaGetListRequest20.
+        The column headings are: "Media Codec", "Priority".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="codecBasedRtg" type="xs:boolean"/>
+          <xs:element name="mediaCodec" type="MediaCodec" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaClearRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Clears the Routing NE Media for a particular Routing NE.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a Routing NE Route.         
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="farendCategory" type="CallCategory"/>
+          <xs:element name="farendDMI" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="nearendDMI" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="farendDTG" type="DestinationTrunkGroup" minOccurs="0"/>
+          <xs:element name="nearendDTG" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a Routing NE Route.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of Routing NE Route.
+        The response is either RoutingNERoutingGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest"/>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNERoutingGetListRequest.
+        The column headings are: "Routing NE", "From", "To", "Cost", "Weight",
+        "Far-end Category", "Far-end Digit Manipulation Index" "Near-end Digit Manipulation Index" 
+        "Far-end Destination Trunk Group", "Near-End Destination Trunk Group".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="routingNERoutingListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a Routing NE Route.
+        The response is either RoutingNERoutingGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEAddressGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="farendCategory" type="CallCategory"/>
+          <xs:element name="farendDMI" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="nearendDMI" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="farendDTG" type="DestinationTrunkGroup" minOccurs="0"/>
+          <xs:element name="nearendDTG" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNERoutingModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a Routing NE Route.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="farendCategory" type="CallCategory" minOccurs="0"/>
+          <xs:element name="farendDMI" type="DigitManipulationIndex" minOccurs="0" nillable="true"/>
+          <xs:element name="nearendDMI" type="DigitManipulationIndex" minOccurs="0" nillable="true"/>
+          <xs:element name="farendDTG" type="DestinationTrunkGroup" minOccurs="0" nillable="true"/>
+          <xs:element name="nearendDTG" type="DestinationTrunkGroup" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a WebServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="description" type="WebServerFarmDescription" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a WebServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of WebServerFarm.
+        The response is either WebServerFarmGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmGetListRequest.
+        The column headings are: "Name", "Description".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="webServerFarmListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a WebServerFarm.
+        The response is either WebServerFarmGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="description" type="WebServerFarmDescription" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a WebServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="description" type="WebServerFarmDescription" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a WebServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="version" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="patchLevel" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="minWebPatchLevel" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="description" type="WebServerFarmDescription" minOccurs="0"/>
+          <xs:element name="webImpactingPatches" type="WebServerFarmNodePatchList" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a WebServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of WebServerFarm Nodes.
+        The response is either WebServerFarmNodeGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmNodeGetListRequest.
+        The column headings are: "Web Server Farm", "Node Id", "State", "Version",
+        "Is Branding Master", "Patch Level", "Minimum Web Patch Level", "Description",
+        "Web Impacting Patches".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="webServerFarmNodeListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the details of a WebServerFarm Node.
+        The response is either WebServerFarmNodeGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmNodeGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="version" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean"/>
+          <xs:element name="patchLevel" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="minWebPatchLevel" type="WebServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="description" type="WebServerFarmDescription" minOccurs="0"/>
+          <xs:element name="webImpactingPatches" type="WebServerFarmNodePatchList" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmNodeModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a WebServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="state" type="DeviceState" minOccurs="0"/>
+          <xs:element name="version" type="WebServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="patchLevel" type="WebServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="minWebPatchLevel" type="WebServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="description" type="WebServerFarmDescription" minOccurs="0" nillable="true"/>
+          <xs:element name="webImpactingPatches" type="WebServerFarmNodePatchList" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a WebServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="type" type="WebServerFarmAddressType"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a WebServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of WebServerFarm Addresses.
+        The response is either WebServerFarmAddressGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmAddressGetListRequest.
+        The column headings are: "Web Server Farm", "Node Id", "Address", "Type",
+        "Cost", "Weight".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="webServerFarmAddressListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a WebServerFarm Address.
+        The response is either WebServerFarmAddressGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to WebServerFarmAddressGetRequest.
+        The column headings are: "Type", "Cost", "Weight".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="type" type="WebServerFarmAddressType"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="WebServerFarmAddressModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a WebServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="WebServerFarmName"/>
+          <xs:element name="nodeId" type="WebServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="type" type="WebServerFarmAddressType" minOccurs="0"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a XSPServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="description" type="XSPServerFarmDescription" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a XSPServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of XSPServerFarm.
+        The response is either XSPServerFarmGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmGetListRequest.
+        The column headings are: "Name", "Description".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="xspServerFarmListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a XSPServerFarm.
+        The response is either XSPServerFarmGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="description" type="XSPServerFarmDescription" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a XSPServerFarm.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="description" type="XSPServerFarmDescription" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a XSPServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="version" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="patchLevel" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="minXSPPatchLevel" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="description" type="XSPServerFarmDescription" minOccurs="0"/>
+          <xs:element name="xspImpactingPatches" type="XSPServerFarmNodePatchList" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a XSPServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of XSPServerFarm Nodes.
+        The response is either XSPServerFarmNodeGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmNodeGetListRequest.
+        The column headings are: "XSP Server Farm", "Node Id", "State", "Version",
+        "Is Branding Master", "Patch Level", "Minimum XSP Patch Level", "Description",
+        "XSP Impacting Patches".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="xspServerFarmNodeListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the details of a XSPServerFarm Node.
+        The response is either XSPServerFarmNodeGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmNodeGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="state" type="DeviceState"/>
+          <xs:element name="version" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean"/>
+          <xs:element name="patchLevel" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="minXSPPatchLevel" type="XSPServerFarmNodeVersion" minOccurs="0"/>
+          <xs:element name="description" type="XSPServerFarmDescription" minOccurs="0"/>
+          <xs:element name="xspImpactingPatches" type="XSPServerFarmNodePatchList" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmNodeModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a XSPServerFarm Node.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="state" type="DeviceState" minOccurs="0"/>
+          <xs:element name="version" type="XSPServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="isBrandingMaster" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="patchLevel" type="XSPServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="minXSPPatchLevel" type="XSPServerFarmNodeVersion" minOccurs="0" nillable="true"/>
+          <xs:element name="description" type="XSPServerFarmDescription" minOccurs="0" nillable="true"/>
+          <xs:element name="xspImpactingPatches" type="XSPServerFarmNodePatchList" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a XSPServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="type" type="XSPServerFarmAddressType"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a XSPServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of XSPServerFarm Addresses.
+        The response is either XSPServerFarmAddressGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmAddressGetListRequest.
+        The column headings are: "XSP Server Farm", "Node Id", "Address", "Type",
+        "Cost", "Weight".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="xspServerFarmAddressListTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a XSPServerFarm Address.
+        The response is either XSPServerFarmAddressGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to XSPServerFarmAddressGetRequest.
+        The column headings are: "Type", "Cost", "Weight".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="type" type="XSPServerFarmAddressType"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="XSPServerFarmAddressModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a XSPServerFarm Address.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="XSPServerFarmName"/>
+          <xs:element name="nodeId" type="XSPServerFarmNodeId"/>
+          <xs:element name="address" type="DeviceAddress"/>
+          <xs:element name="type" type="XSPServerFarmAddressType" minOccurs="0"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:simpleType name="DeviceAddress">
+    <xs:annotation>
+      <xs:documentation>
+        Device Address.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="DeviceState">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for the device status.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Online"/>
+      <xs:enumeration value="Offline"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="MediaName">
+    <xs:annotation>
+      <xs:documentation>
+        Media Codec Name.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="Priority">
+    <xs:annotation>
+      <xs:documentation>
+        Priority value.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="99"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:complexType name="MediaCodec">
+    <xs:annotation>
+      <xs:documentation>
+          Media Codec Name with priority attribute
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="mediaName" type="MediaName"/>
+      <xs:element name="priority" type="Priority" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>    
+    
+  <xs:complexType name="ReplacementMediaNameList20">
+    <xs:annotation>
+      <xs:documentation>
+          A list of Media Codecs.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="mediaCodec" type="MediaCodec" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>    
+    
+  <xs:simpleType name="RoutingNEAddressPort">
+    <xs:annotation>
+      <xs:documentation>
+        Routing NE Address Port.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="65535"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="RoutingNEAddressTransportType">
+    <xs:annotation>
+      <xs:documentation>
+          Routing NE Address Port.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Udp"/>
+      <xs:enumeration value="Tcp"/>
+      <xs:enumeration value="Undefined"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="RoutingNESignalingAttribute">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for routing NE signaling attributes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="E164 Compliant"/>
+      <xs:enumeration value="Forking"/>
+      <xs:enumeration value="Inbound Only"/>
+      <xs:enumeration value="Use Orig-Based Screening"/>
+      <xs:enumeration value="Disable Dynamic Routing"/>
+      <xs:enumeration value="Access Routing NE"/>
+      <xs:enumeration value="Call Trigger Required"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmAddressType">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for the web server farm address type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Access"/>
+      <xs:enumeration value="Alias"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmDescription">
+    <xs:annotation>
+      <xs:documentation>
+        Web server farm description.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="80"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmName">
+    <xs:annotation>
+      <xs:documentation>
+        Web server farm name.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmNodeId">
+    <xs:annotation>
+      <xs:documentation>
+        Web server farm node Id.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmNodePatchList">
+    <xs:annotation>
+      <xs:documentation>
+        Web server farm node version.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="2048"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="WebServerFarmNodeVersion">
+    <xs:annotation>
+      <xs:documentation>
+        Web server farm node version.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmAddressType">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for the XSP server farm address type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Access"/>
+      <xs:enumeration value="Alias"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmDescription">
+    <xs:annotation>
+      <xs:documentation>
+        XSP server farm description.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="80"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmName">
+    <xs:annotation>
+      <xs:documentation>
+        XSP server farm name.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmNodeId">
+    <xs:annotation>
+      <xs:documentation>
+        XSP server farm node Id.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmNodePatchList">
+    <xs:annotation>
+      <xs:documentation>
+        WXSP server farm node version.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="2048"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="XSPServerFarmNodeVersion">
+    <xs:annotation>
+      <xs:documentation>
+        XSP server farm node version.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+</xs:schema>

@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2010 BroadSoft, Inc.  All rights reserved.               -->
+<!-- ********************************************************************** -->
+<!-- CTIRoutePoint  X M L  S C H E M A                                      -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the Route Point Services.         -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns="http://schema.broadsoft.com/CTI"
+  targetNamespace="http://schema.broadsoft.com/CTI" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsp="http://schema.broadsoft.com/XspXMLInterface" xmlns:xsi="http://schema.broadsoft.com/xsi"
+  elementFormDefault="unqualified" version="1.0">
+
+
+  <xs:import namespace="http://schema.broadsoft.com/XspXMLInterface"
+    schemaLocation="../../XSPXMLSchema/XspXMLInterface.xsd" />
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/MeetMeConference/XSIMeetMeConference.xsd" />
+
+
+  <xs:element name="GetMeetMeConferenceRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to get details of a Meet-Me conference. 
+
+        Returns a xsp:Response with xsi:MeetMeConference.
+        
+        Change History:
+        19.0 - Added.   
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="GET" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MeetMeConferenceHoldCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request puts a particular participant’s call on hold. 
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.          
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/calls/%callId%/hold"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="callId" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to hold.                        
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                              
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MeetMeConferenceLockRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>        
+        This request locks a specified Meet-Me conference. 
+        Once the conference is locked, no participant can join 
+        the conference by dialing into the conference bridge. 
+        The only way to add the participant is to use the 
+        Outgoing Dial request. 
+        
+        Returns a generic xsp:Response with empty payload.
+        
+        Change History:
+        19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/lock"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MeetMeConferenceMuteCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>       
+       This request mutes a particular participant on the call. 
+       When muted, no audio stream is transmitted from the muted 
+       participant associated with the call to the other participants. 
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/calls/%callId%/mute"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="callId" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to mute.                        
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                              
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceOutgoingDialRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>   
+        This request is used to originate a call session from 
+        the Meet-Me conference to the specified destination. 
+        If the request is accepted, then BroadWorks initiates 
+        a call to the target destination.              
+        
+        Returns a generic xsp:Response with empty payload.
+        
+        Change History:
+        19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/outgoingdial%address%&amp;%uniqueIdentifier%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="address" type="xsi:Address">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Address of destination Phone no.
+                        to call.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                   <xs:element name="uniqueIdentifier" type="xsi:NonEmptyToken" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>
+                        When present, allows a participant to identify themselves with a 
+                        code when joined a conference. The length of this parameter 
+                        should be within 10 digits.                                                 
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferencePlaySecurityClassificationRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation> 
+        This request can be used to play a message 
+        that announces the current security classification 
+        level calculated for a specified Meet-Me conference. 
+
+        Returns a generic xsp:Response with empty payload.
+        
+        Change History:
+        19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/playsecurityclassification"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  <xs:element name="MeetMeConferencePauseRecordingRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation> 
+        This request can be used to pause a recording for the 
+        Meet-Me Conference that is being recorded.       
+        
+        Returns a generic xsp:Response with empty payload.
+        
+        Change History:
+        19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/pauserecording"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  <xs:element name="MeetMeConferenceReleaseCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>       
+       This request releases a particular participant’s call from the conference. 
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/calls/%callId%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="DELETE" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="callId" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to release.                        
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                              
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MeetMeConferenceResumeRecordingRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>       
+       This request can be used to resume recording for the Meet-Me Conference that was paused earlier.  
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/resumerecording"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceRetrieveCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>               
+       This request retrieves (unhold) a particular participant’s call which was held.
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/calls/%callId%/retrieve"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="callId" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to retrieve.                        
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                              
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceSetConferenceClientSessionInfoRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request can be used to explicitly associate the client session 
+       info with the specified Meet-Me conference.  
+              
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       20.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/clientSessionInfo?%info%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="info" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                       This is an opaque information provided by the client for the 
+                       Application Server to correlate this information with all the 
+                       call sessions connected to the Meet-Me conference focus. 
+                       The Application Server stores this information against 
+                       the call session and triggers notifications for both ends of the 
+                       call session over the SIP or CTI interface.   
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                                
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceSetLectureModeRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>   
+       This request can be used to set the lecture mode for 
+       a specified Meet-Me conference. Once the Lecture Mode 
+       is set with a particular moderator, only the moderator 
+       can talk and all the other participants in the conference 
+       are muted.              
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/setlecturemode"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>    
+  
+  <xs:element name="MeetMeConferenceStartRecordingRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request can be used to start recording for a specified 
+       Meet-Me conference. An error response is returned if there is 
+       an attempt to start recording twice without stopping.  
+
+       When conference recording is stopped/started multiple times 
+       during a conference, a new recording is stored on the 
+       repository each time.                   
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/startrecording"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceStopRecordingRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request can be used to stop recording for the Meet-Me 
+       Conference that was started earlier.  If the recording was not 
+       started, this command returns an error.  When the recording is 
+       stopped, the recording is uploaded to the repository.
+              
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/stoprecording"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="MeetMeConferenceUnlockRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request unlocks a specified Meet-Me conference that was 
+       previously locked.  Once successful, participants can join 
+       the conference by dialing in to the bridge.  
+              
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/unlock"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+<xs:element name="MeetMeConferenceUnmuteCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>               
+       This request unmutes a particular participant on the call. 
+       When unmuted, the audio stream can again be transmitted 
+       from the conference participant associated with the call 
+       to the other participants.  
+        
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/calls/%callId%/unmute"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="callId" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to unmute.                        
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                              
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MeetMeConferenceUnsetLectureModeRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+       This request can be used to set the lecture mode for a specified 
+       Meet-Me conference.
+              
+       This returns a generic xsp:Response with empty payload.
+       
+       Change History:
+       19.0 - Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of the request
+                  I.e. "/-context-/v2.0/meetmeconference/%bridgeId%/conference/%conferenceId%/unsetlecturemode"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bridgeId" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the Meet-Me bridge.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="conferenceId" type="xsi:MeetMeConferenceId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The conferenceId of the conference.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                               
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+      
+
+</xs:schema>

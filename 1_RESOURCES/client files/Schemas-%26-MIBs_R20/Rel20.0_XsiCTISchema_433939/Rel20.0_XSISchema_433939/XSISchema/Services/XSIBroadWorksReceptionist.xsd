@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Broadworks Receptionist User Service interface in the                    -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="BroadWorksReceptionist">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with BroadWorks Receptionist
+        Enterprise service.        
+      </xs:documentation>
+    </xs:annotation>
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="monitoredUsers" type="UserDetailInfoList"
+        minOccurs="0" nillable="true">
+          <xs:annotation>
+            <xs:documentation>
+              List of monitoredUser of type UserDetailInfoList.
+              For Modification of monitoredUserList,
+
+              1.Requires only the userid of monitored users,
+              rest elements are ignored.
+
+              2. If set to nil will clear the configured monitored users list.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

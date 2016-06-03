@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Privacy User Service interface in the http://schema.broadsoft.com/xsi    -->
+<!-- namespace.                                                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+    targetNamespace="http://schema.broadsoft.com/xsi"
+    attributeFormDefault="unqualified" elementFormDefault="qualified"
+    version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <xs:element name="Privacy">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with Privacy service.
+
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:annotation>
+        <xs:documentation>
+          Contains the Privacy service configuration data.
+          User Privacy allows you to exclude yourself from Group and
+          Enterprise Directory listings, Auto Attendant extension and/or
+          name dialing, and Phone Status monitoring. You can also select
+          members in an Enterprise or Group who are allowed to monitor
+          your phone status. These selected members can view your phone
+          status even if you enable phone status privacy.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="isEnableDirectoryPrivacy" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether directory privacy should be enabled or not.
+              With privacy enabled, when another user does a directory listing, 
+              the user's name and information do not appear.  
+              With privacy disabled, the name appears as usual.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="isEnableAutoAttendantExtensionDialingPrivacy" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether to exclude the user from Auto 
+              Attendant extension dialing.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="isEnableAutoAttendantNameDialingPrivacy" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether to exclude the user from Auto 
+              Attendant name dialing.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="isEnablePhoneStatusPrivacy" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When present, indicates whether the user should be excluded from 
+              Phone Status monitoring.
+              This prevents users in the same group or enterprise from seeing the
+              user's phone status.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="allowedUsers" type="UserDetailInfoList" minOccurs="0" nillable="true">
+          <xs:annotation>
+            <xs:documentation>
+              List of authorized users of type UserDetailsList.
+              This allows a group of specified users to monitor your phone status,
+              regardless of the Phone Status Privacy setting.
+
+              1.Requires only the userid of authorized users, remaining elements 
+              of UserDetailInfoList.UserDetailInfo are ignored.
+
+              2. If set to nil will clear the configured authorized users list.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

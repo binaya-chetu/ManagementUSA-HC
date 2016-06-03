@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ************************************************************************* -->
+<!-- Copyright (c) 2007-2008 Broadsoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************* -->
+<!--         O C I   X M L   S C H E M A  :  S Y S T E M  (N S)  P A R T       -->
+<!--                                                                           -->
+<!-- This file defines the XML Schema for the BroadSoft Profile Server         -->
+<!-- Open Client Interface (OCI).                                              -->
+<!-- ************************************************************************* -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:core="C" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:import namespace="C" schemaLocation="OCISchemaBASE.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypesNS.xsd"/>
+  <!-- ***************************************************************************** -->
+  <!-- S Y S T E M  (N S)  R E Q U E S T S   A N D   R E S P O N S E S               -->
+  <!-- ***************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+
+  SystemLocationAddRequest
+  SystemLocationDeleteRequest
+  SystemLocationGetRequest
+  SystemLocationGetListRequest
+  SystemLocationModifyRequest
+  
+  SystemCarrierAddRequest
+  SystemCarrierDeleteRequest
+  SystemCarrierGetRequest
+  SystemCarrierModifyRequest
+  -->
+  <xs:complexType name="SystemLocationAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a physical location.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="id" type="PhysicalLocationId"/>
+          <xs:element name="location" type="PhysicalLocation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a physical location.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="id" type="PhysicalLocationId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of physical location.
+        The response is either SystemPhysicalLocationGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a SystemLocationGetListRequest. 
+        The table column headings are "Physical Location Id", "Physical Location".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="physicalLocationTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a particular physical location.
+        The response is either SystemLocationGetResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="id" type="PhysicalLocationId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a SystemLocationGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="location" type="PhysicalLocation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemLocationModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a physical location.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="id" type="PhysicalLocationId"/>
+          <xs:element name="location" type="PhysicalLocation"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a carrier.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="CarrierName"/>
+          <xs:element name="cc" type="CountryCode"/>
+          <xs:element name="cac" type="CarrierAccessCode"/>
+          <xs:element name="intraLata" type="xs:boolean"/>
+          <xs:element name="interLata" type="xs:boolean"/>
+          <xs:element name="international" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Delete a carrier.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="CarrierName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties for a given carrier.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="CarrierName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a SystemCarrierGetRequest. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="cc" type="CountryCode"/>
+          <xs:element name="cac" type="CarrierAccessCode"/>
+          <xs:element name="intraLata" type="xs:boolean"/>
+          <xs:element name="interLata" type="xs:boolean"/>
+          <xs:element name="international" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of carriers.
+        The response is either SystemCarrierGetListResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a SystemCarrierGetListRequest. 
+        The table column headings are "Carrier", "Country Code", "Carrier Access Code",
+        "IntraLata", "InterLata", "International".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="carrierTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SystemCarrierModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a carrier.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="CarrierName"/>
+          <xs:element name="intraLata" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="interLata" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="international" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- ******************************************************************** -->
+  <!-- M E S S A G E   P A R A M E T E R S                                  -->
+  <!-- ******************************************************************** -->
+  <!--
+  The system specific non-primitive attributes are listed here in alphabetical order.
+
+  CarrierAccessCode
+  CountryCodeOffHookWarningTimerSeconds
+  CountryCodeMaxCallWaitingTones
+  CountryCodeRingPeriodMilliseconds
+  CountryCodeTimeBetweenCallWaitingTonesMilliseconds
+  
+  -->
+  <xs:simpleType name="CarrierAccessCode">
+    <xs:annotation>
+      <xs:documentation>
+        Carrier Access Code.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

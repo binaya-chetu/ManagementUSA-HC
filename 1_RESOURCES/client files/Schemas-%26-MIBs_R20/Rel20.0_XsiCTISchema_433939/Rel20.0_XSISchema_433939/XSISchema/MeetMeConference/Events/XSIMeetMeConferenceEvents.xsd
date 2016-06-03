@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!-- Copyright (c) 2008 BroadSoft, Inc. All rights reserved. -->
+<!-- ************************************************************************ -->
+<!-- XSI X M L S C H E M A -->
+<!-- ************************* -->
+<!-- This file defines the schema types and elements required by the -->
+<!-- CallSession Event interface in the http://schema.broadsoft.com/xsi -->
+<!-- name space. -->
+<!-- -->
+<!-- The Elements and Types are defined in the Alphabetical Order with -->
+<!-- grouping at the Element, Complex and Simple level respectively. -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../../MeetMeConference/XSIMeetMeConference.xsd" />
+  <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+  <!-- ************************************************************** -->
+  <!-- Complex Type in Alphabetical Order. -->
+  <!-- ************************************************************** -->
+
+  <xs:complexType name="MeetMeAutoLectureModeStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever the automatic lecture mode starts.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="unmutedParticipants" type="MeetMeConferenceParticipants" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The list of participants who will remain unmuted after the conference
+                has been placed into automatic lecture mode. All other non-moderator 
+                participants will be muted.
+                
+                If no list is included in the event, all non-moderator participants
+                are muted.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceClientSessionInfoUpdatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Initial event sent for the MeetMe Conference event package.
+        Event is sent if ClientSessionInfo is changed for the conference.
+        
+        Change History:
+        20.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceInfo" type="MeetMeConferenceInfo" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Included if ClientSessionInfo has been changed for the conference.        
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+
+  <xs:complexType name="MeetMeConferenceLockedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever a conference is locked.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who locked the conference.
+                
+                Omitted in the case of a client XSI Action request.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferenceRecordingPausedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when a conference's recording service is paused.
+
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who paused the recording
+ 
+                Omitted in the case of a client XSI Action request.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceRecordingResumedEvent">
+    <xs:annotation>
+     <xs:documentation>
+        Sent sent when a conference's recording service is resumed.
+
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who resumed the recording.
+              
+                Omitted in the case of a client XSI Action request.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceRecordingStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when a conference's recording service is started.
+
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who started the recording.
+
+                Omitted in the case of a client XSI Action request.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceRecordingStoppedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when a conference's recording service is stopped.
+
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who stopped the recording.
+
+                Omitted in the case of a client XSI Action request.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="MeetMeConferenceRecordingStoppedReason">
+            <xs:annotation>
+              <xs:documentation>
+                The reason the recording has stopped.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceSecurityClassificationUpdatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever the security classification of a meetme conference 
+        changes due to participants joining, leaving, or particiapnts
+        updating their current security classification level.
+        This event is sent when the conference owner has the 
+        Security Classification service assigned.
+        
+        Change History:
+        20.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="securityClassification" type="NonEmptyToken" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+              The conference security classification value.
+              Determined by selecting the lowest-ranked current 
+               classification level from all participant(s).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever a conference starts.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="securityClassification" type="NonEmptyToken" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+              The conference call classification level.
+              The classification is determined by selecting
+              the lowestcurrent classification level from all
+              participant(s).
+              Present if the conference owner has the Security                 
+              Classification service assigned.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>      
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferenceStoppedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever a conference stops.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConferenceSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Initial event sent for the MeetMe Conference event package.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conference" type="MeetMeConference" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+              Is present if a targetSubId was included on 
+              subscription and if the conference is active.        
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceSubscriptionResyncEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The MeetMeConferenceSubscriptionResyncEvent is generated when a situation arises that causes a loss of updates and a resync is needed.
+        Change History:
+        Release Added: R19.sp1
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="MeetMeConferenceSubscriptionEvent" />
+    </xs:complexContent>
+  </xs:complexType>  
+
+  <xs:complexType name="MeetMeConferenceUnlockedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever a conference is unlocked.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The participant who unlocked the conference.
+                
+                Omitted in the case of a client XSI Action request.                
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeLectureModeStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever a conference is put into lecture mode by a moderator.
+        
+        Entering lecture mode, all non-moderator participants are muted, all 
+        moderators are unmuted.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"  minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The moderator who initiated lecture mode.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeLectureModeStoppedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent whenever the lecture mode of a conference is stopped by a moderator.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The moderator who stopped the lecture mode.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantLeftEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants leave a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callIds" type="MeetMeConferenceCallIdList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The call ids of the participants leaving the conference.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantHeldEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants are held in a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                The participants held.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantJoinedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants join a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                The list of participants joining the conference.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantMutedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants are muted in a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                List of participants muted.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantRetrievedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants are retrieved in a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                The participants retrieved.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantUnmutedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants are unmuted in a conference.
+        
+        Change History:
+        19.0 - added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                List of participants unmuted.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeParticipantUpdatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Sent when one or more participants have their participant
+        information updated.
+
+        Change History:
+        19.0 - added Meet Me Conference event package
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+            <xs:annotation>
+              <xs:documentation>
+                List of participants updated.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+</xs:schema>

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- S E R V I C E   C E N T E R  P O L I C Y                               -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- S E R V I C E   C E N T E R    R E Q U E S T S  A N D  R E S P O N S E S           -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyServiceCenterAddInstanceRequest18    
+    RoutingPolicyServiceCenterDeleteInstanceRequest    
+    RoutingPolicyServiceCenterGetInstanceRequest18    
+    RoutingPolicyServiceCenterModifyInstanceRequest18    
+    RoutingPolicyServiceCenterAddGatewayControllerRequest    
+    RoutingPolicyServiceCenterDeleteGatewayControllerRequest    
+    RoutingPolicyServiceCenterGetGatewayControllerListRequest    
+    RoutingPolicyServiceCenterAddRouteRequest    
+    RoutingPolicyServiceCenterDeleteRouteRequest    
+    RoutingPolicyServiceCenterGetRouteEntryRequest    
+    RoutingPolicyServiceCenterGetRouteListRequest    
+    RoutingPolicyServiceCenterModifyRouteRequest    
+    RoutingPolicyServiceCenterAddTrunkGroupRequest    
+    RoutingPolicyServiceCenterDeleteTrunkGroupRequest    
+    RoutingPolicyServiceCenterGetTrunkGroupEntryRequest    
+    RoutingPolicyServiceCenterGetTrunkGroupListRequest    
+    RoutingPolicyServiceCenterModifyTrunkGroupRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyServiceCenterAddInstanceRequest18">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="AddCicAsCacType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetInstanceRequest18">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyServiceCenterGetInstanceResponse18 or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetInstanceResponse18">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetInstanceRequest18.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="AddCicAsCacType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterModifyInstanceRequest18">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="isCicRequired" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="useCicAlways" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="addCicAsCac" type="AddCicAsCacType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterAddGatewayControllerRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a gateway controller entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="controllerGroupId" type="ControllerGroupId"/>
+          <xs:element name="controller" type="HostingNEName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterDeleteGatewayControllerRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a gateway controller entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="controllerGroupId" type="ControllerGroupId"/>
+          <xs:element name="controller" type="HostingNEName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetGatewayControllerListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of gateway controller entries.
+        The response is either a RoutingPolicyServiceCenterGetGatewayControllerListResponse or
+        an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactControllerGroupId" type="SearchCriteriaExactControllerGroupId" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactController" type="SearchCriteriaExactHostingNEName" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetGatewayControllerListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetGatewayControllerListRequest.
+        The column headings are: "Group Id", "Controller".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="gatewayControllerTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterAddRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="destination" type="ServiceCenterRouteDestination"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="callSelector" type="CallDiversionSelector" minOccurs="0"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterDeleteRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="destination" type="ServiceCenterRouteDestination"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetRouteEntryRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given route entry.
+        The response is either a RoutingPolicyServiceCenterGetRouteEntryResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="destination" type="ServiceCenterRouteDestination"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetRouteEntryResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetRouteEntryRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="callSelector" type="CallDiversionSelector"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetRouteListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of route entries.
+        The response is either a RoutingPolicyServiceCenterGetRouteListResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactCallType" type="SearchCriteriaExactCallType" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactFrom" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTo" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactCallDiversionSelector" type="SearchCriteriaExactCallDiversionSelector" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactAddress" type="SearchCriteriaExactDn" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactRoutingNE" type="SearchCriteriaExactRoutingNE" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTrunkGroupId" type="SearchCriteriaExactNetworkTrunkGroupId" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDigitManipulationIndex" type="SearchCriteriaExactDigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDestinationTrunkGroup" type="SearchCriteriaExactDestinationTrunkGroup" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetRouteListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetRouteListRequest.
+        The column headings are: "Call Type", "From", "To", "Call Selector", "Address", "Routing Network Element",
+        "TrunkGroup Id", "Cost", "Weight", "Digit Manipulation Index", "Destination Trunk Group".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="routeTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterModifyRouteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify a route entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="callType" type="CallType"/>
+          <xs:element name="from" type="DN"/>
+          <xs:element name="to" type="DN"/>
+          <xs:element name="destination" type="ServiceCenterRouteDestination"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0" nillable="true"/>
+          <xs:element name="callSelector" type="CallDiversionSelector" minOccurs="0"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterAddTrunkGroupRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a trunkgroup entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="protocol" type="TrunkGroupProtocol"/>
+          <xs:element name="trunkGroup" type="TrunkGroupName"/>
+          <xs:element name="channel" type="ChannelName"/>
+          <xs:element name="gatewayAddress" type="GatewayAddress"/>
+          <xs:element name="controllerGroupId" type="ControllerGroupId" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterDeleteTrunkGroupRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a trunk group entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="protocol" type="TrunkGroupProtocol"/>
+          <xs:element name="trunkGroup" type="TrunkGroupName"/>
+          <xs:element name="channel" type="ChannelName"/>
+          <xs:element name="gatewayAddress" type="GatewayAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetTrunkGroupEntryRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the properties of a given trunk group entry.
+        The response is either a RoutingPolicyServiceCenterGetTrunkGroupEntryResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="protocol" type="TrunkGroupProtocol"/>
+          <xs:element name="trunkGroup" type="TrunkGroupName"/>
+          <xs:element name="channel" type="ChannelName"/>
+          <xs:element name="gatewayAddress" type="GatewayAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetTrunkGroupEntryResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetTrunkGroupEntryRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="controllerGroupId" type="ControllerGroupId" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetTrunkGroupListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of trunk group entries.
+        The response is either a RoutingPolicyServiceCenterGetTrunkGroupListResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactTrunkGroupProtocol" type="SearchCriteriaExactTrunkGroupProtocol" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTrunkGroupName" type="SearchCriteriaExactTrunkGroupName" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactChannelName" type="SearchCriteriaExactChannelName" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactGatewayAddress" type="SearchCriteriaExactGatewayAddress" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactControllerGroupId" type="SearchCriteriaExactControllerGroupId" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetTrunkGroupListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetTrunkGroupListRequest.
+        The column headings are : "Protocol", "Trunk Group", "Channel", "Gateway Address", "Controller Group Id".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="trunkGroupTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterModifyTrunkGroupRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify a trunk group entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="protocol" type="TrunkGroupProtocol"/>
+          <xs:element name="trunkGroup" type="TrunkGroupName"/>
+          <xs:element name="channel" type="ChannelName"/>
+          <xs:element name="gatewayAddress" type="GatewayAddress"/>
+          <xs:element name="controllerGroupId" type="ControllerGroupId" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:simpleType name="ChannelName">
+    <xs:annotation>
+      <xs:documentation>
+        Channel name.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="GatewayAddress">
+    <xs:annotation>
+      <xs:documentation>
+        Gateway address.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="ControllerGroupId">
+    <xs:annotation>
+      <xs:documentation>
+        The group id of a gateway controller.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="TrunkGroupProtocol">
+    <xs:annotation>
+      <xs:documentation>
+        Trunk group protocol.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="MGCP"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:complexType name="SearchCriteriaExactChannelName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular ChannelName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="channelName" type="ChannelName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactGatewayAddress">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular GatewayAddress.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="gatewayAddress" type="GatewayAddress"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactControllerGroupId">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular ControllerGroupId.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="controllerGroupId" type="ControllerGroupId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactTrunkGroupProtocol">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular TrunkGroupProtocol.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="trunkGroupProtocol" type="TrunkGroupProtocol"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="ServiceCenterRouteDestination">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the destination of the routing list entry.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="address" type="DN"/>
+      <xs:element name="routingNE" type="RoutingNE"/>
+      <xs:element name="trunkGroupId" type="NetworkTrunkGroupId"/>
+    </xs:choice>
+  </xs:complexType>    
+    
+</xs:schema>

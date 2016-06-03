@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Forwarding No Answer User Service interface in the                  -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:complexType name="CallForwardingNoAnswer">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Call Forwarding No Answer service configuration data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CallForwarding">
+        <xs:sequence>
+          <xs:element name="numberOfRings"
+            type="NumberOfRingsZeroToTwentyExcludeOne" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The number of rings to ring the phone before
+                forwarding the calls.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType> 
+
+  <xs:element name="CallForwardingNoAnswer" type="CallForwardingNoAnswer">
+    <xs:annotation>
+      <xs:documentation>
+        User Call Forward No Answer (CFNA) properties. Call Forwarding No Answer
+        allows you to forward
+        all your calls to a different phone number or SIP-URI when you do not
+        answer your phone. Use
+        this service when you would rather have a secretary or co-worker receive
+        the call instead of the
+        caller being sent to your voice messaging box if you miss a call.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+    
+</xs:schema>

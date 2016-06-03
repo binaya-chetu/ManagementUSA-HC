@@ -1,0 +1,325 @@
+-- File Name : BW-USS.mib
+
+BW-USS DEFINITIONS ::= BEGIN
+  IMPORTS
+    DateAndTime, DisplayString 
+      FROM SNMPv2-TC
+    MODULE-COMPLIANCE, OBJECT-GROUP 
+      FROM SNMPv2-CONF
+    enterprises, MODULE-IDENTITY, OBJECT-TYPE, Gauge32, Counter32, Integer32, Unsigned32, Counter64
+      FROM SNMPv2-SMI;
+
+  broadsoft MODULE-IDENTITY
+    LAST-UPDATED "201308110000Z"
+    ORGANIZATION "Broadsoft, Inc"
+    CONTACT-INFO "Broadsoft, Inc
+9737 Washingtonian Blvd
+Suite 350
+Gaithersburg, MD 20878
+301-977-9440"
+    DESCRIPTION
+      "This is the System Management Information structure for the BroadSoft USS."
+
+    REVISION "201308110000Z"
+      DESCRIPTION "Creation of the USS MIB."
+    ::= { enterprises 6431 }
+
+  broadworks OBJECT IDENTIFIER
+    ::= { broadsoft 1 }
+
+  uss OBJECT IDENTIFIER
+    ::= { broadworks 37 }
+
+  rooms OBJECT IDENTIFIER
+    ::= { uss 1 }
+
+  users OBJECT IDENTIFIER
+    ::= { uss 2 }
+
+  resources OBJECT IDENTIFIER
+    ::= { uss 3 }
+
+  imageprocessing OBJECT IDENTIFIER
+    ::= { resources 1 }
+
+  connections OBJECT IDENTIFIER
+    ::= { resources 2 }
+
+  bwUSSMibConformance OBJECT IDENTIFIER
+    ::= { uss 1000 }
+
+-- Rooms Counters  ...........................................
+    
+  bwUSSRoomsNumInUse    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This gauge reports the number of rooms that are currently in use."
+-- @feature:195928
+    ::=  {  rooms  1  }
+
+  bwUSSRoomsMax    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This gauge reports the maximum number of rooms that can be allocated simultaneously."
+-- @feature:195928
+    ::=  {  rooms  2  }
+
+  bwUSSRoomsNumCreated    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room was successfully created."
+-- @feature:195928
+    ::=  {  rooms  3  }
+
+  bwUSSRoomsNumCreationFailedAuthenticationFailure    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room creation failed because the authentication of the end-user failed."
+-- @feature:195928
+    ::=  {  rooms  4  }
+
+  bwUSSRoomsNumCreationFailedServerCapacityExceeded    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room creation failed because the server maximum capacity was exceeded."
+-- @feature:195928
+    ::=  {  rooms  5  }
+
+  bwUSSRoomsNumCreationFailedOther    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room creation failed for other reasons."
+-- @feature:195928
+    ::=  {  rooms  6  }
+
+  bwUSSRoomsTotalDuration    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the total duration of all rooms, in seconds."
+-- @feature:195928
+    ::=  {  rooms  7  }
+
+  bwUSSRoomsTotalDataReceived    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the total number of bytes transmitted by floor holders to rooms."
+-- @feature:195928
+    ::=  {  rooms  8  }
+
+  bwUSSRoomsTotalDataTransmitted    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the total number of bytes transmitted by rooms to participants."
+-- @feature:195928
+    ::=  {  rooms  9  }
+
+  bwUSSRoomsNumDestroyedInactive    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room was destroyed by the system due to inactivity."
+-- @feature:195928
+    ::=  {  rooms  10  }
+
+  bwUSSRoomsNumDestroyedMaximumDurationExceeded    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a room was destroyed by the system due the room maximum duration being reached."
+-- @feature:195928
+    ::=  {  rooms  11  }
+
+-- Users Counters  ...........................................
+
+  bwUSSUsersNumConnected    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This gauge reports the number of end-users who are currently connected to the server."
+-- @feature:195928
+    ::=  {  users  1  }
+
+  bwUSSUsersMaxConnected    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This gauge reports the maximum number of users that can be connected simultaneously."
+-- @feature:195928
+    ::=  {  users  2  }
+
+  bwUSSUsersTotalConnected    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a user successfully connected to a room."
+-- @feature:195928
+    ::=  {  users  3  }
+
+  bwUSSUsersTotalConnectionFailedServerCapacityExceeded    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a user could not connect because the server is busy."
+-- @feature:195928
+    ::=  {  users  4  }
+
+  bwUSSUsersTotalConnectionFailedInvalidRoomId    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a user could not join a room because an invalid room identifier was provided."
+-- @feature:195928
+    ::=  {  users  5  }
+
+  bwUSSUsersTotalConnectionFailedOther    OBJECT-TYPE  
+    SYNTAX      Counter64
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This counter tracks the number of times a user could not connect to a room for other reasons."
+-- @feature:195928
+    ::=  {  users  6  }
+
+-- Resources Counters  ...........................................
+    
+  bwUSSImageProcessingQueueCapacity    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the capacity of the image processing queue."
+-- @feature:195928
+    ::=  {  imageprocessing  1  }
+
+  bwUSSImageProcessingQueueSize    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the current size of the image processing queue."
+-- @feature:195928
+    ::=  {  imageprocessing  2  }
+
+  bwUSSImageProcessingThreadsBusy    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the approximate number of threads that are actively executing tasks."
+-- @feature:195928
+    ::=  {  imageprocessing  3  }
+
+  bwUSSImageProcessingThreadsAlive    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the current number of threads instantiated."
+-- @feature:195928
+    ::=  {  imageprocessing  4  }
+
+  bwUSSImageProcessingThreadsAliveMax    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the maximum number of threads that can be allocated at the same time."
+-- @feature:195928
+    ::=  {  imageprocessing  5  }
+
+  bwUSSConnectionsThreadsAlive    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the current number of threads instantiated."
+-- @feature:195928
+    ::=  {  connections  1  }
+
+  bwUSSConnectionsThreadsAliveMax    OBJECT-TYPE  
+    SYNTAX      Gauge32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION    
+        "This is the maximum number of threads that can be allocated at the same time."
+-- @feature:195928
+    ::=  {  connections  2  }
+
+-- BroadWorks USS MIB Conformance Definition  ......................................
+
+  bwUSSMibGroups OBJECT IDENTIFIER 
+    ::= { bwUSSMibConformance 1 }
+
+  bwUSSMibCompliancy OBJECT IDENTIFIER
+    ::= { bwUSSMibConformance 2 }
+
+  bwUSSRoomsStatsGroup OBJECT-GROUP
+    OBJECTS { bwUSSRoomsNumInUse, bwUSSRoomsMax, bwUSSRoomsNumCreated,
+              bwUSSRoomsNumCreationFailedAuthenticationFailure,
+              bwUSSRoomsNumCreationFailedServerCapacityExceeded,
+              bwUSSRoomsNumCreationFailedOther, bwUSSRoomsTotalDuration,
+              bwUSSRoomsTotalDataReceived, bwUSSRoomsTotalDataTransmitted,
+              bwUSSRoomsNumDestroyedInactive, bwUSSRoomsNumDestroyedMaximumDurationExceeded
+               }
+    STATUS current
+    DESCRIPTION 
+        "This group defines the USS Rooms statistics."
+    ::= { bwUSSMibGroups 1 }
+   
+  bwUSSUsersStatsGroup OBJECT-GROUP
+    OBJECTS { bwUSSUsersNumConnected, bwUSSUsersMaxConnected, bwUSSUsersTotalConnected,
+              bwUSSUsersTotalConnectionFailedServerCapacityExceeded,
+              bwUSSUsersTotalConnectionFailedInvalidRoomId,
+              bwUSSUsersTotalConnectionFailedOther }
+    STATUS current
+    DESCRIPTION 
+        "This group defines the USS Users statistics."
+    ::= { bwUSSMibGroups 2 }
+   
+  bwUSSResourcesStatsGroup OBJECT-GROUP
+    OBJECTS { bwUSSImageProcessingQueueCapacity, bwUSSImageProcessingQueueSize,
+              bwUSSImageProcessingThreadsBusy, bwUSSImageProcessingThreadsAlive,
+              bwUSSConnectionsThreadsAlive, bwUSSConnectionsThreadsAliveMax }
+    STATUS current
+    DESCRIPTION 
+        "This group defines the USS Resources statistics."
+    ::= { bwUSSMibGroups 3 }
+   
+  bwUSSBasicCompliance MODULE-COMPLIANCE
+    STATUS      current
+    DESCRIPTION 
+        "BroadWorks Unified Sharing Server MIB compliance"
+
+    MODULE      -- this module
+
+        MANDATORY-GROUPS        
+        { bwUSSRoomsStatsGroup, bwUSSUsersStatsGroup,
+          bwUSSResourcesStatsGroup }
+
+    ::= { bwUSSMibCompliancy 1 }
+END

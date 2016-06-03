@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  E N T E R P R I S E  P A R T           -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="./OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypesNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- E N T E R P R I S E  P A R T    R E Q U E S T S  A N D  R E S P O N S E S          -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    EnterpriseDefaultPoliciesOnSyncGetRequest    
+    EnterpriseDefaultPoliciesOnSyncAddRequest    
+    EnterpriseDefaultPoliciesOnSyncDeleteRequest    
+    
+  --> 
+  
+  <xs:complexType name="EnterpriseDefaultPoliciesOnSyncGetRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request the list of the default private policies.
+        The response is either an EnterpriseDefaultPoliciesOnSyncGetResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="EnterpriseDefaultPoliciesOnSyncGetResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to EnterpriseDefaultPoliciesOnSyncGetRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="EnterpriseDefaultPoliciesOnSyncAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy to the list of default policies.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyName" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="EnterpriseDefaultPoliciesOnSyncDeleteRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy from the list of default policies.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyName" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- CallPark Events interface in the                                         -->
+    <!-- http://schema.broadsoft.com/xsi namespace.                               -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- groupind at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+    targetNamespace="http://schema.broadsoft.com/xsi" attributeFormDefault="unqualified"
+    elementFormDefault="qualified" version="1.0">
+
+
+
+    <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+    <xs:include schemaLocation="../XSIServices.xsd" />
+
+    <!-- ******************************************************************** -->
+    <!-- C A L L  P A R K    N O T I F I C A T I O N  T Y P E S               -->
+    <!--                                                                      -->
+    <!-- Types for all Call Park service related notifications.               -->
+    <!-- ******************************************************************** -->
+
+    <xs:complexType name="CallParkedAgainstEvent">
+      <xs:annotation>
+        <xs:documentation>
+          Provides information about the parked user when a call is
+          parked against the target user or indicates a call is 
+          no longer parked against the target user.
+
+          Change History:
+          R17.sp3 - Added                               
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="EventData">
+          <xs:sequence>
+            <xs:element name="parkedParty" type="PartyInformation" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                   The details of the Parked user. Refer to 
+                   Party Information for more details.
+                   
+                   Present when a call is parked against the 
+                   monitored user.
+                   Not Present when a call is not parked against 
+                   the monitored user.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

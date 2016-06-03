@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Speed Dial 8 Service interface in the http://schema.broadsoft.com/xsi    -->
+<!-- namespace.                                                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="SpeedDial8">
+    <xs:annotation>
+      <xs:documentation>
+        User Speed Dial 8 properties. Speed Dial 8
+        allows you to set up to eight speed dial 
+        numbers that can be called with the push of 
+        a button. Enter the number as you would
+        normally dial it and then
+        just hit that number on your touch pad
+        to call it. You can also program
+        your speed dial using your phone
+        and the star code for Speed Dial 8.
+   </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="speedDial8Entry" type="SpeedDial8Entry"
+          minOccurs="0" maxOccurs="8" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="SpeedDial8Entry">
+    <xs:annotation>
+      <xs:documentation>Speed dial 8 list definition.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="speedCode" type="SpeedDial8Code" />
+      <xs:element name="phoneNumber" type="OutgoingDNorSIPURI"
+        nillable="true" minOccurs="0" />
+      <xs:element name="description" type="SpeedDialDescription"
+        nillable="true" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:simpleType name="SpeedDial8Code">
+    <xs:annotation>
+      <xs:documentation>Speed Dial 8 entry code.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="2" />
+      <xs:maxInclusive value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

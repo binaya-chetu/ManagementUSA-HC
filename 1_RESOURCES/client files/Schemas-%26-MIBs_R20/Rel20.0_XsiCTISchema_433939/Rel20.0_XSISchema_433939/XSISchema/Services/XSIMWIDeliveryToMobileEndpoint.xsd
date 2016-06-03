@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- MWI Delivery To Mobile Endpoint service interface in the                 -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="MWIDeliveryToMobileEndpoint" type ="MWIDeliveryToMobileEndpoint">
+    <xs:annotation>
+      <xs:documentation>
+        MWI Delivery to Mobile Endpoint allows you to deliver a notification
+        to your mobile phone about the reception of a new voice mail, fax or
+        video message. If this feature is enabled, and your mobile phone has
+        SMS (Short Messaging Service) or MWI (Message Waiting Indicator)
+        capability, the information about new voice mail, fax or video message
+        waiting will be presented at your mobile phone.
+
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <!-- ******************************************************************** -->
+  <!--          MWI Delivery to Mobile Endpoint   D A T A  T Y P E S        -->
+  <!--                                                                      -->
+  <!-- Data types for MWI Delivery to Mobile Endpoint.                      -->
+  <!-- ******************************************************************** -->
+    
+  <xs:complexType name="MWIDeliveryToMobileEndpoint">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the MWI Delivery to Mobile Endpoint service configuration
+        data.
+
+        MWI Delivery to Mobile Endpoint allows you to deliver a notification to
+        your mobile phone about the reception of a new voice mail, fax or
+        video message. If this feature is enabled, and your mobile phone has
+        SMS (Short Messaging Service) or MWI (Message Waiting Indicator)
+        capability, the information about new voice mail, fax or video message
+        waiting will be presented at your mobile phone.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ActivatableServiceInfo">
+        <xs:sequence>
+          <xs:element name="mobilePhoneNumber" type="DN" minOccurs="0" nillable="true">
+            <xs:annotation>
+              <xs:documentation>
+                The number of the mobile phone to which MWI notifications will
+                be sent. The field must be present when the service is enabled. 
+                It may not be present when the service is disabled.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+</xs:schema>

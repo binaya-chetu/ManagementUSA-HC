@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Transfer User Service interface in the                              -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="CallTransfer" type="CallTransferInfo">
+    <xs:annotation>
+      <xs:documentation>
+        User Call Transfer properties. Call Transfer allows you to transfer a
+        call to another phone
+        using your phone or a call client application.
+   </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="CallTransferInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Call Transfer service configuration data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="recallActive" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when Call Transfer Recall is enabled.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="recallNumberOfRings" type="NumberOfRingsTwoToTwenty"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Number of rings before Call Transfer Recall is invoked.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="busyCampOnActive" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when Busy Camp On is enabled.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="busyCampOnSeconds" type="CallTransferBusyCampOnSeconds"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Number of seconds for Busy Camp On timer.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="useDiversionInhibitorForBlindTransfer"
+        type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when the diversion inhibitor is enabled for
+            blind transfers.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="useDiversionInhibitorForConsultativeCalls"
+        type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when the diversion inhibitor is enabled for
+            consultative calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="CallTransferBusyCampOnSeconds">
+    <xs:annotation>
+      <xs:documentation>
+        Number of seconds for the Call Transfer service's Busy Camp On timer.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="PositiveInt">
+      <xs:minInclusive value="30" />
+      <xs:maxInclusive value="600" />
+    </xs:restriction>
+  </xs:simpleType>
+      
+</xs:schema>

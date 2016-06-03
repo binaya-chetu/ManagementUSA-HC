@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- **************************************************************************** -->
+    <!--          Copyright (c) 2013 BroadSoft, Inc.  All rights reserved.            -->
+    <!-- **************************************************************************** -->
+    <!--                      XSI  X M L  S C H E M A                                 -->
+    <!--                     *************************                                -->
+    <!-- This file defines the schema types and elements required by the              -->
+    <!-- FlexibleSeatingGuest Events interface in the http://schema.broadsoft.com/xsi -->
+    <!-- namespace.                                                                   -->
+    <!--                                                                              -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with groupind   -->
+    <!-- at the Element, Complex and Simple level respectively.                       -->
+    <!-- **************************************************************************** -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+    targetNamespace="http://schema.broadsoft.com/xsi" attributeFormDefault="unqualified"
+    elementFormDefault="qualified" version="1.0">
+
+    <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+    <xs:include schemaLocation="../XSIServices.xsd" />
+
+    <!-- ******************************************************************************* -->
+    <!-- F L E X I B L E  S E A T L I N G  G U E S T  N O T I F I C A T I O N  T Y P E S -->
+    <!--                                                                                 -->
+    <!-- Types for all XSI Flexible Seating Guest service related notifications.         -->
+    <!-- ******************************************************************************* -->
+
+    <xs:complexType name="FlexibleSeatingGuestEvent">
+        <xs:annotation>
+            <xs:documentation>
+                Notification with the current configuration status for the Flexible Seating
+                Guest service.
+
+                Change History:
+                R20.0 - Added.
+      </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ServiceEvent">
+                <xs:sequence>
+                    <xs:element name="info" type="FlexibleSeatingGuest" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Notification data for the Flexible Seating Guest service. Only
+                                not present for service unassignment
+                                notifications.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

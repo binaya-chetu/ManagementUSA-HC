@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  D E P R E C A T E D  19                -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="./OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="./OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- D E P R E C A T E D  C O M M A N D S  F R O M  R E L E A S E  19                   -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingNEMediaAddRequest    
+    RoutingNEMediaModifyRequest    
+    RoutingNEMediaGetListRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingNEMediaAddRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Add a Routing NE Media.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingNEMediaAddRequest20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="mediaCodec" type="MediaName" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaModifyRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Modify a Routing NE Media.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingNEMediaModifyRequest20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE"/>
+          <xs:element name="mediaCodecs" type="ReplacementMediaNameList" minOccurs="0"/>
+          <xs:element name="codecBasedRtg" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get media codecs for a given routing NE.
+        The response is either RoutingNEMediaGetListResponse or ErrorResponse.
+        Replaced by: RoutingNEMediaGetListRequest20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="ne" type="RoutingNE" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingNEMediaGetListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingNEMediaGetListRequest.
+        The column headings are: "Media Codec".
+		Replaced by: RoutingNEMediaGetListResponse20
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="codecBasedRtg" type="xs:boolean"/>
+          <xs:element name="mediaCodec" type="MediaName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="ReplacementMediaNameList">
+    <xs:annotation>
+      <xs:documentation>
+          A list of Media Codecs.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="mediaName" type="MediaName" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>    
+    
+</xs:schema>

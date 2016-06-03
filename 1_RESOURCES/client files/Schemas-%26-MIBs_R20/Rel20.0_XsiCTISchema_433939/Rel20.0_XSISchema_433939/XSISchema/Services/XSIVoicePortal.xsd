@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- Voice Portal Service interface in the http://schema.broadsoft.com/xsi -->
+    <!-- namespace.                                                               -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="VoicePortal">
+    <xs:annotation>
+      <xs:documentation>
+        Voice Portal allows you to set a Personalized Name (upload an audio file to use as your 
+        name for Auto Attendant and Voice Messaging) and set voice portal auto-login option.
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element name="usePersonalizedName" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="voicePortalAutoLogin" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="personalizedNameAudioFile" type="LabeledMediaFileResource" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

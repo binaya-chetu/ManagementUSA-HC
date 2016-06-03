@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2004-2005 Broadsoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  S E A R C H   C R I T E R I A  ( N S ) -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Application Server  -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:core="C" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:include schemaLocation="OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="OCISchemaDataTypesNS.xsd"/>
+  <xs:complexType name="SearchCriteria" abstract="true">
+    <xs:annotation>
+      <xs:documentation>
+        Abstract base type for specifing search criteria. A search criteria is an optional element
+        used to restrict the number of rows returned when requesting a potentially large set of
+        data from the provisioning server.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDn">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified DN.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dn" type="DN"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactRoutingNE">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified RoutingNE.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="routingNE" type="RoutingNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactResourceNE">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified ResourceNE.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="resourceNE" type="ResourceNE"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactResourceCost">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified resource cost.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="cost" type="ResourceCost"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactResourceWeight">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified resource weight.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="weight" type="ResourceWeight"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDigitManipulationIndex">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified DigitManipulationIndex.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDestinationTrunkGroup">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified DestinationTrunkGroup.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactCarrierName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified CarrierName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="carrierName" type="CarrierName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactCallType">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular CallType.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="callType" type="CallType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactCallDiversionSelector">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular CallDiversionSelector.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="callSelector" type="CallDiversionSelector"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dialPlanName" type="DialPlanName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanDNLengthLimit">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanDNLengthLimit.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="DialPlanDNLengthLimit" type="DialPlanDNLengthLimit"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanMatchClause">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanMatchClause.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dialPlanMatchClause" type="DialPlanMatchClause"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanAction">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanAction.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dialPlanAction" type="DialPlanAction" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanAlternateCallIndicator">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanAlternateCallIndicator.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dialPlanAlternateCallIndicator" type="DialPlanAlternateCallIndicator" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDialPlanDescription">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanDescription.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="dialPlanDescription" type="DialPlanDescription" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactLATA">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular LATA.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="lata" type="LATA"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactRateCenterName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular RateCenterName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="rateCenterName" type="RateCenterName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactCountryCode">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular CountryCode.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="countryCode" type="CountryCode"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactZoneName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular ZoneName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="zoneName" type="ZoneName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactHostingNEName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular HostingNEName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="hostingNEName" type="HostingNEName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactTrunkGroupName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular TrunkGroupName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="trunkGroupName" type="TrunkGroupName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactDomainName">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DomainName.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="domainName" type="DomainName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactPrefixLength">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified prefix.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="prefixLength" type="PrefixLength"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactNetworkTrunkGroupId">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular NetworkTrunkGroupId.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="trunkGroupId" type="NetworkTrunkGroupId"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactMediaServerService">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular MediaServerService.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="mediaServerService" type="MediaServerService"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactCallCategory">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular call category.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="callCategory" type="CallCategory" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SearchCriteriaExactTrunkGroupTranslDescription">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular  TrunkGroupTranslDescription.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="description" type="TrunkGroupTranslDescription" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

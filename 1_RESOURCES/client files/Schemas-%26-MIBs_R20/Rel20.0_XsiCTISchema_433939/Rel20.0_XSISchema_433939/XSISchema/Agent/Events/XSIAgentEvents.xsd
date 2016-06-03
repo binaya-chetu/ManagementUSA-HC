@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- ACDAgent Event interface in the http://schema.broadsoft.com/xsi          -->
+    <!-- name space.                                                              -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIAgent.xsd" />
+  <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Complex type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+
+  <xs:complexType name="ACDAgentJoinUpdateEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification with the information on the ACD the agent is joining or leaving.
+        Change History:
+          Rel19.0 - This event is also generated when the skill level of the 
+                    agent is modified.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="ccAgentJoinUpdateData" type="ACDAgentJoinUpdateData"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Notification update data for the ACD Agent Join.
+
+                Only not present for service unassignment notifications.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AgentSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification with the list of ACDs that an agent belongs to and the state of the
+        Agent. This is used for initial notifications.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="joinData" type="ACDAgentJoinData">
+            <xs:annotation>
+              <xs:documentation>
+                Notification data for the ACD Agent Join.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="stateInfo" type="AgentStateInformation"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The agent's state. This is only present when state information is
+                available.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AgentDispositionCodeAddedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Agent Disposition Code Added event is sent when an agent enters
+        a Disposition Code. The callId parameter identifies the call
+        associated with the Disposition Code.
+        Disposition Code can be added using the BroadWorks ACD client or from the
+        agent's endpoint.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="dispositionCode" type="AgentDispositionCode">
+            <xs:annotation>
+              <xs:documentation>
+                Disposition code to tag the call center call with.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                Identification of the call center call to tag.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AgentStateEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Agent State event is sent when an agent changes state. State
+        change can be initiated by a remote application Agent State
+        Change request or from the BroadWorks Call Center client or from
+        the agent's endpoint or from the web portal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="agentStateInfo" type="AgentStateInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information on the agent state.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="CallCenterAgentMonitoringEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Call Center Agent Monitoring event is sent when an 
+        ACD call to an agent ends or is transferred.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="monitoringStatus" type="CallCenterAgentMonitoringStatus">
+            <xs:annotation>
+              <xs:documentation>
+                 The current call center agent monitoring status.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="CallCenterAgentMonitoringSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Call Center Agent Monitoring Subscription Event is the initial event.
+        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="monitoringStatus" type="CallCenterAgentMonitoringStatus">
+            <xs:annotation>
+              <xs:documentation>
+                 The current call center agent monitoring status.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="alertInfo" type="CallCenterAgentOnCallAlertInfo" minOccurs="0" >
+            <xs:annotation>
+              <xs:documentation>
+                The current on-call/idle time and alert status.
+                Omitted if the alerts are not enabled.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>        
+          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+ 
+  <xs:complexType name="CallCenterAgentOnCallAlertEvent">
+    <xs:annotation>
+      <xs:documentation>
+        A Call Center Agent On-Call Alert Event is sent
+        if an agent has been on a call or idle
+        for too long.
+  
+        The event is also sent to clear or update the
+        severity of alerts.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="alertInfo" type="CallCenterAgentOnCallAlertInfo">
+            <xs:annotation>
+              <xs:documentation>
+                The current on-call/idle time and alert status.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>        
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+ 
+ 
+</xs:schema>

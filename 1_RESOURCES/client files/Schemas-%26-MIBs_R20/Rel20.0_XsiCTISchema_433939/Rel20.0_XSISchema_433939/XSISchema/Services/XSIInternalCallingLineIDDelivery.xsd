@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Internal Calling Line ID Delivery service interface in the               -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="InternalCallingLineIDDelivery">
+    <xs:annotation>
+      <xs:documentation>
+        User Internal Calling Line ID Delivery properties.
+        Internal Calling Line
+        ID Delivery allows the
+        Calling Line name and
+        number for callers from inside your group to be
+        displayed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element> 
+  
+ </xs:schema>

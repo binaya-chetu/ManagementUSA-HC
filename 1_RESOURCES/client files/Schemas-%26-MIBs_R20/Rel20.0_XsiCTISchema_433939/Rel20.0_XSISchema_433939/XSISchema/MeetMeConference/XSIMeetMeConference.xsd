@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!--
+    ************************************************************************
+  -->
+  <!--
+    Copyright (c) 2008 BroadSoft, Inc. All rights reserved.
+  -->
+  <!--
+    ************************************************************************
+  -->
+  <!--
+    XSI X M L S C H E M A
+  -->
+  <!--
+    *************************
+  -->
+  <!--
+    This file defines the schema types and elements required by
+  -->
+  <!-- MeetMeConference in the http://schema.broadsoft.com/xsi    -->
+  <!--
+    name space.
+  -->
+  <!--
+  -->
+  <!--
+    The Elements and Types are defined in the Alphabetical Order with
+  -->
+  <!--
+    grouping at the Element, Complex and Simple level respectively.
+  -->
+  <!--
+    ************************************************************************
+  -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../Services/XSIServices.xsd" />
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Element Type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+  
+ <xs:element name="MeetMeConference" type="MeetMeConference">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the details of a Meet-Me conference.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <!-- **************************************************************-->
+  <!--   Complex Types in Alphabetical Order.                        -->
+  <!-- **************************************************************-->
+  
+  <xs:complexType name="MeetMeConferenceCallIdList">
+    <xs:annotation>
+      <xs:documentation>
+				A list of call IDs.
+			
+				Release Added: R19
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="callId" type="CallId" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MeetMeConference">
+    <xs:annotation>
+      <xs:documentation>
+        This schema defines the information of a 
+        Conference which is active.It will give current state of the   
+        conference including the list of participants and moderators.
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="conferenceInfo" type="MeetMeConferenceInfo">
+        <xs:annotation>
+          <xs:documentation>
+            Current State of the conference
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="conferenceParticipants" type="MeetMeConferenceParticipants">
+        <xs:annotation>
+          <xs:documentation>
+            The details of attendees in the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+ <xs:complexType name="MeetMeConferenceInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Defines the details of an instance of an active MeetMe 
+        Conference. This will nto have the information of a participants
+        in the conference.   
+        Release Added:  R17.sp3
+        Release Modified R19.0
+        Change History:
+        20.0 - Added clientSessionInfo element
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lectureMode" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+           Is present if the lecture mode is enabled
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="automaticLectureMode" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+           Is present if the automatic lecture mode is enabled
+           Release Added: R19.0
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lock" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+           Is present if the conference is locked
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="recordingState" type="MeetMeConferenceRecordingState">
+        <xs:annotation>
+          <xs:documentation>
+            Defines the recording state of the conference
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityClassification" type="NonEmptyToken"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Release Added: R20.0
+            The conference security classification level.
+            Present if the conference owner has the Security 
+            Classification service assigned.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clientSessionInfo" type="ClientSessionInfo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            An opaque token set by the client.
+            
+            This is present if client session info 
+            has been set for this session.
+          
+            Release Added: R20.0
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>                    
+    </xs:sequence>
+  </xs:complexType>
+  
+ <xs:complexType name="MeetMeConferenceParticipant">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the details for a MeetMe Conference Participant
+        Release Added: R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="callId" type="CallId">
+        <xs:annotation>
+          <xs:documentation>
+            The call ID of the call for the participant.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="partyInformation" type="PartyInformation">
+        <xs:annotation>
+          <xs:documentation>
+            Information about the participant to the
+            conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="activeTalker" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the active
+            participant is the talker
+            on the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="held" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the participant
+            has been put on hold by a host.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="moderator" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the participant
+            is a moderator in the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="muted" type="EmptyContent" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the participant
+            has been muted by a host.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="uniqueIdentifier" type="MeetMeConferenceUniqueIdentifier" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Occurs when a participant has keyed a self Identifying pin while joining the conference.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="MeetMeConferenceParticipants">
+    <xs:annotation>
+      <xs:documentation>
+        A list of MeetMe Conference Participant.
+        Release Added: R17.sp3
+        Release Modified: R18.0
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="conferenceParticipant" type="MeetMeConferenceParticipant" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            MeetMeParticipantList is an array of MeetMeConferenceParticipant instances.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- **************************************************************-->
+  <!--   Simple Types in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+    
+  <xs:simpleType name="MeetMeConferenceId">
+    <xs:annotation>
+      <xs:documentation>
+        A conference ID for a MeetMe conference.
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="MeetMeConferenceRecordingState">
+    <xs:annotation>
+      <xs:documentation>
+        The various values for the recording state of a MeetMe Conference 
+        Release Added:  R17.sp3
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">  
+      <xs:enumeration value="Not Started"/>
+      <xs:enumeration value="Recording"/>
+      <xs:enumeration value="Pause"/>
+      <xs:enumeration value="End"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MeetMeConferenceRecordingStoppedReason">
+    <xs:annotation>
+      <xs:documentation>
+        The reasons for the recording stopping of a MeetMe Conference 
+        Release Added:  R19.0
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">  
+      <xs:enumeration value="Normal"/>
+      <xs:enumeration value="Max Recording File Size Reached"/>
+      <xs:enumeration value="Silence Only"/>
+      <xs:enumeration value="Media Failure"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

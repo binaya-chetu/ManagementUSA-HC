@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Call Forwarding Always User Service interface in the                     -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:complexType name="CallForwardingAlways">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Call Forwarding Always service configuration data.
+        Call Forwarding Always allows you to forward all your incoming calls to a different
+        phone number or SIP-URI, such as your home office or cell phone. You can also
+        make your primary phone emit a short ring burst to inform you if you are next to your
+        phone when the call is forwarded by using the Ring Reminder. This is important
+        when you have forgotten the service is turned on and you are at your primary
+        phone waiting to
+        receive calls. Note that the address (phone number or SIP-URI) you forward
+        your calls to must be permitted by your outgoing calling plan. You can also
+        set the phone
+        number or SIP-URI to forward to using the voice portal or on the phone
+        using the feature access code.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CallForwarding">
+        <xs:sequence>
+          <xs:element name="ringSplash" type="xs:boolean"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                When set to true, indicates that the subscriber should
+                be notified through a ring tone that a call has been forwarded.
+                Only
+                used if CFA is enabled.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType> 
+  
+    <xs:element name="CallForwardingAlways" type="CallForwardingAlways">
+    <xs:annotation>
+      <xs:documentation>
+        User Call Forwarding Always (CFA) properties. Call Forwarding Always
+        allows you to forward all
+        your incoming calls to a different phone number or SIP-URI, such as your
+        home office or cell
+        phone. You can also make your primary phone emit a short ring burst to
+        inform you if you are
+        next to your phone when the call is forwarded by using the Ring
+        Reminder. This is important when
+        you have forgotten the service is turned on and you are at your primary
+        phone waiting to receive
+        calls. Note that the address (phone number or SIP-URI) you forward your
+        calls to must be
+        permitted by your outgoing calling plan. You can also set the phone number or
+        SIP-URI to forward
+        to using the voice portal or on the phone using the feature access
+        code.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

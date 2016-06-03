@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Directed Call Pickup with BargeIn service interface in the               -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="DirectedCallPickupWithBargeIn">
+    <xs:annotation>
+      <xs:documentation>
+        User Directed Call Pickup With BargeIn properties. Directed Call Pickup
+        with Barge-in allows you
+        to dial a feature access code followed by an extension to pick up or
+        barge-in on a call to
+        another group member. If the call has not been answered, then it is picked
+        up. If the call has
+        been answered, then barge-in occurs. A barge-in results in a three-way
+        call being created
+        between you, the group member being barged-in on, and the other party the
+        group member is
+        connected to. You are the controller of the barge-in three-way call.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enableBargeInWarningTone" type="xs:boolean"
+            minOccurs="0" />
+        <xs:element name="enableAutomaticTargetSelection" type="xs:boolean"
+            minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+</xs:schema>

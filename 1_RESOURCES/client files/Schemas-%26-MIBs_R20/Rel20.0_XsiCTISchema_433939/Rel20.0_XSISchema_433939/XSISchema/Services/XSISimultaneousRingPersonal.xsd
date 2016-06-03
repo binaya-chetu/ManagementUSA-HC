@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Simultaneous Ring Personal service interface in the                      -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="SimultaneousRingPersonal" type="SimultaneousRingPersonal">
+    <xs:annotation>
+      <xs:documentation>
+        Simultaneous Ring Personal properties. Simultaneous Ring Personal allows you to
+        list phone
+        numbers or SIP-URI addresses you would like to ring in addition to your
+        primary phone when you
+        receive a call. This feature is helpful when you are not at your phone but
+        you would like your
+        cell phone to ring when you get a call. You can also turn off
+        simultaneous ringing when you are
+        at your desk on a call. Warning: if your cell phone or other phone has
+        voice mail that picks up
+        before your office voice messaging picks up, your voice mails could be on
+        your cell phone
+        messaging system!
+   </xs:documentation>
+    </xs:annotation>
+   </xs:element>
+   
+  <xs:element name="SimultaneousRingPersonalCriteria">
+    <xs:annotation>
+      <xs:documentation>
+        Simultaneous Ring Personal Details
+         
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="blackListed" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When true, reject the call according to the criteria.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="criteria" type="CriteriaWithFromDn" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation>
+               The criteria for each Sequential Ring entry can be a list of up to 12 phone numbers or digit patterns, 
+               a specified time schedule, and a specified holiday schedule. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+    <xs:complexType name="SimultaneousRingPersonal">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Simultaneous Ring Personal service configuration data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ActivatableServiceInfo">
+        <xs:sequence>
+          <xs:element name="incomingCalls" type="SimultaneousRingSelection">
+            <xs:annotation>
+              <xs:documentation>
+                Setting for how incoming calls are handled by the
+                Simultaneous Ring Personal service.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="simRingLocations" type="SimultaneousRingLocationList"
+            minOccurs="0" nillable="true">
+            <xs:annotation>
+              <xs:documentation>
+                The locations configured for the Simultaneous Ring
+                Personal service. Only present when at least
+                one location has been set.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="criteriaActivationList" type="CriteriaActivationList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The list of criteria for Simultaneous Ring Personal.
+                This is present what at least one
+                criterion is "set".
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- ******************************************************************** -->
+  <!--          S I M U L T A N E O U S  R I N G  D A T A  T Y P E S        -->
+  <!--                                                                      -->
+  <!-- Data types for Simultaneous Ring service subscription.               -->
+  <!-- ******************************************************************** -->
+
+  <xs:complexType name="SimultaneousRingLocation">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the information for a Simultaneous Ring location.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="address" type="Address">
+        <xs:annotation>
+          <xs:documentation>
+            The address for the location.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answerConfirmationRequired" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present and true, indicates that answer confirmation is required
+            for the location.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SimultaneousRingLocationList">
+    <xs:annotation>
+      <xs:documentation>
+        Contains a list of Simultaneous Ring Personal locations.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="simRingLocation" type="SimultaneousRingLocation"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:simpleType name="SimultaneousRingSelection">
+    <xs:annotation>
+      <xs:documentation>
+        The available settings for how Simultaneous Ring handles incoming
+        calls.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Do not Ring if on a Call" />
+      <xs:enumeration value="Ring for all Incoming Calls" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- Voice Messaging Service interface in the http://schema.broadsoft.com/xsi -->
+    <!-- namespace.                                                               -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+   <xs:element name="VoiceMessagingAliasList">
+    <xs:annotation>
+      <xs:documentation>
+        The voice mail aliases for a users voice message.
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="phoneNumber" type="DN" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="VoiceMessagingDistributionList">
+    <xs:annotation>
+      <xs:documentation>
+        The distribution list for a users voice message. 
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element name="description" type="VoiceMessagingDistributionListDescription" nillable="true" minOccurs="0"/>
+          <xs:element name="phoneNumberList" type="OutgoingDNorSIPURIList" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+   <xs:element name="VoiceMessagingGreetings">
+    <xs:annotation>
+      <xs:documentation>
+        Message Greetings allows you to upload personal audio files as greetings to use 
+        when people reach your voice messaging box.
+        
+        Change History:
+        R19.0 - Added              
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+        <xs:sequence>
+          <xs:element name="busyAnnouncementSelection" type="AnnouncementSelection" minOccurs="0"/>
+          <xs:element name="busyPersonalAudioFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="busyPersonalVideoFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="noAnswerAnnouncementSelection" type="VoiceMessagingNoAnswerGreetingSelection" minOccurs="0"/>
+          <xs:element name="noAnswerPersonalAudioFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="noAnswerPersonalVideoFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="disableExtendedAwayMessageDeposit" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="enableExtendedAwayGreeting" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="noAnswerExtendedAwayAudioFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="noAnswerExtendedAwayVideoFile" type="LabeledMediaFileResource" minOccurs="0"/>
+          <xs:element name="noAnswerAlternateGreeting01" type="VoiceMessagingAlternateNoAnswerGreeting" minOccurs="0"/>
+          <xs:element name="noAnswerAlternateGreeting02" type="VoiceMessagingAlternateNoAnswerGreeting" minOccurs="0"/>
+          <xs:element name="noAnswerAlternateGreeting03" type="VoiceMessagingAlternateNoAnswerGreeting" minOccurs="0"/>
+          <xs:element name="noAnswerNumberOfRings" type="NumberOfRingsZeroToTwentyExcludeOne" minOccurs="0"/>
+          <xs:element name="disableMessageDeposit" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="disableMessageDepositAction" type="VoiceMessagingDisableMessageDepositSelection" minOccurs="0"/>
+          <xs:element name="greetingOnlyForwardDestination" type="OutgoingDNorSIPURI" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="VoiceMessaging">
+    <xs:annotation>
+      <xs:documentation>
+        Voice Messaging allows you to specify how to handle your messages. Use Unified 
+        messaging if you want to use your phone to retrieve messages. You can also just 
+        choose to send the message to your e-mail and not use the phone for messaging. 
+        
+        Note that the message settings here also apply to other types of messaging such 
+        as fax if enabled.
+        
+        Change History:
+        R19.0 - Added.
+                voiceMessageDeliveryEmailAddress, voiceMessageNotifyEmailAddress, 
+                voiceMessageCarbonCopyEmailAddress and transferPhoneNumber
+                elements made nillable. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+          <xs:sequence>
+            <xs:element name="processing" type="VoiceMessagingMessageProcessing" minOccurs="0"/>
+            <xs:element name="voiceMessageDeliveryEmailAddress" type="EmailAddress" minOccurs="0" nillable="true"/>
+            <xs:element name="usePhoneMessageWaitingIndicator" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="sendVoiceMessageNotifyEmail" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="voiceMessageNotifyEmailAddress" type="EmailAddress" minOccurs="0" nillable="true"/>
+            <xs:element name="sendCarbonCopyVoiceMessage" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="voiceMessageCarbonCopyEmailAddress" type="EmailAddress" minOccurs="0" nillable="true"/>
+            <xs:element name="transferOnZeroToPhoneNumber" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="transferPhoneNumber" type="OutgoingDN" minOccurs="0" nillable="true"/>
+            <xs:element name="alwaysRedirectToVoiceMail" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="busyRedirectToVoiceMail" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="noAnswerRedirectToVoiceMail" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="outOfPrimaryZoneRedirectToVoiceMail" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element> 
+  
+  <xs:element name="VoiceMessagingMailServer">
+    <xs:annotation>
+      <xs:documentation>
+        Voice Messaging Mail Server allows you to specify how to store your messages. 
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element name="mailServerSelection" type="VoiceMessagingUserMailServerSelection" minOccurs="0"/>
+          <xs:element name="groupMailServerEmailAddress" type="EmailAddress" minOccurs="0"/>
+          <xs:element name="groupMailServerUserId" type="VoiceMessagingMailServerUserId" minOccurs="0"/>
+          <xs:element name="groupMailServerPassword" type="Password" minOccurs="0"/>
+          <xs:choice minOccurs="0">
+            <xs:element name="useGroupDefaultMailServerFullMailboxLimit" type="xs:boolean" fixed="true"/>
+            <xs:element name="groupMailServerFullMailboxLimit" type="VoiceMessagingMailboxLengthMinutes" />
+          </xs:choice>
+          <xs:element name="personalMailServerNetAddress" type="NetAddress" minOccurs="0"/>
+          <xs:element name="personalMailServerProtocol" type="VoiceMessagingMailServerProtocol" minOccurs="0"/>
+          <xs:element name="personalMailServerRealDeleteForImap" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="personalMailServerEmailAddress" type="EmailAddress" minOccurs="0"/>
+          <xs:element name="personalMailServerUserId" type="VoiceMessagingMailServerUserId" minOccurs="0"/>
+          <xs:element name="personalMailServerPassword" type="Password" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

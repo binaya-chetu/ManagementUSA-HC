@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- BroadWorks Anywhere Mobility User Service interface in the               -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="BroadWorksMobility">
+    <xs:annotation>
+      <xs:documentation>
+        The user level data associated with BroadWorks Mobility.
+        
+        Change History:
+          R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+          <xs:sequence>
+            <xs:element name="phonesToRing" type="BroadWorksMobilityPhoneToRingSelection" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When present, indicates the type of phones to ring.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="mobilePhoneNumber" type="DN" minOccurs="0" nillable="true">
+              <xs:annotation>
+                <xs:documentation>
+                  When present, indicates the mobile phone number.
+                  A mobile phone number must be present when service
+                  is active.
+                  This is cleared when set to nil.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="alertClickToDialCalls" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When true, indicates that the mobile phone is alerted  
+                  when making a Click-to Dial call.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="alertGroupPagingCalls" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When true, indicates that the mobile phone is alerted  
+                  when receiving a Group Paging call.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="enableDiversionInhibitor" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When true, indicates that unanswered call are not
+                  redirected.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="requireAnswerConfirmation" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When true, requires a confirmation digit after mobile 
+                  call leg is answered.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="broadworksCallControl" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  When true, indicates that call control is to be performed 
+                  by BroadWorks and not by mobile device.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element> 
+
+  <xs:simpleType name="BroadWorksMobilityPhoneToRingSelection">
+    <xs:annotation>
+      <xs:documentation>
+        BroadWorks Mobility selection for phone to ring.
+        
+        Change History:
+          R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Fixed"/>
+      <xs:enumeration value="Mobile"/>
+      <xs:enumeration value="Both"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

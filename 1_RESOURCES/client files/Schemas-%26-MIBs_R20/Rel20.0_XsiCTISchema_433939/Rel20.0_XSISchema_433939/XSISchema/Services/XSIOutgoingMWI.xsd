@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- Outgoing Messaging Waiting Indicator Service interface in the            -->
+    <!-- http://schema.broadsoft.com/xsi namespace.                               -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="OutgoingMWI">
+    <xs:annotation>
+      <xs:documentation>
+        Outgoing MWI enables the system to send a message to other devices to allow your Message Waiting 
+        Indicator (MWI) to work on your phone.
+        
+        Change History:
+        
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+          <xs:sequence>
+            <xs:element name="outgoingSMDIMWIPhoneNumberList" type="OutgoingDNList" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

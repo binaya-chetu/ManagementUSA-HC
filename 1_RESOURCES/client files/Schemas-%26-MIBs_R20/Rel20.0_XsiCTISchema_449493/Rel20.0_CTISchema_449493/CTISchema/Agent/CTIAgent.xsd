@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2010 BroadSoft, Inc.  All rights reserved.               -->
+<!-- ********************************************************************** -->
+<!-- CTIAgent  X M L  S C H E M A                                           -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the Agent Services.               -->
+<!-- ********************************************************************** -->
+
+
+<xs:schema xmlns="http://schema.broadsoft.com/CTI"
+  targetNamespace="http://schema.broadsoft.com/CTI" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsp="http://schema.broadsoft.com/XspXMLInterface" xmlns:xsi="http://schema.broadsoft.com/xsi"
+  elementFormDefault="unqualified" version="1.0">
+
+
+  <xs:import namespace="http://schema.broadsoft.com/XspXMLInterface"
+    schemaLocation="../../XSPXMLSchema/XspXMLInterface.xsd" />
+
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/Agent/XSIAgent.xsd" />
+
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/Services/XSIServices.xsd" />
+    
+  <xs:element name="EscalateToSupervisorRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to originate a call session
+        from the specified agent to an available supervisor. When
+        escalating a call to the supervisor, the existing call 
+        handled by the agent is placed on hold.
+        The request may optionally specify the supervisor's 
+        address. If the request does not specify the
+        address of the supervisor then BroadWorks determines an 
+        available supervisor from the list of supervisors assigned 
+        to that particular agent.
+        Two conditions are to be met for the call to find an available
+        supervisor.
+        1. Supervisor should not be on a call
+        2. Supervisor should not have DND set.
+
+        Returns a xsp:Response with a xsi:CallStartInfo payload.
+        
+        Change History:
+        17.sp4 - Modified to add the location and locationAddress 
+                 optional elements.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI EscalateToSupervisor Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/calls/Escalate?%address%&amp;%location%&amp;%locationAddress%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token"></xs:element>          
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the calling
+                        user.                
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="address" type="xsi:Address" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The address of the supervisor to whom 
+                        the call is being escalated. 
+                        The address is optional. If absent, 
+                        the AS determines an available supervisor.               
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                                 
+                  <xs:element name="location" type="xsi:ClickToDialLocationEnum" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>
+                        When present, specifies the location of the 
+                        calling user to ring for the call.
+                        
+                        When not present, locations are alerted per the 
+                        calling user's profile on BroadWorks.
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="locationAddress" type="xsi:NonEmptyToken" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Specific address of location to ring. This element 
+                        should only be present if the "location" element is 
+                        present and set to "BroadWorksAnywhere" or 
+                        "SharedCallAppearance".
+                                          
+                        When the "location" element is set to 
+                        "BroadWorksAnywhere", the locationAddress is 
+                        optional and contains a directory number. The 
+                        directory number may be in E.164 format or it 
+                        may just contain digits. When not present, all
+                        BroadWorks Anywhere locations are alerted. The 
+                        following are valid directory numbers for the 
+                        locationAddress element:
+                              - 9725551000
+                              - +19725551000
+
+                        When the "location" element is set to 
+                        "SharedCallAppearance", the locationAddress 
+                        is optional and contains a BroadWorks 
+                        address of record.  The address of record may 
+                        be user@domain for SIP locations or user for 
+                        MGCP locations. When not present, all
+                        Shared Call Appearance locations are alerted.
+                        The following are valid address of records for 
+                        the locationAddress element:
+                              - 9725551000@broadsoft.com
+                              - 9725551000
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="EmergencyCallToSupervisorRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        The Emergency Call to Supervisor request is used
+        by an agent to immediately contact a supervisor while the agent
+        is handling a call. The existing agent call is "not" placed on
+        "hold" when an emergency call is initiated. Instead, the
+        supervisor is immediately conferenced into the call.
+        This request is a variation of the Directed Call Pickup with Barge-in
+        (DPUBI) request and requires that the supervisor has the DPUBI
+        service.
+        The request may optionally specify the supervisor's address. 
+        If the request does not specify the address of the supervisor then
+        BroadWorks determines an available supervisor from the list of
+        supervisors assigned to that particular agent.
+        Two conditions are to be met for the call to find an available
+        supervisor.
+        1. Supervisor should not be on a call
+        2. Supervisor should not have DND set
+
+        Returns a xsp:Response with a xsi:CallStartInfo payload.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI AgentEmergencyCall Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/calls/%callid%/EmergencyEscalate?%address%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token"></xs:element>            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the agent.                
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallId of the call to be escalated.                
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element> 
+                  <xs:element name="address" type="xsi:Address" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The address of the supervisor to whom 
+                        the call is being escalated. 
+                        The address is optional. If absent, 
+                        the AS determines an available supervisor.               
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                                 
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload"/>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  <xs:element name="GetAgentStateRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to get the agent state.
+        BroadWorks performs basic validation on the request and if it 
+        is accepted, returns the agent state.
+        
+        Returns a xsp:Response with xsi:CallCenter response.
+        
+        Change History:
+        19.0 - Added.      
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI GetAgentState Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/services/callcenter"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="GET" />
+            <xs:element name="version" type="xs:token"></xs:element>          
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the agent.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />          
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="SetAgentStateRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to set the agent state.
+        BroadWorks performs basic validation on the request and if it 
+        is accepted, change the agent state.
+
+        Returns a xsp:Response with empty payload.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI SetAgentState Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/services/callcenter"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token"></xs:element>          
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the agent.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:restriction base="xsp:Payload">
+                    <xs:sequence>
+                      <xs:element ref="xsi:CallCenter">
+                        <xs:annotation>
+                          <xs:documentation>
+                            The "acdState" and "agentUnavailableCode" only needs to be set
+                            in the CallCenter for this request.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:restriction>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+ 
+  <xs:element name="TagDispositionCodeRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to add/set a disposition code
+        to the last treated call by the agent when 
+        the agent is(must be) in the wrap up state.
+
+        Returns a GenericResponse with  Empty payload               
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI TagDispositionCode Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/calls/DispositionCode/%code%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token"></xs:element>            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the agent.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="code" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Value of the call center dispostion code (e.g. "1", "Code 1").                
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload"  type="xsp:EmptyPayload"/>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+   <xs:element name="TagDispositionCodeToCallIdRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to set a disposition code
+        with the associated callId for the agent. 
+        The call must be an ACD call in the Active, 
+        Held or Remote Held state. 
+
+        Returns a GenericResponse with Empty payload               
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI TagDispositionCode Request
+                  I.e. "/-context-/v2.0/user/%subscriberid%/calls/%callid%/DispositionCode/%code%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token"></xs:element>            
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="subscriberid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The subscriberId of the agent.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The associated callId to be tagged. 
+                        The agent must not be in the Wrap-Up state.               
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                  <xs:element name="code" type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        Value of the call center dispostion code (e.g. "1", "Code 1").                
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

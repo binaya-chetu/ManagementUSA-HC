@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- RemoteOffice Events interface in the                                     -->
+    <!-- http://schema.broadsoft.com/xsi namespace.                               -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- groupind at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+    targetNamespace="http://schema.broadsoft.com/xsi" attributeFormDefault="unqualified"
+    elementFormDefault="qualified" version="1.0">
+
+
+
+    <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+    <xs:include schemaLocation="../XSIServices.xsd" />
+
+
+
+    <!-- ******************************************************************** -->
+    <!-- R E M O T E  O F F I C E  N O T I F I C A T I O N  T Y P E S         -->
+    <!--                                                                      -->
+    <!-- Types for all XSI Remote Office service related                      -->
+    <!-- notifications.                                                       -->
+    <!-- ******************************************************************** -->
+
+    <xs:complexType name="RemoteOfficeEvent">
+        <xs:annotation>
+            <xs:documentation>
+                Notification with the current configuration status for the Remote Office service.
+        
+        
+      </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ServiceEvent">
+                <xs:sequence>
+                    <xs:element name="info" type="RemoteOffice" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Notification data for the Remote Office service. Only not present for service unassignment
+                                notifications.
+              </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

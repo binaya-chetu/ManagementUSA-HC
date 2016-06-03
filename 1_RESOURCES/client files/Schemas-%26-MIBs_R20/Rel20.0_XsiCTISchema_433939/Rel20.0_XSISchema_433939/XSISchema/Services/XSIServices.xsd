@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- Provisioning (User/Subscriber Service Configuration) Services and Events -->
+    <!-- interface in the http://schema.broadsoft.com/xsi namespace.              -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  <xs:include schemaLocation="../Profile/XSIProfile.xsd" />
+  <xs:include schemaLocation="XSIAccountAuthorizationCodes.xsd" />
+  <xs:include schemaLocation="XSIAlternateNumbers.xsd" />
+  <xs:include schemaLocation="XSIAnonymousCallRejection.xsd" />
+  <xs:include schemaLocation="XSIAttendantConsole.xsd" />
+  <xs:include schemaLocation="XSIAutomaticCallback.xsd" />
+  <xs:include schemaLocation="XSIAutomaticHoldRetrieve.xsd" />
+  <xs:include schemaLocation="XSIBargeInExempt.xsd" />
+  <xs:include schemaLocation="XSIBroadWorksAnywhere.xsd" />
+  <xs:include schemaLocation="XSIBroadWorksMobility.xsd" />
+  <xs:include schemaLocation="XSIBroadWorksReceptionist.xsd" />
+  <xs:include schemaLocation="XSIBusyLampField.xsd" />
+  <xs:include schemaLocation="XSICallCenter.xsd" />
+  <xs:include schemaLocation="XSICallCenterMonitoring.xsd" />
+  <xs:include schemaLocation="XSICallForwardingAlways.xsd" />
+  <xs:include schemaLocation="XSICallForwardingBusy.xsd" />
+  <xs:include schemaLocation="XSICallForwardingNoAnswer.xsd" />
+  <xs:include schemaLocation="XSICallForwardingNotReachable.xsd" />
+  <xs:include schemaLocation="XSICallForwardingSelective.xsd" />
+  <xs:include schemaLocation="XSICallingLineIDBlockingOverride.xsd" />
+  <xs:include schemaLocation="XSICallingLineIDDeliveryBlocking.xsd" />
+  <xs:include schemaLocation="XSICallingNameDelivery.xsd" />
+  <xs:include schemaLocation="XSICallingNameRetrieval.xsd" />
+  <xs:include schemaLocation="XSICallingNumberDelivery.xsd" />
+  <xs:include schemaLocation="XSICallingPartyCategory.xsd" />
+  <xs:include schemaLocation="XSICallMeNow.xsd" />
+  <xs:include schemaLocation="XSICallNotify.xsd" />
+  <xs:include schemaLocation="XSICallPark.xsd" />
+  <xs:include schemaLocation="XSICallRecording.xsd" />
+  <xs:include schemaLocation="XSICallTransfer.xsd" />
+  <xs:include schemaLocation="XSICallWaiting.xsd" />
+  <xs:include schemaLocation="XSIChargeNumber.xsd" />
+  <xs:include schemaLocation="XSICommPilotCallManager.xsd" />
+  <xs:include schemaLocation="XSICommPilotExpress.xsd" />
+  <xs:include schemaLocation="XSIConnectedLineIdentificationPresentation.xsd" />
+  <xs:include schemaLocation="XSIConnectedLineIdentificationRestriction.xsd" />
+  <xs:include schemaLocation="XSICustomRingback.xsd" />
+  <xs:include schemaLocation="XSIDirectedCallPickupWithBargeIn.xsd" />
+  <xs:include schemaLocation="XSIDoNotDisturb.xsd" />
+  <xs:include schemaLocation="XSIExecutive.xsd" />
+  <xs:include schemaLocation="XSIExecutiveAssistant.xsd" />
+  <xs:include schemaLocation="XSIExternalCallingLineIDDelivery.xsd" />
+  <xs:include schemaLocation="XSIFaxMessaging.xsd" />
+  <xs:include schemaLocation="XSIFlexibleSeatingGuest.xsd" />
+  <xs:include schemaLocation="XSIGroupNightForwarding.xsd" />
+  <xs:include schemaLocation="XSIHotelingGuest.xsd" />
+  <xs:include schemaLocation="XSIHotelingHost.xsd" />
+  <xs:include schemaLocation="XSIInCallServiceActivation.xsd" />
+  <xs:include schemaLocation="XSIIntegratedIMP.xsd" />
+  <xs:include schemaLocation="XSIIntercept.xsd" />
+  <xs:include schemaLocation="XSIInternalCallingLineIDDelivery.xsd" />
+  <xs:include schemaLocation="XSILegacyAutomaticCallback.xsd" />
+  <xs:include schemaLocation="XSIMeetMeConferencing.xsd" />
+  <xs:include schemaLocation="XSIMusicOnHold.xsd" />
+  <xs:include schemaLocation="XSIMWIDeliveryToMobileEndpoint.xsd" />
+  <xs:include schemaLocation="XSIOutgoingMWI.xsd" />
+  <xs:include schemaLocation="XSIOutlookIntegration.xsd" />
+  <xs:include schemaLocation="XSIPriorityAlert.xsd" />
+  <xs:include schemaLocation="XSIPrivacy.xsd" />
+  <xs:include schemaLocation="XSIPushToTalk.xsd" />
+  <xs:include schemaLocation="XSIRemoteOffice.xsd" />
+  <xs:include schemaLocation="XSISecurityClassification.xsd" />
+  <xs:include schemaLocation="XSISelectiveCallAcceptance.xsd" />
+  <xs:include schemaLocation="XSISelectiveCallRejection.xsd" />
+  <xs:include schemaLocation="XSISequentialRing.xsd" />
+  <xs:include schemaLocation="XSISimultaneousRingPersonal.xsd" />
+  <xs:include schemaLocation="XSISpeedDial100.xsd" />
+  <xs:include schemaLocation="XSISpeedDial8.xsd" />
+  <xs:include schemaLocation="XSIThirdPartyVoiceMailSupport.xsd" />
+  <xs:include schemaLocation="XSIVoiceMessaging.xsd" />
+  <xs:include schemaLocation="XSIVoiceMessagingMessages.xsd" />
+  <xs:include schemaLocation="XSIVoicePortal.xsd" />
+   
+  <xs:element name="AvailableUsers">
+    <xs:annotation>
+      <xs:documentation>
+        Details of Available Users.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="userDetails" type="UserDetailInfo"
+          minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Services">
+    <xs:annotation>
+      <xs:documentation>
+        Services properties. Services allows you to list
+        all the services that are
+        assigned to the
+        user.
+   </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="service" type="ServiceEntry" minOccurs="0"
+          maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+ </xs:schema>

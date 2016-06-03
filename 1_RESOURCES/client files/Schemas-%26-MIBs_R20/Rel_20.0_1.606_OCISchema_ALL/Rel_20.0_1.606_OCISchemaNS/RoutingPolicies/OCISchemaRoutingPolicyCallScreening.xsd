@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- C A L L   S C R E E N I N G  P O L I C Y                               -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- C A L L   S C R E E N I N G    R E Q U E S T S  A N D  R E S P O N S E S           -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyCallScreeningAddInstanceRequest16    
+    RoutingPolicyCallScreeningDeleteInstanceRequest    
+    RoutingPolicyCallScreeningGetInstanceRequest16    
+    RoutingPolicyCallScreeningModifyInstanceRequest16    
+    RoutingPolicyCallScreeningAddCallTypeProcessingRuleRequest16sp2    
+    RoutingPolicyCallScreeningDeleteCallTypeProcessingRuleRequest    
+    RoutingPolicyCallScreeningGetCallTypeProcessingRuleEntryRequest16sp2    
+    RoutingPolicyCallScreeningGetCallTypeProcessingRuleListRequest16sp2    
+    RoutingPolicyCallScreeningModifyCallTypeProcessingRuleRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyCallScreeningAddInstanceRequest16">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetInstanceRequest16">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either a RoutingPolicyCallScreeningGetInstanceResponse16 or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetInstanceResponse16">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a RoutingPolicyCallScreeningGetInstanceRequest16.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningModifyInstanceRequest16">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningAddCallTypeProcessingRuleRequest16sp2">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a call type processing rule entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="incomingCallType" type="CallType"/>
+          <xs:element name="translatedCategory" type="TranslatedCallCategory"/>
+          <xs:element name="e164Call" type="xs:boolean"/>
+          <xs:element name="unconditional" type="xs:boolean"/>
+          <xs:element name="action" type="CallTypeProcessingAction"/>
+          <xs:element name="revXlaApplicable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningDeleteCallTypeProcessingRuleRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a call type processing rule entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="incomingCallType" type="CallType"/>
+          <xs:element name="translatedCategory" type="TranslatedCallCategory"/>
+          <xs:element name="e164Call" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetCallTypeProcessingRuleEntryRequest16sp2">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given call type processing rule entry.
+        The response is either a RoutingPolicyCallScreeningGetCallTypeProcessingRuleEntryResponse16sp2 or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="incomingCallType" type="CallType"/>
+          <xs:element name="translatedCategory" type="TranslatedCallCategory"/>
+          <xs:element name="e164Call" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetCallTypeProcessingRuleEntryResponse16sp2">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyCallScreeningGetCallTypeProcessingRuleEntryRequest16sp2.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="unconditional" type="xs:boolean"/>
+          <xs:element name="action" type="CallTypeProcessingAction"/>
+          <xs:element name="revXlaApplicable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetCallTypeProcessingRuleListRequest16sp2">
+    <xs:annotation>
+      <xs:documentation>
+        Get list of call type processing rule entries.
+        The response is either a RoutingPolicyCallScreeningGetCallTypeProcessingRuleListResponse16sp2 or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactIncomingCallType" type="SearchCriteriaExactCallType" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactTranslatedCategory" type="SearchCriteriaExactTranslatedCallCategory" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactE164Call" type="SearchCriteriaExactE164Call" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactUnconditional" type="SearchCriteriaExactUnconditional" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactCallTypeProcessingAction" type="SearchCriteriaExactCallTypeProcessingAction" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactRevXlaApplicable" type="SearchCriteriaExactRevXlaApplicable" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningGetCallTypeProcessingRuleListResponse16sp2">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyCallScreeningGetCallTypeProcessingRuleListRequest16sp2.
+        The column headings are: "Incoming Call Type", "Translated Category", "E164 Call", "Unconditional", "Action", "RevXlaApplicable".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="callTypeProcessingRuleTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyCallScreeningModifyCallTypeProcessingRuleRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify a call type processing rule entry.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="incomingCallType" type="CallType"/>
+          <xs:element name="translatedCategory" type="TranslatedCallCategory"/>
+          <xs:element name="e164Call" type="xs:boolean"/>
+          <xs:element name="unconditional" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="action" type="CallTypeProcessingAction" minOccurs="0"/>
+          <xs:element name="revXlaApplicable" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:simpleType name="TranslatedCallCategory">
+    <xs:annotation>
+      <xs:documentation>
+        Call Category.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Local"/>
+      <xs:enumeration value="National"/>
+      <xs:enumeration value="InterLat"/>
+      <xs:enumeration value="IntraLat"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="CallTypeProcessingAction">
+    <xs:annotation>
+      <xs:documentation>
+        Call type processing action.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:complexType name="SearchCriteriaExactTranslatedCallCategory">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular TranslatedCallCategory.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="translatedCallCategory" type="TranslatedCallCategory"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactCallTypeProcessingAction">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular DialPlanAction.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="callTypeProcessingAction" type="CallTypeProcessingAction" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactE164Call">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular E164 call.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="e164Call" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactUnconditional">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular unconditional.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="unconditional" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactRevXlaApplicable">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular unconditional.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="revXlaApplicable" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

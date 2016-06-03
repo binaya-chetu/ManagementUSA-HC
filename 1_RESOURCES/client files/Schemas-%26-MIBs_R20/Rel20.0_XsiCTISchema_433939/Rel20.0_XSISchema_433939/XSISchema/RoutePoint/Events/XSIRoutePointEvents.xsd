@@ -1,0 +1,1171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+     <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- RoutePoint Event interface in the http://schema.broadsoft.com/xsi        -->
+    <!-- name space.                                                              -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIRoutePoint.xsd" />
+  <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Complex Type in Alphabetical Order.                          -->
+  <!-- **************************************************************-->
+
+  <xs:complexType name="RoutePointBusyCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Busy Completed event is sent when a Route Point Play
+        Busy is completed.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="playCollectResult" type="PlayCollectResult">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the play and DTMF collection request performed.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointBusyStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Busy Started event is sent when a Route Point Busy
+        Treatment is started. The event specifies the playCollectId of
+        the operation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallAbandonedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Abandoned event is sent after a call is released
+        by the remote party while being in the Route Point queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallAddedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Added event is sent when a new call is added to
+        the Route Point queue.
+        
+        Change History:
+        17.sp3 - "redirections" element added       
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are
+                the details of other parties that have redirected
+                this call.
+            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallAnsweredByAgentEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Answered event is sent after a call has been
+        offered to an agent, the agent has decided to accept the call,
+        and the call has been removed from the queue. The removeTime
+        parameter is set to the time the call was removed from the queue
+        (i.e. answered by an agent).
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallBouncedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Bounced event is sent after a call is bounced.
+        When a call is bounced, the Route Point bounced call policy is
+        applied. The event reports that the call is bounced by adding
+        the bounced parameter to the RoutePointQueueEntry in the event.
+        This parameter will be maintained in all future events until the
+        call is removed from the Route Point queue. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on call
+                bounce policy. This happens when the policy action is
+                set to transfer.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallFailedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Failed event is sent in two cases:
+        i) when the Route Point per call failure policy is triggered. This can
+        happen for instance if no request is received for a call within
+        the configurable time period after being added to the queue
+        ii) when the Route Point failure policy is triggered. This can happen
+        for instance when a remote application sends a Route Point Fail
+        request and a call is queued at the Route Point. This can also
+        occur when a call is received for a failed Route Point.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="failureReason" type="RoutePointCallFailureReason">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on the
+                per call failure policy.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallForwardedEvent">
+    <xs:annotation>
+      <xs:documentation>
+       The RoutePointCallForwardedEvent event is sent when the Forced 
+       Forwarding policy is triggered.
+       
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added
+                 "redirect" element made optional            
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0"> 
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect when the local user
+                has redirected the
+                call. Note that these details can be replaced
+                in some
+                scenarios (e.g. BroadWorks Anywhere is used for a
+                terminating call, and then the call is forwarded).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the
+                details of other parties that have
+                redirected
+                this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallForwardedTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointCallForwardedTreatmentCompletedEvent is sent
+        when the annoucement is completed for a call treated according to the
+        Holiday policy.     
+
+        Change History:
+        17.sp3 - Added                         
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect when the local user
+                has redirected the
+                call. Note that these details can be replaced
+                in some
+                scenarios (e.g. BroadWorks Anywhere is used for a
+                terminating call, and then the call is forwarded).
+                Only present when redirection took place.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+
+  <xs:complexType name="RoutePointCallOfferedToAgentEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Offered event is sent when the remote application
+        performs a Route Point Distribute Call against a call queued to
+        an agent. This event indicates that the call is offered to the
+        agent but remains in the queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallOverflowedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Overflowed event is sent after a call is mark as
+        overflow. The overFlowReason specifies the cause of overflow.
+              
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added             
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="overFlowReason" type="OverflowReason"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Specify the reason for overflow.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on call
+                overflowed policy. This happens when the policy action
+                is set to transfer.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the
+                details of other parties that have
+                redirected
+                this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="RoutePointCallOverflowedTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointCallOverflowedTreatmentCompletedEvent is 
+        sent when the annoucement is completed for a call treated 
+        according to the Overflow policy.
+
+        Change History:
+        17.sp3 - Added                       
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="overFlowReason" type="OverflowReason"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Specify the reason for overflow.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the call was redirected to another destination based on call
+                overflowed policy. This happens when the policy action
+                is set to transfer.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>                   
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallReleasedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Released event is sent in two cases:
+        i)following a Route Point Release Call request,
+        ii)when an outgoing call is released during call setup in which case the
+        CPD result is provided (if available).
+
+        The removeTime is set to the time the call was released.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="releaseReason" type="RoutePointCallReleaseReason">
+            <xs:annotation>
+              <xs:documentation>
+                The reason for the call release.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="outgoingCallReleaseCause" type="ReleaseCause"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if an outgoing call is released with cause (e.g. 
+                called party is busy).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="cpdResult" type="CPDResult"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Specifies the Call Progress Detection result for the
+                call. Present for outgoing calls where CPD information
+                is available.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallTransferredEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Transferred event is sent when the remote
+        application performs a blind transfer against a call queued in a
+        Route Point. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="redirect" type="Redirect">
+            <xs:annotation>
+              <xs:documentation>
+                The detail of the redirect. 
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointCallUpdatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Updated event is generated when the remote party
+        attributes are modified while being in the queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="cpdResult" type="CPDResult"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Specify the Call Progress Detection result for the call. Present for
+                outgoing call where CPD information is available.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="CallUpdateReason" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present when the update is triggered by a changing
+                remote party. 
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointEvent">
+    <xs:annotation>
+      <xs:documentation>
+        This is the base type for RoutePointEvents. 
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="queueEntry" type="RoutePointQueueEntry">
+            <xs:annotation>
+              <xs:documentation>
+                Provides information about each call maintained in a route point queue.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointFailedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Failed event is sent when a Route Point enters the
+        failed state.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="stateChangeReason" type="RoutePointStateChangeReason">
+            <xs:annotation>
+              <xs:documentation>
+                The reason the Route Point entered the failed state.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointHolidayPolicyAppliedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointHolidayPolicyAppliedEvent event is sent 
+        when the Holiday policy is triggered.
+                      
+        Change History:
+        17.sp3 - "treatmentStarted" element added 
+                 "redirections" element added             
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is
+                redirected per the
+                Holiday Service policy.
+             </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+            <xs:element name="redirections" type="RedirectionList"
+              minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>
+                  List of all the redirections (if any) for the
+                  call. These are the
+                  details of other parties that have
+                  redirected
+                  this call.               
+              </xs:documentation>
+              </xs:annotation>           
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointHolidayPolicyTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointHolidayPolicyTreatmentCompletedEvent is sent
+        when the annoucement is completed for a call treated according to 
+        the Holiday policy.
+        
+        Change History:
+        17.sp3 - Added                       
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is
+                redirected per the
+                Holiday Service policy.
+             </xs:documentation>
+            </xs:annotation>
+            </xs:element>
+            <xs:element name="reason" type="TreatmentCompletionReason">
+              <xs:annotation>
+                <xs:documentation>
+                  Indicates the completion reason.
+              </xs:documentation>
+              </xs:annotation>
+            </xs:element>          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointMOHCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointMOHCompletedEventEvent is sent when a Route Point Play MOH
+        is completed.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="playCollectResult" type="PlayCollectResult">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the play and DTMF collection request performed.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointMOHStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point MOH Started event is sent when a Route Point MOH
+        Treatment is started. The event specifies the playCollectId of
+        the operation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointNightPolicyAppliedEvent">
+    <xs:annotation>
+      <xs:documentation>
+       The RoutePointNightPolicyAppliedEvent event is sent when the 
+       Night policy is triggered.
+                    
+       Change History:
+       17.sp3 - "treatmentStarted" element added 
+                "redirections" element added             
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is
+                redirected per the
+                Night Service policy.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="treatmentStarted" type="EmptyContent"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Present if the policy starts playing a treatment
+                as per policy configuration.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirections" type="RedirectionList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                List of all the redirections (if any) for the
+                call. These are the
+                details of other parties that have
+                redirected
+                this call.               
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="RoutePointNightPolicyTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointNightPolicyTreatmentCompletedEvent is sent when 
+        the annoucement is completed for a call treated according to the 
+        Night policy. 
+
+        Change History:
+        17.sp3 - Added                      
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="callId" type="CallId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extTrackingId" type="ExternalTrackingId">
+            <xs:annotation>
+              <xs:documentation>
+                The external tracking ID for the call.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointName" type="NonEmptyString">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point name(DNIS Name)
+                associated with the RP number
+                the call was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="routePointNumber" type="Address">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the Route Point number(DNIS) the call
+                was received on.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="remoteParty" type="PartyInformation">
+            <xs:annotation>
+              <xs:documentation>
+                Information about the remote party.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="redirect" type="Redirect" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                The details for the redirect if the call is
+                redirected per the
+                Night Service policy.
+                            </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" type="TreatmentCompletionReason">
+            <xs:annotation>
+              <xs:documentation>
+                Indicates the completion reason.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointOutgoingCallAnsweredEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Answered event is sent when a call is answered by
+        the remote destination. The OutgoingCallAnswerTime is set to the
+        time the call was answered.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointOutgoingCallOriginatedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Call Originated event is sent when a call is being
+        originated following an Outgoing Dial action but before the call
+        is added to the Route Point queue. The outgoingCall parameter is
+        present to mark the call permanently as an outbound call.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointRecoveredEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Recovered event is sent when a Route Point enters the
+        normal state.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointRingbackCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointRingbackCompletedEvent is sent when a Route Point
+        Play Ringback is completed.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="playCollectResult" type="PlayCollectResult">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the play and DTMF collection request performed.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointRingbackStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Ringback Started event is sent when a Route Point MOH
+        Treatment is started. The event specifies the playCollectId of
+        the operation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointSilenceCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointSilenceCompletedEvent is sent when a Route Point Play
+        Silence is completed.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="playCollectResult" type="PlayCollectResult">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the play and DTMF collection request performed.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointSilenceStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Silence Started event is sent when a Route Point Play
+        Silence is started. The event specifies the playCollectId of the
+        operation.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointSubscriptionEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Subscription event is issued immediately after a
+        subscription is added or refreshed, provided that the
+        subscription target is not a collection of subscriber (e.g. a
+        group).
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="EventData">
+        <xs:sequence>
+          <xs:element name="queueEntries" type="RoutePointQueueEntryList"
+            minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Contains the list of RoutePointQueueEntry maintained by the Route Point.
+                Only present if there is at least one
+                RoutePointQueueEntry maintained by the Route Point.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="RoutePointSubscriptionResyncEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointSubscriptionResyncEvent is generated when a situation arises that causes a loss of updates and a resync is needed.
+        Change History:
+        Release Added: R19.sp1
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointSubscriptionEvent" />
+    </xs:complexContent>
+  </xs:complexType>  
+
+  <xs:complexType name="RoutePointTreatmentCompletedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The RoutePointTreatmentCompletedEvent is sent when a Route Point
+        Play Treatment is completed.  
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent">
+        <xs:sequence>
+          <xs:element name="playCollectResult" type="PlayCollectResult">
+            <xs:annotation>
+              <xs:documentation>
+                The details of the play and DTMF collection request performed.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointTreatmentStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Treatment Started event is sent when a Route Point Play
+        Treatment is started.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RoutePointWhisperStartedEvent">
+    <xs:annotation>
+      <xs:documentation>
+        The Route Point Whisper Started event is sent when the agent answers an
+        offered call and the whisper announcement is started.
+
+        The call remains in the queue, but subsequent actions on the call are
+        rejected. The Route Point Call Answered By Agent is sent once
+        the whisper announcement completes.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="RoutePointEvent" />
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

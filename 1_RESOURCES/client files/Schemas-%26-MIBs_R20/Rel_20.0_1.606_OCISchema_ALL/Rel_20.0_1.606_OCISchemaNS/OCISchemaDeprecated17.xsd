@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  D E P R E C A T E D  17                -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="./OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="./OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="./OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- D E P R E C A T E D  C O M M A N D S  F R O M  R E L E A S E  17                   -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyEqualAccessAddInstanceRequest    
+    RoutingPolicyEqualAccessGetInstanceRequest    
+    RoutingPolicyEqualAccessModifyInstanceRequest    
+    RoutingPolicyOriginatorRedirectAddInstanceRequest    
+    RoutingPolicyOriginatorRedirectGetInstanceRequest    
+    RoutingPolicyOriginatorRedirectModifyInstanceRequest    
+    RoutingPolicyRateCenterAddInstanceRequest    
+    RoutingPolicyRateCenterGetInstanceRequest    
+    RoutingPolicyRateCenterModifyInstanceRequest    
+    RoutingPolicyServiceCenterAddInstanceRequest    
+    RoutingPolicyServiceCenterGetInstanceRequest    
+    RoutingPolicyServiceCenterModifyInstanceRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyEqualAccessAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingPolicyEqualAccessAddInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="blockUnknownCac" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyEqualAccessGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyEqualAccessGetInstanceResponse or ErrorResponse.
+        Replaced by: RoutingPolicyEqualAccessGetInstanceResponse18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyEqualAccessGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a RoutingPolicyEqualAccessGetInstanceRequest.
+        Replaced by: RoutingPolicyEqualAccessGetInstanceResponse18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="blockUnknownCac" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyEqualAccessModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingPolicyEqualAccessModifyInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="blockUnknownCac" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="useCicAlways" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="addCicAsCac" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="redirectOnLinePortInsteadOfDN" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyOriginatorRedirectGetInstanceResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to a RoutingPolicyOriginatorRedirectGetInstanceRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="redirectOnLinePortInsteadOfDN" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyOriginatorRedirectModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="redirectOnLinePortInsteadOfDN" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyRateCenterAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced By: RoutingPolicyRateCenterAddInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyRateCenterGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyRateCenterGetInstanceResponse or ErrorResponse.
+        Replaced By: RoutingPolicyRateCenterGetInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyRateCenterGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyRateCenterGetInstanceRequest.
+        Replaced By: RoutingPolicyRateCenterGetInstanceResponse18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyRateCenterModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingPolicyRateCenterModifyInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="isCicRequired" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="useCicAlways" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="addCicAsCac" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="keepPrefix" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+        Replaced by: RoutingPolicyServiceCenterAddInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyServiceCenterGetInstanceResponse or ErrorResponse.
+        Replaced by: RoutingPolicyServiceCenterGetInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyServiceCenterGetInstanceRequest.
+        Replaced by: RoutingPolicyServiceCenterGetInstanceResponse18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="isCicRequired" type="xs:boolean"/>
+          <xs:element name="useCicAlways" type="xs:boolean"/>
+          <xs:element name="addCicAsCac" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyServiceCenterModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either a SuccessResponse or an ErrorResponse.
+        Replaced by: RoutingPolicyServiceCenterModifyInstanceRequest18
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+          <xs:element name="isCicRequired" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="useCicAlways" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="addCicAsCac" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

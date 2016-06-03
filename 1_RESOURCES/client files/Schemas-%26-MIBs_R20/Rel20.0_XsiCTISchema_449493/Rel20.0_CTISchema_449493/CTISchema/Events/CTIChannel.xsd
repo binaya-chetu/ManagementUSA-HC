@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2010 BroadSoft, Inc.  All rights reserved.               -->
+<!-- ********************************************************************** -->
+<!-- CTIChannel  X M L  S C H E M A                                         -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the Channel level Services.       -->
+<!-- ********************************************************************** -->
+
+
+<xs:schema xmlns="http://schema.broadsoft.com/CTI"
+  targetNamespace="http://schema.broadsoft.com/CTI" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsp="http://schema.broadsoft.com/XspXMLInterface" xmlns:xsi="http://schema.broadsoft.com/xsi"
+  elementFormDefault="unqualified" version="1.0">
+
+
+  <xs:import namespace="http://schema.broadsoft.com/XspXMLInterface"
+    schemaLocation="../../XSPXMLSchema/XspXMLInterface.xsd" />
+
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/Events/XSIChannel.xsd" />
+
+  <xs:element name="AddChannelRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        BroadWorks. The channel is associated to the
+        connection over which it is created and to an event 
+        channel set identifier provided by the remote application. 
+        Associated with each channel is a priority, weight and expires 
+        value. The expires value defines the life of the event channel. 
+        The priority defines the order of the event channel within a 
+        set and weight defines the load balancing factor amongst 
+        channels with the same priority in a set.
+        
+        The expiration value must be within the range configured in 
+        the system. If the provided value exceeds the maximum allowed 
+        value, then the expiration value is set to the maximum allowed 
+        value. If the provided expiration value is less than 3600 (1 hour), 
+        then the value is set to "3600". If the request is accepted, 
+        the BroadWorks assigns to the event channel a channelId and 
+        returns it in the response. An application can add more than 
+        one event channel over the same connection.
+        
+        Returns a xsp:Response with xsi:Channel (having information for 
+        ChannelId and expires for the newly created Channel).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI Add Channel Request.
+                  I.e. "/-context-/v2.0/channel"
+                  where -context- corresponds to the application context of the Xsi-Events web application (e.g. com.broadsoft.xsi-events).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="POST" />
+            <xs:element name="version" type="xs:token" />              
+            <xs:element name="params" />
+            <xs:element name="payload">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:restriction base="xsp:Payload">
+                    <xs:sequence>
+                      <xs:element ref="xsi:Channel" />
+                    </xs:sequence>
+                  </xs:restriction>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetChannelSetRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to request the set of event
+        channels for the authenticated subscriber and an event 
+        channel set identifier. If the request is accepted and 
+        one or multiple channels are found, then the returned 
+        response contains the list of channels.
+        
+        Returns a xsp:Response with xsi:ChannelSet as payload.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ChannelSet GET Request.      
+                  I.e. "/-context-/v2.0/channelset/%channelSetId%"
+                  where -context- corresponds to the application context of the Xsi-Events web application (e.g. com.broadsoft.xsi-events).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="GET" />
+            <xs:element name="version" type="xs:token" />              
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="channelSetId" type="xsi:ChannelSetId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The channelSetId used to query
+                        the event channel set.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UpdateChannelRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to modify an event channel.
+        It is used to refresh a channel prior to its expiration.
+        Currently it modifies only the Expiration value of the Channel.
+        
+        The expiration value must be within the range configured in the
+        system. If the provided value exceeds the maximum allowed value,
+        then the expiration value is set to the maximum allowed value. If
+        the provided expiration value is less than 3600 (1 hour), then
+        the value is set to "3600".
+        
+        Returns a xsp:Response with xsi:Channel (having information for 
+        ChannelId and expires for the updated Channel).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI Update Channel Request.
+                  I.e. "/-context-/v2.0/channel/%channelId%"
+                  where -context- corresponds to the application context of the Xsi-Events web application (e.g. com.broadsoft.xsi-events).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />              
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="channelId" type="xsi:ChannelId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The channelId of the event
+                        channel to refresh.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:restriction base="xsp:Payload">
+                    <xs:sequence>
+                      <xs:element ref="xsi:Channel">
+                        <xs:annotation>
+                          <xs:documentation>
+                            The expiration value should only be 
+                            provided. Other information with this 
+                            are ignored for this request.
+                             
+                            Modify the expiration value which is 
+                            the relative time (delta from the 
+                            current time) in seconds until the
+                            expiration of a channel. This ranges 
+                            from minimum value of 3600 to any 
+                            higher integer value.
+                        </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:restriction>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeleteChannelRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to delete an event channel.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI Delete Channel Request.
+                  I.e. "/-context-/v2.0/channel/%channelId%"
+                  where -context- corresponds to the application context of the Xsi-Events web application (e.g. com.broadsoft.xsi-events).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="DELETE" />
+            <xs:element name="version" type="xs:token" />              
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="channelId" type="xsi:ChannelId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The channelId identifying the 
+                        event channel to be delete.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

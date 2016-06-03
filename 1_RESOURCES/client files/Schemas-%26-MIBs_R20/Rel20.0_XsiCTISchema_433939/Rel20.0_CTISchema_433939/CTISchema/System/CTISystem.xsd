@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2010 BroadSoft, Inc.  All rights reserved.               -->
+<!-- ********************************************************************** -->
+<!-- CTISystem  X M L  S C H E M A                                          -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the System level Services.        -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns="http://schema.broadsoft.com/CTI"
+  targetNamespace="http://schema.broadsoft.com/CTI" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsp="http://schema.broadsoft.com/XspXMLInterface" xmlns:xsi="http://schema.broadsoft.com/xsi"
+  elementFormDefault="unqualified" version="1.0">
+
+
+  <xs:import namespace="http://schema.broadsoft.com/XspXMLInterface"
+    schemaLocation="../../XSPXMLSchema/XspXMLInterface.xsd" />
+
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/System/XSISystem.xsd" />
+
+  <xs:element name="SetApplicationControllerStateRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        The remote application sends this request to set
+        the application controller state to either "ready"
+        or "not ready".
+        
+        This request is typically sent at the end of system
+        initialization once the remote application has 
+        synchronized all subscribed resources related to 
+        the application controller. In this case, the remote
+        application sets the state to "ready".
+        
+        The application controller is associated to an 
+        event channel set through configuration. If the 
+        event channel set is empty, then BroadWorks rejects 
+        any attempt to set the state to "ready". The remote 
+        application must create event channels for the associated
+        event channel set before setting the state to "ready".
+        
+        This request can also be used to force the application 
+        controller state to "not ready" and force evaluation 
+        of a failure condition on resources that are linked 
+        to the application controller (e.g. a route point).
+
+        Returns a generic xsp:Response with empty payload
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ApplicationController State Set Request
+                  I.e. "/-context-/v2.0/system/services/routepoint/applicationcontroller/%applicationcontrollerid%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token" />                   
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="applicationcontrollerid"
+                    type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The applicationControllerId that
+                        identifies the application
+                        controller.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:restriction base="xsp:Payload">
+                    <xs:sequence>
+                      <xs:element ref="xsi:ApplicationController">
+                        <xs:annotation>
+                          <xs:documentation>
+                            The requested state, either
+                            "ready" or "not ready".
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:restriction>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetApplicationControllerStateRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        The remote application sends this request to
+        retrieve the application controller state. If 
+        the request is accepted, then the returned response 
+        contains the state information.
+
+        This request is used by the remote application to
+        synchronize with the application controller state 
+        maintained by BroadWorks. It may also be used
+        as a keep-alive/heart beat mechanism.
+
+        Returns a xsp:Response with xsi:ApplicationController
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ApplicationController State Get Request.
+                  I.e. "/-context-/v2.0/system/services/routepoint/applicationcontroller/%applicationcontrollerid%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="GET" />
+            <xs:element name="version" type="xs:token" />                   
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="applicationcontrollerid"
+                    type="xs:string">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The applicationControllerId that
+                        identifies the application
+                        controller.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

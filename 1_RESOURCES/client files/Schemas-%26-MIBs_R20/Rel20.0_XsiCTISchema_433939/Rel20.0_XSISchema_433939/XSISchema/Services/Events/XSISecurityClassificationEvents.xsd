@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- SecurityClassification Events interface in the                           -->
+    <!-- http://schema.broadsoft.com/xsi namespace.                               -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in Alphabetical Order with            -->
+    <!-- groupind at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+    targetNamespace="http://schema.broadsoft.com/xsi" attributeFormDefault="unqualified"
+    elementFormDefault="qualified" version="1.0">
+
+    <xs:include schemaLocation="../../XSIBaseEvent.xsd" />
+
+    <xs:include schemaLocation="../XSIServices.xsd" />
+
+  <!-- ************************************************************************************* -->
+  <!-- S E C U R I T Y  C L A S S I F I C A T I O N   N O T I F I C A T I O N  T Y P E S     -->
+  <!--                                                                                       -->
+  <!-- Types for all Security Classification service related notifications.                  -->
+  <!-- ************************************************************************************* -->
+  <!-- ************************************************************************************* -->
+  <!-- Complex Type in Alphabetical Order. -->
+  <!-- ************************************************************************************* -->
+
+  <xs:complexType name="SecurityClassificationEvent">
+    <xs:annotation>
+      <xs:documentation>
+        Notification of the current configuration settings 
+        for the user’s Security Classification service.
+        
+        Change History:
+        20.0 – Added.        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ServiceEvent">
+        <xs:sequence>
+          <xs:element name="info" type="SecurityClassificationInfo" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Notification data for the Security Classification service.
+                Only not present for service unassignment notifications.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>          
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+</xs:schema>

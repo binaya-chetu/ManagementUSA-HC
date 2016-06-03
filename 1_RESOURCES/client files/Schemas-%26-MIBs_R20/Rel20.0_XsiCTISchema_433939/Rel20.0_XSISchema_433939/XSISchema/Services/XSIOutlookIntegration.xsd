@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Outlook Integration User Service interface in the                        -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="OutlookIntegration">
+    <xs:annotation>
+      <xs:documentation>
+        Outlook Integration enables you to integrate your personal 
+        contacts in Microsoft Outlook with your CommPilot Call 
+        Manager.  Using the Outlook Contacts tab in the CommPilot 
+        Call Manager, you can perform a search of your personal 
+        Outlook contacts by name or company.  Once the desired 
+        contact is located, you may click-to-dial one of the 
+        contact's phone numbers, or may choose to display the 
+        contact's vCard by clicking on the name. When receiving a 
+        call, your Microsoft Outlook contact database is searched 
+        for a match of the caller's phone number. If the number 
+        matches, the icon next to the incoming calling name is 
+        highlighted and rolling the mouse over it gives the caller's 
+        name.  In addition, you have the option to click the icon to 
+        open the caller's vCard.  You can have new Outlook journal 
+        entries automatically opened for incoming and/or outgoing 
+        calls. You can choose to turn it off if you are at a remote 
+        location using your Call Manager but do not have access to 
+        your Outlook.  The contact retrieval option allows you to 
+        only retrieve contacts from your default contact folder 
+        for performance reasons.  
+
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ActivatableServiceInfo">
+          <xs:sequence>
+            <xs:element name="contactRetrievalSelection" type="OutlookIntegrationContactRetrieval"  minOccurs="0" >
+              <xs:annotation>
+                <xs:documentation>
+                  When present, indicates whether to enable Outlook contact 
+                  retrieval or not.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:simpleType name="OutlookIntegrationContactRetrieval">
+    <xs:annotation>
+      <xs:documentation>
+        Microsoft Outlook contact database search option.
+        Controls which contacts are retrieved from outlook.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Retrieve Default Contact Folder Only"/>
+      <xs:enumeration value="Retrieve All Contacts"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  
+</xs:schema>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Sequential Ring service interface in the http://schema.broadsoft.com/xsi -->
+<!-- namespace.                                                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <!-- ******************************************************************** -->
+  <!--          S E Q U E N T I A L  R I N G  D A T A  T Y P E S            -->
+  <!--                                                                      -->
+  <!-- Data types for Sequential Ring service subscription.                 -->
+  <!-- ******************************************************************** -->
+
+  <xs:element name="SequentialRing" type="SequentialRing">
+    <xs:annotation>
+      <xs:documentation>
+        User Sequential Ring properties. Sequential Ring
+        allows you to sequentially ring up to 5
+        locations in addition to
+        the base location for a specified number of rings.
+        The 5 locations can
+        be either a phone number or a SIP-URI. The feature
+        applies to calls matching your pre-defined
+        criteria. Use this
+        service to ring calls from your manager, a family member,
+        or an important
+        customer on your cell phone, alternate business phone,
+        or home phone. If the criteria do not
+        match, the call continues as
+        if this service was not turned on. Via the
+        XSI, the ability to create/edit criteria is not provided. Only the ability to
+        retrieve the list of  criteria, defined
+        by their name, and whether
+        each criteria is active or not, is provided
+        at this time.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:complexType name="SequentialRing">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the Sequential Ring service configuration data.
+        Sequential Ring allows you to sequentially ring up to 5 locations in addition
+        to the base location for a
+        specified number of rings. The 5 locations can be either a phone number or a
+        SIP-URI. The feature applies to calls matching your pre-defined
+        criteria. Use this service to ring calls from your manager, a family member, 
+        or an important customer on your cell phone, alternate business phone, 
+        or home phone. If the criteria do not match, the call continues as if 
+        this service was not turned on. Via the XSI, the ability to create/edit 
+        criteria is not provided. Only the ability to retrieve the
+        list of criteria, defined by their name, and whether each criteria is
+        active or not, is provided at this time.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ringBaseLocationFirst" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present and true, indicates whether the base location should be
+            rung first.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="baseLocationNumberOfRings" type="NumberOfRingsZeroToTwentyExcludeOne"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The number of rings to ring the base location.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="continueIfBaseLocationIsBusy" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present and true, indicates the need to continue the search
+            process when the base location is busy.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="callerMayStopSearch" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present and true, indicates that the caller can skip the search
+            process. This assumes that forwarding
+            or messaging is enabled.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="location1" type="SequentialRingLocation"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The first sequential ring location.  
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="location2" type="SequentialRingLocation"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The second sequential ring location.  
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="location3" type="SequentialRingLocation"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The third sequential ring location.  
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="location4" type="SequentialRingLocation"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The fourth sequential ring location.  
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="location5" type="SequentialRingLocation"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The fifth sequential ring location.  
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="criteriaActivationList" type="CriteriaActivationList"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The list of criteria for Sequential Ring. This is present what
+            at least one criterion is "set".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SequentialRingLocation">
+    <xs:annotation>
+      <xs:documentation>
+        Defines pieces of information for each Sequential Ring location.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="address" type="Address" minOccurs="0"
+        nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            The address for this Sequential Ring Location. Only present
+            when an address has been "set".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfRings" type="NumberOfRingsZeroToTwentyExcludeOne"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The number of rings to ring the specified address.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answerConfirmationRequired" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when answer confirmation is required for the
+            location.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:element name="SequentialRingCriteria">
+    <xs:annotation>
+      <xs:documentation>
+        Sequential Ring Criteria Details
+         
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="blackListed" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When true, reject the call according to the criteria.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="criteria" type="CriteriaWithFromDn" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation>
+               The criteria for each Sequential Ring entry can be a list of up to 12 phone numbers or digit patterns, 
+               a specified time schedule, and a specified holiday schedule. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+    
+</xs:schema>

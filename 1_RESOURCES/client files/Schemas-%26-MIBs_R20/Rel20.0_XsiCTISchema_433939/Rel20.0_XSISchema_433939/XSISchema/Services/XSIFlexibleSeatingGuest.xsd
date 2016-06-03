@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2013 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Flexible Seating Guest interface in the http://schema.broadsoft.com/xsi  -->
+<!-- namespace.                                                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="FlexibleSeatingGuest" type="FlexibleSeatingGuest">
+    <xs:annotation>
+      <xs:documentation>
+        Data associated with a user assigned the Flexible Seating Guest service. 
+        Change History:
+        R20.0 – Added. 
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element> 
+  
+  <!-- ******************************************************************** -->
+  <!--    F L E X I B L E  S E A T I N G  G U E S T   D A T A  T Y P E S    -->
+  <!--                                                                      -->
+  <!-- Data types for Flexible Seating Guest service subscription.          -->
+  <!-- ******************************************************************** -->
+
+<xs:complexType name="FlexibleSeatingGuest">
+  <xs:annotation>
+    <xs:documentation>
+  User Flexible Seating Guest properties. Flexible Seating Guest allows a user to associate their service profile with a Flexible Seating Host user. This allows the guest user to use the host's device with the guest user's service profile. This is useful for transient employees. The Xsi provides for association of a Flexible Seating Host user to a Flexible Seating Guest, as well as control of Flexible Seating Guest settings.
+    The following elements are read-only 
+      hostLastName
+      hostFirstName
+      hostAssociationDateTime
+      hostEnforcesAssociationLimit
+      hostAssociationLimitHours
+        Change History:
+        R20.0 – Added. 
+   </xs:documentation>
+     </xs:annotation>
+    <xs:complexContent>
+    <xs:extension base="ActivatableServiceInfo">
+   <xs:sequence>
+    <xs:element name="enableAssociationLimit" type="xs:boolean" minOccurs="0"/>
+    <xs:element name="associationLimitHours" type="FlexibleSeatingAssociationLimitHours" minOccurs="0"/>
+    <xs:element name="unlockPhonePINCode" type="FlexibleSeatingGuestUnlockPhonePINCode" nillable="true" minOccurs="0"/>
+    <xs:element name="accessDevice" type="FlexibleSeatingGuestAccessDevice" minOccurs="0"/>
+    <xs:element name="hostUserId" type="UserId" nillable="true" minOccurs="0"/>
+    <xs:element name="hostLastName" type="LastName" minOccurs="0"/>
+    <xs:element name="hostFirstName" type="FirstName" minOccurs="0"/>
+    <xs:element name="hostAssociationDateTime" type="xs:dateTime" minOccurs="0"/>
+    <xs:element name="hostEnforcesAssociationLimit" type="xs:boolean" minOccurs="0"/>
+    <xs:element name="hostAssociationLimitHours" type="FlexibleSeatingAssociationLimitHours" minOccurs="0"/>    
+   </xs:sequence>
+  </xs:extension>
+   </xs:complexContent> 
+</xs:complexType>
+
+<xs:simpleType name="FlexibleSeatingAssociationLimitHours">
+ <xs:annotation>
+  <xs:documentation>
+       Maximum time limit for a flexible seating guest's association to flexible seating hosts
+        Change History:
+        R20.0 – Added. 
+  </xs:documentation>
+</xs:annotation>
+   <xs:restriction base="xs:int">
+    <xs:minInclusive value="1" />
+    <xs:maxInclusive value="999" />
+  </xs:restriction>
+</xs:simpleType>
+
+  <xs:simpleType name="FlexibleSeatingGuestUnlockPhonePINCode">
+    <xs:annotation>
+      <xs:documentation>
+        Unlock phone PIN code for the flexible seating guest.
+          Change History:
+          R20.0 – Added. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="4"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="FlexibleSeatingGuestAccessDevice"> 
+    <xs:annotation>
+      <xs:documentation>
+        Device associated with a flexible seating guest.
+        Change History:
+        R20.0 – Added.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+     <xs:element name="deviceName" type="AccessDeviceName">
+        <xs:annotation>
+          <xs:documentation>
+            Access device name.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceLevel" type="AccessDeviceLevel">
+        <xs:annotation>
+          <xs:documentation>
+            Identifies at which level in the system an identity/device profile is created.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deviceLinePort" type="AccessDeviceEndpointLinePort" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The Line/Port identifies a device endpoint 
+            in standalone mode or a SIPURI public identity in IMS mode.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

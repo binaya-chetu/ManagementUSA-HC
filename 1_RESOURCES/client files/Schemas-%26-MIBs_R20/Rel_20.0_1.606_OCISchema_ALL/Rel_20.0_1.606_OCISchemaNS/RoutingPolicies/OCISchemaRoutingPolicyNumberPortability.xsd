@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  P O L I C Y  P A R T                   -->
+<!--                                                                        -->
+<!-- N U M B E R   P O R T A B I L I T Y  P O L I C Y                       -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "../OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="../OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="../OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="../OCISchemaSearchCriteriaNS.xsd"/>
+  
+  <!-- ********************************************************************************** -->
+  <!-- N U M B E R   P O R T A B I L I T Y    R E Q U E S T S  A N D  R E S P O N S E S   -->
+  <!-- ********************************************************************************** -->
+  <!--
+  Requests and responses are listed here in alphabetical order.
+  The non-primitive attributes inside the commands are defined in another
+  section of the schema.
+
+  Requests in this schema file:
+    RoutingPolicyNumberPortabilityAddInstanceRequest    
+    RoutingPolicyNumberPortabilityDeleteInstanceRequest    
+    RoutingPolicyNumberPortabilityGetInstanceRequest    
+    RoutingPolicyNumberPortabilityModifyInstanceRequest    
+    RoutingPolicyNumberPortabilityAddInNumberRequest    
+    RoutingPolicyNumberPortabilityDeleteInNumberRequest    
+    RoutingPolicyNumberPortabilityGetInNumberRequest    
+    RoutingPolicyNumberPortabilityGetInNumberListRequest    
+    RoutingPolicyNumberPortabilityModifyInNumberRequest    
+    RoutingPolicyNumberPortabilityAddOutNumberRequest    
+    RoutingPolicyNumberPortabilityDeleteOutNumberRequest    
+    RoutingPolicyNumberPortabilityGetOutNumberRequest    
+    RoutingPolicyNumberPortabilityGetOutNumberListRequest    
+    RoutingPolicyNumberPortabilityModifyOutNumberRequest    
+    RoutingPolicyNumberPortabilityAddBulkloadRequest    
+    RoutingPolicyNumberPortabilityCancelBulkloadRequest    
+    RoutingPolicyNumberPortabilityGetBulkloadRequest    
+    
+  --> 
+  
+  <xs:complexType name="RoutingPolicyNumberPortabilityAddInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityDeleteInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get attributes of a policy instance.
+        The response is either RoutingPolicyNumberPortabilityGetInstanceResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInstanceResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetInstanceRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="isEnabled" type="xs:boolean"/>
+          <xs:element name="callType" type="CallType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityModifyInstanceRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify attributes of a policy instance.
+        The response is either SuccessResponse or ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="isEnabled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="callTypeList" type="ReplacementCallTypeList" nillable="true" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityAddInNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add an entry to the ported in numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedInNumber" type="PortedInNumber"/>
+          <xs:element name="publicNumber" type="PublicNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityDeleteInNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete an entry from the ported in numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedInNumber" type="PortedInNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given ported in number.
+        The response is either a RoutingPolicyNumberPortabilityGetInNumberResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedInNumber" type="PortedInNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInNumberResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetInNumberRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="publicNumber" type="PublicNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInNumberListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of ported in numbers.
+        The response is either a RoutingPolicyNumberPortabilityGetInNumberListResponse. or
+        an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactPortedInNumber" type="SearchCriteriaExactPortedInNumber" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactPublicNumber" type="SearchCriteriaExactPublicNumber" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetInNumberListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetInNumberListRequest.
+        Contains a table of InNumbers.
+        The column headings are: "Ported In Number", "Public Number".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIResponse">
+        <xs:sequence>
+          <xs:element name="inNumberTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityModifyInNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify an entry in the ported in numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedInNumber" type="PortedInNumber"/>
+          <xs:element name="publicNumber" type="PublicNumber" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityAddOutNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to add an entry to the ported out numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedOutNumber" type="PortedOutNumber"/>
+          <xs:element name="internalNumber" type="InternalNumber"/>
+          <xs:element name="routingNE" type="RoutingNE" minOccurs="0"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityDeleteOutNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to delete an entry from the ported out numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedOutNumber" type="PortedOutNumber"/>
+          <xs:element name="routingNE" type="RoutingNE" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetOutNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given ported out number.
+        The response is either a RoutingPolicyNumberPortabilityGetOutNumberResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedOutNumber" type="PortedInNumber"/>
+          <xs:element name="routingNE" type="RoutingNE" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetOutNumberResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetOutNumberRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="internalNumber" type="InternalNumber"/>
+          <xs:element name="cost" type="ResourceCost"/>
+          <xs:element name="weight" type="ResourceWeight"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetOutNumberListRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get the list of ported out numbers.
+        The response is either a RoutingPolicyNumberPortabilityGetOutNumberListResponse or
+        an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="searchCriteriaExactPortedOutNumber" type="SearchCriteriaExactPortedOutNumber" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactInternalNumber" type="SearchCriteriaExactInternalNumber" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactRoutingNE" type="SearchCriteriaExactRoutingNE" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactResourceCost" type="SearchCriteriaExactResourceCost" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactResourceWeight" type="SearchCriteriaExactResourceWeight" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDigitManipulationIndex" type="SearchCriteriaExactDigitManipulationIndex" minOccurs="0"/>
+          <xs:element name="searchCriteriaExactDestinationTrunkGroup" type="SearchCriteriaExactDestinationTrunkGroup" minOccurs="0"/>
+          <xs:element name="responsePagingRestriction" type="ResponsePagingRestriction" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetOutNumberListResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetOutNumberListRequest.
+        Contains a table of ported out numbers.
+        The column headings are: "Ported Out Number", "Internal Number",
+        "Routing NE", "Cost", "Weight", "Digit Manipulation Index", "Destination Trunk Group".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIResponse">
+        <xs:sequence>
+          <xs:element name="outNumberTable" type="core:OCITable"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityModifyOutNumberRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to modify an entry in the ported out numbers list.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="portedOutNumber" type="PortedOutNumber"/>
+          <xs:element name="routingNE" type="RoutingNE" minOccurs="0"/>
+          <xs:element name="internalNumber" type="InternalNumber" minOccurs="0"/>
+          <xs:element name="cost" type="ResourceCost" minOccurs="0"/>
+          <xs:element name="weight" type="ResourceWeight" minOccurs="0"/>
+          <xs:element name="digitManipulationIndex" type="DigitManipulationIndex" minOccurs="0" nillable="true"/>
+          <xs:element name="destinationTrunkGroup" type="DestinationTrunkGroup" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityAddBulkloadRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to bulkload a file.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+          <xs:element name="file" type="FileName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityCancelBulkloadRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Request to cancel a bulkload request or delete the status if the request is
+        already finished.
+        The response is either a SuccessResponse or an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetBulkloadRequest">
+    <xs:annotation>
+      <xs:documentation>
+        Get properties of a given bulk load entry.
+        The response is either a RoutingPolicyNumberPortabilityGetBulkloadResponse or
+        an ErrorResponse.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIRequest">
+        <xs:sequence>
+          <xs:element name="name" type="PolicyInstanceName"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="RoutingPolicyNumberPortabilityGetBulkloadResponse">
+    <xs:annotation>
+      <xs:documentation>
+        Response to RoutingPolicyNumberPortabilityGetBulkloadRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="core:OCIDataResponse">
+        <xs:sequence>
+          <xs:element name="file" type="FileName"/>
+          <xs:element name="bulkLoadStatus" type="BulkLoadStatus"/>
+          <xs:element name="timeElapsedSeconds" type="xs:int"/>
+          <xs:element name="rowsLoaded" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:simpleType name="BulkLoadStatus">
+    <xs:annotation>
+      <xs:documentation>
+        Dial plan matching clause.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="File Loading"/>
+      <xs:enumeration value="File Loading Failed"/>
+      <xs:enumeration value="File Loaded"/>
+      <xs:enumeration value="No File Loaded"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="PublicNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Public Number
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="DN">
+      <xs:minLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="PortedOutNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Ported Out Number
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="DN">
+      <xs:minLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="PortedInNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Ported In Number
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="DN">
+      <xs:minLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:simpleType name="InternalNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Internal Number
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:minLength value="3"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>    
+    
+  <xs:complexType name="SearchCriteriaExactPublicNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified PublicNumber.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="publicNumber" type="PublicNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactPortedInNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified PortedInNumber.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="portedInNumber" type="PortedInNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactPortedOutNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified PortedOutNumber.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="portedOutNumber" type="PortedOutNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+  <xs:complexType name="SearchCriteriaExactInternalNumber">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for searching for a particular fully specified InternalNumber.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="SearchCriteria">
+        <xs:sequence>
+          <xs:element name="internalNumber" type="InternalNumber"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>    
+    
+</xs:schema>

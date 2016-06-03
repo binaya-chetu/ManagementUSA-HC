@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+     <!-- ************************************************************************** -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.               -->
+    <!-- ************************************************************************** -->
+    <!--                XSI  X M L  S C H E M A                                     -->
+    <!--               *************************                                    -->
+    <!-- This file defines the schema types and elements required by the            -->
+    <!-- ACD Agent interface in the http://schema.broadsoft.com/xsi name space.     -->
+    <!--                                                                            -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with          -->
+    <!-- grouping at the Element, Complex and Simple level respectively.            -->
+    <!-- ************************************************************************** -->
+
+
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Complex type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+  <xs:complexType name="ACDAgentJoinInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Information about a ACD an agent belongs to and may be joined to.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="acdUserId" type="UserId">
+        <xs:annotation>
+          <xs:documentation>
+            The ACD user ID.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="joined" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when the agent has joined the ACD.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="skillLevel" type="SkillLevel" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Only present when the agent is in Skill-Based ACD.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ACDAgentJoinInfoList">
+    <xs:annotation>
+      <xs:documentation>
+        A list of information about the ACD the agent belongs to and may have
+        joined.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="joinInfo" type="ACDAgentJoinInfo"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ACDAgentJoinData">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the ACD service data that an agent has joined to or belong to.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="joinInfos" type="ACDAgentJoinInfoList"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            List of ACDs Agent Join Info. Only present when the agent belongs to
+            at least one ACD.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ACDAgentJoinUpdateData">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the ACD service update data for agent joining or leaving.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="joinInfo" type="ACDAgentJoinInfo"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The ACD Agent Join Info indicating that the agent is joining or
+            leaving a ACD.
+
+            Only not present for service unassignment notifications.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AgentStateInformation">
+    <xs:annotation>
+      <xs:documentation>
+        An AgentStateInformation maintains information about the agent state.
+        
+        Change History:
+        19     - Modified: 
+                  stateTimestamp type changed from 
+                    Timestamp to TimestampWithSeverity
+                  averageWrapUpTime type changed from 
+                    NonNegativeInt to NonNegativeIntWithSeverity
+        
+        17.sp3 - Modified by adding element "wrapUpCallCenterUserId"      
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="state" type="AgentState">
+        <xs:annotation>
+          <xs:documentation>
+            The current agent state.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="stateTimestamp" type="TimestampWithSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            Time stamp value of the last agent state change.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unavailableCode" type="AgentUnavailableCode"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the call is being played the mandatory entrance message.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="wrapUpCallId" type="CallId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the agent is in wrap-up and the wrap-up is associated 
+            with a specific call. This element captures the agent callId as 
+            reported in the events sent in the context of the Basic, Standard, 
+            or Advanced event packages.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="signInTimestamp" type="Timestamp"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Time stamp value of the agent sign-in (i.e. transition out the sign-out state).
+            The element is not present if the state is Sign-Out.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="totalAvailableTime" type="NonNegativeInt"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The total available time since the last agent sign-in. Time currently spent in
+            the Available state not included. It is not provided when the agent state is Sign-Out.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="averageWrapUpTime" type="NonNegativeIntWithSeverity"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The average wrap-up time per handled call since the last sign-in. 
+            It is not provided when the agent state is Sign-Out.
+            
+            This data also indicates whether this value is normal, and if not, with what severity
+            according to configuration.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>      
+      <xs:element name="wrapUpCallCenterUserId" type="UserId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the agent is in wrap-up. This indicates the 
+            userId of the call center associated with the last incoming
+            or outgoing call center call made by the agent. This 
+            information element can be used to determine the
+            appropriate list of disposition codes that can be 
+            entered by the agent in wrap-up. This element may not 
+            be present if the agent is in wrap-up and BroadWorks cannot
+            associate the wrap-up state with a call center call.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CallCenterAgentMonitoringStatus">
+    <xs:annotation>
+      <xs:documentation>
+        The CallCenterAgentMonitoringStatus maintains real-time information about the agent.
+        
+        Change History: 
+        19     - Modified: 
+                  averageACDCallTime type changed from 
+                    NonNegativeInt to NonNegativeIntWithSeverity
+                  averageACDOutgoingCallTime type changed from 
+                    NonNegativeInt to NonNegativeIntWithSeverity
+        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="averageACDCallTime" type="NonNegativeIntWithSeverity"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The average call time for ACD calls since the last sign-in. It is not provided when the agent state is Sign-Out.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    <xs:element name="averageACDOutgoingCallTime" type="NonNegativeIntWithSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            The average call time for outgoing ACD calls since the last sign-in. It is not provided when the agent state is Sign-Out.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="CallCenterAgentOnCallAlertInfo">
+    <xs:annotation>
+      <xs:documentation>
+        The CallCenterAgentOnCallAlertInfo indicates if an agent is 
+          1) on a call or idle
+          2) for how long, in either case (timestamp)
+          3) whether that length of time is greater than a configured
+            threshold
+        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="alertEvent">
+        <xs:simpleType>
+          <xs:annotation>
+            <xs:documentation>
+              Alert Type identifies whether the
+              event pertains to
+              In-call Time or Idle Time.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="OnCallTime" />
+            <xs:enumeration value="IdleTime" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="timestamp" type="TimestampWithSeverity" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  
+  
+  <!-- **************************************************************-->
+  <!--   Simple type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+</xs:schema>

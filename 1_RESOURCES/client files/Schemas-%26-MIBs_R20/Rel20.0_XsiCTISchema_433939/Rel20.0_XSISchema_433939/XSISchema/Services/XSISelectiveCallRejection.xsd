@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Selective Call Rejection User Service interface in the              i    -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="SelectiveCallRejection">
+    <xs:annotation>
+      <xs:documentation>
+        Selective Call Rejection allows you to reject only calls that meet your pre-defined criteria. 
+        The criteria for each Selective Acceptance entry can be a list of up to 12 phone numbers or digit patterns, 
+        a specified time schedule, and a specified holiday schedule. 
+        All criteria for an entry must be true for you to reject the call.
+        
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="criteriaActivations" type="CriteriaActivationList" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The criteria set for the location. 
+              This rejection criteria defines when calls are to be rejected and optionally by which specified numbers.        
+              This is present when at least one criterion is "set".
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> 
+  
+  <xs:element name="SelectiveCallRejectionCriteria">
+    <xs:annotation>
+      <xs:documentation>
+        Selective Call Rejection Criteria Details
+         
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="blackListed" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              When true, use sequential ring according to the criteria.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="criteria" type="CriteriaWithSelectiveCall" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation>
+               The criteria for each Selective Rejection entry can be a list of up to 12 phone numbers or digit patterns, 
+               a specified time schedule, and a specified holiday schedule. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="CriteriaWithSelectiveCall">
+    <xs:annotation>
+      <xs:documentation>
+        Criteria for Priority Alert service.
+  
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Criteria">
+        <xs:sequence>
+          <xs:element name="criteriaFromDn" type="SelectiveCallRejectionCriteriaFromDn" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SelectiveCallRejectionCriteriaFromDn">
+    <xs:annotation>
+      <xs:documentation>
+        The to dn criteria.
+
+        Change History:
+        R19.0 - Added
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="fromDnCriteriaSelection" type="SelectiveCallRejectionCriteriaCallTypeSelection" minOccurs="0"/>
+      <xs:element name="includeAnonymousCallers" type="xs:boolean" minOccurs="0" />
+      <xs:element name="includeUnavailableCallers" type="xs:boolean" minOccurs="0" />
+      <xs:element name="phoneNumberList" type="CriteriaPhoneNumberList" nillable="true" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="SelectiveCallRejectionCriteriaCallTypeSelection">
+    <xs:annotation>
+      <xs:documentation>
+        Selection criteria for a call type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Any" />
+      <xs:enumeration value="Forwarded" />
+      <xs:enumeration value="Specified Only" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

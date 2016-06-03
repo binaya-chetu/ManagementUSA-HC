@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2010 BroadSoft, Inc.  All rights reserved.               -->
+<!-- ********************************************************************** -->
+<!-- CTIACD  X M L  S C H E M A                                             -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the Automatic Call Distribution   --> 
+<!-- Services.                                                              -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns="http://schema.broadsoft.com/CTI"
+  targetNamespace="http://schema.broadsoft.com/CTI" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsp="http://schema.broadsoft.com/XspXMLInterface" xmlns:xsi="http://schema.broadsoft.com/xsi"
+  elementFormDefault="unqualified" version="1.0">
+
+
+  <xs:import namespace="http://schema.broadsoft.com/XspXMLInterface"
+    schemaLocation="../../XSPXMLSchema/XspXMLInterface.xsd" />
+
+  <xs:import namespace="http://schema.broadsoft.com/xsi"
+    schemaLocation="../../XSISchema/ACD/XSIACD.xsd" />
+
+  <xs:element name="ACDBlindTransferRequest"
+    substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to transfer a call queued
+        at an ACD to a new destination.
+        
+        Returns a generic xsp:Response with a empty payload
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ACD Blind Transfer Request
+                  I.e. "/-context-/v2.0/callcenter/%callcenterid%/calls/%callid%/blindtransfer?%phoneno%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token"></xs:element>
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="callcenterid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallCenterId of the ACD.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to
+                        transfer.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="phoneno" type="xsi:Address">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The destination address for the
+                        transfer.          
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="ACDPromoteCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to change the priority of a
+        call queued in an ACD. The call can only be promoted not demoted
+        (i.e. the ACDPriority value can only be reduced, see Appendix A
+        for details).
+        BroadWorks will reject any request to move a call
+        to a lower priority (i.e. increase the ACDPriority value). Only
+        calls that have not been bounced and that are not being played a
+        mandatory entrance message can be promoted.
+        This request does not involve any call state or topology changes.
+
+        Returns a generic xsp:Response with a xsi:QueueCallOrder payload.  
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ACDPromoteCall Request
+                  I.e. "/-context-/v2.0/callcenter/%callcenterid%/calls/%callid%/promote"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token"></xs:element>
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="callcenterid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallCenterId of the ACD.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to
+                        promote.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload">
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:restriction base="xsp:Payload">
+                    <xs:sequence>
+                      <xs:element ref="xsi:ACDPromote">
+                        <xs:annotation>
+                          <xs:documentation>
+                            This carries the priority to
+                            promote the call.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:restriction>
+                </xs:complexContent>
+              </xs:complexType>
+
+            </xs:element>
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDReleaseCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used by a remote application to
+        release a call maintained in an ACD queue. As a result of this
+        request, the call is removed from the ACD queue.
+        If the call session was offered to an agent, the associated call is
+        also released. However, if the call was offered and answered by
+        an agent, the call cannot be released by this command as the
+        call is no longer in the ACD queue.
+
+        Returns a generic xsp:Response with a empty payload.
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ACDReleaseCall Request
+                  I.e. "/-context-/v2.0/callcenter/%callcenterid%/calls/%callid%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="DELETE" />
+            <xs:element name="version" type="xs:token"></xs:element>
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="callcenterid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallCenterId of the ACD.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to
+                        release.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDReorderCallRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to move the call in an ACD
+        queue to the specified position.
+        The position specifies the location of a call in an 
+        ACD queue. The call at position 1 in the
+        queue is the next call to be distributed to
+        an agent. A remote application can modify the 
+        position of a call if its priority is set to "0-Highest", 
+        if it has not been bounced and if it not
+        being played a mandatory entrance message.
+        The new position is returned in the response. Note that the new
+        position may not always match the requested position due to the
+        dynamic nature of the queue.
+        
+        This request does not involve any call state or
+        topology changes.
+
+        Returns a generic xsp:Response with a xsi:QueueCallOrder payload.
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ACDReorderCall Request
+                  I.e. "/-context-/v2.0/callcenter/%callcenterid%/calls/%callid%/reorder?%index%"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="PUT" />
+            <xs:element name="version" type="xs:token"></xs:element>
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="callcenterid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallCenterId of the ACD.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="callid" type="xsi:CallId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The callId of the call to
+                        promote.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="index" type="xs:int">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The new position for the call's
+                        entry in
+                        the ACD queue.                
+                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetACDRequest" substitutionGroup="xsp:payload">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to get the list of calls
+        maintained in an ACD queue
+
+        Returns a generic xsp:Response with a xsi:ACDQueue payload.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:restriction base="xsp:RequestPayload">
+          <xs:sequence>
+            <xs:element name="uri" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation>
+                  The relative URI of XSI ACDQueueGet Request
+                  I.e. "/-context-/v2.0/callcenter/%callcenterid%/calls"
+                  where -context- corresponds to the application context of the Xsi-Actions web application (e.g. com.broadsoft.xsi-actions).  
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="method" type="xs:token" fixed="GET" />
+            <xs:element name="version" type="xs:token"></xs:element>
+            <xs:element name="params">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="callcenterid" type="xsi:SubscriberId">
+                    <xs:annotation>
+                      <xs:documentation>
+                        The CallCenterId of the ACD.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="payload" type="xsp:EmptyPayload" />
+          </xs:sequence>
+        </xs:restriction>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************************** -->
+<!-- Copyright (c) 2000-2012 BroadSoft, Inc.  All rights reserved.          -->
+<!-- ********************************************************************** -->
+<!-- O C I   X M L   S C H E M A  :  N   S  P A R T                         -->
+<!--                                                                        -->
+<!-- This file defines the XML Schema for the BroadSoft Network Server      -->
+<!-- Open Client Interface (OCI).                                           -->
+<!-- ********************************************************************** -->
+
+<xs:schema xmlns:xs             = "http://www.w3.org/2001/XMLSchema"
+           xmlns:core           = "C"
+           xmlns                = ""
+           attributeFormDefault = "qualified"
+           elementFormDefault   = "qualified">
+  
+  <xs:import namespace      = "C"
+             schemaLocation = "OCISchemaBASE.xsd"/>
+  
+  <xs:include schemaLocation="OCISchemaDataTypes.xsd"/>
+  <xs:include schemaLocation="OCISchemaDataTypesNS.xsd"/>
+  <xs:include schemaLocation="OCISchemaSearchCriteriaNS.xsd"/>
+  <xs:include schemaLocation="OCISchemaRouting.xsd"/>
+  <xs:include schemaLocation="OCISchemaSystemNS.xsd"/>
+  <xs:include schemaLocation="OCISchemaNetworkElement.xsd"/>
+  <xs:include schemaLocation="OCISchemaEnterprise.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyCallScreening.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyCallTyping.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyDestinationService.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyEqualAccessService.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyEqualAccess.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyFarEnd.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyIMRNFetching.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyMediaServerSelection.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyMobileNumberRtg.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyNearEnd.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyNetVoicePortalRtg.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyNumberPortability.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyOriginatorRedirect.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyPhysLocation.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyPreCallTyping.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyPreCallTyping.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyRateCenter.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyReverseTranslation.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyServiceCenter.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicySimple.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicySMSDefaultRouting.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicySMSNearEndRouting.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicySubscriberLocation.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyTandeOverflow.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyTgrpTerm.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyTrunkGroupTransl.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyUrlDialing.xsd"/>
+  <xs:include schemaLocation="RoutingPolicies/OCISchemaRoutingPolicyXSLocation.xsd"/>
+  <xs:include schemaLocation="OCISchemaDeprecated15.xsd"/>
+  <xs:include schemaLocation="OCISchemaDeprecated17.xsd"/>
+  <xs:include schemaLocation="OCISchemaDeprecated19.xsd"/>
+</xs:schema>

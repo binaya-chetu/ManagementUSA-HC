@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <!-- ************************************************************************ -->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- ************************************************************************ -->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- RoutePoint DataTypes interface in the http://schema.broadsoft.com/xsi    -->
+    <!-- name space.                                                               -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--   Element Type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+  <xs:element name="RoutePointCallStartInfo">
+    <xs:annotation>
+      <xs:documentation>
+        Identifies a new Call with CallId and External Tracking Id.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="callId" type="CallId" />
+        <xs:element name="externalTrackingId" type="ExternalTrackingId" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RoutePointQueue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="queueEntries" type="RoutePointQueueEntryList"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The details of entries in the Route Point queue. Only present when
+              there are entries in the queue.
+              </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RoutePointState" type="RoutePointState">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointState maintains state information(Normal or Failed) about
+        a Route Point.. 
+        </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="RoutePointDistribute">
+    <xs:annotation>
+      <xs:documentation>
+        Requests the specified call in the Route Point's queue to be distributed to
+        the specified agent. 
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="agentId" type="SubscriberId">
+          <xs:annotation>
+            <xs:documentation>
+              The userId of the agent to which the call is to be distributed. The
+              agent must have the "Call Center Premium" service
+              assigned. 
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="callingLineIdNumber" type="Address"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The Calling Line Id number to be displayed on the agent's device or
+              call client. When present, this value overrides the value
+              that would normally be provided by BroadWorks.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="callingLineIdName" type="NonEmptyString"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The Calling Line Id name to be displayed on the agent's Device or
+              call client. When present, this value overrides the value
+              that would normally be provided by BroadWorks.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="timeInQueue" type="NonNegativeInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The amount of time (in seconds) that the caller has spent in the
+              queue waiting for an agent. When present, this value is
+              passed to the agent's device if the device supports the
+              x-broadworks-call-center MIME type.
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="numberOfCallsInQueue" type="NonNegativeInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The number of calls remaining in the queue. When Present, this value
+              is passed to the agent's device if the device supports the
+              x-broadworks-call-center MIME type.
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="longestWaitTime" type="NonNegativeInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The longest wait time (in seconds) of the calls remaining in the
+              queue. When present, this value is passed to the agent's
+              device if the device supports the x-broadworks-call-center
+              MIME type.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="whisperMessageAudioUrl" type="NonEmptyURI"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The URL of the audio whisper message to play to the agent upon going
+              off-hook to answer the call.
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="whisperMessageVideoUrl" type="NonEmptyString"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The URL of the video whisper message to play to the agent upon going
+              off-hook to answer the call.
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RoutePointOutgoingDial">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to originate a call from the Route Point to the
+        specified destination.
+
+        A given Route Point may have multiple numbers assigned (DNIS – Dialed
+        Number Identification Service). In this case, the request may
+        include the name of the Route Point whose number should be used
+        for the outgoing dial request.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" type="Address">
+          <xs:annotation>
+            <xs:documentation>
+              The address to use for the outgoing dial.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="routePointName" type="NonEmptyString"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Indicates the Route Point name associated with the Route Point number to
+              use for the outgoing call. 
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RoutePointPlayBusy">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to play localized busy to a selected call in the
+        Route Point queue.
+
+        The duration of the busy to play can be optionally specified. If the
+        busy duration is provided, then the busy is discontinued when
+        the time is reached. If the duration is not provided, the busy
+        is played without interruption.
+
+        When the Play Busy request is successfully accepted by BroadWorks, a
+        play-collect operation is started. A playCollectId is assigned
+        to the operation and is returned in the response.
+
+        A remote application can update the busy duration by sending another
+        request for the same call. The busy duration will be replaced by
+        the new specified value and the playback timer will be reset to
+        zero. The original playCollectId must be specified in the
+        request with the new duration. If the request is successfully
+        accepted by BroadWorks the same playCollectId will be returned
+        in the response.
+
+            </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="duration" type="PositiveInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The duration of the busy in seconds.
+              </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="busyPattern" type="BusyPattern">
+          <xs:annotation>
+            <xs:documentation>
+              Specify if a busy or fast busy must be played.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCollectId" type="PlayCollectId"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The playCollect Id used to identify a play-collect
+              operation in progress. Only specified when extending
+              the duration of the
+              play-collect operation in progress.
+              The busyPattern parameter is ignored,
+              only the new
+              duration value is taken into consideration.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RoutePointPlayMusicOnHold">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to play Music On Hold (MOH) to a selected call in
+        the Route Point queue.
+
+        The MOH to be played is defined through Route Point configuration.
+        Digits can be collected while the MOH is being played if an MGCP
+        digit map is specified in the request. However, if the MOH is
+        played from an external source to BroadWorks, no digit
+        collection can be performed.
+
+        The duration of the MOH to play can be optionally specified. If the
+        duration is provided, then the MOH is discontinued when the time
+        is reached. If the duration is not provided, the MOH is played
+        without interruption.
+
+        When the request is successfully accepted by BroadWorks, a play-collect
+        operation is started. A playCollectId is assigned to the
+        operation and is returned in the response.
+
+        A remote application can update the MOH duration by sending another
+        request for the same call. The MOH duration will be replaced by
+        the new value and the playback timer will be reset to zero. When
+        extending the MOH duration no new MGCP digit map can be
+        specified. The original playCollectId must be specified in the
+        request. If the request is successfully accepted by BroadWorks
+        the same playCollectId will be returned in the response.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="duration" type="PositiveInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The duration of the MOH to play (in seconds). If not present, the
+              MOH is played once and without interruption.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="digitMap" type="MGCPDigitMap"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Digit map to define which digits to collect as specified in RFC 3435.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCollectId" type="PlayCollectId"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The playCollect Id used to identify a play-collect operation in
+              progress. Only specified when extending the duration of
+              the play-collect operation in progress. The mgcpDigitMap
+              parameter is ignored, only the new duration value is taken
+              into consideration.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RoutePointPlayRingBack">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to play localized ringback to a selected call in
+        the Route Point queue.
+
+        If an MGCP digit map is specified in the request, digits will be
+        collected while the ringback is being played.
+
+        The duration of the ringback to play can be optionally specified. If
+        the ringback duration is provided, then the ringback is
+        discontinued when the time is reached. If the duration is not
+        provided, the ringback is played without interruption.
+
+        When the Play Ringback request is successfully accepted by BroadWorks, a
+        play-collect operation is started. A playCollectId is assigned
+        to the operation and is returned in the response.
+
+        A remote application can update the ringback duration by sending
+        another request for the same call. The ringback duration will be
+        replaced by the new specified value and the playback timer will
+        be reset to zero. When extending the ringback duration no new
+        MGCP digit map can be specified. The original playCollectId must
+        be specified in the request with the new duration. If the
+        request is successfully accepted by BroadWorks the same
+        playCollectId will be returned in the response.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="duration" type="PositiveInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The duration of the ringback in seconds.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="digitMap" type="MGCPDigitMap"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Digit map to define which digits to collect as specified in RFC 3435.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCollectId" type="PlayCollectId"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The playCollect Id used to identify a play-collect operation in
+              progress. Only specified when extending the duration of
+              the play-collect operation in progress. The mgcpDigitMap
+              parameter is ignored, only the new duration value is taken
+              into consideration.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RoutePointPlaySilence">
+    <xs:annotation>
+      <xs:documentation>
+        This request is used to play localized silence to a selected call in the
+        Route Point queue.
+
+        If an MGCP digit map is specified in the request, digits will be
+        collected while the silence is being played.
+
+        The duration of the silence to play can be optionally specified. If the
+        silence duration is provided, then the silence is discontinued
+        when the time is reached. If the duration is not provided, the
+        silence is played without interruption.
+
+        When the Play Silence request is successfully accepted by BroadWorks, a
+        play-collect operation is started. A playCollectId is assigned
+        to the operation and is returned in the response.
+
+        A remote application can update the silence duration by sending
+        another request for the same call. The silence duration will be
+        replaced by the new specified value and the playback timer will
+        be reset to zero. When extending the silence duration no new
+        MGCP digit map can be specified. The original playCollectId must
+        be specified in the request with the new duration. If the
+        request is successfully accepted by BroadWorks the same
+        playCollectId will be returned in the response.
+
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="duration" type="PositiveInt"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The duration of the silence in seconds.
+              </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="digitMap" type="MGCPDigitMap"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Digit map to define which digits to collect as specified in RFC 3435.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="playCollectId" type="PlayCollectId"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The playCollect Id used to identify a play-collect operation in
+              progress. Only specified when extending the duration of
+              the play-collect operation in progress. The mgcpDigitMap
+              parameter is ignored, only the new duration value is taken
+              into consideration.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="RoutePointPlayTreatment">
+    <xs:annotation>
+      <xs:documentation>
+        Requests a treatment to be played to the specified call in the Route Point's
+        queue. The treatment is defined by a series of up to four audio
+        or video URLs to be played sequentially. This sequence can be
+        repeated up to five times. For an audio-only call, the treatment
+        is played using the audio URLs, which are played in sequence.
+        For a video call, the treatment is played using the video URLs,
+        which are played in sequence. The treatment (i.e. the applicable
+        sequence of URLs) can be played up to five times. If an MGCP
+        digit map is specified in the request, digits can be collected
+        while the treatment is being played. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="audioUrlList" type="RoutePointPlayTreatmentURIList">
+          <xs:annotation>
+            <xs:documentation>
+              The list of audio URL(s) to play for an audio-only
+              call.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="videoUrlList" type="RoutePointPlayTreatmentURIList"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The list of video URL(s) to play for a video call.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="numberOfPlay"
+          type="RoutePointPlayTreatmentNumberOfPlay" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The list of audio URL(s) to play.
+                </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="digitMap" type="MGCPDigitMap"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Digit map to define which digits to collect as specified in RFC 3435.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RoutePointPlayInfo">
+    <xs:annotation>
+      <xs:documentation>
+        RoutePoint Play Info carries the playCollectId to correlate the request with
+        its associated event when a Play Request (PlayBusy, PlaySilence
+        etc.) is made successfully. 
+
+       </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="playCollectId" type="PlayCollectId">
+          <xs:annotation>
+            <xs:documentation>
+              The playCollectId used to correlate the request with its associated
+              event.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RoutePointBlindTransfer">
+    <xs:annotation>
+      <xs:documentation>
+        This requests the specified call in the Route Point's queue to be
+        transferred the specified address.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="address" type="Address">
+          <xs:annotation>
+            <xs:documentation>
+              The address to use for the outgoing dial.
+                        </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- **************************************************************-->
+  <!--   Complex Type in Alphabetical Order.                          -->
+  <!-- **************************************************************-->
+  <xs:complexType name="PlayCollectInfo">
+    <xs:annotation>
+      <xs:documentation>
+        A PlayCollectInfo provides information on the play collection
+        operation in progress. 
+                    </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="playCollectId" type="PlayCollectId">
+        <xs:annotation>
+          <xs:documentation>
+            PlayCollectId as returned in the response. Use to match the request with its
+            associated events.
+                                </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="playCollectType" type="PlayCollectType">
+        <xs:annotation>
+          <xs:documentation>
+            The type of play collection operation.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PlayCollectResult">
+    <xs:annotation>
+      <xs:documentation>
+        A PlayCollectResult provides information regarding the completion of
+        a play-collect operation.
+                    </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="playCollectId" type="PlayCollectId">
+        <xs:annotation>
+          <xs:documentation>
+            PlayCollectId as returned in the response. Use to match the request with its
+            associated events.
+                                </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="completionReason" type="PlayCompletionReason">
+        <xs:annotation>
+          <xs:documentation>
+            The reason the operation was completed.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="digits" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Contains the collected DTMF input characters. Only present if a DTMF input
+            was collected.
+                                </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorReason" type="xs:string"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Contains detail of the error. Only present when the reason is set to
+            "Error"
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="RoutePointPlayTreatmentURIList">
+    <xs:annotation>
+      <xs:documentation>
+        Contains a list of URIs that are used in the context of a
+        RoutePointPlayTreatmentRequest.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="uri" type="NonEmptyURI" maxOccurs="4" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RoutePointQueueEntry">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointQueueEntry provides information about each call
+        maintained in a route point queue.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="callId" type="CallId">
+        <xs:annotation>
+          <xs:documentation>
+            The call Id of the call for the route point entry.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extTrackingId" type="ExternalTrackingId">
+        <xs:annotation>
+          <xs:documentation>
+            The external tracking Id of the call for the route point entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="remoteParty" type="PartyInformation">
+        <xs:annotation>
+          <xs:documentation>
+            Information about the remote party for the route point entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="addTime" type="Timestamp" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The time when this entry was added to the route point queue. Only
+            present if the call has been added to the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="removeTime" type="Timestamp"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The time when this entry was removed from the route point queue. Only
+            present when the entry has been removed from the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bounced" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the call was at some point offered to an
+            agent and bounced.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="routePointName" type="NonEmptyString">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates the Route Point name(DNIS Name) associated with the RoutePoint
+            number the call was received on.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="routePointNumber" type="Address">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates the Route Point number(DNIS) the call was received on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="playCollectInfo" type="PlayCollectInfo"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Details on the play collection operation in progress. Only present if a
+            play-collect is currently being performed.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="outgoingCall" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates that the call was added as a result of an
+            outgoing Dial request. If no present, then the call was
+            added as a result of incoming call.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="outgoingCallAnswerTime" type="Timestamp"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Specify when the queued call was answered by the callee. Only present for
+            outgoing call that have been answered by the called
+            destination.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringUserId" type="UserId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The user ID of the agent that answered the call.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringCallId" type="CallId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The call ID of the agent call when the call is answered by an agent.
+            This field is only present when the call to the agent is
+            non-distributed.
+
+            This field can be used to correlate with events generated in the
+            context of a Basic, Advance Call, or Advanced Call2
+            subscription for that agent.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringNetworkCallId" type="NonEmptyToken"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The SIP call ID of the agent call when the call is answered by an
+            agent. This field is only present when the call to the agent
+            is distributed. I.e. The call offer from the call center to
+            the agent contains a SIP call leg.
+
+            This field can be used to correlate with events generated in the
+            context of a Basic, Advance Call, or Advanced Call2
+            subscription for that agent.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RoutePointQueueEntryList">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointQueueEntryList contains a list of RoutePointQueueEntry.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="queueEntry" type="RoutePointQueueEntry"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- **************************************************************-->
+  <!--   Simple Type in Alphabetical Order.                          -->
+  <!-- **************************************************************-->
+
+  <xs:simpleType name="CPDResult">
+    <xs:annotation>
+      <xs:documentation>
+        A CPDResult provides information regarding the Call Progress
+        Detection performed on an outgoing call.
+                    </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="SIT">
+        <xs:annotation>
+          <xs:documentation>
+            Special Information Tone was received during call setup.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fax">
+        <xs:annotation>
+          <xs:documentation>
+            A Fax machine answered the call.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VoiceMessaging">
+        <xs:annotation>
+          <xs:documentation>
+            A voice messaging system answered the call.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PlayCollectId">
+    <xs:annotation>
+      <xs:documentation>
+        The playCollect Id used to identify a play-collect
+        operation in progress. Only specified when extending
+        the duration of the play-collect operation in progress.
+        The busyPattern parameter is ignored, only the new
+        duration value is taken into consideration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="PlayCollectType">
+    <xs:annotation>
+      <xs:documentation>
+        A PlayCollectType specifies the nature of the play-collect operation
+        performed. 
+                    </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Treatment">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that a treatment is being played.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MOH">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that Music On Hold is being played.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ringback">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that a ringback is being played.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Busy">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that a busy is being played.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Silence ">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that silence is being played.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PlayCompletionReason">
+    <xs:annotation>
+      <xs:documentation>
+        A CompletionReason indicates the reason the play-collect operation
+        has ended.
+                    </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Match">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the DTMF grammar was matched.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NoMatch">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the DTMF grammar was not matched. The NoMatch value is
+            required when the digits entered by the end-user doesn't
+            match the digit map provided.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Timeout">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that no DTMF input was received before one of the collection
+            timers expired.
+                                </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EOF">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the play operation has completed as expected. This reason is
+            only used when no digits are collected.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Stopped-OutOfQueue">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the play-collect operation was implicitly stopped because
+            the call was removed from the Route Point queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Stopped-NewPlayCollect">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the play-collect operation was stopped because a new
+            play-collect was requested for the call.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Stopped-OfferedWithRingback">
+        <xs:annotation>
+          <xs:documentation>
+            Indicated that the play-collect operation was implicitly stopped because
+            the call was offered to an agent and the system is now
+            providing ringback as per the Route Point configuration.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Error">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates that the play or DTMF collection operation was not completed
+            because off an error. The error reason is provided in the
+            errorDetail parameter of the PlayCollectResult.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RoutePointCallFailureReason">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointCallFailureReason specifies the cause for a Route Point
+        call failure.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="CallFailureRequested">
+        <xs:annotation>
+          <xs:documentation>
+            The call was marked as failed as requested by the remote application
+            through a Route Point Fail Call
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CallFailureDueToInactivity">
+        <xs:annotation>
+          <xs:documentation>
+            The call was marked as failed because no request was received for the
+            call within the configurable time period.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RoutePointFailure">
+        <xs:annotation>
+          <xs:documentation>
+            The call was marked as failed because the Route Point is in the
+            failed state.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RoutePointCallReleaseReason">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointCallReleaseReason specifies the cause for a Route Point
+        call release.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="CallReleaseRequested">
+        <xs:annotation>
+          <xs:documentation>
+            The call was released as requested by the remote application
+            through a Route Point Release Call.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NoAnswerTimeOut">
+        <xs:annotation>
+          <xs:documentation>
+            The call was released because the no answer timer expired 
+            prior to the call being answered.
+            This reason is only applicable for outgoing calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReleasedWithCause">
+        <xs:annotation>
+          <xs:documentation>
+            The call was released because the call failed to be 
+            delivered to the provided destination.
+            This reason is only applicable for outgoing calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RoutePointPlayTreatmentNumberOfPlay">
+    <xs:annotation>
+      <xs:documentation>
+        Indicates the number of times that the treatment is to be played.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="PositiveInt">
+      <xs:maxInclusive value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MGCPDigitMap">
+    <xs:annotation>
+      <xs:documentation>
+        An MGCP digit map, per RFC3435.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken" />
+  </xs:simpleType>
+
+  <xs:simpleType name="RoutePointState">
+    <xs:annotation>
+      <xs:documentation>
+        A RoutePointState maintains state information about a Route Point.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Normal">
+        <xs:annotation>
+          <xs:documentation>
+            All call received by the Route Point are queued and treated normally.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Failed">
+        <xs:annotation>
+          <xs:documentation>
+            All call received by the Route Point are sent to the failed
+            destination.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RoutePointStateChangeReason">
+    <xs:annotation>
+      <xs:documentation>
+        A StateChangeReason specifies the reason for a Route Point state
+        change.
+            </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="FailureDetected">
+        <xs:annotation>
+          <xs:documentation>
+            The state change was performed because a failure was detected.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExternalRequest">
+        <xs:annotation>
+          <xs:documentation>
+            The state change was performed because it was requested through an
+            explicit request.
+                    </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

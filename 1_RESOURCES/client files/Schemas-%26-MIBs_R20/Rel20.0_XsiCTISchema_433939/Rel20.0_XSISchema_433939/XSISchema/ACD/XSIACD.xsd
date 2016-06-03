@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+    <!-- *************************************************************************-->
+    <!--     Copyright (c) 2008 BroadSoft, Inc.  All rights reserved.             -->
+    <!-- *************************************************************************-->
+    <!--                XSI  X M L  S C H E M A                                   -->
+    <!--               *************************                                  -->
+    <!-- This file defines the schema types and elements required by the          -->
+    <!-- ACD interface in the http://schema.broadsoft.com/xsi name space.         -->
+    <!--                                                                          -->
+    <!-- The Elements and Types are defined in the Alphabetical Order with        -->
+    <!-- grouping at the Element, Complex and Simple level respectively.          -->
+    <!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+
+  <!-- **************************************************************-->
+  <!--       Element in Alphabetical Order.                          -->
+  <!-- **************************************************************-->
+
+  <xs:element name="ACDForcedForwarding">
+    <xs:annotation>
+      <xs:documentation>
+        Configure the call center to temporarily divert
+        new incoming calls to a different route independent
+        of the Night Service route.
+        Forced Forwarding does not affect calls already in the queue.
+      </xs:documentation>
+    </xs:annotation>
+    
+    <xs:complexType>
+    <xs:complexContent>
+    <xs:extension base="ActivatableServiceInfo">
+      <xs:sequence>
+                <xs:element name="forwardToPhoneNumber" type="OutgoingDNorSIPURI"
+                minOccurs="0" nillable="true" />
+                <xs:element name="allowEnableViaFAC" type="xs:boolean" minOccurs="0" />
+                <xs:element name="playAnnouncementBeforeForwarding" type="xs:boolean" minOccurs="0" />
+                <xs:element name="audioMessageSelection" type="ExtendedFileResourceSelection"  minOccurs="0" />
+                <xs:element name="audioUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+                <xs:element name="audioFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+                <xs:element name="videoMessageSelection" type="ExtendedFileResourceSelection" minOccurs="0"/>
+                <xs:element name="videoUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+                <xs:element name="videoFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+      </xs:sequence>
+      </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDNightService">
+    <xs:annotation>
+      <xs:documentation>
+        Configure the call center to route calls differently
+        during hours when the queue is not in service. This is
+        determined by a schedule that defines the business hours 
+        of the queue. Night service cannot be disabled, however
+        it can have a schedule that defines business hours to be 
+        24x7 which means that no night service shall be provided.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+       <xs:element name="action" type="CallCenterScheduledServiceAction" minOccurs="0"/>
+       <xs:element name="businessHours" type="ScheduleName" minOccurs="0" nillable="true"/>
+        <xs:element name="forceNightService" type="xs:boolean" minOccurs="0" />
+        <xs:element name="allowManualOverrideViaFAC" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="transferPhoneNumber" type="OutgoingDNorSIPURI" minOccurs="0" nillable="true"/>
+        <xs:element name="playAnnouncementBeforeAction" type="xs:boolean" minOccurs="0"/>
+        <xs:element name="audioMessageSelection" type="ExtendedFileResourceSelection" minOccurs="0"/>
+	<xs:element name="audioUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+	<xs:element name="audioFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+	<xs:element name="videoMessageSelection" type="ExtendedFileResourceSelection" minOccurs="0"/>
+        <xs:element name="videoUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+        <xs:element name="videoFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+        <xs:element name="manualAnnouncementMode" type="CallCenterManualNightServiceAnnouncementMode" minOccurs="0"/>
+        <xs:element name="manualAudioMessageSelection" type="ExtendedFileResourceSelection" minOccurs="0"/>
+        <xs:element name="manualAudioUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+        <xs:element name="manualAudioFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+        <xs:element name="manualVideoMessageSelection" type="ExtendedFileResourceSelection" minOccurs="0"/>
+        <xs:element name="manualVideoUrlList" type="CallCenterAnnouncementURLList" minOccurs="0"/>
+        <xs:element name="manualVideoFileList" type="CallCenterAnnouncementFileList" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+    
+  <xs:element name="ACDPromote">
+    <xs:annotation>
+      <xs:documentation>
+        Requests the entry for the specified call in the Call Center's queue 
+        to be promoted to the specified priority. 
+        
+        This service is only available for Premium Call Centers.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="priority" type="ACDPriorityType">
+          <xs:annotation>
+            <xs:documentation>
+              The new priority for the call's entry in the Call Center
+              queue.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDQueue">
+    <xs:annotation>
+      <xs:documentation>
+        Returns a list of call center queue entries identifying the calls 
+        queued up in a call center.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="queueEntries" type="ACDQueueEntryList"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The details of entries in the Call Center queue. Only present when
+              there are entries in the queue.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDAgentUnavailableCodes">
+    <xs:annotation>
+      <xs:documentation>
+        Request the enterprise/group level data associated
+        with Call Center Agents Unavailable Code Settings.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enableAgentUnavailableCodes" type="xs:boolean" />
+        <xs:element name="defaultAgentUnavailableCodeOnDND"
+          type="AgentUnavailableCode" minOccurs="0" />
+        <xs:element name="defaultAgentUnavailableCodeOnPersonalCalls"
+          type="AgentUnavailableCode" minOccurs="0" />
+        <xs:element name="defaultAgentUnavailableCodeOnConsecutiveBounces"
+          type="AgentUnavailableCode" minOccurs="0" />
+        <xs:element name="forceUseOfAgentUnavailableCodes"
+          type="xs:boolean" />
+        <xs:element name="unavailableCodes" type="ACDAgentUnavailableCodeList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDCallDispostionCodes">
+    <xs:annotation>
+      <xs:documentation>
+        Request the user level data associated with Call Center Call Disposition
+        Code Settings.
+
+        This service is only available for Premium Call Centers.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enableCallDispositionCodes" type="xs:boolean" />
+        <xs:element name="includeOrganizationCodes" type="xs:boolean" />
+        <xs:element name="forceUseOfCallDispositionCodes"
+          type="xs:boolean" />
+        <xs:element name="dispositionCodes" type="ACDCallDispositionCodeList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+	
+  <xs:element name="ACDDNIS">
+    <xs:annotation>
+      <xs:documentation>
+        Get a list of DNIS that are configured for a CallCenter.
+
+        This service is only available for Premium Call Centers.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dnisDisplaySetting" type="ACDDNISDisplaySetting" minOccurs="0" />
+        <xs:element name="dnisPrioritySetting" type="ACDDNISPrioritySetting" minOccurs="0" />        
+        <xs:element name="dnisInfoList" type="ACDDNISInfoList" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ACDDNISKey">
+    <xs:annotation>
+      <xs:documentation>
+        Get a call center's DNIS Details. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dnisPhoneNumber" type="DN" minOccurs="0" />
+        <xs:element name="extension" type="Extension" minOccurs="0" />
+        <xs:element name="useCustomCLIDSettings" type="xs:boolean"
+                    minOccurs="0" />
+        <xs:element name="callingLineIdPhoneNumber" type="DN"
+                    minOccurs="0" />
+        <xs:element name="callingLineIdLastName" type="CallingLineIdLastName"
+                    minOccurs="0" />
+        <xs:element name="callingLineIdFirstName" type="CallingLineIdFirstName"
+                    minOccurs="0" />
+        <xs:element name="useCustomDnisAnnouncementSettings"
+                    type="xs:boolean" minOccurs="0" />
+        <xs:element name="priority" type="ACDPriorityType" />
+        <xs:element name="allowOutgoingACDCall" type="xs:boolean"
+                    minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ACDExternalReporting">
+    <xs:annotation>
+      <xs:documentation>
+        Maintains information about the ACD external reporting setting.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mode" type="ACDExternalReportingMode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ACDProfile">
+    <xs:annotation>
+      <xs:documentation>
+        Request to get all the information of a Call Center	instance.
+        
+        Change History:
+        17.sp3 - Modified by adding element "externalReporting"    
+        19.0 - Modified by adding element "routingType". 
+               This element is only present for Premium call centers.
+        19.0 - Modified by adding element "callCenterThresholdEnabled"
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="serviceInstanceProfile" type="ServiceInstanceReadProfile"
+					minOccurs="0" />
+        <xs:element name="type" type="ACDType" minOccurs="0" />
+        <xs:element name="routingType" type="ACDRouting" minOccurs="0" />
+        <xs:element name="policy" type="HuntPolicy" minOccurs="0" />
+        <xs:element name="enableVideo" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="queueLength" type="ACDQueueLength"
+					minOccurs="0" />
+        <xs:element name="allowCallerToDialEscapeDigit" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="escapeDigit" type="DTMFDigit"
+					minOccurs="0" />
+        <xs:element name="resetCallStatisticsUponEntryInQueue"
+					type="xs:boolean" minOccurs="0" />
+        <xs:element name="allowAgentLogoff" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="allowCallWaitingForAgents" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="allowCallsToAgentsInWrapUp" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="overrideAgentWrapUpTime" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="wrapUpSeconds" type="ACDWrapUpSeconds"
+					minOccurs="0" />
+        <xs:element name="forceDeliveryOfCalls" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="forceDeliveryWaitTimeSeconds" type="ACDForceDeliveryWaitTimeSeconds"
+					minOccurs="0" />
+        <xs:element name="enableAutomaticStateChangeForAgents"
+					type="xs:boolean" minOccurs="0" />
+        <xs:element name="agentStateAfterCall" type="AgentACDAutomaticState"
+					minOccurs="0" />
+        <xs:element name="agentUnavailableCode" type="AgentUnavailableCode"
+					minOccurs="0" />
+        <xs:element name="externalPreferredAudioCodec" type="AudioFileCodec"
+					minOccurs="0" />
+        <xs:element name="internalPreferredAudioCodec" type="AudioFileCodec"
+					minOccurs="0" />
+        <xs:element name="playRingingWhenOfferingCall" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="externalReporting" type="xs:boolean"
+					minOccurs="0" />
+        <xs:element name="enableThreshold" type="xs:boolean"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Indicates whether thresholds and alert severities
+              are enabled in the Call Center.  
+              This element is always present.
+            </xs:documentation>
+          </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>   
+  
+  
+   
+  <!-- **************************************************************-->
+  <!--   Complex type in Alphabetical Order.                         -->
+  <!-- **************************************************************-->
+
+  <xs:complexType name="ACDQueueEntry">
+    <xs:annotation>
+      <xs:documentation>
+        A ACDQueueEntry provides information about each call
+        maintained in a ACD queue.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="callId" type="CallId">
+        <xs:annotation>
+          <xs:documentation>
+            The call Id of the call for the ACD entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="extTrackingId" type="ExternalTrackingId">
+        <xs:annotation>
+          <xs:documentation>
+            The external tracking Id of the call for the ACD entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="remoteParty" type="PartyInformation">
+        <xs:annotation>
+          <xs:documentation>
+            Information about the remote party for the ACD entry.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="addTime" type="Timestamp">
+        <xs:annotation>
+          <xs:documentation>
+            The time when this entry was added to the ACD queue. Only present if
+            the call has been added to the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="removeTime" type="Timestamp"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The time when this entry was removed from the ACD queue. Only present
+            when the entry has been removed from the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mandatoryEntrance" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the call is being played the mandatory entrance message.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bounced" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the call has been bounced once or more before being
+            offered to an agent. It marks calls that have been bounced so they
+            can be easily identified.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reordered" type="EmptyContent"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the call has been reordered within the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="preservedWaitTime" type="PositiveInt"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Present when the call has been waiting in another ACD queue and was
+            transferred to this ACD queue. The preserved represents the
+            total time spent waiting in the previous ACD queue(s).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="acdName" type="NonEmptyString">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates the ACD name associated with the RP number the call was 
+            received on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="acdNumber" type="Address">
+        <xs:annotation>
+          <xs:documentation>
+            Indicates the ACD number(DNIS) the call was received on.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="acdPriority" type="ACDPriorityType"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The priority assigned to a call when inserted in the priority bucket
+            in the queue. Present only if the ACD is of type Premium.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="addTimeInPriorityBucket" type="Timestamp"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Set when the ACD is of type Premium.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="preservedWaitTimeInPriorityBucket"
+        type="PositiveInt" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Set when the ACD is of type Premium.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringUserId" type="UserId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The user ID of the agent that answered the call.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringCallId" type="CallId"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The call ID of the agent call when the call is answered by an agent.
+            This field is only present when the call to the agent is
+            non-distributed.
+
+            This field can be used to correlate with events generated in the
+            context of a Basic, Advance Call, or Advanced Call2
+            subscription for that agent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="answeringNetworkCallId" type="NonEmptyToken"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The SIP call ID of the agent call when the call is answered by an
+            agent. This field is only present when the call to the agent
+            is distributed. I.e. The call offer from the call center to
+            the agent contains a SIP call leg.
+
+            This field can be used to correlate with events generated in the
+            context of a Basic, Advance Call, or Advanced Call2
+            subscription for that agent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ACDQueueEntryList">
+    <xs:annotation>
+      <xs:documentation>
+        A ACDQueueEntryList contains a list of ACDQueueEntry.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="queueEntry" type="ACDQueueEntry"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ACDDNISDisplaySetting">
+    <xs:annotation>
+      <xs:documentation>
+        DNIS Display Configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="displayDNISNumber" type="xs:boolean" />
+      <xs:element name="displayDNISName" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDAgentUnavailableCodeList">
+	<xs:annotation>
+		<xs:documentation>
+			Unavailable Code List for a call center.
+        </xs:documentation>
+	</xs:annotation>	
+	<xs:sequence>	
+	<xs:element name="unavailableCodeDetail" type="ACDAgentUnavailableCodeDetail" minOccurs="0" maxOccurs="unbounded" />
+	</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDAgentUnavailableCodeDetail">
+	<xs:annotation>
+		<xs:documentation>
+			Unavailable Code Details.
+        </xs:documentation>
+	</xs:annotation>	
+	<xs:sequence>	
+		<xs:element name="active" type="xs:boolean" minOccurs="0" /> 
+		<xs:element name="code" type="AgentUnavailableCode" minOccurs="0" />
+		<xs:element name="description" type="xs:string" minOccurs="0" />
+	</xs:sequence>
+	<xs:attribute name="isDefault" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="ACDCallDispositionCodeList">
+    <xs:annotation>
+	  <xs:documentation>Disposition Code List for a call center</xs:documentation>
+    </xs:annotation>
+	<xs:sequence>
+	  <xs:element name="dispositionCodeDetail" type="ACDCallDispositionCodeDetail" minOccurs="0" maxOccurs="unbounded"/>
+	</xs:sequence>
+  </xs:complexType>
+  
+   <xs:complexType name="ACDCallDispositionCodeDetail">
+		<xs:annotation>
+			<xs:documentation>Disposition Code Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="AgentDispositionCode"/>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="level" type="ACDCallDispositionCodeLevel"/>
+		</xs:sequence>
+		<xs:attribute name="isDefault" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+                
+  <xs:complexType name="ACDDNISPrioritySetting">
+    <xs:annotation>
+      <xs:documentation>
+         DNIS Priority Configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="promoteCallsFromPriority1to0" type="xs:boolean" />
+      <xs:element name="promoteCallsFromPriority1to0Seconds"
+                    type="DNISPromoteCallPrioritySeconds" />
+      <xs:element name="promoteCallsFromPriority2to1" type="xs:boolean" />
+      <xs:element name="promoteCallsFromPriority2to1Seconds"
+                    type="DNISPromoteCallPrioritySeconds" />
+      <xs:element name="promoteCallsFromPriority3to2" type="xs:boolean" />
+      <xs:element name="promoteCallsFromPriority3to2Seconds"
+                    type="DNISPromoteCallPrioritySeconds" />
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:complexType name="ACDDNISInfo">
+    <xs:annotation>
+      <xs:documentation>
+          DNIS Details.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" /> 
+      <xs:element name="phoneNumber" type="DN" minOccurs="0" />
+      <xs:element name="extension" type="Extension" minOccurs="0" />
+      <xs:element name="priority" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ACDDNISInfoList">
+    <xs:annotation>
+      <xs:documentation>
+        List of the DNIS.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dnisInfo" type="ACDDNISInfo" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="CallCenterAnnouncementFileList">
+      <xs:annotation>
+        <xs:documentation>
+          Contains a list of audio or video files to modify.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="file1" type="LabeledMediaFileResource" nillable="true" minOccurs="0"/>
+        <xs:element name="file2" type="LabeledMediaFileResource" nillable="true" minOccurs="0"/>
+        <xs:element name="file3" type="LabeledMediaFileResource" nillable="true" minOccurs="0"/>
+        <xs:element name="file4" type="LabeledMediaFileResource" nillable="true" minOccurs="0"/>
+      </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="CallCenterAnnouncementURLList">
+      <xs:annotation>
+        <xs:documentation>
+          Contains a list of URLs for modify.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="url1" type="URL" nillable="true" minOccurs="0"/>
+        <xs:element name="url2" type="URL" nillable="true" minOccurs="0"/>
+        <xs:element name="url3" type="URL" nillable="true" minOccurs="0"/>
+        <xs:element name="url4" type="URL" nillable="true" minOccurs="0"/>
+      </xs:sequence>
+  </xs:complexType>
+  
+  <!-- **************************************************************-->
+  <!--   Simple type in Alphabetical Order.                          -->
+  <!-- **************************************************************-->
+
+
+  <xs:simpleType name="ACDPriorityType">
+    <xs:annotation>
+      <xs:documentation>
+        An ACDPriorityType specifies the various values for the priority 
+        assigned to a call inserted into an ACD queue
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="0-Highest">
+        <xs:annotation>
+          <xs:documentation>
+            Highest priority.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="1-High">
+        <xs:annotation>
+          <xs:documentation>
+            High priority.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2-Medium">
+        <xs:annotation>
+          <xs:documentation>
+            Medium priority.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3-Low">
+        <xs:annotation>
+          <xs:documentation>
+            Low priority.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="AgentACDAutomaticState">
+    <xs:annotation>
+      <xs:documentation>
+        Agent Automatic Call Distribution (ACD) State.
+        States available for Wrap-Up agent state management.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Available"/>
+      <xs:enumeration value="Unavailable"/>
+      <xs:enumeration value="Wrap-Up"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  
+  <xs:simpleType name="ACDCallDispositionCodeLevel">
+    <xs:annotation>
+      <xs:documentation>
+        Identifies at which level in the system a call center call disposition 
+        code is created.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Enterprise"/>
+      <xs:enumeration value="Group"/>
+      <xs:enumeration value="Queue"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ACDExternalReportingMode">
+    <xs:annotation>
+      <xs:documentation>
+        Specifies the external reporting mode:
+        - CCRS: external reporting is provided solely through the BroadWorks
+        Call Center Reporting Server (CCRS).
+        - enhanced: external reporting is provided solely through the
+        enhanced reporting capabilities.
+        - both: external reporting is provided by both the CCRS and the
+        enhanced reporting capabilities.                         
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Enhanced" />
+      <xs:enumeration value="Off" />
+    </xs:restriction>
+  </xs:simpleType>
+    
+  <xs:simpleType name="ACDForceDeliveryWaitTimeSeconds">
+    <xs:annotation>
+      <xs:documentation>
+        Call center force delivery wait time in seconds.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ACDQueueLength">
+    <xs:annotation>
+      <xs:documentation>
+        The limit for the number of calls the system will keep in queue, 
+        waiting for an available agent.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="525"/>
+    </xs:restriction>
+  </xs:simpleType>  
+  
+  <xs:simpleType name="ACDType">
+    <xs:annotation>
+      <xs:documentation>
+        Call center type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Basic"/>
+      <xs:enumeration value="Standard"/>
+      <xs:enumeration value="Premium"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ACDWrapUpSeconds">
+    <xs:annotation>
+      <xs:documentation>
+         The ACD wrap up time in seconds.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="3600"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="CallCenterManualNightServiceAnnouncementMode">
+    <xs:annotation>
+      <xs:documentation>
+        Call center manual night service announcement mode.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Normal Announcement"/>
+      <xs:enumeration value="Manual Announcement"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="CallCenterMonitoringStatus">
+    <xs:annotation>
+      <xs:documentation>
+        The CallCenterMonitoringStatus maintains real-time information about the call center.
+        
+        Change History:
+        19     - Modified: 
+                  elements averageHandlingTime, expectedWaitTime, averageSpeedOfAnswer, 
+                           longestWaitTime, numCallsInQueue
+                   types changed from NonNegativeInt to NonNegativeIntWithSeverity        
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="averageHandlingTime" type="NonNegativeIntWithSeverity"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The average handling time for calls to this call center.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expectedWaitTime" type="NonNegativeIntWithSeverity"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The expected wait time for calls to this call center. The expected 
+            wait time is a function of the average handle time and the number 
+            of agents in available or wrap-up state. Not present if there are 
+            no agents in the Available or Wrap-Up state.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="averageSpeedOfAnswer" type="NonNegativeIntWithSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            The average speed of answer for calls to this call center.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="longestWaitTime" type="NonNegativeIntWithSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            The longest wait time of any calls in the queue. The value reflects 
+            the longest wait time at the time the event was sent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numCallsInQueue" type="NonNegativeIntWithSeverity">
+        <xs:annotation>
+          <xs:documentation>
+            The number of calls in the queue.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element> 
+      <xs:element name="numAgentsAssigned" type="NonNegativeInt">
+        <xs:annotation>
+          <xs:documentation>
+            The number of agents assigned to the call center.
+          </xs:documentation>	
+        </xs:annotation>
+      </xs:element>      
+      <xs:element name="numAgentsStaffed" type="NonNegativeInt">
+        <xs:annotation>
+          <xs:documentation>
+            The number of agents staffing the call center.
+          </xs:documentation>	
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numStaffedAgentsIdle" type="NonNegativeInt">
+        <xs:annotation>
+          <xs:documentation>
+            The number of staffed agents that are idle, i.e. agents that are not
+            on a call and that are in the available state.
+          </xs:documentation>	
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numStaffedAgentsUnavailable" type="NonNegativeInt">
+        <xs:annotation>
+          <xs:documentation>
+            The number of staffed agents that are in the unavailable state.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  
+  <xs:simpleType name="CallCenterScheduledServiceAction">
+    <xs:annotation>
+      <xs:documentation>
+        Call center scheduled service (Night Services, Holiday Services, etc.) 
+        processing action.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="Busy"/>
+      <xs:enumeration value="Transfer"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ExtendedFileResourceSelection">
+    <xs:annotation>
+      <xs:documentation>
+        Choices for extended file resource usage.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="File"/>
+      <xs:enumeration value="URL"/>
+      <xs:enumeration value="Default"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="DNISPromoteCallPrioritySeconds">
+    <xs:annotation>
+      <xs:documentation>
+        Timer to upgrade the priority for a DNIS number 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="1800"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

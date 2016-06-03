@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ************************************************************************ -->
+<!--     Copyright (c) 2012 BroadSoft, Inc.  All rights reserved.             -->
+<!-- ************************************************************************ -->
+<!--                XSI  X M L  S C H E M A                                   -->
+<!--               *************************                                  -->
+<!-- This file defines the schema types and elements required by the          -->
+<!-- Comm Pilot Express User Service interface in the                         -->
+<!-- http://schema.broadsoft.com/xsi namespace.                               -->
+<!-- ************************************************************************ -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schema.broadsoft.com/xsi"
+  targetNamespace="http://schema.broadsoft.com/xsi"
+  attributeFormDefault="unqualified" elementFormDefault="qualified"
+  version="1.0">
+
+  <xs:include schemaLocation="../XSIDataTypes.xsd" />
+  
+  <xs:element name="CommPilotExpress" type="CommPilotExpress">
+    <xs:annotation>
+      <xs:documentation>User CommPilot Express properties.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element> 
+
+  <xs:complexType name="CommPilotExpress">
+    <xs:annotation>
+      <xs:documentation>
+        Contains the CommPilot Express service configuration data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="profile" type="CommPilotExpressProfile"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            This specifies the CommPilot Express profile setting.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="availableInOffice" type="CommPilotExpressAvailableInOffice"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This allows the user to configure CommPilot Express when in
+            the office.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="availableOutOfOffice" type="CommPilotExpressAvailableOutOfOffice"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This allows the user to configure CommPilot Express when out
+            of the office but available to take
+            calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="busy" type="CommPilotExpressBusy"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This allows the user to configure CommPilot Express when busy
+            and not available to take calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="unavailable" type="CommPilotExpressUnavailable"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This allows the user to configure CommPilot Express for off
+            work hours.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+    <xs:complexType name="CommPilotExpressAvailableInOffice">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Available In Office Settings.
+        
+        Change History:
+        R19.0 - additionalPhoneNumberToRing element made nillable.       
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="additionalPhoneNumberToRing" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            An additional number or SIP URI to ring.
+            This is present when the additional address is "set".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="busySetting" type="CommPilotExpressRedirection"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The redirection behavior when the user receives a call while
+            in the office and busy.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="noAnswerSetting" type="CommPilotExpressRedirection"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The redirection behavior when the user receives a call while
+            in the office and not answering.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommPilotExpressAvailableOutOfOffice">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Available Out Of Office Configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="incomingCalls" type="CommPilotExpressRedirection"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The redirection behavior when out of the office but available
+            to take calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="incomingCallNotify" type="CommPilotExpressEmailNotify"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The email address and notification setting for notifying an
+            incoming call.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommPilotExpressBusy">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Busy Configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="incomingCalls"
+        type="CommPilotExpressRedirectionWithException" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The settings for handling incoming calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="voiceMailNotify" type="CommPilotExpressEmailNotify"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The settings for email notification of voice messages.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="CommPilotExpressEmailNotify">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Email Notify configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="sendEmail" type="xs:boolean"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present and true, indicates an email should be sent.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="emailAddress" type="EmailAddress"
+        nillable="true" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The email address to send the voice message notification to.
+            Present when the email address has
+            been set.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommPilotExpressRedirection">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express type to transfer to voice Mail or forward to a
+        number used in the context.
+        
+        Change History:
+        R19.0 - forwardingAddress element made nillable.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="action" type="CommPilotExpressRedirectionAction"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The action to take when redirecting.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="forwardingAddress" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            The forwarding address. This is only valid when
+            CommPilotExpressRedirectionAction is set to
+            Forward. This is present when the
+            forwarding address is "set".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="CommPilotExpressRedirectionWithException">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express type to transfer to voice mail or forward to a
+        number with certain exceptions.
+        
+        Change History:
+        R19.0 - excludedAddress1, excludedAddress2, excludedAddress3 and 
+                forwardToAddress elements made nillable.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="sendCallsToVoiceMailExceptExcludedAddresses"
+        type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            When present, indicates the need to send calls to Voice
+            Messaging on all calls except for excluded
+            numbers.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="excludedAddress1" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            Only valid when sendCallToVoiceMailExceptExcludeNumber is
+            present.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="excludedAddress2" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            Only valid when sendCallToVoiceMailExceptExcludeNumber is
+            present.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="excludedAddress3" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            Only valid when sendCallToVoiceMailExceptExcludeNumber is
+            present.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="forwardToAddress" type="Address"
+        minOccurs="0" nillable="true">
+        <xs:annotation>
+          <xs:documentation>
+            Only valid when sendCallToVoiceMailExceptExcludeNumber is
+            present.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommPilotExpressUnavailable">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Unavailable Configuration.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="incomingCalls"
+        type="CommPilotExpressRedirectionWithException" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The settings for handling incoming calls.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="voiceMailGreeting" type="CommPilotExpressVoiceMailGreeting"
+        minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The type of Voice Mail greeting to be used.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>  
+  
+  <xs:simpleType name="CommPilotExpressProfile">
+    <xs:annotation>
+      <xs:documentation>
+        The names of the CommPilot Express profiles.
+        
+        Change History:
+        R19.0 - Removed None value
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Available In Office" />
+      <xs:enumeration value="Available Out Of Office" />
+      <xs:enumeration value="Busy" />
+      <xs:enumeration value="Unavailable" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CommPilotExpressRedirectionAction">
+    <xs:annotation>
+      <xs:documentation>
+        The available actions for a CommPilot Express redirection.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="Transfer To Voice Mail" />
+      <xs:enumeration value="Forward" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CommPilotExpressVoiceMailGreeting">
+    <xs:annotation>
+      <xs:documentation>
+        CommPilot Express Voice Messaging GreetingChoices.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="NonEmptyToken">
+      <xs:enumeration value="No Answer" />
+      <xs:enumeration value="Unavailable" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
