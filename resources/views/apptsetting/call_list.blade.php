@@ -36,6 +36,7 @@
                 @endif
             </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
+               
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -49,7 +50,6 @@
                     <tr>
                         <td class="table-text table-text-id"><div>1</div></td>
                         <td class="table-text">+120-964644</td>
-
                         <td class="table-text"> 31-05-2016 11:00am</td>
                         <td class="table-text">Advertisement</td>
                         <td class="actions">
