@@ -8,5 +8,5 @@ class WebLead extends Model
 {
     //
         protected $table = 'web_leads';
-        public $fillable = ['title','description'];
+        public $fillable = ['id','first_name','last_name','email','phone','location','requested_time'];
 }
