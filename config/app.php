@@ -155,7 +155,8 @@ Collective\Html\HtmlServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\Validation\ValidationServiceProvider::class
+        App\Providers\Validation\ValidationServiceProvider::class,
+		'Maatwebsite\Excel\ExcelServiceProvider',
 
     ],
 
@@ -183,6 +184,7 @@ Collective\Html\HtmlServiceProvider::class,
         'DB' => Illuminate\Support\Facades\DB::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,

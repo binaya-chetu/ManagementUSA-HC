@@ -35,8 +35,12 @@
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
             </div>
-            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
+            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools-default">
                 <thead>
+                    <tr style="align:right">
+                        <th><a href ="#">XLS|</a><a href ="#">PDF|</a><a href ="#">CSV|</a><a href ="#">Print</a></th>
+                       
+                    </tr>
                     <tr>
                         <th>S. No.</th>
                         <th>Name</th>                        
