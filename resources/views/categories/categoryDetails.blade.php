@@ -38,7 +38,7 @@
 
         <title>Responsive Tables | Porto Admin - Responsive HTML5 Template 1.4.1</title>
         <meta name="keywords" content="HTML5 Admin Template" />
-        <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+        <meta name="description" content="">
         <meta name="author" content="okler.net">
 
         <!-- Mobile Metas -->
@@ -48,23 +48,20 @@
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
         <!-- Vendor CSS -->
-        <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-
-        <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-        <link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-        <link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+        <!--link rel="stylesheet" href="/assets/vendor/magnific-popup/magnific-popup.css" /-->
+        <!--link rel="stylesheet" href="/assets/vendor/bootstrap-datepicker/css/datepicker3.css" /-->
 
         <!-- Theme CSS -->
-        <link rel="stylesheet" href="assets/stylesheets/theme.css" />
+        <!--link rel="stylesheet" href="/assets/stylesheets/theme.css" /-->
 
         <!-- Skin CSS -->
-        <link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+        <!--link rel="stylesheet" href="/assets/stylesheets/skins/default.css" /-->
 
         <!-- Theme Custom CSS -->
-        <link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+        <!--link rel="stylesheet" href="/assets/stylesheets/theme-custom.css"-->
 
         <!-- Head Libs -->
-        <script src="assets/vendor/modernizr/modernizr.js"></script>
+        <!--script src="/assets/vendor/modernizr/modernizr.js"></script-->
         <style>
             .bronze{ background:#cd7f32; }
             .silver{ background:#C0C0C0;}
@@ -92,7 +89,7 @@
             <header class="header">
                 <div class="logo-container">
                     <a href="../" class="logo">
-                        <img src="assets/images/logo.png" height="35" alt="Porto Admin" />
+                        <img src="/assets/images/logo.png" height="35" alt="Porto Admin" />
                     </a>
                     <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                         <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -179,7 +176,7 @@
                                         <li>
                                             <a href="#" class="clearfix">
                                                 <figure class="image">
-                                                    <img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle" />
+                                                    <img src="/assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle" />
                                                 </figure>
                                                 <span class="title">Joseph Doe</span>
                                                 <span class="message">Lorem ipsum dolor sit.</span>
@@ -188,7 +185,7 @@
                                         <li>
                                             <a href="#" class="clearfix">
                                                 <figure class="image">
-                                                    <img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
+                                                    <img src="/assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
                                                 </figure>
                                                 <span class="title">Joseph Junior</span>
                                                 <span class="message truncate">Truncated message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam, nec venenatis risus. Vestibulum blandit faucibus est et malesuada. Sed interdum cursus dui nec venenatis. Pellentesque non nisi lobortis, rutrum eros ut, convallis nisi. Sed tellus turpis, dignissim sit amet tristique quis, pretium id est. Sed aliquam diam diam, sit amet faucibus tellus ultricies eu. Aliquam lacinia nibh a metus bibendum, eu commodo eros commodo. Sed commodo molestie elit, a molestie lacus porttitor id. Donec facilisis varius sapien, ac fringilla velit porttitor et. Nam tincidunt gravida dui, sed pharetra odio pharetra nec. Duis consectetur venenatis pharetra. Vestibulum egestas nisi quis elementum elementum.</span>
@@ -197,7 +194,7 @@
                                         <li>
                                             <a href="#" class="clearfix">
                                                 <figure class="image">
-                                                    <img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle" />
+                                                    <img src="/assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle" />
                                                 </figure>
                                                 <span class="title">Joe Junior</span>
                                                 <span class="message">Lorem ipsum dolor sit.</span>
@@ -206,7 +203,7 @@
                                         <li>
                                             <a href="#" class="clearfix">
                                                 <figure class="image">
-                                                    <img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
+                                                    <img src="/assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
                                                 </figure>
                                                 <span class="title">Joseph Junior</span>
                                                 <span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
@@ -281,7 +278,7 @@
                     <div id="userbox" class="userbox">
                         <a href="#" data-toggle="dropdown">
                             <figure class="profile-picture">
-                                <img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+                                <img src="/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="/assets/images/!logged-user.jpg" />
                             </figure>
                             <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
                                 <span class="name">John Doe Junior</span>
@@ -540,7 +537,7 @@
                                 <ul>
                                     <li class="status-online">
                                         <figure class="profile-picture">
-                                            <img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+                                            <img src="/assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
                                         </figure>
                                         <div class="profile-info">
                                             <span class="name">Joseph Doe Junior</span>
@@ -549,7 +546,7 @@
                                     </li>
                                     <li class="status-online">
                                         <figure class="profile-picture">
-                                            <img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+                                            <img src="/assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
                                         </figure>
                                         <div class="profile-info">
                                             <span class="name">Joseph Doe Junior</span>
@@ -558,7 +555,7 @@
                                     </li>
                                     <li class="status-offline">
                                         <figure class="profile-picture">
-                                            <img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+                                            <img src="/assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
                                         </figure>
                                         <div class="profile-info">
                                             <span class="name">Joseph Doe Junior</span>
@@ -567,7 +564,7 @@
                                     </li>
                                     <li class="status-offline">
                                         <figure class="profile-picture">
-                                            <img src="assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
+                                            <img src="/assets/images/!sample-user.jpg" alt="Joseph Doe" class="img-circle">
                                         </figure>
                                         <div class="profile-info">
                                             <span class="name">Joseph Doe Junior</span>
