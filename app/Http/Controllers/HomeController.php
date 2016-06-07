@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -8,31 +8,43 @@ use App\Appointment;
 use App\User;
 use App\Role;
 
+/**
+* This class is used to handle home page related action
+*
+* @category App\Http\Controllers;
+*
+* @return null
+*/
 class HomeController extends Controller
 {
-    protected $patient_role = 6;
+    // declear properties for patient role and doctor role
     protected $doctor_role = 5;
+    protected $patient_role = 6;
+    
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return null
      */
     public function __construct()
     {
+        // uses auth middleware
         $this->middleware('auth');
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application dashboard with calender scheduler.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        // get all appointments which status is active
         $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
-        foreach ($appointments as $appointment) {
+        foreach ($appointments as $appointment) 
+        {
             $events = array();
             $events ['id'] = $appointment->id;
             $events ['title'] = 'Appointment#' . $appointment->id;
@@ -45,7 +57,9 @@ class HomeController extends Controller
             $i++;
         }
         
+        // get all patients list
         $patients = User::where('role', $this->patient_role)->get();
+        // get all doctors list
         $doctors = User::where('role', $this->doctor_role)->get();
         return view('appointment.viewappointment', [
             'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors
