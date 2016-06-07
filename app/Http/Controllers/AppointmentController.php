@@ -233,7 +233,6 @@ class AppointmentController extends Controller {
         if ($patient_id) {
             $this->addPatAppointment($request);
             \Session::flash('flash_message', 'Appointment added successfully.');
-            ;
             return "Success";
         } else {
             return "Error";
