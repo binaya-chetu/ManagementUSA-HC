@@ -61,8 +61,8 @@ class CategoriesController extends Controller
             
             return view('categories.categoryDetails',['category' => $category, 'details' => $category_info]);            
         } catch(\Exception $e){
-            //App::abort(404, $e->getMessage());
-            echo $e->getMessage(); die;            
+            App::abort(404, $e->getMessage());
+           // echo $e->getMessage(); die;            
         }
     }
     
@@ -74,14 +74,14 @@ class CategoriesController extends Controller
         if (!($user = User::find($userId))) 
         {
             App::abort(404, 'Page not found.');
-            echo $this->error; die;
+            //echo $this->error; die;
         }
         else 
         {
             \DB::table('users')
             ->where('id', $userId)
             ->update(['status' => $status]);
-            echo $this->success; die;
+            //echo $this->success; die;
         }
     }
     
