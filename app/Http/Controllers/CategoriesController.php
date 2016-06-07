@@ -45,24 +45,41 @@ class CategoriesController extends Controller
                         'category_types.name as package_type'
                 )
                 ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
-            
             $category_info = [];
             $pck_type = '';
             $total_price = 0;
-            foreach($category_details as $cat){
+			$products = [];
+			if(empty($category_details)){
+				throw New Exception('Sorry no packages associated with this category');
+			}
+            foreach($category_details as $cat){			
                 if($pck_type != $cat->package_type){
                     $pck_type = $cat->package_type;
                     $category_info[$pck_type] = [];
                     $category_info[$pck_type]['total_price'] = 0;
+					$category_info[$pck_type]['ori_price'] = 0;
                 }
-                $category_info[$pck_type][] = $cat;
+               //$category_info[$pck_type][] = $cat;
                 $category_info[$pck_type]['total_price'] += $cat->spl_price;
-            }
-            
-            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info]);            
+                $category_info[$pck_type]['ori_price'] += $cat->price * $cat->p_count;
+				
+				if(!isset($products[$cat->name])){
+					$products[$cat->name] = [];
+					
+					$products[$cat->name]['Bronze'] = [];
+					$products[$cat->name]['Silver'] = [];
+					$products[$cat->name]['Gold'] = [];					
+				}
+				
+ 				$products[$cat->name]['price'] = $cat->price;
+				$products[$cat->name]['unit_of_measurement'] = $cat->unit_of_measurement;
+				$products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
+				$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price; 
+			}
+
+            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products]);            
         } catch(\Exception $e){
-            //App::abort(404, $e->getMessage());
-            echo $e->getMessage(); die;            
+            App::abort(404, $e->getMessage());          
         }
     }
     
