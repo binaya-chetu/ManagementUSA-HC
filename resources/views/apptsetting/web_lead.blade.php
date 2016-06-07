@@ -28,6 +28,7 @@
             </div>
 
             <h2 class="panel-title">Web Leads</h2>
+            
         </header>
         <div class="panel-body">
             <div class="row">
@@ -35,12 +36,9 @@
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
             </div>
-            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools-default">
+            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
-                    <tr style="align:right">
-                        <th><a href ="#">XLS|</a><a href ="#">PDF|</a><a href ="#">CSV|</a><a href ="#">Print</a></th>
-                       
-                    </tr>
+                   
                     <tr>
                         <th>S. No.</th>
                         <th>Name</th>                        
@@ -104,10 +102,15 @@
             <div  id="reasonCode">
                 <div class="form-group">
                     {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-4 control-label mandatory')) }}
-
                     <div class="col-md-6">
                         {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $reasonCode, ['class' => 'form-control required']) }}
-                        
+                    </div>
+                </div>
+                  <div class="form-group">
+                    {{ Form::label('follow_up_after', 'Follow-up Afetr', array('class' => 'col-sm-4 control-label')) }}
+                    <div class="col-md-6">
+                        {{ Form::checkbox('follow_up_after', null, ['class' => 'form-control']) }}                        
+                        {{ Form::hidden('appt_id', null, ['id' => 'apptId']) }}                        
                     </div>
                 </div>
                 <div class="form-group">
@@ -121,7 +124,6 @@
         </div>
         <footer class="panel-footer">
             <div class="row">
-
                 <div class="col-md-12 text-right">
                     {{ Form::button( 'Submit', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type' => 'submit')) }}
                     <button class="btn btn-default closePop">Cancel</button>
@@ -131,9 +133,7 @@
     </section>
     {{ Form::close() }}
 </div>
-<style>
-    .call_label { padding-top:0px !important; }
-</style>
+
 <script>
     $('document').ready(function() {
         $('#reasonCode').hide();
@@ -141,7 +141,7 @@
     })
     
     $('.lead_popup').on('click', function() {
-        $('#apptId').val($(this).attr('rel'));
+       // $('#apptId').val($(this).attr('rel'));
         
         $.magnificPopup.open({
             items: {
