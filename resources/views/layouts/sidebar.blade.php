@@ -29,8 +29,8 @@
                         </a>
                         <ul class="nav nav-children">                       
                             <li class="{{ Request::segment(2) === 'callList' ? 'nav-active' : null }}">
-                                <a href="{{ url('/apptsetting/callList') }}">
-                                    Call List
+                                <a href="{{ url('/apptsetting/marketingCall') }}">
+                                    Tele-marketing Calls
                                 </a>
                             </li>   
                             <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">

@@ -277,12 +277,12 @@ headers: {
          */
 
         $(document).on("click", "#add-view-appointment", function(ev) {
-$.magnificPopup.open({
-items: {
-src: '#modal-add-view-appointment',
-        type: 'inline'
-        }
-});
+            $.magnificPopup.open({
+            items: {
+            src: '#modal-add-view-appointment',
+                    type: 'inline'
+                    }
+            });
         });
         $(document).on("click", ".fc-event-inner", function(ev) {
 		var text =  $(this).data('id');
@@ -414,10 +414,10 @@ src: '#modal-add-view-appointment',
                                         sExtends: 'csv',
                                                 sButtonText: 'CSV'
                                         },
-                                        {
-                                        sExtends: 'xls',
-                                                sButtonText: 'Excel'
-                                        },
+//                                        {
+//                                        sExtends: 'xls',
+//                                                sButtonText: 'Excel'
+//                                        },
                                         {
                                         sExtends: 'print',
                                                 sButtonText: 'Print',
@@ -431,3 +431,12 @@ src: '#modal-add-view-appointment',
                 datatableInit();
                 });
         }).apply(this, [jQuery]);
+
+$(document).on("click", "#add_marketing_call", function(ev) {
+            $.magnificPopup.open({
+            items: {
+            src: '#modal_add_marketing_call',
+                    type: 'inline'
+                    }
+            });
+        });

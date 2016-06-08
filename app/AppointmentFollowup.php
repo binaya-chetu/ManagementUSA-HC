@@ -13,5 +13,13 @@ class AppointmentFollowup extends Model
         'comment',
         'status'
     ];
+     
+    public function web_lead() {        
+        return $this->belongsTo('App\WebLead', 'appt_id');
+    }
+    
+    public function telemarketing() {        
+        return $this->belongsTo('App\TelemarketingCall', 'appt_id');
+    }
 
 }

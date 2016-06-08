@@ -17,9 +17,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', 'HomeController@index');
     
     // route for the appointment setting
-    Route::get('/apptsetting/callList', [
-            'uses' => 'ApptSettingController@callList',
-            'as' => 'apptsetting.callList',
+    Route::get('/apptsetting/marketingCall', [
+            'uses' => 'ApptSettingController@marketingCall',
+            'as' => 'apptsetting.marketingCall',
             //'middleware' => ['acl:appointment_read']
         ]);
     Route::get('/apptsetting/missedCall', [
@@ -35,6 +35,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/apptsetting/saveApptFollowup', [
             'uses' => 'ApptSettingController@saveApptFollowup',
             'as' => 'apptsetting.saveApptFollowup',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
+    Route::post('/apptsetting/saveMarketingCall', [
+            'uses' => 'ApptSettingController@saveMarketingCall',
+            'as' => 'apptsetting.saveMarketingCall',
            // 'middleware' => ['acl:appointment_write']
         ]);
     

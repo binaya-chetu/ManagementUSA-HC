@@ -3,26 +3,24 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWebLeadsTable extends Migration
+class CreateTelemarketingCallsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-         Schema::create('web_leads', function (Blueprint $table) {
+   public function up() {
+        Schema::create('telemarketing_calls', function (Blueprint $table) {
             $table->increments('id');
             $table->string('first_name');  
             $table->string('last_name');
             $table->string('email');  
             $table->string('phone');  
-            $table->string('location');  
-            $table->timestamp('requested_date');  
-            $table->string('call_time');  
-            $table->tinyInteger('status')->comment('0=> Pending, 1=>Completed');  
-            $table->timestamps();           
+            $table->timestamp('requested_date');
+            $table->tinyInteger('status')->default(0)->comment('0=>Pending, 1=>Set, 2=>No Set');            
+            $table->text('comment');
+            $table->timestamps();
         });
     }
 
