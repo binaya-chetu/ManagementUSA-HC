@@ -15,38 +15,70 @@ use View;
 use App;
 
 
-
-
+/**
+* Class is used to handle all the action related to doctor module
+* 
+* @category App\Http\Controllers;
+* 
+* @return void
+*/
 class DoctorController extends Controller {
-
+    
+    // define role properties for doctor. 
     protected $role = 5;
-    public function __construct() {
+    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() 
+    {
+        //uses auth middleware
         $this->middleware('auth');
     }
     
-    public function index() {
+    
+    /**
+     * Fetech all doctor data to show on index page in listing 
+     *
+     * @params void
+     * 
+     * @return \resource\views\doctor\index.blade.php
+     */
+    public function index() 
+    {
+        // get the doctors list to show on index page
         $doctors = User::with('doctorDetail', 'DoctorDetail.doctorStateName')->where('role', $this->role)->get();
         
         return view('doctor.index', ['doctors' => $doctors]);
     }
     
+    /**
+     * Call layout for the add new doctor 
+     *
+     * @params void
+     * 
+     * @return \resource\views\doctor\add_doctor.blade.php
+     */
     public function addDoctor()
     {
-        $states = State::get();
+        // get the state list from state table
+        $states = State::lists('name', 'id')->toArray();
         
-        $stateArray = array();
-       
-        foreach($states as $state)
-        {
-            $stateArray[$state->id] = $state->name;
-        }
-        
-        return view('doctor.add_doctor', ['states' => $stateArray]);
+        return view('doctor.add_doctor', ['states' => $states]);
     }
     
+    /**
+     * Create new doctor and save data in user table and doctor_details table 
+     *
+     * @params $request
+     *  
+     * @return \Illuminate\Http\Response
+     */
     public function create(Request $request) {
-        
        
+        // define validation rule
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -56,6 +88,7 @@ class DoctorController extends Controller {
             'zipCode' => 'required|min:6|max:15'
         ]);
         
+        // create User object
         $userData = new User;
         $userData->first_name = $request->first_name;
         $userData->last_name = $request->last_name;
@@ -63,14 +96,17 @@ class DoctorController extends Controller {
         $userData->password = bcrypt($request['password']);
         $userData->role = $this->role;
        
+        // save user data in user table
         if ($userData->save()) 
         {
+           // create doctor object to store doctor details in doctor_details table
            $doctorData = new Doctor;
+           // get the last inserted id to store in doctor_details table as reference key
            $doctorData->user_id = $userData->id;
            if($request->dob)
-            {
+           {
                 $doctorData->dob = date('Y-m-d', strtotime($request->dob));
-            }
+           }
            $doctorData->gender = $request->gender;
            $doctorData->phone = $request->phone;
            $doctorData->address1 = $request->address1;
@@ -81,10 +117,12 @@ class DoctorController extends Controller {
            $doctorData->employer = $request->employer;
            $doctorData->specialization = $request->specialization;
            
+           // save the user details data in user_details table
            if($doctorData->save())
            {
-            \Session::flash('flash_message', 'Doctor created successfully.');
-            return redirect('/doctor');
+                // set the flash message for doctor creation success.
+                \Session::flash('flash_message', 'Doctor created successfully.');
+                return redirect('/doctor');
            }
            else
            {
@@ -96,34 +134,34 @@ class DoctorController extends Controller {
             return redirect('/doctor/addDcotor');
         }
     }
-
-    public function store(Request $request) {
-        //
-    }
-
-    public function show($id) {
-        //
-    }
-
-    public function edit($id) {
-        if (!($doctor = User::with('doctorDetail')->find(base64_decode($id)))) {
+    
+    /**
+     * Get the layout for eadit doctor details
+     *
+     * @params $id 
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id) 
+    {
+        if (!($doctor = User::with('doctorDetail')->find(base64_decode($id)))) 
+        {
             App::abort(404, 'Page not found.');
         }
-        $states = State::get();
-        
-        $stateArray = array();
-       
-        foreach($states as $state)
-        {
-            $stateArray[$state->id] = $state->name;
-        }
+        // get the state list from state table
+        $states = State::lists('name', 'id')->toArray();
         
         return view('doctor.edit_doctor', [
             'doctor' => $doctor,
-            'states' => $stateArray
+            'states' => $states
         ]);
     }
-
+    
+    /**
+     * Update the doctor details 
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update($id, Request $request) {
         if (!($userData = User::find($id))) {
             App::abort(404, 'Page not found.');
