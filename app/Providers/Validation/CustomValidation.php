@@ -36,6 +36,9 @@ class CustomValidation extends Validator {
 	
     public function validateDoctorAvailability($attribute, $value, $parameters){
 		$doctor_id = $parameters[1];
+		if(empty($doctor_id)){
+			return true;
+		}
 		$date = $value;
 		$time = $parameters[0];
 		$apptSpan = \Config::get('constants.DEFAULT_APPOINTMENT_TIME_SPAN'); // average appt span time in sec

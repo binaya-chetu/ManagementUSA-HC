@@ -1,0 +1,112 @@
+<?php $__env->startSection('content'); ?>	
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Calendar</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Pages</span></li>
+                <li><span>Calendar</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <section class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <?php if(Session::has('flash_message')): ?>
+                <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> <?php echo session('flash_message'); ?></em></div></div>
+                <?php endif; ?>
+                <div class="row">
+                    <div class="col-md-12 text-left col-sm-offset-1">
+                        <a href="javascript:void(0)"><button id="add-view-appointment" class="btn btn-primary">Add Appointment <i class="fa fa-plus"></i></button></a>
+                        <a href="<?php echo e(url('/patient/addpatient')); ?>"><button id="addToTable" class="btn btn-primary">Add Patient    <i class="fa fa-plus"></i></button></a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+
+                    <div id="calendar"></div>
+                    <section class="panel">
+
+
+                        <div class="panel-body">
+                            <div id="dialog" class="modal-block mfp-hide">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">Are you sure?</h2>
+                                    </header>
+                                    <div class="panel-body">
+                                        <div class="modal-wrapper">
+                                            <div class="modal-text">
+                                                <p>Are you sure that you want to delete this row?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button id="dialogConfirm" class="btn btn-primary" value="10">Confirm</button>
+                                                <button id="dialogCancel" class="btn btn-default">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                </section>
+                            </div>
+
+                            <!-- Modal Form -->
+                            <div id="modalForm" class="modal-block modal-block-primary mfp-hide">                               
+                                <?php echo $__env->make('appointment.edit_appointment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>                                          
+                            </div>
+
+                            <div id="modal-add-view-appointment" class="modal-block modal-block-primary mfp-hide">                                
+                                <?php echo $__env->make('appointment.popup_appointment_form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>                                          
+                            </div>
+
+                            <!-- Model for the Follow up Status -->
+                             <?php echo $__env->make('appointment.followup_popup', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
+                        </div>
+                    </section>
+
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- end: page -->
+</section>
+
+<script>
+    (function($) {
+		var clinicOpenTime = "<?php echo e(@config('constants.CLINIC_OPEN_TIME')); ?>";
+		var clinicCloseTime = "<?php echo e(@config('constants.CLINIC_CLOSE_TIME')); ?>";
+		var defaultApptTime = "<?php echo e(@config('constants.DEFAULT_APPOINTMENT_TIME_SPAN')); ?>";
+		var gapBetweenAppt = "<?php echo e(@config('constants.GAP_BETWEEN_APPOINTMENTS')); ?>";
+		
+        'use strict';
+
+        $(function() {
+            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt);
+            //initCalendarDragNDrop();
+        });
+
+    }).apply(this, [jQuery]);
+
+</script>
+
+
+
+<?php $__env->stopSection(); ?>	
+
+<?php echo $__env->make('layouts.common', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

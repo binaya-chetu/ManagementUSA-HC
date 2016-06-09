@@ -312,10 +312,31 @@ Route::group(['middleware' => 'web'], function () {
         ]);
 
 
+
 	Route::get('/clientapi', [
             'uses' => 'ClientapiController@getApiResponse',
             'as' => 'clientapi.getApiResponse',
 			//'middleware' => ['acl:user_write']
         ]);
+
+		
+	Route::get('/web_lead', function(){
+		$table = WebLead::webLeads();
+		$filename = "web-leads.csv";
+		$handle = fopen($filename, 'w+');
+		fputcsv($handle, array('Sr. No.','Name','Email','Phone','Location','Requested Time'));
+
+		foreach($table as $row) {
+			fputcsv($handle, array($row['id'], $row['first_name']['last_name'], $row['email'], $row['phone'], $row['location'], $row['requested_time']));
+		}
+
+		fclose($handle);
+
+		$headers = array(
+			'Content-Type' => 'text/csv',
+		);
+		return Response::download($filename, 'web-leads.csv', $headers);
+	});
+		
 });
 

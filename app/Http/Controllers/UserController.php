@@ -14,14 +14,37 @@ use App\State;
 use View;
 use App;
 
+/**
+* Class is used to handle all the action related to user module
+*
+* @category App\Http\Controllers;
+* 
+* @return void
+*/
 class UserController extends Controller
 {
-    public function __construct() {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() 
+    {
+        // uses auth middleware
         $this->middleware('auth');
     }
+    
+    // declare properties
     protected $success = true;
     protected $error = false;
+    protected $doctor_role = 5;
+    protected $patient_role = 6;
     
+    /**
+    * define the server side vaidation rules 
+    *
+    * @return array
+    */
     private $rules = array(
         'first_name' => 'required|max:255',
         'last_name' => 'required|max:255',
@@ -30,31 +53,37 @@ class UserController extends Controller
         'role' => 'required'
     );
     
-    public function addUser() {
-      
-        $roles = Role::where('id','!=',5)
-                ->where('id','!=',6)
-                ->get();
-        $roleArray = array();
-        foreach($roles as $role)
-        {
-            $roleArray[$role->id] = $role->role_title;
-        }
+    /**
+    * addUser() is used to call the layout for Add User
+    * super admin can add staff member from here.
+    *
+    * @param void
+    * 
+    * @return \resource\views\user\add_user.blade.php
+    */
+    public function addUser() 
+    {
+        // get the all role except doctor and patient
+        $roles = Role::whereNotIn('id', [$this->doctor_role, $this->patient_role])
+                ->lists('role_title', 'id')
+                ->toArray();
         
-        $states = State::get();
+        // get the state list from state table
+        $states = State::lists('name', 'id')->toArray();
         
-        $stateArray = array();
-       
-        foreach($states as $state)
-        {
-            $stateArray[$state->id] = $state->name;
-        }
-        
-        return view('user.add_user', ['roles' => $roleArray, 'states' => $stateArray]);
+        return view('user.add_user', ['roles' => $roles, 'states' => $states]);
     }
     
-    public function saveUser(Request $request) {
-        
+    /**
+    * This function is used to save user data in database
+    *
+    * @param $request
+    *
+    * @return redirect to '/user/listUsers'
+    */
+    public function saveUser(Request $request) 
+    {
+        // validation rules 
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -65,21 +94,23 @@ class UserController extends Controller
             'zipCode' => 'required|min:6|max:15'
         ]);
         
+        // create new object for User
         $userData = new User;
         $userData->first_name = $request->first_name;
         $userData->last_name = $request->last_name;
         $userData->email = $request->email;
         $userData->password = bcrypt($request['password']);
         $userData->role = $request->role;
-       
+        
+        // save data in user table
         if ($userData->save()) 
         {
            $userDetailData = new UserDetail;
            $userDetailData->user_id = $userData->id;
            if($request->dob)
-            {
+           {
                 $userDetailData->dob = date('Y-m-d', strtotime($request->dob));
-            }
+           }
            $userDetailData->gender = $request->gender;
            $userDetailData->phone = $request->phone;
            $userDetailData->address1 = $request->address1;
@@ -88,10 +119,12 @@ class UserController extends Controller
            $userDetailData->state = $request->state;
            $userDetailData->zipCode = $request->zipCode;
            
+           // save user details in user_details table
            if($userDetailData->save())
            {
-            \Session::flash('flash_message', 'User created successfully.');
-            return redirect('/user/listUsers');
+               // set flash message when user created successfully.
+                \Session::flash('flash_message', 'User created successfully.');
+                return redirect('/user/listUsers');
            }
            else
            {
@@ -104,9 +137,17 @@ class UserController extends Controller
         }
     }
     
-     public function listUsers() {
-        $users = User::with('roleName')->where('role','!=',5)
-                ->where('role','!=',6)
+    /**
+    * This function is used to fetch all users except which have role doctor or patient.
+    *
+    * @param void
+    *
+    * @return \resource\views\user\index.blade.php
+    */
+    public function listUsers() 
+    {
+        // get all users except doctor and patient to show on listing page
+        $users = User::with('roleName')->whereNotIn('role', [$this->doctor_role, $this->patient_role])
                 ->get();
         
         return view('user.index', [
@@ -114,6 +155,13 @@ class UserController extends Controller
         ]);
     }
     
+    /**
+    * Active or Diactivate user status
+    *
+    * @param $request
+    *
+    * @return null
+    */
     public function updateUserStatus(Request $request)
     {
         $data = $request->all();
@@ -126,17 +174,30 @@ class UserController extends Controller
         }
         else 
         {
+            // update the user status by user id
             \DB::table('users')
             ->where('id', $userId)
             ->update(['status' => $status]);
+            
             echo $this->success; die;
         }
     }
     
-    public function updateUser($id = null, Request $request) {
-        if (!($userData = User::find($id))) {
+    /**
+    * This function is used to update the user detail
+    *
+    * @param $id and $request
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function updateUser($id = null, Request $request) 
+    {
+        if (!($userData = User::find($id))) 
+        {
             App::abort(404, 'Page not found.');
         }
+        
+        // validation rule
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -146,7 +207,8 @@ class UserController extends Controller
         
         $userInput['first_name'] = $request->first_name;
         $userInput['last_name'] = $request->last_name;
-                
+        
+        // get user details data by user id
         $userDetailData = UserDetail::where('user_id',$id)->get();
         if($request->dob)
         {
@@ -160,49 +222,76 @@ class UserController extends Controller
         $userDetailInput['state'] = $request->state;
         $userDetailInput['zipCode'] = $request->zipCode;
         
-        if ($userData->fill($userInput)->save() && $userDetailData[0]->fill($userDetailInput)->save()) {
+        // save user data in user table and user details data in user details table.
+        if ($userData->fill($userInput)->save() && $userDetailData[0]->fill($userDetailInput)->save()) 
+        {
             \Session::flash('flash_message', 'User details updated successfully.');
            
             return redirect('/user/listUsers');
-        } else {
+        } 
+        else 
+        {
             return redirect('/user/editUser');
         }
     }
 
-    
+    /**
+    * This function is used to delete the user
+    * soft delete technique is used to delete the user
+    *
+    * @param $id 
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function deleteUser( $id = null )
     {
-        if (!($user = User::find(base64_decode($id)))) {
+        if (!($user = User::find(base64_decode($id)))) 
+        {
             App::abort(404, 'Page not found.');
         }
-        User::destroy($id);
+        // delete the user by user id
+        User::destroy(base64_decode($id));
+        // set the flash message.
         \Session::flash('flash_message', 'User deleted successfully.');
+        // redirect back to the page.
         return Redirect::back();
     }
     
+    /**
+    * This function is used to fetch layout of edit user form and user details to display on that form
+    *
+    * @param $id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function editUser( $id = null )
     {
-        if (!($user = User::with('userDetail')->find(base64_decode($id)))) {
+        if (!($user = User::with('userDetail')->find(base64_decode($id)))) 
+        {
             App::abort(404, 'Page not found.');
         }
         
-        $states = State::get();
-        
-        $stateArray = array();
-       
-        foreach($states as $state)
-        {
-            $stateArray[$state->id] = $state->name;
-        }
+        // get the state list from state table
+        $states = State::lists('name', 'id')->toArray();
         
         return view('user.edit_user', [
             'user' => $user,
-            'states' => $stateArray
+            'states' => $states
         ]);
     }
     
-    public function viewUser($id = null) {
-        if (!($user = User::with('userDetail', 'UserDetail.userStateName', 'roleName')->find(base64_decode($id)))) {
+    /**
+    * This function is used to view the details of a particular user
+    *
+    * @param $id
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function viewUser($id = null) 
+    {
+        // find the user details by user id
+        if (!($user = User::with('userDetail', 'UserDetail.userStateName', 'roleName')->find(base64_decode($id)))) 
+        {
             App::abort(404, 'Page not found.');
         }
 

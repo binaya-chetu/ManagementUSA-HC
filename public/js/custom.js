@@ -440,3 +440,18 @@ $(document).on("click", "#add_marketing_call", function(ev) {
                     }
             });
         });
+var table = $('table')[0];
+var button = $('th')[0];		
+$(button).on( 'click', function (e) {
+    var data = table
+        .data()
+        .map( function (row) {
+            return row.join(',');
+        })
+        .join( '\n' );
+ 
+    saveAs(
+        new Blob( [data], {type : 'text/csv'},
+        'My file.csv'
+    ));
+} );
