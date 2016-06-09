@@ -94,6 +94,19 @@ class ApptSettingController extends Controller
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
         ]);
     }
+   /**
+     * Listing all the Call List from the Api
+     *
+     * @return \resource\view\apptsetting\call_list
+     */
+    public function directWalkins() {        
+           
+        $webLeads = WebLead::where('status', 0)->get();
+        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
+        return view('apptsetting.web_lead', [
+            'webLeads' => $webLeads, 'reasonCode' => $reasonCode
+        ]);
+    } 
     /*
      * Common function to save the Followup with the patient details from Webleads & Telemarketing calls
      * 

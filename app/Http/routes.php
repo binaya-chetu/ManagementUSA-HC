@@ -337,6 +337,11 @@ Route::group(['middleware' => 'web'], function () {
 		);
 		return Response::download($filename, 'web-leads.csv', $headers);
 	});
-		
+		Route::get('/apptsetting/directWalkins', [
+            'uses' => 'ApptSettingController@directWalkins',
+            'as' => 'ApptSettingController@directWalkins',
+			'middleware' => ['acl:user_write']
+        ]);
+
 });
 
