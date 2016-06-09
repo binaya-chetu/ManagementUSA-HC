@@ -59,5 +59,17 @@ class CustomValidation extends Validator {
         }
 		return true;
     }
+	
+    public function validateClinicOffHours($attribute, $value, $parameters){ 
+		$apptTime = strtotime($parameters[0]);
+		$clinic_open_time = strtotime($parameters[1]);
+		$clinic_close_time = strtotime($parameters[2]);
+
+		if($apptTime >= $clinic_open_time AND $apptTime < $clinic_close_time){
+			return true;
+		} else{
+			return false;
+		}
+    }
 
 }
