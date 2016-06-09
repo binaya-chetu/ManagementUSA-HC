@@ -274,33 +274,6 @@ class AppointmentController extends Controller {
         }
     }
 
-    /*
-     * Submit Patient and Appointment Date in Single Call.
-     * 
-     * @param Illuminate\Http\Request
-     */
-
-//    public function editpatientappointment(Request $request) {
-//        $request->merge(array('patient_id' => 12));
-//        $request->merge(array('address2' => 'Lorren Epsum'));
-//        $request->merge(array('city' => 'Lorren Epsum'));
-//        $request->merge(array('state' => 'Lorren Epsum'));
-//        $request->merge(array('zipCode' => 000));
-//        $request->merge(array('occupation' => 000));
-//        $controller = new PatientController();
-//        $patient_id = $controller->savePatientDetail($request);
-//        $request->merge(array('patient_id' => $patient_id));
-//        if ($patient_id) {
-//            $this->addPatAppointment($request);
-//            \Session::flash('flash_message', 'Appointment added successfully.');
-//            ;
-//            return "Success";
-//        } else {
-//            return "Error";
-//        }
-//        die;
-//    }
-
     /**
      * Function for the checking the enter email is already exist or not
      *

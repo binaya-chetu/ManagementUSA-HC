@@ -17,7 +17,7 @@ class CreateTelemarketingCallsTable extends Migration
             $table->string('last_name');
             $table->string('email');  
             $table->string('phone');  
-            $table->timestamp('requested_date');
+            $table->dateTime('requested_date');
             $table->tinyInteger('status')->default(0)->comment('0=>Pending, 1=>Set, 2=>No Set');            
             $table->text('comment');
             $table->timestamps();

@@ -213,7 +213,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </span>
-                        {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker', 'id' => 'apptdate']) }}
+                        {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required', 'data-plugin-datepicker', 'id' => 'calendarDate']) }}
                     </div>
                 </div>
                 <div class="col-md-4">
