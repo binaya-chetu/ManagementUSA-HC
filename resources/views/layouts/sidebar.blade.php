@@ -42,7 +42,12 @@
                                 <a href="{{ url('/apptsetting/webLead') }}">
                                     Web Leads
                                 </a>
-                            </li>  
+                            </li> 
+                            <li class="{{ Request::segment(2) === 'directWalkins' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/directWalkins') }}">
+                                    Direct Walkins
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
