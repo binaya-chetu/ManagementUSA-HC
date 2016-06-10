@@ -32,6 +32,21 @@
                 <!-- Display Validation Errors -->
                     {{ csrf_field() }}
                     <div class="row">
+						@if(Session::has('error_message'))
+							<div class="col-sm-12">
+								<div class="alert alert-danger">
+									<span class="glyphicon glyphicon-ok"></span>
+									<em> {!! session('error_message') !!}</em>
+								</div>
+							</div>
+						@elseif(Session::has('success_message'))
+							<div class="col-sm-12">
+								<div class="alert alert-success">
+									<span class="glyphicon glyphicon-ok"></span>
+									<em> {!! session('success_message') !!}</em>
+								</div>
+							</div>						
+						@endif					
                         <div class="col-sm-6 form-group{{ $errors->has('productFile') ? ' has-error' : '' }}">
 							{{ Form::label('productFile', 'Product List', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-sm-9">
