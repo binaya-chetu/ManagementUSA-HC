@@ -1,3 +1,29 @@
+(function($){
+    $.fn.checkUploadFileType = function(options) {
+        var defaults = {
+            allowedExtensions: [],
+            success: function() {},
+            error: function() {}
+        };
+        options = $.extend(defaults, options);
+
+        return this.each(function() {
+            $(this).on('change', function() {
+                var value = $(this).val(),
+                    file = value.toLowerCase(),
+                    extension = file.substring(file.lastIndexOf('.') + 1);
+
+                if ($.inArray(extension, options.allowedExtensions) == -1) {
+                    options.error();
+                    $(this).focus();
+                } else {
+                    options.success();
+                }
+            });
+        });
+    };	
+})(jQuery);
+
 var initCalendarDragNDrop = function() {
 	$('#external-events div.external-event').each(function() {
 		var eventObject = {
@@ -217,11 +243,11 @@ return false;
          */
 
         $(document).on("click", ".edit-row", function(ev) {
-$.ajaxSetup({
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-});
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
         var appointmentId = $(this).attr('rel');
         $.ajax({
         type: "POST",
@@ -394,6 +420,28 @@ src: '#modal-add-view-appointment',
         });	 
 	})
 
+/*     $('#productFile').checkUploadFileType({		
+        allowedExtensions: ['xlsx', 'xls', 'htm'],
+        success: function() {
+ 			var data = new FormData();
+			data.append('productFile', jQuery('#productFile')[0].files);
+			data.append('_token', $("#addproducts").find('input[name="_token"]').val());
+			jQuery.ajax({			
+				url: '/products/saveProducts',
+				data: data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				type: 'POST',
+				success: function(data){
+					console.log(data);
+				}
+			});
+        },
+        error: function() {
+            alert('Only .xlsx files are accepted');
+        }
+    });	 */
 });
 
         (function($) {

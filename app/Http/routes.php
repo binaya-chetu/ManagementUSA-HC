@@ -296,13 +296,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/categories/listCategories', [
             'uses' => 'CategoriesController@listCategories',
             'as' => 'categories.listCategories',
-            'middleware' => ['acl:user_write']
+            //'middleware' => ['acl:user_write']
         ]);
 		
     Route::get('/categories/categoryDetails/{id}', [
             'uses' => 'CategoriesController@categoryDetails',
             'as' => 'categories.categoryDetails',
-            'middleware' => ['acl:user_write']
+            //'middleware' => ['acl:user_write']
         ]);
     
     Route::get('/categories/newCategory', [
@@ -320,17 +320,29 @@ Route::group(['middleware' => 'web'], function () {
     
     // shop code
    Route::get('/addProduct/{productId}', [
-       'uses' => 'CartController@addItem',
-       //'middlaware' => ['acl:user_write']
+            'uses' => 'CartController@addItem',
+            //'middlaware' => ['acl:user_write']
        ]);
    Route::get('/removeItem/{productId}', [
-       'uses' => 'CartController@removeItem',
-       'middleware' => ['acl:user_write']
+            'uses' => 'CartController@removeItem',
+            //'middleware' => ['acl:user_write']
        ]);
    Route::get('/cart', [
-       'uses' => 'CartController@showCart',
-       //'middleware' => ['acl:user_write']
+            'uses' => 'CartController@showCart',
+            //'middleware' => ['acl:user_write']
        ]);
- 
+		
+    Route::get('/products/addproducts', [
+            'uses' => 'ProductsController@addproducts',
+            'as' => 'products.addproducts',
+            //'middleware' => ['acl:add_products']	
+	]);	
+	
+    Route::post('/products/saveProducts', [
+            'uses' => 'ProductsController@saveProducts',
+            'as' => 'products.saveproducts',
+            //'middleware' => ['acl:save_products']	
+	]);	
+
 });
 
