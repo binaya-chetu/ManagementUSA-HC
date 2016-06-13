@@ -43,7 +43,6 @@
 								</th>
 								<th class="silver plan" colspan="2">
 									<h3 class="silver">Silver<span>${{ $details['Silver']['total_price'] }}</span></h3>
-
 									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
 								</th>
 								<th class="gold plan" colspan="2">
