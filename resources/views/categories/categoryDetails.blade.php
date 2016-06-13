@@ -1,3 +1,33 @@
+<!-- @extends('layouts.common')
+
+@section('content')
+<section role="main" class="content-body">
+    <header class="page-header">     
+        <h2> {{ $category[0]->cat_name }} </h2>
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>List Categories</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+
+    <div class="row">
+
+        <div class="col-md-12">
+       
+           
+        </div>
+            </div>
+        </section>    
+@endsection -->
+
 <style>
 	.bronze{ background:#cd7f32; }
 	.silver{ background:#C0C0C0;}
@@ -43,11 +73,11 @@
 								</th>
 								<th class="silver plan" colspan="2">
 									<h3 class="silver">Silver<span>${{ $details['Silver']['total_price'] }}</span></h3>
-									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
+									<a class="btn btn-lg btn-primary" href="/addProduct/{{ base64_encode(1) }}">Buy Now</a>
 								</th>
 								<th class="gold plan" colspan="2">
 									<h3 class="gold">Gold<span>${{ $details['Gold']['total_price'] }}</span></h3>
-									<a class="btn btn-lg btn-primary" href="/addProduct/{{ base64_encode(1) }}">Buy Now</a>
+									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
 								</th>								
 							</tr>
 							<tr>
