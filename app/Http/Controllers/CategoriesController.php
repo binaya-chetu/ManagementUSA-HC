@@ -22,13 +22,38 @@ class CategoriesController extends Controller
         $this->middleware('auth');
     }
   
-     public function listCategories() {
+    public function listCategories() {
        
         $categories = DB :: table('categories')->get();
         return view('categories.categories', [
             'categories' => $categories
         ]);
     }
+    
+    public function addNewCategory() {
+        
+        return view('categories.add_new_category');
+    }
+    
+    public function saveCategory(Request $request) {
+
+        $this->validate($request, [
+            'cat_name' => 'required|unique:categories',
+            'duration_months' => 'required'
+        ]);
+
+        $category = new Categories();
+        $category->cat_name = $request->cat_name;
+        $category->duration_months = $request->duration_months;
+        
+        if ($category->save()) {
+            \Session::flash('flash_message', 'New Category Added successfully.');
+            return redirect('/categories/listCategories');
+        } else {
+            return redirect('/categories/newCategory');
+        }
+    }
+    
     public function categoryDetails( $id = null, Request $request){
         try{
             $id = base64_decode($id);
@@ -162,4 +187,6 @@ class CategoriesController extends Controller
             'user' => $user
         ]);
     }
+  
+
 }

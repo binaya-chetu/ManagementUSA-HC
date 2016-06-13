@@ -213,7 +213,6 @@ Route::group(['middleware' => 'web'], function () {
         ]);
 
     // Doctor route
-
     Route::get('/doctor', [
             'uses' => 'DoctorController@index',
             'as' => 'doctor',
@@ -252,7 +251,6 @@ Route::group(['middleware' => 'web'], function () {
 
 
     // route for User
-
     Route::get('/user/addUser', [
             'uses' => 'UserController@addUser',
             'as' => 'user.addUser',
@@ -293,17 +291,46 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'user.viewUser',
             'middleware' => ['acl:user_read']
         ]);
-		// Route for categories
-	Route::get('/categories/listCategories', [
+    
+    // Route for categories
+    Route::get('/categories/listCategories', [
             'uses' => 'CategoriesController@listCategories',
             'as' => 'categories.listCategories',
-			'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_write']
         ]);
 		
-	Route::get('/categories/categoryDetails/{id}', [
+    Route::get('/categories/categoryDetails/{id}', [
             'uses' => 'CategoriesController@categoryDetails',
             'as' => 'categories.categoryDetails',
-			'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_write']
         ]);
+    
+    Route::get('/categories/newCategory', [
+            'uses' => 'CategoriesController@addNewCategory',
+            'as' => 'categories.addNewCategory',
+            //'middleware' => ['acl:user_write']
+        ]);
+    
+    Route::post('/categories/saveCategory', [
+            'uses' => 'CategoriesController@saveCategory',
+            'as' => 'CategoriesController.saveCategory',
+            //'middleware' => ['acl:user_write']
+        ]);
+    
+    
+    // shop code
+   Route::get('/addProduct/{productId}', [
+       'uses' => 'CartController@addItem',
+       //'middlaware' => ['acl:user_write']
+       ]);
+   Route::get('/removeItem/{productId}', [
+       'uses' => 'CartController@removeItem',
+       'middleware' => ['acl:user_write']
+       ]);
+   Route::get('/cart', [
+       'uses' => 'CartController@showCart',
+       //'middleware' => ['acl:user_write']
+       ]);
+ 
 });
 

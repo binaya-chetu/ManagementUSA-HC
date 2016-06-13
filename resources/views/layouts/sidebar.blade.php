@@ -176,11 +176,23 @@
                         </ul>
                     </li>
                     @endif
-                     <li class="{{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
-                        <a href="{{ url('categories/listCategories') }}">
+                     <li class="nav-parent {{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                        <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
+                         <ul class="nav nav-children">
+                            <li class="{{ Request::segment(2) === 'newCategory'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/categories/newCategory') }}">
+                                    Add New Category
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'listCategories'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/categories/listCategories') }}">
+                                    List All Categories
+                                </a>
+                            </li>
+                        </ul>
                     </li> 
                 </ul>
             </nav>

@@ -361,7 +361,7 @@
                                           
                                             <th class="bronze plan" colspan="2">
                                             <h3 class="bronze">Bronze<span>$3395</span></h3>
-									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
+						<a class="btn btn-lg btn-primary" href="/addProduct/{{ base64_encode(1) }}">Buy Now</a>
                                                 
                                             </th>
                                             

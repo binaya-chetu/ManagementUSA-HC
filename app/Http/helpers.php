@@ -54,3 +54,23 @@ function commonScale()
     }
     return $strength;
 }
+
+/**
+ * Function to find the Erection Strength in the ED/PD
+ *
+ * @return array()
+ */
+function durationInMonths()
+{
+    for ($i = 1; $i <= 12; $i++){
+        if($i == 1)
+        {
+            $duration[$i] = $i . " Month"; 
+        }
+        else
+        {
+             $duration[$i] = $i . " Months";
+        }
+    }
+    return $duration;
+}
