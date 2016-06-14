@@ -317,5 +317,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'products.saveproducts',
 			//'middleware' => ['acl:save_products']	
 	]);	
+	
+	Route::get('/categories/addcategories', [
+            'uses' => 'CategoriesController@addcategories',
+            'as' => 'categories.addcategories',
+			//'middleware' => ['acl:add_categories']	
+	]);	
+	
+	Route::post('/categories/saveCategories', [
+            'uses' => 'CategoriesController@saveCategories',
+            'as' => 'categories.savecategories',
+			//'middleware' => ['acl:save_categories']	
+	]);	
 });
 

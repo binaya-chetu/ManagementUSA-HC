@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Config\Repository;
 use App\Role;
 use App\User;
 use App\UserDetail;
@@ -18,6 +20,8 @@ use Exception;
 
 class CategoriesController extends Controller
 {
+	protected $success = false;
+	
     public function __construct() {
         $this->middleware('auth');
     }
@@ -179,4 +183,68 @@ class CategoriesController extends Controller
             'user' => $user
         ]);
     }
+
+
+
+
+
+
+
+	
+	public function saveCategories(Request $request){
+		$data = Input::all();
+        $messages = [
+            'mimes' => 'Please upload a valid excel file'
+        ];
+
+        $validator = Validator::make($data, [
+			'categoryFile' =>'required|mimes:xls,xlsx'
+		], $messages);
+
+        if ($validator->fails()) {
+            return Redirect::to('/categories/addcategories')->withInput()->withErrors($validator->errors());
+        }		
+			
+		$rejectedList = [];
+ 		\Excel::load($data['categoryFile']->getPathname(), function($reader) {
+			// Getting all results
+			$categoryList = $reader->select(array('sku', 'name', 'unit_of_measurement', 'price', 'p_count', 'spl_price', 'package', 'category_id'))->get()->toArray();
+			
+			$category_types = DB::table('category_types')->pluck('id', 'name');
+			$list = [];
+			$product = [];
+			$packageRows = [];
+			// check if any column is missing in any row if found then the row is rejected
+			foreach($categoryList as $i => $n){
+				if(!isset($n['sku']) || !isset($n['name']) || !isset($n['unit_of_measurement']) || !isset($n['price']) || !isset($n['p_count']) || !isset($n['spl_price']) || !isset($n['package']) || !isset($n['category_id']) || empty($n['sku']) || empty($n['name']) || empty($n['unit_of_measurement']) || empty($n['price']) || empty($n['p_count']) || empty($n['spl_price']) || empty($n['package']) || empty($n['category_id'])){
+					$rejectedList[] = $categoryList[$i];
+					unset($categoryList[$i]);
+				} else{
+					$pro = ['sku' => $n['sku'], 'name' => $n['name'], 'unit_of_measurement' => $n['unit_of_measurement'], 'price' => $n['price']];
+					$product[] = $pro;
+					$proUpdated = App\Products::firstOrNew(array('sku' => $n['sku']));
+					$proUpdated->fill($pro)->save();					
+					
+					$packRows = ['product_id' => $proUpdated->getKey(), 'category_id' => $n['category_id'], 'product_count' =>$n['p_count'], 'product_price' => $n['spl_price'], 'category_type' => $category_types[ucfirst($n['package'])]];				
+					$packageRows[] = $packRows;
+					$proUpdated = App\Packages::firstOrNew(array('product_id' => $proUpdated->getKey(), 'category_id' => $n['category_id'], 'category_type' => $category_types[ucfirst($n['package'])]));
+					$proUpdated->fill($packRows)->save();					
+				}			
+			}
+
+			if(!empty($product) AND !empty($packageRows)){
+				$this->success = true;
+			}
+		});
+		if($this->success){
+			\Session::flash('success_message', 'Category saved successfully.');
+		} else{
+			\Session::flash('error_message', 'Category SAVE FAILED. Please try again witha valid excel file.');
+		}
+		return redirect()->back();
+	}
+	
+    public function addcategories(){
+        return view('categories.add_categories');
+	}	
 }
