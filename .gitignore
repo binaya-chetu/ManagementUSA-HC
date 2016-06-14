@@ -6,3 +6,4 @@ Homestead.yaml
 Homestead.json
 .env
  /nbproject
+/public/documents/upload_products/*
