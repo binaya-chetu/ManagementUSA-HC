@@ -37,6 +37,7 @@ class CategoriesController extends Controller
         try{
             $id = base64_decode($id);
             $category = DB::table('categories')->where('id', $id)->get();
+            
             if(empty($category)){
                 throw new Exception('Requested product category not found');
             }
@@ -49,6 +50,7 @@ class CategoriesController extends Controller
                         'category_types.name as package_type'
                 )
                 ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
+            
             $category_info = [];
             $pck_type = '';
             $total_price = 0;
@@ -216,7 +218,7 @@ class CategoriesController extends Controller
 			$packageRows = [];
 			// check if any column is missing in any row if found then the row is rejected
 			foreach($categoryList as $i => $n){
-				if(!isset($n['sku']) || !isset($n['name']) || !isset($n['unit_of_measurement']) || !isset($n['price']) || !isset($n['p_count']) || !isset($n['spl_price']) || !isset($n['package']) || !isset($n['category_id']) || empty($n['sku']) || empty($n['name']) || empty($n['unit_of_measurement']) || empty($n['price']) || empty($n['p_count']) || empty($n['spl_price']) || empty($n['package']) || empty($n['category_id'])){
+				if(!isset($n['sku']) || !isset($n['name']) || !isset($n['price']) || !isset($n['p_count']) || !isset($n['spl_price']) || !isset($n['package']) || !isset($n['category_id']) || empty($n['sku']) || empty($n['name']) || empty($n['price']) || empty($n['p_count']) || empty($n['spl_price']) || empty($n['package']) || empty($n['category_id'])){
 					$rejectedList[] = $categoryList[$i];
 					unset($categoryList[$i]);
 				} else{

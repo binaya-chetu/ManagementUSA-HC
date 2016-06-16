@@ -176,10 +176,16 @@
                         </ul>
                     </li>
                     @endif
-                     <li class="{{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                     <li class="{{ Request::segment(2) === 'listCategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/listCategories') }}">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
+                        </a>
+                    </li> 
+                    <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
+                        <a href="{{ url('categories/addcategories') }}">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Imports Product</span>
                         </a>
                     </li> 
                 </ul>
