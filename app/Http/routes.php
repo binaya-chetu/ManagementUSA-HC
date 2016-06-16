@@ -326,8 +326,6 @@ Route::group(['middleware' => 'web'], function () {
 			'middleware' => ['acl:user_write']
         ]);
 
-
-
 	Route::get('/clientapi', [
             'uses' => 'ClientapiController@getApiResponse',
             'as' => 'clientapi.getApiResponse',
@@ -357,6 +355,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'ApptSettingController@directWalkins',
 			'middleware' => ['acl:user_write']
         ]);
-
+		
+	Route::get('/products/addproducts', [
+            'uses' => 'ProductsController@addproducts',
+            'as' => 'products.addproducts',
+			//'middleware' => ['acl:add_products']	
+	]);	
+	
+	Route::post('/products/saveProducts', [
+            'uses' => 'ProductsController@saveProducts',
+            'as' => 'products.saveproducts',
+			//'middleware' => ['acl:save_products']	
+	]);	
 });
 

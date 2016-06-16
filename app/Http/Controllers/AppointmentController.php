@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Config\Repository;
 use Session;
 use App;
 use Auth;
@@ -105,15 +106,16 @@ class AppointmentController extends Controller {
         $date = $data['appDate'];
         $time = $data['appTime'];
         $doctor_id = $request->doctor_id;
-
+		
         $messages = [
             'after' => ':attribute cannot be a past date',
             'future_date' => 'Appointment cannot be set for past',
-            'doctor_availability' => 'Sorry this time slot is not available'
+            'doctor_availability' => 'Sorry this time slot is not available',
+			'clinic_off_hours' => 'Appoint can be selected only between '.config("constants.CLINIC_OPEN_TIME").' and ' .config("constants.CLINIC_CLOSE_TIME")
         ];
 
         $validator = Validator::make($data, [
-                    'appDate' => 'required|date|future_date:' . $time . '|doctor_availability:' . $time . ',' . $doctor_id,
+                    'appDate' => 'required|date|future_date:' . $time . '|doctor_availability:' . $time . ',' . $doctor_id.'|clinic_off_hours:'. $time .','.config("constants.CLINIC_OPEN_TIME").','.config("constants.CLINIC_CLOSE_TIME"),
                     'comment' => 'required',
                         ], $messages);
 

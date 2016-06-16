@@ -1,3 +1,29 @@
+(function($){
+    $.fn.checkUploadFileType = function(options) {
+        var defaults = {
+            allowedExtensions: [],
+            success: function() {},
+            error: function() {}
+        };
+        options = $.extend(defaults, options);
+
+        return this.each(function() {
+            $(this).on('change', function() {
+                var value = $(this).val(),
+                    file = value.toLowerCase(),
+                    extension = file.substring(file.lastIndexOf('.') + 1);
+
+                if ($.inArray(extension, options.allowedExtensions) == -1) {
+                    options.error();
+                    $(this).focus();
+                } else {
+                    options.success();
+                }
+            });
+        });
+    };	
+})(jQuery);
+
 var initCalendarDragNDrop = function() {
 	$('#external-events div.external-event').each(function() {
 		var eventObject = {
@@ -219,11 +245,11 @@ $(document).ready(function() {
          */
 
         $(document).on("click", ".edit-row", function(ev) {
-        $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-        });
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
         var appointmentId = $(this).attr('rel');
         $.ajax({
         type: "POST",
@@ -395,7 +421,6 @@ $(document).ready(function() {
             }
         });	 
 	})
-
 });
 
         (function($) {
