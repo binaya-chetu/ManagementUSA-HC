@@ -12,7 +12,7 @@ class CreateAppointmentResourcesTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointment_resources', function (Blueprint $table) {
+        Schema::create('appointment_sources', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('description');

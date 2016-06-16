@@ -46,7 +46,8 @@
                         <th>App Date and Time</th>
                         <th>Patient</th>
                         <th>Comment</th>
-                        <th>Status</th>
+<!--                        <th>Status</th>-->
+                        <th>Source</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -61,16 +62,26 @@
                         <td class="table-text"><div>{{ $appointment->comment }}</div></td>
                         <td class="table-text"><div>
                                 <?php
-                                switch ($appointment->status) {
-                                    case 1: echo "Active";
+//                                switch ($appointment->status) {
+//                                    case 1: echo "Active";
+//                                        break;
+//                                    case 2: echo "Reschedule";
+//                                        break;
+//                                    case 3: echo "Cancel";
+//                                        break;
+//                                    case 4: echo "Confirm";
+//                                        break;
+//                                    default: echo "Active";
+//                                        break;
+//                                }
+                                switch ($appointment->appt_source) {
+                                    case 1: echo "Web Lead";
                                         break;
-                                    case 2: echo "Reschedule";
+                                    case 2: echo "Tele Marketing";
                                         break;
-                                    case 3: echo "Cancel";
+                                    case 3: echo "Walk-ins";
                                         break;
-                                    case 4: echo "Confirm";
-                                        break;
-                                    default: echo "Active";
+                                    default: echo "Unknown";
                                         break;
                                 }
                                 ?>

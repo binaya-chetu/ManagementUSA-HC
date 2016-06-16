@@ -196,32 +196,34 @@ $(document).ready(function() {
         var i = 1;
         var j = 1;
         $("#addAppPatient").click(function() {
-if (i === 1)
+        if (i === 1)
         {
-        $('#patient_come').show();
+                $("#email").rules("add", { remote: ajax_url+ "/apptsetting/uniqueEmail"});
+                $('#patient_come [type=text], #patient_come [type=email]').val('');
+                $('#patient_come').show();
                 $('#patient_id').val('');
                 $('#addAppPatient').html('Del Patient <i class="fa fa-minus"></i>');
                 $('.patient_id').hide();
                 i = 2;
-                } else
+        } else
         {
-        $('#patient_come').hide();
+                $('#patient_come').hide();
                 $('.patient_id').show();
                 $('#addAppPatient').html('<i class="fa fa-plus"></i> Add Patient');
                 i = 1;
                 }
-return false;
+                return false;
         });
         /*
          * End of Functions for Add appointment.
          */
 
         $(document).on("click", ".edit-row", function(ev) {
-$.ajaxSetup({
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-});
+        $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
         var appointmentId = $(this).attr('rel');
         $.ajax({
         type: "POST",
@@ -455,3 +457,56 @@ $(button).on( 'click', function (e) {
         'My file.csv'
     ));
 } );
+
+/*
+ * Show the appointment patient record on the selection form choosing patient at the time of create appointment
+ */
+$('#patient_id').on('change', function(){
+    var appt_request_id = $(this).val();
+    if(appt_request_id != ''){
+        
+        $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        $('#emailParent').removeClass('has-error');
+        $('#emailParent label[class=error]').remove();
+        $('#patient_come [type=text], #patient_come [type=email]').val('');
+        $.ajax({
+		type: "POST",
+                url: ajax_url+"/apptsetting/findAppointmentDetail",
+                data: {"id": appt_request_id},
+                success: function(response) {
+                var combine = JSON.parse(response);                
+                $('#first_name').val(combine.first_name);
+                $('#last_name').val(combine.last_name);
+                $('#email').val(combine.email);
+                $('#phone').val(combine.phone);
+                $('#dob').datepicker('setDate', moment(combine.dob).format('MM/DD/YYYY'));
+                $('#email').rules('remove', 'remote');
+                $('#patient_come').show();
+                }
+        });
+    }else{
+        $("#email").rules("add", "required");
+        $('#patient_come').hide();
+    }
+});
+/*
+ * Validate the form for creating new form by the Appt Setting 
+ */
+ $('#addApptRequest').validate({
+          rules: {
+            email: {
+              //required: true,
+              email: true,
+              remote: ajax_url+ "/apptsetting/uniqueEmail"
+            }
+          },
+          messages:{
+              email: {
+                  remote: 'Email already registered'
+              }
+          }
+    });

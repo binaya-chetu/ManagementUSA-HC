@@ -17,6 +17,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', 'HomeController@index');
     
     // route for the appointment setting
+    Route::get('/apptsetting/index/{val?}', [
+            'uses' => 'ApptSettingController@index',
+            'as' => 'apptsetting.index',
+            //'middleware' => ['acl:appointment_read']
+        ]);
     Route::get('/apptsetting/marketingCall', [
             'uses' => 'ApptSettingController@marketingCall',
             'as' => 'apptsetting.marketingCall',
@@ -41,6 +46,16 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'ApptSettingController@saveMarketingCall',
             'as' => 'apptsetting.saveMarketingCall',
            // 'middleware' => ['acl:appointment_write']
+        ]);
+    Route::get('/apptsetting/uniqueEmail/{email?}', [
+            'uses' => 'ApptSettingController@uniqueEmail',
+            'as' => 'apptsetting.uniqueEmail',
+            //'middleware' => ['acl:appointment_write']
+        ]);
+    Route::post('/apptsetting/findAppointmentDetail', [
+            'uses' => 'ApptSettingController@findAppointmentDetail',
+            'as' => 'apptsetting.findAppointmentDetail',
+            //'middleware' => ['acl:appointment_write']
         ]);
     
     // route for appointment module

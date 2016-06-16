@@ -28,21 +28,27 @@
                             <span>Appt. Settings</span>
                         </a>
                         <ul class="nav nav-children">                       
-                            <li class="<?php echo e(Request::segment(2) === 'callList' ? 'nav-active' : null); ?>">
-                                <a href="<?php echo e(url('/apptsetting/marketingCall')); ?>">
-                                    Tele-marketing Calls
-                                </a>
-                            </li>   
+                              
                             <li class="<?php echo e(Request::segment(2) === 'missedCall' ? 'nav-active' : null); ?>">
                                 <a href="<?php echo e(url('/apptsetting/missedCall')); ?>">
                                     Missed Call
                                 </a>
                             </li>  
+                            <li class="<?php echo e(Request::segment(3) === 'marketingCall' ? 'nav-active' : null); ?>">
+                                <a href="<?php echo e(url('/apptsetting/index/marketingCall')); ?>">
+                                    Tele-marketing Calls
+                                </a>
+                            </li> 
                             <li class="<?php echo e(Request::segment(2) === 'webLead' ? 'nav-active' : null); ?>">
                                 <a href="<?php echo e(url('/apptsetting/webLead')); ?>">
                                     Web Leads
                                 </a>
-                            </li>  
+                            </li> 
+                            <li class="<?php echo e(Request::segment(3) === 'walkin' ? 'nav-active' : null); ?>">
+                                <a href="<?php echo e(url('/apptsetting/index/walkin')); ?>">
+                                    Direct Walkins
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>

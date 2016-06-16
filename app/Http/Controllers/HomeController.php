@@ -41,6 +41,7 @@ class HomeController extends Controller
     {
         // get all appointments which status is active
         $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
+        
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) 

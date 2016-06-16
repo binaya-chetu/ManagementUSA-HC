@@ -21,8 +21,8 @@ class AppointmentController extends Controller {
 
     protected $patient_role = 6;
     protected $doctor_role = 5;
-    protected $success = true;
-    protected $error = false;
+    public $success = true;
+    public $error = false;
 
     public function __construct() {
         $this->middleware('auth');
@@ -167,7 +167,7 @@ class AppointmentController extends Controller {
      */
     public function listappointment() {
 
-        $appointments = Appointment::with('patient')->get();
+        $appointments = Appointment::with('patient')->orderBy('id', 'desc')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
 
@@ -282,9 +282,9 @@ class AppointmentController extends Controller {
     public function uniquePatientEmail() {
         $appointment = User::where('email', $_GET['email'])->count();
         if ($appointment) {
-            echo $this->error; 
+            echo json_encode($this->error); 
         } else {
-            echo $this->success;
+            echo json_encode($this->success);
         }
         die;
     }

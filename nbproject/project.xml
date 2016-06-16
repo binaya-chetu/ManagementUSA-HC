@@ -6,6 +6,7 @@
             <name>ManagementUSA-HC</name>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>endif</word>
             <word>lse</word>
         </spellchecker-wordlist>
     </configuration>
