@@ -27,4 +27,6 @@ class Categories extends Model
         return $this->belongsTo('App\CategoryAddOns', 'category_id');
     }
     
+   
+    
 }

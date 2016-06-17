@@ -13,7 +13,7 @@ class CartItem extends Model
  
     public function product()
     {
-        return $this->belongsTo('App\Categories');
+        return $this->belongsTo('App\Products', 'product_id');
     }
 }
  

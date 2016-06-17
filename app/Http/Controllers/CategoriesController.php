@@ -70,6 +70,7 @@ class CategoriesController extends Controller
                         'category_types.name as package_type'
                 )
                 ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
+            //echo "<pre>";print_r($category_details);die;
             $category_info = [];
             $pck_type = '';
             $total_price = 0;
@@ -101,7 +102,7 @@ class CategoriesController extends Controller
 				$products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
 				$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price; 
 			}
-
+                        
             return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products]);            
         } catch(\Exception $e){
             App::abort(404, $e->getMessage());          

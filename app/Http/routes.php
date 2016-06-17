@@ -319,7 +319,7 @@ Route::group(['middleware' => 'web'], function () {
     
     
     // shop code
-   Route::get('/addProduct/{productId}', [
+   Route::post('/addProduct', [
             'uses' => 'CartController@addItem',
             //'middlaware' => ['acl:user_write']
        ]);

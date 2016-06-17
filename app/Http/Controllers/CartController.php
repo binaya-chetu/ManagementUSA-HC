@@ -6,9 +6,10 @@ use App\CartItem;
 use Illuminate\Support\Facades\Auth;
  
 use Illuminate\Http\Request;
- 
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
  
 class CartController extends Controller
 {
@@ -18,74 +19,86 @@ class CartController extends Controller
         $this->middleware('auth');
     }
  
-    public function addItem ($categoryId){
+    public function addItem (Request $request){
         
-        $categoryId = base64_decode($categoryId);
-        $category = \DB::table('categories')->where('id', $categoryId)->get();
+        $categoryId = $request->category_id;
+        $categoryType = $request->category_type;
+        
+        $category = DB::table('categories')->where('id', $categoryId)->get();
         if(empty($category)){
             throw new Exception('Requested product category not found');
         }
 
-        $category_details = \DB::table('packages')
-            ->leftJoin('products', 'packages.product_id', '=', 'products.id')            
-            ->leftJoin('category_types', 'packages.category_type', '=', 'category_types.id')
+        $category_details = DB::table('packages')
+            ->leftJoin('products', 'packages.product_id', '=', 'products.id') 
             ->select('packages.product_count as p_count', 'packages.product_price as spl_price',
-                    'products.*',
-                    'category_types.name as package_type'
+                    'products.*'
             )
-            ->where('packages.category_id', $categoryId)->orderBy('package_type', 'DESC')->get();
-
-        $category_info = [];
-        $pck_type = '';
-        $total_price = 0;
+            ->where('packages.category_id', $categoryId)
+                ->where('packages.category_type', $categoryType)
+                ->get();
+        //echo "<pre>"; print_r($category_details);die;
+        
+        $total_amount = 0;
+        
+        $totalUnitPrice = 0;
         foreach($category_details as $cat){
-            if($pck_type != $cat->package_type){
-                $pck_type = $cat->package_type;
-                $category_info[$pck_type] = [];
-                $category_info[$pck_type]['total_price'] = 0;
-            }
-            $category_info[$pck_type][] = $cat;
-            $category_info[$pck_type]['total_price'] += $cat->spl_price;
+            $total_amount += $cat->spl_price;
+            $totalUnitPrice += $cat->price * $cat->p_count;
         }
- 
-        $cart = Cart::where('user_id',Auth::user()->id)->first();
- 
-        if(!$cart){
-            $cart =  new Cart();
-            $cart->user_id=Auth::user()->id;
-            $cart->save();
-        }
- 
-        $cartItem  = new Cartitem();
-        $cartItem->product_id = $categoryId;
-        $cartItem->cart_id = $cart->id;
-        $cartItem->save();
- 
-        return redirect('/cart');
- 
-    }
- 
-    public function showCart(){
+        $package_discount = $total_amount - $totalUnitPrice;
         $cart = Cart::where('user_id',Auth::user()->id)->first();
  
         if(!$cart){
             $cart =  new Cart();
             $cart->user_id = Auth::user()->id;
+            $cart->category_id = $categoryId;
+            $cart->package_price = $total_amount;
+            $cart->discount_price = $package_discount;
+            $cart->total_amount = $total_amount;
             $cart->save();
+            
+            foreach($category_details as $category_detail)
+            {
+                $cartItem  = new Cartitem();
+                $cartItem->cart_id = $cart->id;
+                $cartItem->product_id = $category_detail->id;
+                $cartItem->product_sku = $category_detail->sku;
+                $cartItem->product_price = $category_detail->spl_price;
+                $cartItem->quantity = $category_detail->p_count;
+                $unitPrice = $category_detail->price * $category_detail->p_count;
+                $unitDiscount = $category_detail->spl_price - $unitPrice;
+                $cartItem->discount_price = $unitDiscount;
+                $cartItem->total_price = $category_detail->spl_price;
+                $cartItem->save();
+            }
+            return redirect('/cart');
+        }
+        else
+        {
+            \Session::flash('flash_message', 'A Package already exists in your cart.');
+            return Redirect::back();
         }
  
-        $items = $cart->cartItems;
-        $total=0;
-        foreach($items as $item){
-            $total+=$item->product->price;
-        }
+        
  
-        return view('cart.view',['items'=>$items,'total'=>$total]);
+    }
+ 
+    public function showCart(){
+        $cart = Cart::with('cartItems', 'category', 'cartItems.product')->where('user_id',Auth::user()->id)->first();
+        //echo "<pre>";print_r($cart);die;
+        $cart_items = [];
+        if(!empty($cart))
+        {
+            $cart_items = $cart->cartItems;
+        }
+        return view('cart.cart',['items'=>$cart, 'cart_items' => $cart_items, ]);
     }
  
     public function removeItem($id){
  
-        CartItem::destroy($id);
+        Cart::destroy($id);
+        DB::table('cart_items')->where('cart_id', '=', $id)->delete();
         return redirect('/cart');
     }
  
