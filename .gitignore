@@ -7,3 +7,5 @@ Homestead.json
 .env
  /nbproject
  /1_RESOURCES
+/public/documents/upload_products/*
+
