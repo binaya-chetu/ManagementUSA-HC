@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppointmentSourcesTable extends Migration
+class AddHashColumnToPatientDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateAppointmentSourcesTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointment_sources', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->timestamps();
-        });
+		Schema::table('patient_details', function ($table) {
+			$table->string('hash', 255);
+			$table->index('hash');
+		});		
     }
 
     /**

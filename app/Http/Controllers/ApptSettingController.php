@@ -173,6 +173,7 @@ class ApptSettingController extends Controller {
                     $user = User::where('email', $requestPatient->email)
                                     ->select('id', 'email')
                                     ->get()->first();   
+					//print_r($user->id);die;
                 }else{
                     $user = new User;
                     $user->first_name = $request->first_name;
