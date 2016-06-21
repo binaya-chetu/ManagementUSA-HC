@@ -49,6 +49,11 @@
                                     Direct Walkins
                                 </a>
                             </li>
+                            <li class="{{ Request::segment(4) === 'requestFollowup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/requestFollowUp') }}">
+                                   Request Follow-up
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>

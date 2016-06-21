@@ -70,7 +70,6 @@ class ApptSettingController extends Controller {
      */
 
     public function saveMarketingCall(Request $request) {
-        
         $call = new TelemarketingCall();
         $call->requested_date = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
         $call->first_name = $request->first_name;
@@ -111,6 +110,20 @@ class ApptSettingController extends Controller {
 
         return view('apptsetting.web_lead', [
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
+        ]);
+    }
+    
+    /**
+     * Listing all the Call List from the Api
+     *
+     * @return \resource\view\apptsetting\call_list
+     */
+    public function requestFollowUp() {
+
+        $requestFollowups = AppointmentRequest::where('status', 2)->get();
+        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
+        return view('apptsetting.requestFollowup', [
+            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode
         ]);
     }
 
@@ -189,12 +202,12 @@ class ApptSettingController extends Controller {
             }
         } else {
             
-            $apptRequest->first_name = $request->first_name;
-            $apptRequest->last_name = $request->last_name;
-            $apptRequest->email = $request->email;
-            $apptRequest->phone = $request->phone;
-            if (!empty($request->dob)) {
-                $apptRequest->dob = date('Y-m-d', strtotime($request->dob));
+                $apptRequest->first_name = $request->first_name;
+                $apptRequest->last_name = $request->last_name;
+                $apptRequest->email = $request->email;
+                $apptRequest->phone = $request->phone;
+                if (!empty($request->dob)) {
+                    $apptRequest->dob = date('Y-m-d', strtotime($request->dob));
             }
            
             $apptRequest->save();

@@ -379,5 +379,9 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'categories.savecategories',
 			//'middleware' => ['acl:save_categories']	
 	]);	
+          Route::get('/apptsetting/requestFollowUp', [
+            'uses' => 'ApptSettingController@requestFollowUp',
+            'as' => 'apptsetting.requestFollowUp',
+            //'middleware' => ['acl:appointment_read']
+        ]);
 });
-

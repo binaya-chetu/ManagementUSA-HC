@@ -33,7 +33,7 @@ class CategoriesController extends Controller
             'categories' => $categories
         ]);
     }
-    public function categoryDetails( $id = null, Request $request){
+    public function categoryDetails($id = null, Request $request){
         try{
             $id = base64_decode($id);
             $category = DB::table('categories')->where('id', $id)->get();
@@ -88,7 +88,6 @@ class CategoriesController extends Controller
             App::abort(404, $e->getMessage());
         }
     }
-    
     public function updateUserStatus(Request $request)
     {
         $data = $request->all();

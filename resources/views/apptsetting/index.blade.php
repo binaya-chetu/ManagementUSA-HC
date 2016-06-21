@@ -13,7 +13,6 @@
             }
         ?>
         <h2>Create Appointment From {{ $type }}</h2>
-
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
