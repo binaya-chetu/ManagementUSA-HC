@@ -157,14 +157,19 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'AppointmentController@getdoctorschedule',
             'as' => 'doctor.getSchedule',
             'middleware' => ['acl:appointment_write']
+
     ]);
     Route::get('/appointment/upcomingappointments', [
             'uses' => 'AppointmentController@upcomingappointments',
             'as' => 'appointment.upcomingappointments',
             //'middleware' => ['acl:appointment_read']
         ]);
-    
-    
+ 
+    Route::post('/appointment/savePatientMedicalRecord/{id}', [
+            'uses' => 'AppointmentController@savePatientMedicalRecord',
+            'as' => 'appointment.savePatientMedicalRecord',
+            //'middleware' => ['acl:appointment_write']
+    ]);	
     // route for ACL
     Route::get('/acl/listRole', [
             'uses' => 'AclController@listRoles',

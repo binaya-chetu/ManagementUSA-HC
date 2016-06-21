@@ -274,13 +274,14 @@ $(function() {
 		ev.preventDefault();
 		var validated = $('#w3 form').valid();
 		if ( validated ) {
-			new PNotify({
-				title: 'Congratulations',
-				text: 'You completed the wizard form.',
-				type: 'custom',
-				addclass: 'notification-success',
-				icon: 'fa fa-check'
-			});
+                    $('#patientMedical').submit();
+//			new PNotify({
+//				title: 'Congratulations',
+//				text: 'You completed the wizard form.',
+//				type: 'custom',
+//				addclass: 'notification-success',
+//				icon: 'fa fa-check'
+//			});
 		}
 	});
 
