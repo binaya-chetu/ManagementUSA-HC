@@ -44,10 +44,10 @@
                     </div>
                     @if($type == 'Tele-Marketing Call')
                     <div class="form-group">
-                            {{ Form::label('phone', 'Marketing Phone', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-6">
-                                {{ Form::text('telemarketing_phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Phone', 'maxlength' => '14', 'readonly' => true]) }}
-                            </div>
+                        {{ Form::label('phone', 'Marketing Phone', array('class' => 'col-sm-3 control-label mandatory')) }}
+                        <div class="col-sm-6">
+                            {{ Form::text('marketing_phone', old('phone'), ['class' => 'form-control phone required', 'placeholder' => 'Tele-marketing Phone', 'maxlength' => '14']) }}
+                        </div>
                     </div>
                     @endif
                     <div class="form-group">
@@ -118,7 +118,6 @@
                                     @foreach ($patients as $patient)
                                         <option {{ old('patient_id') == $patient->id ? 'selected="selected"' :'' }} value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }} </option>
                                     @endforeach
-
                                 </select>
                                 
                             </div>
@@ -178,7 +177,16 @@
                                 @endif
                             </div>
                         </div>
- 
+                        <div class="form-group">
+                            {{ Form::label('email_invitation', 'Allow to send invitation', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-6">
+                                <div class="input-group">                                   
+
+                                    {{ Form::checkbox('email_invitation', null, false, ['class' => '']) }}                                
+
+                                </div>
+                            </div>                            
+                        </div>
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-6">
@@ -315,7 +323,7 @@
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
                             {{ Form::button(
-                                    '<i class="fa fa-btn fa-user"></i>  Add Appointment',
+                                    '<i class="fa fa-btn fa-user"></i>  Save Details',
                                     array(
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit'))

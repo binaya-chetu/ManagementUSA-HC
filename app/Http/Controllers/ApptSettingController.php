@@ -20,15 +20,19 @@ use App;
 use Auth;
 
 class ApptSettingController extends Controller {
-
-    protected $patient_role = 6;
-    protected $doctor_role = 5;
+    protected $user = '';
+    protected $patient_role =   6;
+    protected $doctor_role  =   5;
     protected $success = true;
     protected $error = false;
 
     public function __construct() {
         $this->middleware('auth');
     }
+	
+	public function getPatientHash($salt){
+		return md5(uniqid($salt, true));
+	}
 
     /*
      * Open the appointment form for telemarketing, walkin patient 
@@ -127,6 +131,17 @@ class ApptSettingController extends Controller {
         ]);
     }
 
+	public function emailPatientEditForm($user){
+		$this->user = $user;
+		$url = 'appointment/patientMedical/'.base64_encode($user->id).'/hash/'.$user->hash;
+		$url = App::make('url')->to($url);
+		\Mail::send('emails.pateintprofileaccess', ['url' => $url], function($message)
+		{ 
+			$message->to($this->user->email, 'Azmens Clinic')->subject('Welcome!');
+		});		
+		return ['response' => true, 'msg' => $url];
+	}
+	
     /*
      * Common function to save the Followup with the patient details from Webleads & Telemarketing calls
      * 
@@ -136,16 +151,21 @@ class ApptSettingController extends Controller {
      */
 
     public function saveApptFollowup(Request $request) {
-       //echo '<pre>'; print_r($request->all());die;
         $apptRequest = new AppointmentRequest;
         $apptRequest->appt_source = $request->appt_source;
         $apptRequest->comment = $request->comment;
         $apptRequest->created_by = $request->created_by;
         $apptRequest->status = $request->status;
         $apptRequest->created_at = date('Y-m-d H:i:s', strtotime($request->created . " " . $request->created_time));
+        if(isset($request->marketing_phone)){
+            $apptRequest->marketing_phone = $request->marketing_phone;
+        }
         // Case of Set for the Appointment request
         if ($request->status == '1') {
             $apptRequest->appt_time = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
+            if (isset($request->email_invitation)) {
+                $apptRequest->email_invitation = 1;  
+            }
         } else { 
         // Case of NO Set for the Appointment request
             $apptRequest->reason_id = $request->reason_id;
@@ -168,37 +188,53 @@ class ApptSettingController extends Controller {
             $apptRequest->phone = $requestPatient->phone;
             $apptRequest->comment = $requestPatient->comment;
             $apptRequest->dob = $requestPatient->dob;
+            if (isset($request->email_invitation)) {
+                $apptRequest->email_invitation = 1;  
+            }
             $apptRequest->save();
-           
             /* save the data in user, patient_detail, appointment with Set status */
             if ($request->status == '1') {
                 
-                // If already appointment request email exist or not
-                
+                // If already appointment request email exist or not                
+                 if(!empty($requestPatient->email)){
+                    $user = User::where('email', $requestPatient->email)
+                                    ->select('id', 'email')
+                                    ->get()->first();  
+									
+					$user->hash = $this->getPatientHash($user->id);
+					App\Patient::where('user_id', $user->id)->update(['hash' => $user->hash]);
+				}else{
                     $user = new User;
-                    $user->first_name = $requestPatient->first_name;
-                    $user->last_name = $requestPatient->last_name;
-                    $user->email = $requestPatient->email;
+                    $user->first_name = $request->first_name;
+                    $user->last_name = $request->last_name;
+                    $user->email = $request->email;
                     $user->role = $this->patient_role;
                     $user->save();
                     $patient = new Patient;
                     $patient->user_id = $user->id;
-                    $patient->phone = $requestPatient->phone;
-                    if (!empty($request->dob)) {
+                    $patient->phone = $request->phone;
+                    if (isset($request->dob)) {
                         $patient->dob = date('Y-m-d', strtotime($request->dob));
                     }
+					echo '<pre>'; print_r($user); die;
+					$patient->hash = $this->getPatientHash($patient->user_id);
+					$user->hash = $patient->hash;
+					
                     $patient->save();
-             
-               // echo '<pre>';print_r($user->all());die;
+                }
+				
+				if(!empty($user->email) && isset($request->email_invitation)){
+					$this->emailPatientEditForm($user);
+				}
+				
                 $appointment = new Appointment;
                 $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
                 $appointment->patient_id = $user->id;
                 $appointment->createdBy = Auth::user()->id;
                 $appointment->appt_source = $request->appt_source;
                 $appointment->request_id = $apptRequest->id;
-                $appointment->comment = $request->comment;
+                $appointment->comment = $request->comment;                
                 $appointment->save();
-                 //echo '<pre>';print_r($request->all());die;
             }
         } else {
             
@@ -211,7 +247,6 @@ class ApptSettingController extends Controller {
             }
            
             $apptRequest->save();
-            // echo '<pre>';print_r($request->all());die;
             // Case for Set condtions to save the data in user, patient_detail, Appointment models
             if ($request->status == '1') {
                 /* save the data in user, patient_detail, appointment with Set status */
@@ -227,7 +262,16 @@ class ApptSettingController extends Controller {
                 if (!empty($request->dob)) {
                     $patient->dob = date('Y-m-d', strtotime($request->dob));
                 }
+
+				$patient->hash = $this->getPatientHash($patient->user_id);
+				$user->hash = $patient->hash;
+				
                 $patient->save();
+				
+				if(!empty($request->email) && isset($request->email_invitation)){
+					$this->emailPatientEditForm($user);
+				}
+				
                 $appointment = new Appointment;
                 $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
                 $appointment->patient_id = $user->id;
@@ -240,13 +284,11 @@ class ApptSettingController extends Controller {
         }
         if ($request->status == '1') {
             \Session::flash('flash_message', 'Appointment updated successfully.');
-            return redirect()->action('AppointmentController@listappointment');
-        
+            return redirect()->action('AppointmentController@listappointment');        
         }else{
             \Session::flash('flash_message', 'Appointment updated successfully.');
             return redirect()->back();
-        }
-        
+        }       
     }
     
     /**
