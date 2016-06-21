@@ -424,6 +424,20 @@ class AppointmentController extends Controller {
         }
     }
     
-    
+    /*
+     * Find the list of all appointment which appointment time are within 24 Hours.
+     * 
+     * @return \resource\view\apptsetting\listappointment.blade.php
+     */
+    public function upcomingappointments() {
+        
+        $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
+        $patients = User::where('role', $this->patient_role)->get();
+        $doctors = User::where('role', $this->doctor_role)->get();
+
+        return view('appointment.listappointment', [
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors
+        ]);
+    }
     
 }

@@ -57,6 +57,8 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.findAppointmentDetail',
             //'middleware' => ['acl:appointment_write']
         ]);
+   
+    
     
     // route for appointment module
     Route::get('/appointment/newAppointment/{id?}', [
@@ -155,7 +157,12 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'AppointmentController@getdoctorschedule',
             'as' => 'doctor.getSchedule',
             'middleware' => ['acl:appointment_write']
-    ]);		
+    ]);
+    Route::get('/appointment/upcomingappointments', [
+            'uses' => 'AppointmentController@upcomingappointments',
+            'as' => 'appointment.upcomingappointments',
+            //'middleware' => ['acl:appointment_read']
+        ]);
     
     
     // route for ACL

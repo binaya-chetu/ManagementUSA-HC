@@ -20,10 +20,9 @@ use App;
 use Auth;
 
 class ApptSettingController extends Controller {
-
     protected $user = '';
-    protected $patient_role = 6;
-    protected $doctor_role = 5;
+    protected $patient_role =   6;
+    protected $doctor_role  =   5;
     protected $success = true;
     protected $error = false;
 
@@ -139,7 +138,6 @@ class ApptSettingController extends Controller {
      */
 
     public function saveApptFollowup(Request $request) {
-        
         $apptRequest = new AppointmentRequest;
         $apptRequest->appt_source = $request->appt_source;
         $apptRequest->comment = $request->comment;
