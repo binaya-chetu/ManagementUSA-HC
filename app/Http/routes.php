@@ -140,6 +140,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.patientMedical',
             'middleware' => ['acl:followupappointment_read']
         ]);
+	// do not add middleware to this route	
+/*     Route::get('/appointment/patientMedical/{id}/hash/{hash}', [
+            'uses' => 'AppointmentController@patientMedical',
+            'as' => 'appointment.patientMedicalWithHash',
+            //'middleware' => ['acl:followupappointment_read']
+        ]); */
+    Route::get('/appointment/patientMedical/{id}/hash/{hash}', [
+            'uses' => 'AppointmentController@patientMedical',
+            'as' => 'appointment.patientMedicalWithHash',
+            //'middleware' => ['acl:followupappointment_read']
+        ]);
     Route::post('/getdoctorschedule', [
             'uses' => 'AppointmentController@getdoctorschedule',
             'as' => 'doctor.getSchedule',

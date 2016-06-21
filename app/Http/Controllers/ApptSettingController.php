@@ -21,6 +21,7 @@ use Auth;
 
 class ApptSettingController extends Controller {
 
+    protected $user = '';
     protected $patient_role = 6;
     protected $doctor_role = 5;
     protected $success = true;
@@ -29,6 +30,10 @@ class ApptSettingController extends Controller {
     public function __construct() {
         $this->middleware('auth');
     }
+	
+	public function getPatientHash($salt){
+		return md5(uniqid($salt, true));
+	}
 
     /*
      * Open the appointment form for telemarketing, walkin patient 
@@ -114,6 +119,17 @@ class ApptSettingController extends Controller {
         ]);
     }
 
+	public function emailPatientEditForm($user){
+		$this->user = $user;
+		$url = 'appointment/patientMedical/'.base64_encode($user->id).'/hash/'.$user->hash;
+		$url = App::make('url')->to($url);
+		\Mail::send('emails.pateintprofileaccess', ['url' => $url], function($message)
+		{ 
+			$message->to($this->user->email, 'Azmens Clinic')->subject('Welcome!');
+		});		
+		return ['response' => true, 'msg' => $url];
+	}
+	
     /*
      * Common function to save the Followup with the patient details from Webleads & Telemarketing calls
      * 
@@ -172,9 +188,11 @@ class ApptSettingController extends Controller {
                  if(!empty($requestPatient->email)){
                     $user = User::where('email', $requestPatient->email)
                                     ->select('id', 'email')
-                                    ->get()->first();   
-					//print_r($user->id);die;
-                }else{
+                                    ->get()->first();  
+									
+					$user->hash = $this->getPatientHash($user->id);
+					App\Patient::where('user_id', $user->id)->update(['hash' => $user->hash]);
+				}else{
                     $user = new User;
                     $user->first_name = $request->first_name;
                     $user->last_name = $request->last_name;
@@ -187,8 +205,17 @@ class ApptSettingController extends Controller {
                     if (isset($request->dob)) {
                         $patient->dob = date('Y-m-d', strtotime($request->dob));
                     }
+					echo '<pre>'; print_r($user); die;
+					$patient->hash = $this->getPatientHash($patient->user_id);
+					$user->hash = $patient->hash;
+					
                     $patient->save();
                 }
+				
+				if(!empty($user->email) && isset($request->email_invitation)){
+					$this->emailPatientEditForm($user);
+				}
+				
                 $appointment = new Appointment;
                 $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
                 $appointment->patient_id = $user->id;
@@ -224,7 +251,16 @@ class ApptSettingController extends Controller {
                 if (!empty($request->dob)) {
                     $patient->dob = date('Y-m-d', strtotime($request->dob));
                 }
+
+				$patient->hash = $this->getPatientHash($patient->user_id);
+				$user->hash = $patient->hash;
+				
                 $patient->save();
+				
+				if(!empty($request->email) && isset($request->email_invitation)){
+					$this->emailPatientEditForm($user);
+				}
+				
                 $appointment = new Appointment;
                 $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
                 $appointment->patient_id = $user->id;
@@ -237,13 +273,11 @@ class ApptSettingController extends Controller {
         }
         if ($request->status == '1') {
             \Session::flash('flash_message', 'Appointment updated successfully.');
-            return redirect()->action('AppointmentController@listappointment');
-        
+            return redirect()->action('AppointmentController@listappointment');        
         }else{
             \Session::flash('flash_message', 'Appointment updated successfully.');
             return redirect()->back();
-        }
-        
+        }       
     }
     
     /**
