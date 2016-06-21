@@ -145,7 +145,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'doctor.getSchedule',
             'middleware' => ['acl:appointment_write']
     ]);		
-    
+    Route::post('/appointment/savePatientMedicalRecord/{id}', [
+            'uses' => 'AppointmentController@savePatientMedicalRecord',
+            'as' => 'appointment.savePatientMedicalRecord',
+            //'middleware' => ['acl:appointment_write']
+    ]);	
     
     // route for ACL
     Route::get('/acl/listRole', [

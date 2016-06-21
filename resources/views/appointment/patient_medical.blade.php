@@ -180,9 +180,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {{ Form::label('w3-zip', 'Zip Code', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    {{ Form::label('w3-zip', 'Zip Code', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('zip', $patient['patientDetail']->zipCode, ['class' => 'form-control input required', 'id' => 'zipCode', 'placeholder' => 'Zip Code', 'maxlength' => '15', 'minlength' => '6']) }}
+                                        {{ Form::text('zipCode', $patient['patientDetail']->zipCode, ['class' => 'form-control input', 'id' => 'zipCode', 'placeholder' => 'Zip Code', 'maxlength' => '15', 'minlength' => '6']) }}
                                     </div>
                                 </div>
                             </div>
@@ -190,9 +190,9 @@
                         <div class="row customFormRow">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {{ Form::label('w3-homePhone', 'Home Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    {{ Form::label('w3-homePhone', 'Home Phone', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('phone', $patient['patientDetail']->phone, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                        {{ Form::text('phone', $patient['patientDetail']->phone, ['class' => 'form-control', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-work', 'Work', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('work', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
+                                        {{ Form::text('employer', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-physician_phone', 'Physician Phone', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm', 'id' => 'phone', 'placeholder' => 'Physician Phone']) }}
+                                        {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm phone', 'placeholder' => 'Physician Phone']) }}
                                     </div>
                                 </div>
                             </div>

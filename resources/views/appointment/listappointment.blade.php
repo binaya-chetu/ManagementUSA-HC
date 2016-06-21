@@ -102,6 +102,7 @@
 <!-- Modal Form -->
 <div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
             @include('appointment.edit_appointment')   
+            @include('appointment.followup_popup') 
 </div>
 
 <div id="modal-add-view-appointment" class="modal-block modal-block-primary mfp-hide">  

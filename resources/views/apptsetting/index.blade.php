@@ -182,7 +182,7 @@
                             {{ Form::label('email_invitation', 'Allow to send invitation', ['class' => 'col-sm-3 control-label']) }}
                             <div class="col-md-6">
                                 <div class="input-group">                                   
-                                    {{ Form::checkbox('email_invitation', null, false, ['class' => 'form-control']) }}                                
+                                    {{ Form::checkbox('email_invitation', null, false, ['class' => '']) }}                                
                                 </div>
                             </div>                            
                         </div>

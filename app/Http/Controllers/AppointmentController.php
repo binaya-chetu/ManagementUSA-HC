@@ -410,6 +410,15 @@ class AppointmentController extends Controller {
         }
     }
     
-    
+    /**
+     * Save the patient medical form for different diseases
+     * 
+     * @param $id
+     *
+     * @return \resource\view\appointment\patient_medical
+     */
+    public function savePatientMedicalRecord($id, Request $response) {
+        echo '<pre>'; print_r($response->all());die;
+    }
     
 }
