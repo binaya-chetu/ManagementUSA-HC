@@ -51,7 +51,7 @@
                     <tr class="gradeX">
                         <td>{{ ++$i }}</td>
                         <td><a class="defaultColor" href="/patient/view/{{ base64_encode($follow->appointment->patient->id) }}">{{ $follow->appointment->patient->first_name }} {{ $follow->appointment->patient->last_name }}</a></td>
-                        <td>{{ date('d F Y H:ia', strtotime($follow->appointment->apptTime)) }}</td>  
+                        <td>{{ date('d F Y H:ia', strtotime($follow->appointment->apptTime)) }}</td>
                         <td>{{ $follow->action }}</td>  
                         <td>{{ date('d F Y H:ia', strtotime($follow->created_at)) }}</td>  
                         <td>@if($follow->status === 1)
@@ -64,8 +64,7 @@
                             <a href="/appointment/viewFollowup/{{ base64_encode($follow->id) }}" class="on-default" title="View"><i class="fa fa-eye"></i></a> 
                         </td>
                     </tr>
-                    @endforeach 
-
+                    @endforeach
                 </tbody>
             </table>
         </div>

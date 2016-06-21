@@ -135,12 +135,11 @@
                                 </a>
                             </li>
                             @endif
-                            <!--<li class="nav-parent">
-                                <a>
-                                    Follow-up Sale
+                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/upcomingappointments') }}">
+                                    Upcoming Appointments
                                 </a>
-
-                            </li>-->
+                            </li>
                         </ul>
                     </li>
                     <?php } ?>
@@ -180,13 +179,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="{{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
-                        <a href="{{ url('categories/listCategories') }}">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Product Categories</span>
-                        </a>
-                    </li>                    
+                    </li>       
                     @endif
                      <li class="{{ Request::segment(2) === 'listCategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/listCategories') }}">
