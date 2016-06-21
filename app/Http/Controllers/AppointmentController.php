@@ -25,8 +25,10 @@ class AppointmentController extends Controller {
     public $success = true;
     public $error = false;
 
-    public function __construct() {
-        $this->middleware('auth');
+    public function __construct(Request $request) {
+		if($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash'){
+			$this->middleware('auth');
+		}
     }
 
     /**
@@ -383,11 +385,23 @@ class AppointmentController extends Controller {
      *
      * @return \resource\view\appointment\patient_medical
      */
-    public function patientMedical($id = null) {
+    public function patientMedical($id = null, $hash = null) {
         $id = base64_decode($id);
+		$hash = $hash;
         if (!($patient = User::with('patientDetail')->find($id))) {
-            App::abort(404, 'Page not found.');
+            App::abort(404, 'Patient with given id was not found.');
         }
+		
+		if($hash != null){
+			$patHash = $patient->toArray()['patient_detail']['hash'];
+			if($patHash != $hash){
+				App::abort(404, 'The url seeme to be expired or invalid.');
+			}else{
+				$hash = md5(uniqid($id, true));
+				
+				App\Patient::where('user_id', $id)->update(['hash' => $hash]);
+			}
+		}
         $states = State::lists('name', 'id')->toArray();
         return view('appointment.patient_medical', [
             'patient' => $patient,
