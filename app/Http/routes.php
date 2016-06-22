@@ -22,6 +22,9 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.index',
             //'middleware' => ['acl:appointment_read']
         ]);
+	Route::get('/common/messages', function(){
+		echo '<div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> Client Profile updated successfully.</em></div>';
+	});	
     Route::get('/apptsetting/marketingCall', [
             'uses' => 'ApptSettingController@marketingCall',
             'as' => 'apptsetting.marketingCall',

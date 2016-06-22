@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
+use App\AdamsQuestionaires;
 use App\User;
 use App\WebLead;
 use App\AppointmentRequest;
@@ -122,9 +123,10 @@ class ApptSettingController extends Controller {
 		$this->user = $user;
 		$url = 'appointment/patientMedical/'.base64_encode($user->id).'/hash/'.$user->hash;
 		$url = App::make('url')->to($url);
+
 		\Mail::send('emails.pateintprofileaccess', ['url' => $url], function($message)
 		{ 
-			$message->to($this->user->email, 'Azmens Clinic')->subject('Welcome!');
+			$message->to($this->user->email, 'Azmensclinic')->subject('Welcome!');
 		});		
 		return ['response' => true, 'msg' => $url];
 	}
@@ -203,7 +205,7 @@ class ApptSettingController extends Controller {
                     if (isset($request->dob)) {
                         $patient->dob = date('Y-m-d', strtotime($request->dob));
                     }
-					echo '<pre>'; print_r($user); die;
+
 					$patient->hash = $this->getPatientHash($patient->user_id);
 					$user->hash = $patient->hash;
 					
@@ -252,8 +254,11 @@ class ApptSettingController extends Controller {
 
 				$patient->hash = $this->getPatientHash($patient->user_id);
 				$user->hash = $patient->hash;
+				$patient->save();
 				
-                $patient->save();
+				$adamQ = new AdamsQuestionaires();
+				$adamQ->patient_id = $user->id;
+				$adamQ->save();
 				
 				if(!empty($request->email) && isset($request->email_invitation)){
 					$this->emailPatientEditForm($user);

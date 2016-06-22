@@ -15,7 +15,7 @@ class AddHashColumnToPatientDetailsTable extends Migration
 		Schema::table('patient_details', function ($table) {
 			$table->string('hash', 255);
 			$table->index('hash');
-		});		
+		});			
     }
 
     /**

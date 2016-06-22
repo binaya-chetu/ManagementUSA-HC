@@ -2,7 +2,6 @@
 
 @section('content')
 <section role="main" class="content-body">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <header class="page-header">
         <h2>Edit patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
         <div class="right-wrapper pull-right">
@@ -39,11 +38,11 @@
                             <a href="#w3-billing" data-toggle="tab"><span>2</span>Adam Questionaires</a>
                         </li>
                         <li>
-                            <a href="#w3-medical" data-toggle="tab"><span>3</span>Medical History</a>
+                            <a href="#w3-medical" data-toggle="tab"><span>3</span>Medical<br>History</a>
                         </li>
                     </ul>
                 </div>
-                {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->id], 'id' => 'patientMedical', 'files' => true, 'class'=>'form-horizontal']) !!}
+                {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->base64Id], 'id' => 'patientMedical', 'files' => true, 'class'=>'form-horizontal']) !!}
                 {!! csrf_field() !!}
                 <div class="tab-content">
                     <div id="w3-account" class="tab-pane active">
@@ -52,6 +51,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
                                     <div class="col-sm-8">
+										{{ Form::hidden('hash', $hash) }}
                                         {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
                                     </div>
                                 </div>
@@ -287,55 +287,57 @@
                         </div>
                     </div>
                     <div id="w3-billing" class="tab-pane">
-                        <div class="col-sm-12 questionRadio">                           
-                            <div class="form-group">
+                        <div class="col-sm-12 questionRadio"> 
+                            <div class="form-group">							
                                 {{ Form::label('libido_rate', 'How would you rate your libido (sex drive)?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', '1', false, ['id' => 'libido_rate1']) }}
+                                        {{ Form::radio('libido_rate', $adamsQuestionaires->libido_rate == '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('libido_rate', '1', $adamsQuestionaires->libido_rate == 1, ['id' => 'libido_rate1']) }}
                                         {{ Form::label('libido_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', '2', false, ['id' => 'libido_rate2']) }}
+                                        {{ Form::radio('libido_rate', '2', $adamsQuestionaires->libido_rate == 2, ['id' => 'libido_rate2']) }}
                                         {{ Form::label('libido_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', '3', false, ['id' => 'libido_rate3']) }}
+                                        {{ Form::radio('libido_rate', '3', $adamsQuestionaires->libido_rate == 3, ['id' => 'libido_rate3']) }}
                                         {{ Form::label('libido_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', '4', false, ['id' => 'libido_rate4']) }}
+                                        {{ Form::radio('libido_rate', '4', $adamsQuestionaires->libido_rate == 4, ['id' => 'libido_rate4']) }}
                                         {{ Form::label('libido_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', '5', false, ['id' => 'libido_rate5']) }}
+                                        {{ Form::radio('libido_rate', '5', $adamsQuestionaires->libido_rate == 5, ['id' => 'libido_rate5']) }}
                                         {{ Form::label('libido_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
                             </div>                                                                                        
                         </div>  
-                        <div class="col-sm-12 questionRadio">                           
+                        <div class="col-sm-12 questionRadio">                          
                             <div class="form-group">
                                 {{ Form::label('energy_rate', 'How are you rate your energy level?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('energy_rate', '1', false, ['id' => 'energy_rate1']) }}
+										{{ Form::radio('energy_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('energy_rate', '1', $adamsQuestionaires->energy_rate == 1, ['id' => 'energy_rate1']) }}
                                         {{ Form::label('energy_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('energy_rate', '2', false, ['id' => 'energy_rate2']) }}
+                                        {{ Form::radio('energy_rate', '2', $adamsQuestionaires->energy_rate == 2, ['id' => 'energy_rate2']) }}
                                         {{ Form::label('energy_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('energy_rate', '3', false, ['id' => 'energy_rate3']) }}
+                                        {{ Form::radio('energy_rate', '3', $adamsQuestionaires->energy_rate == 3, ['id' => 'energy_rate3']) }}
                                         {{ Form::label('energy_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('energy_rate', '4', false, ['id' => 'energy_rate4']) }}
+                                        {{ Form::radio('energy_rate', '4', $adamsQuestionaires->energy_rate == 4, ['id' => 'energy_rate4']) }}
                                         {{ Form::label('energy_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('energy_rate', '5', false, ['id' => 'energy_rate5']) }}
+                                        {{ Form::radio('energy_rate', '5', $adamsQuestionaires->energy_rate == 5, ['id' => 'energy_rate5']) }}
                                         {{ Form::label('energy_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -346,23 +348,24 @@
                                 {{ Form::label('strength_rate', 'How are you rate your strength/endurance?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('strength_rate', '1', false, ['id' => 'strength_rate1']) }}
+										{{ Form::radio('strength_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('strength_rate', '1', $adamsQuestionaires->strength_rate == 1, ['id' => 'strength_rate1']) }}
                                         {{ Form::label('strength_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('strength_rate', '2', false, ['id' => 'strength_rate2']) }}
+                                        {{ Form::radio('strength_rate', '2', $adamsQuestionaires->strength_rate == 2, ['id' => 'strength_rate2']) }}
                                         {{ Form::label('strength_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('strength_rate', '3', false, ['id' => 'strength_rate3']) }}
+                                        {{ Form::radio('strength_rate', '3', $adamsQuestionaires->strength_rate == 3, ['id' => 'strength_rate3']) }}
                                         {{ Form::label('strength_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('strength_rate', '4', false, ['id' => 'strength_rate4']) }}
+                                        {{ Form::radio('strength_rate', '4', $adamsQuestionaires->strength_rate == 4, ['id' => 'strength_rate4']) }}
                                         {{ Form::label('strength_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('strength_rate', '5', false, ['id' => 'strength_rate5']) }}
+                                        {{ Form::radio('strength_rate', '5', $adamsQuestionaires->strength_rate == 5, ['id' => 'strength_rate5']) }}
                                         {{ Form::label('strength_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -373,23 +376,24 @@
                                 {{ Form::label('enjoy_rate', 'How are you rate your enjoyment of life?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('enjoy_rate', '1', false, ['id' => 'enjoy_rate1']) }}
+										{{ Form::radio('enjoy_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('enjoy_rate', '1', $adamsQuestionaires->enjoy_rate == 1, ['id' => 'enjoy_rate1']) }}
                                         {{ Form::label('enjoy_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('enjoy_rate', '2', false, ['id' => 'enjoy_rate2']) }}
+                                        {{ Form::radio('enjoy_rate', '2', $adamsQuestionaires->enjoy_rate == 2, ['id' => 'enjoy_rate2']) }}
                                         {{ Form::label('enjoy_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('enjoy_rate', '3', false, ['id' => 'enjoy_rate3']) }}
+                                        {{ Form::radio('enjoy_rate', '3', $adamsQuestionaires->enjoy_rate == 3, ['id' => 'enjoy_rate3']) }}
                                         {{ Form::label('enjoy_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('enjoy_rate', '4', false, ['id' => 'enjoy_rate4']) }}
+                                        {{ Form::radio('enjoy_rate', '4', $adamsQuestionaires->enjoy_rate == 4, ['id' => 'enjoy_rate4']) }}
                                         {{ Form::label('enjoy_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('enjoy_rate', '5', false, ['id' => 'enjoy_rate5']) }}
+                                        {{ Form::radio('enjoy_rate', '5', $adamsQuestionaires->enjoy_rate == 5, ['id' => 'enjoy_rate5']) }}
                                         {{ Form::label('enjoy_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -400,23 +404,24 @@
                                 {{ Form::label('happiness_rate', 'How are you at your happiness level?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('happiness_rate', '1', false, ['id' => 'happiness_rate1']) }}
+										{{ Form::radio('happiness_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('happiness_rate', '1', $adamsQuestionaires->happiness_rate == 1, ['id' => 'happiness_rate1']) }}
                                         {{ Form::label('happiness_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('happiness_rate', '2', false, ['id' => 'happiness_rate2']) }}
+                                        {{ Form::radio('happiness_rate', '2', $adamsQuestionaires->happiness_rate == 2, ['id' => 'happiness_rate2']) }}
                                         {{ Form::label('happiness_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('happiness_rate', '3', false, ['id' => 'happiness_rate3']) }}
+                                        {{ Form::radio('happiness_rate', '3', $adamsQuestionaires->happiness_rate == 3, ['id' => 'happiness_rate3']) }}
                                         {{ Form::label('happiness_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('happiness_rate', '4', false, ['id' => 'happiness_rate4']) }}
+                                        {{ Form::radio('happiness_rate', '4', $adamsQuestionaires->happiness_rate == 4, ['id' => 'happiness_rate4']) }}
                                         {{ Form::label('happiness_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('happiness_rate', '5', false, ['id' => 'happiness_rate5']) }}
+                                        {{ Form::radio('happiness_rate', '5', $adamsQuestionaires->happiness_rate == 5, ['id' => 'happiness_rate5']) }}
                                         {{ Form::label('happiness_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -427,23 +432,24 @@
                                 {{ Form::label('erection_rate', 'How strong are your erections?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('erection_rate', '1', false, ['id' => 'erection_rate1']) }}
+										{{ Form::radio('erection_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('erection_rate', '1', $adamsQuestionaires->erection_rate == 1, ['id' => 'erection_rate1']) }}
                                         {{ Form::label('erection_rate1', 'Poor') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('erection_rate', '2', false, ['id' => 'erection_rate2']) }}
+                                        {{ Form::radio('erection_rate', '2', $adamsQuestionaires->erection_rate == 2, ['id' => 'erection_rate2']) }}
                                         {{ Form::label('erection_rate2', 'Weak') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('erection_rate', '3', false, ['id' => 'erection_rate3']) }}
+                                        {{ Form::radio('erection_rate', '3', $adamsQuestionaires->erection_rate == 3, ['id' => 'erection_rate3']) }}
                                         {{ Form::label('erection_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('erection_rate', '4', false, ['id' => 'erection_rate4']) }}
+                                        {{ Form::radio('erection_rate', '4', $adamsQuestionaires->erection_rate == 4, ['id' => 'erection_rate4']) }}
                                         {{ Form::label('erection_rate4', 'Strong') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('erection_rate', '5', false, ['id' => 'erection_rate5']) }}
+                                        {{ Form::radio('erection_rate', '5', $adamsQuestionaires->erection_rate == 5, ['id' => 'erection_rate5']) }}
                                         {{ Form::label('erection_rate5', 'Very Strong') }}                                                            
                                     </div>
                                 </div>
@@ -454,23 +460,24 @@
                                 {{ Form::label('performance_rate', 'How are you at your work performance over the last four weeks?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('performance_rate', '1', false, ['id' => 'performance_rate1']) }}
+										{{ Form::radio('performance_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('performance_rate', '1', $adamsQuestionaires->performance_rate == 1, ['id' => 'performance_rate1']) }}
                                         {{ Form::label('performance_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('performance_rate', '2', false, ['id' => 'performance_rate2']) }}
+                                        {{ Form::radio('performance_rate', '2', $adamsQuestionaires->performance_rate == 2, ['id' => 'performance_rate2']) }}
                                         {{ Form::label('performance_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('performance_rate', '3', false, ['id' => 'performance_rate3']) }}
+                                        {{ Form::radio('performance_rate', '3', $adamsQuestionaires->performance_rate == 3, ['id' => 'performance_rate3']) }}
                                         {{ Form::label('performance_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('performance_rate', '4', false, ['id' => 'performance_rate4']) }}
+                                        {{ Form::radio('performance_rate', '4', $adamsQuestionaires->performance_rate == 4, ['id' => 'performance_rate4']) }}
                                         {{ Form::label('performance_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('performance_rate', '5', false, ['id' => 'performance_rate5']) }}
+                                        {{ Form::radio('performance_rate', '5', $adamsQuestionaires->performance_rate == 5, ['id' => 'performance_rate5']) }}
                                         {{ Form::label('performance_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -481,23 +488,24 @@
                                 {{ Form::label('sleep_rate', 'How often do you fall asleep after dinner?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sleep_rate', '1', false, ['id' => 'sleep_rate1']) }}
+										{{ Form::radio('sleep_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('sleep_rate', '1', $adamsQuestionaires->sleep_rate == 1, ['id' => 'sleep_rate1']) }}
                                         {{ Form::label('sleep_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sleep_rate', '2', false, ['id' => 'sleep_rate2']) }}
+                                        {{ Form::radio('sleep_rate', '2', $adamsQuestionaires->sleep_rate == 2, ['id' => 'sleep_rate2']) }}
                                         {{ Form::label('sleep_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sleep_rate', '3', false, ['id' => 'sleep_rate3']) }}
+                                        {{ Form::radio('sleep_rate', '3', $adamsQuestionaires->sleep_rate == 3, ['id' => 'sleep_rate3']) }}
                                         {{ Form::label('sleep_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sleep_rate', '4', false, ['id' => 'sleep_rate']) }}
+                                        {{ Form::radio('sleep_rate', '4', $adamsQuestionaires->sleep_rate == 4, ['id' => 'sleep_rate']) }}
                                         {{ Form::label('sleep_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sleep_rate', '5', false, ['id' => 'sleep_rate5']) }}
+                                        {{ Form::radio('sleep_rate', '5', $adamsQuestionaires->sleep_rate == 5, ['id' => 'sleep_rate5']) }}
                                         {{ Form::label('sleep_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -508,23 +516,24 @@
                                 {{ Form::label('sport_rate', 'How would you rate your sports ability over the past four weeks?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sport_rate', '1', false, ['id' => 'sport_rate1']) }}
+										{{ Form::radio('sport_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('sport_rate', '1', $adamsQuestionaires->sport_rate == 1, ['id' => 'sport_rate1']) }}
                                         {{ Form::label('sport_rate1', 'Terrible') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sport_rate', '2', false, ['id' => 'sport_rate2']) }}
+                                        {{ Form::radio('sport_rate', '2', $adamsQuestionaires->sport_rate == 2, ['id' => 'sport_rate2']) }}
                                         {{ Form::label('sport_rate2', 'Poor') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sport_rate', '3', false, ['id' => 'sport_rate3']) }}
+                                        {{ Form::radio('sport_rate', '3', $adamsQuestionaires->sport_rate == 3, ['id' => 'sport_rate3']) }}
                                         {{ Form::label('sport_rate3', 'Average') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sport_rate', '4', false, ['id' => 'sport_rate4']) }}
+                                        {{ Form::radio('sport_rate', '4', $adamsQuestionaires->sport_rate == 4, ['id' => 'sport_rate4']) }}
                                         {{ Form::label('sport_rate4', 'Good') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('sport_rate', '5', false, ['id' => 'sport_rate5']) }}
+                                        {{ Form::radio('sport_rate', '5', $adamsQuestionaires->sport_rate == 5, ['id' => 'sport_rate5']) }}
                                         {{ Form::label('sport_rate5', 'Exellent') }}                                                            
                                     </div>
                                 </div>
@@ -535,11 +544,12 @@
                                 {{ Form::label('lost_height_rate', 'How much height have you lost?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('lost_height_rate', '1', false, ['id' => 'lost_height_rate1']) }}
+										{{ Form::radio('lost_height_rate', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('lost_height_rate', '1', $adamsQuestionaires->lost_height_rate == 1, ['id' => 'lost_height_rate1']) }}
                                         {{ Form::label('lost_height_rate1', '2" or More') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('lost_height_rate', '2', false, ['id' => 'lost_height_rate2']) }}
+                                        {{ Form::radio('lost_height_rate', '2', $adamsQuestionaires->lost_height_rate == 2, ['id' => 'lost_height_rate2']) }}
                                         {{ Form::label('lost_height_rate2', '1.5 - 1.9"') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
@@ -547,11 +557,11 @@
                                         {{ Form::label('lost_height_rate3', '1 - 1.4"') }}                                                            
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('lost_height_rate', '4', false, ['id' => 'lost_height_rate4']) }}
+                                        {{ Form::radio('lost_height_rate', '4', $adamsQuestionaires->lost_height_rate == 3, ['id' => 'lost_height_rate4']) }}
                                         {{ Form::label('lost_height_rate4', '.5 - .9"') }}
                                     </div>
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('lost_height_rate', '5', false, ['id' => 'lost_height_rate5']) }}
+                                        {{ Form::radio('lost_height_rate', '5', $adamsQuestionaires->lost_height_rate == 4, ['id' => 'lost_height_rate5']) }}
                                         {{ Form::label('lost_height_rate5', '0 - .4"') }}                                                            
                                     </div>
                                 </div>
