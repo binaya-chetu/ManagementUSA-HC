@@ -389,12 +389,6 @@ class AppointmentController extends Controller {
     public function patientMedical($id = null, $hash = null) {
         $id = base64_decode($id);
 		$hash = $hash;
-
-/*  		$patient = DB::table('users')
-						->select('*')
-						->join('patient_details', 'users.id', '=', 'patient_details.user_id')
-						->join('adams_questionaires', 'users.id', '=', 'adams_questionaires.patient_id')
-						->get(); */
 						
 		$patient = User::with('patientDetail')->find($id);
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
@@ -516,9 +510,6 @@ class AppointmentController extends Controller {
 		} elseif(!empty($formData['hash']) && $formData['hash'] == $patientHash){
 			$hash = md5(uniqid($id, true));
 			App\Patient::where('user_id', $id)->update(['hash' => $hash]);
-/* 			return view('common.message', [
-				'response' => 'success', 'messages' => ['Profile saved successfully']
-			]); */
 			return redirect('/common/messages');
 		} else{
 			App::abort(404, '');
