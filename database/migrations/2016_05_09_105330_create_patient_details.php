@@ -15,6 +15,7 @@ class CreatePatientDetails extends Migration
         Schema::create('patient_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unique();
+            $table->integer('disease_id');
             $table->date('dob')->nullable();
             $table->enum('gender', ['Male', 'Female'])->default('Male');
             $table->string('marital_status', 15);

@@ -392,7 +392,7 @@ class AppointmentController extends Controller {
 						
 		$patient = User::with('patientDetail')->find($id);
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
-        if (!$patient || !$adamsQ)
+        if (!$patient)
 		{
             App::abort(404, 'Patient with given id was not found.');
         }

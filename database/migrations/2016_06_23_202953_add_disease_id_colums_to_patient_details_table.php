@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReasonCodes extends Migration
+class AddDiseaseIdColumsToPatientDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class ReasonCodes extends Migration
      */
     public function up()
     {
-        Schema::create('reason_codes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('reason');
-            $table->integer('type')->comment('1=>Set, 1=> No Set');
-            $table->integer('status');
-            $table->timestamps();
+        Schema::table('patient_details', function (Blueprint $table) {
+             $table->integer('disease_id')->nullable()->after('user_id');
         });
     }
 
@@ -28,6 +24,8 @@ class ReasonCodes extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('patient_details', function (Blueprint $table) {
+            //
+        });
     }
 }
