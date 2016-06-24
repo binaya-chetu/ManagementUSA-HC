@@ -45,7 +45,7 @@ class ApptSettingController extends Controller {
      */
 
     public function index($value = null) {
-        $patients = AppointmentRequest::groupBy('email')->get(['id', 'first_name', 'last_name', 'email']);
+        $patients = AppointmentRequest::groupBy('first_name')->get(['id', 'first_name', 'last_name', 'email']);
         $resources = AppointmentSource::lists('name', 'id');
         $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
         $diseases = Disease::lists('title', 'id')->toArray();
@@ -142,6 +142,7 @@ class ApptSettingController extends Controller {
      */
 
     public function saveApptFollowup(Request $request) {
+       
         $apptRequest = new AppointmentRequest;
         $apptRequest->appt_source = $request->appt_source;
         $apptRequest->comment = $request->comment;
@@ -171,7 +172,7 @@ class ApptSettingController extends Controller {
             }
         }
         // Case of selecting patient from drop down 
-        if (!empty($request->patient_id)) {
+        if (!empty($request->patient_id)) {            
             $requestPatient = AppointmentRequest::find($request->patient_id);
             
             $apptRequest->first_name = $requestPatient->first_name;
@@ -231,7 +232,8 @@ class ApptSettingController extends Controller {
                 $appointment->save();
             }
         } else {
-            
+            echo 'check';
+             
             $apptRequest->first_name = $request->first_name;
             $apptRequest->last_name = $request->last_name;
             $apptRequest->email = $request->email;
@@ -240,16 +242,20 @@ class ApptSettingController extends Controller {
                 $apptRequest->dob = date('Y-m-d', strtotime($request->dob));
             }
            
-            $apptRequest->save();
+            //$apptRequest->save();
             // Case for Set condtions to save the data in user, patient_detail, Appointment models
             if ($request->status == '1') {
                 /* save the data in user, patient_detail, appointment with Set status */
+                if(!empty($request->email)){
+                    $exist_user = User::where('email', $_GET['email'])->where('role', '!=', 6)->count();
+                }
                 $user = new User;
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
                 $user->role = $this->patient_role;
                 $user->save();
+                echo '<pre>'; print_r($request->all());die;
                 $patient = new Patient;
                 $patient->user_id = $user->id;
                 $patient->phone = $request->phone;
