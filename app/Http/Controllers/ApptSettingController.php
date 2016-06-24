@@ -256,9 +256,9 @@ class ApptSettingController extends Controller {
 				$user->hash = $patient->hash;
 				$patient->save();
 				
-				$adamQ = new AdamsQuestionaires();
+				/* $adamQ = new AdamsQuestionaires();
 				$adamQ->patient_id = $user->id;
-				$adamQ->save();
+				$adamQ->save(); */
 				
 				if(!empty($request->email) && isset($request->email_invitation)){
 					$this->emailPatientEditForm($user);

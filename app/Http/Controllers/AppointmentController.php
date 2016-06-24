@@ -392,7 +392,8 @@ class AppointmentController extends Controller {
 						
 		$patient = User::with('patientDetail')->find($id);
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
-        if (!$patient || !$adamsQ)
+		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
+        if (!$patient)
 		{
             App::abort(404, 'Patient with given id was not found.');
         }
@@ -408,6 +409,7 @@ class AppointmentController extends Controller {
         return view('appointment.patient_medical', [
             'patient' => $patient,
 			'adamsQuestionaires' => $adamsQ,
+			'medHistories' => $medHistories,
             'states' => $states,
 			'hash' => $hash
         ]);
@@ -502,7 +504,55 @@ class AppointmentController extends Controller {
 		$adamsQ->sport_rate			= $formData['sport_rate'];
 		$adamsQ->lost_height_rate	= $formData['lost_height_rate'];
 		$adamsQ->save();
+		
+		$medHistory = App\MedicalHistories::firstOrCreate(['patient_id' => $id]);	
+		$medHistory->cardiovascular			= $formData['cardiovascular'];
+		$medHistory->hypertension			= $formData['hypertension'];
+		$medHistory->enocrine_disorder		= $formData['enocrine_disorder'];
+		$medHistory->prostate				= $formData['prostate'];
+		$medHistory->lipid					= $formData['lipid'];
+		$medHistory->cancer_form			= $formData['cancer_form'];
+		$medHistory->smoke_status			= $formData['smoke_status'];
+		$medHistory->smoke_often			= $formData['smoke_often'];
+		$medHistory->smoke_quantity			= $formData['smoke_quantity'];
+		$medHistory->drink_status			= $formData['drink_status'];
+		$medHistory->drink_often			= $formData['drink_often'];
+		$medHistory->drink_quantity			= $formData['drink_quantity'];
+		$medHistory->activity_level			= $formData['activity_level'];
+		$medHistory->exercise_status		= $formData['exercise_status'];
+		$medHistory->exercise_often			= $formData['exercise_often'];
+		$medHistory->deficiency_status		= $formData['deficiency_status'];
+		$medHistory->chemical_dependency	= $formData['chemical_dependency'];
+		$medHistory->blood_disorder			= $formData['blood_disorder'];
+		$medHistory->orthopedic_disorder	= $formData['orthopedic_disorder'];
+		$medHistory->known_deficiency		= $formData['known_deficiency'];
+		$medHistory->carpal_syndrome		= $formData['carpal_syndrome'];
+		$medHistory->immune_disorder		= $formData['immune_disorder'];
+		$medHistory->heart_disease			= $formData['heart_disease'];
+		$medHistory->lung_disorder			= $formData['lung_disorder'];
+		$medHistory->cancer_status			= $formData['cancer_status'];
+		$medHistory->surgeries				= $formData['surgeries'];
+		$medHistory->renal					= $formData['renal'];
+		$medHistory->upper					= $formData['upper'];
+		$medHistory->allergies				= $formData['allergies'];
+		$medHistory->genital				= $formData['genital'];
+		$medHistory->retention				= $formData['retention'];
+		$medHistory->endocrine				= $formData['endocrine'];
+		$medHistory->hyperlipidema			= $formData['hyperlipidema'];
+		$medHistory->healing				= $formData['healing'];
+		$medHistory->neurological			= $formData['neurological'];
+		$medHistory->emotional				= $formData['emotional'];
+		$medHistory->hypertention_hbp		= $formData['hypertention_hbp'];
+		$medHistory->other_illness			= $formData['other_illness'];
+		$medHistory->arthritis				= $formData['arthritis'];
+		$medHistory->recreational_drug		= $formData['recreational_drug'];
+		$medHistory->blood_test				= $formData['blood_test'];
+		$medHistory->health_insurance		= $formData['health_insurance'];
+		$medHistory->kind_of_hi				= $formData['kind_of_hi'];
+		$medHistory->medication				= $formData['medication'];
+		$medHistory->save();
 
+		
 		$patientHash = DB::table('patient_details')->where('user_id', $id)->pluck('hash')[0];
         \Session::flash('flash_message', 'Patient details saved successfully');		
 		if(Auth::check()){
