@@ -9,6 +9,7 @@ use App\Doctor;
 use App\User;
 use App\Followup;
 use App\State;
+use App\FollowupStatus;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -174,9 +175,10 @@ class AppointmentController extends Controller {
         $appointments = Appointment::with('patient')->orderBy('id', 'desc')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
+        $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
 
         return view('appointment.listappointment', [
-            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
     }
 
