@@ -29,7 +29,7 @@ class CreatePatientDetails extends Migration
             $table->integer('state');
             $table->string('zipCode',11);       
             $table->string('height',15);
-            $table->string('width',15);
+            $table->string('weight',15);
             $table->string('employment_place');
             $table->string('primary_physician');
             $table->string('physician_phone');
@@ -39,6 +39,7 @@ class CreatePatientDetails extends Migration
             $table->string('payment_bill')->nullable();
             $table->string('hash');
             $table->boolean('never_treat_status')->default(0);
+            $table->boolean('form_status')->default(0);
             $table->timestamps();
         }); 
     }
