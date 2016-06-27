@@ -57,6 +57,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.findAppointmentDetail',
             //'middleware' => ['acl:appointment_write']
         ]);
+    Route::get('/apptsetting/requestFollowUp', [
+            'uses' => 'ApptSettingController@requestFollowUp',
+            'as' => 'apptsetting.requestFollowUp',
+            //'middleware' => ['acl:appointment_read']
+        ]);
+        
+    Route::post('/apptsetting/saveRequestFollowUp', [
+            'uses' => 'ApptSettingController@saveRequestFollowUp',
+            'as' => 'apptsetting.saveRequestFollowUp',
+            //'middleware' => ['acl:appointment_read']
+        ]);
    
     
     
@@ -391,6 +402,12 @@ Route::group(['middleware' => 'web'], function () {
 			//'middleware' => ['acl:save_products']	
 	]);	
 	
+        Route::get('/products/generateInvoice', [
+            'uses' => 'ProductsController@generateInvoice',
+            'as' => 'products.generateInvoice',
+             //'middleware' => ['acl:save_products']	
+	]);	
+	
 	Route::get('/categories/addcategories', [
             'uses' => 'CategoriesController@addcategories',
             'as' => 'categories.addcategories',
@@ -401,10 +418,7 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'CategoriesController@saveCategories',
             'as' => 'categories.savecategories',
 			//'middleware' => ['acl:save_categories']	
-	]);	
-          Route::get('/apptsetting/requestFollowUp', [
-            'uses' => 'ApptSettingController@requestFollowUp',
-            'as' => 'apptsetting.requestFollowUp',
-            //'middleware' => ['acl:appointment_read']
-        ]);
+	]);
+        
+        
 });

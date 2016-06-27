@@ -1,3 +1,4 @@
+
 @extends('layouts.common')
 
 @section('content')
@@ -5,7 +6,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Request Follow-Ups</h2>
-
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -43,6 +43,7 @@
                         <th>Name</th>
                         <th>email</th>
                         <th>Phone</th>
+                        <th>Lead Source</th>
                         <th>Location</th>
                         <th>Actions</th>
                     </tr>
@@ -52,15 +53,15 @@
                     @foreach ($requestFollowups as $requestFollowup)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
-                        <td class="table-text"><div>{{ $requestFollowup->first_name }}{{ $requestFollowup->last_name }}</div></td>
+                        <td class="table-text"><div>{{ $requestFollowup->first_name }}  {{ $requestFollowup->last_name }}</div></td>
                         <td class="table-text"><div>{{ $requestFollowup->email }}</div></td>
-                         <td class="table-text"><div>{{ $requestFollowup->phone }}</div></td>
-                          <td class="table-text"><div>{{ $requestFollowup->location }}</div></td>
-                        <td class="actions">
-                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                            <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $requestFollowup->id }}"><i class="fa fa-pencil"></i></a>
+                        <td class="table-text"><div>{{ $requestFollowup->phone }}</div></td>
+                        <td class="table-text"><div>{{ $resources[$requestFollowup->appt_source] }}</div></td>
+                        <td class="table-text"><div>{{ $requestFollowup->location }}</div></td>
+                        <td class="actions" style = "text-align:center">
+                            <a href="javascript:void(0)" class="on-default request-follow-up"  rel="{{ $requestFollowup->id }}"><i class="fa fa-pencil"></i></a>
                         </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>
@@ -68,12 +69,75 @@
         </div>
     </section>
 </section>
-<!-- Modal Form -->
-<div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
-        
+<div id="modalCall" class="modal-block modal-block-primary mfp-hide">    
+    <section class="panel panel-primary">
+        <header class="panel-heading">
+            <h2 class="panel-title">Request Followup</h2>
+        </header>
+        {{ Form::open(array('url' => '/apptsetting/saveRequestFollowUp', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
+        <div class="panel-body">
+            
+                    <div class="form-group">
+                        {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label')) }}
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                {{ Form::text('created_date', date('m-d-Y'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker']) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                {{ Form::text('created_time', date('H:i:s'), ['class' => 'form-control required', 'data-plugin-timepicker']) }}
+                            </div>
+                        </div>
+                   
+                        {{ Form::hidden('createdBy', Auth::user()->id) }}
+                        {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
+                        {{ Form::hidden('request_id', null, ['id' => 'request_id']) }}  
+                           
+                    </div>
+            
+                    
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    {{ Form::button( 'Set Appointment', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type' => 'submit')) }}
+                </div>
+            </div>
+        </footer>
+        {{ Form::close() }}
+    </section>
+    
 </div>
+<script>
+ $(document).on("click", ".request-follow-up", function(ev) {
+        $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        $.magnificPopup.open({
+        items: {
+        src: '#modalCall',
+        type: 'inline'
+        }
+        });
+        });
+  $('.request-follow-up').on('click', function() {
+        $('#request_id').val($(this).attr('rel'));
+    });
+    
+</script>
 
-<div id="modal-add-view-appointment" class="modal-block modal-block-primary mfp-hide">  
-        
-</div>
 @endsection
+
+
+
+
+

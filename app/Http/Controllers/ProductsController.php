@@ -56,4 +56,8 @@ class ProductsController extends Controller
     public function addproducts(){
         return view('products.add_products');
 	}
+        
+        public function generateInvoice(){
+            return view('products.invoice');
+        }
 }

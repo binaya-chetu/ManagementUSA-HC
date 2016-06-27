@@ -1,11 +1,9 @@
 @extends('layouts.common')
-
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Web Leads</h2>
-
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -26,9 +24,7 @@
                 <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
-
             <h2 class="panel-title">Web Leads</h2>
-            
         </header>
         <div class="panel-body">
             <div class="row">
@@ -127,7 +123,6 @@
 </section>
 <!-- Modal Form -->
 <div id="modalCall" class="modal-block modal-block-primary mfp-hide">    
-      
     <section class="panel panel-primary">
         <header class="panel-heading">
             <h2 class="panel-title">Web Leads Followup</h2>
