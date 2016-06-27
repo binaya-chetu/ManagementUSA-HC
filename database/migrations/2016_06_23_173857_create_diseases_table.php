@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReasonCodes extends Migration
+class CreateDiseasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class ReasonCodes extends Migration
      */
     public function up()
     {
-        Schema::create('reason_codes', function (Blueprint $table) {
+        Schema::create('diseases', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reason');
-            $table->integer('type')->comment('1=>Set, 1=> No Set');
-            $table->integer('status');
+            $table->string('title');  
+            $table->text('description');   
             $table->timestamps();
         });
     }
