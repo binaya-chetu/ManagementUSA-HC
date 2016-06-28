@@ -356,7 +356,7 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'categories.addNewCategory',
             //'middleware' => ['acl:user_write']
         ]);
-<<<<<<< HEAD
+
 
 	Route::get('/clientapi', [
             'uses' => 'ClientapiController@getApiResponse',
