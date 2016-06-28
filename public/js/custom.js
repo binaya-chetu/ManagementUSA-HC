@@ -535,3 +535,28 @@ $('#patient_id').on('change', function(){
               }
           }
     });
+ 
+ $(document).on("click", ".patient_status", function(ev) {
+            $.magnificPopup.open({
+            items: {
+            src: '#modal-add-view-appointment',
+                    type: 'inline'
+                    }
+            });
+        });
+$(document).on("click", ".patient_status", function(event) {
+        event.preventDefault();
+        
+        var appointmentId = $('#appointment_id').val();       
+        $('#followup_appointment_id').val(appointmentId);
+        // If popup close first time & open another time then unset the previous option for followup
+        $('input:radio[name="action"]').removeAttr('checked');
+        $('#showOnSchedule').hide();
+        $.magnificPopup.close();
+        $.magnificPopup.open({
+            items: {
+                src: '#modal-followup-status',
+                type: 'inline'
+            }
+        });
+    });

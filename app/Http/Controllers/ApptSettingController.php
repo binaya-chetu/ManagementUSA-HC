@@ -207,7 +207,7 @@ class ApptSettingController extends Controller {
                     $patient = new Patient;
                     $patient->user_id = $user->id;
                     $patient->phone = $request->phone;
-                    $patient->disease_id = $request->disease_id;
+                   
                     if (isset($request->dob)) {
                         $patient->dob = date('Y-m-d', strtotime($request->dob));
                     }
@@ -228,7 +228,8 @@ class ApptSettingController extends Controller {
                 $appointment->createdBy = Auth::user()->id;
                 $appointment->appt_source = $request->appt_source;
                 $appointment->request_id = $apptRequest->id;
-                $appointment->comment = $request->comment;                
+                $appointment->comment = $request->comment;     
+                $appointment->disease_id = $request->disease_id;
                 $appointment->save();
             }
         } else {
@@ -262,7 +263,7 @@ class ApptSettingController extends Controller {
                 $patient = new Patient;
                 $patient->user_id = $user->id;
                 $patient->phone = $request->phone;
-                $patient->disease_id = $request->disease_id;
+                
                 if (!empty($request->dob)) {
                     $patient->dob = date('Y-m-d', strtotime($request->dob));
                 }
@@ -286,6 +287,7 @@ class ApptSettingController extends Controller {
                 $appointment->appt_source = $request->appt_source;
                 $appointment->request_id = $apptRequest->id;
                 $appointment->comment = $request->comment;
+                $appointment->disease_id = $request->disease_id;
                 $appointment->save();
             }
         }

@@ -43,9 +43,9 @@
                     <tr>
                         <th>Id</th>
                         <th>App Date and Time</th>
-                        <th>Patient</th>
-                        <th>Comment</th>
+                        <th>Patient</th>                        
                         <th>Source</th>
+                        <th>Patient status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -57,7 +57,7 @@
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-                        <td class="table-text"><div>{{ $appointment->comment }}</div></td>
+                        
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {
@@ -72,6 +72,7 @@
                                 }
                                 ?>
                             </div></td>
+                        <td class="table-text"><div>{{ $appointment->comment }}</div></td>
                         <td class="actions">                            
                             <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                             <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 

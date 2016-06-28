@@ -420,7 +420,7 @@ class AppointmentController extends Controller {
      */
     public function checkList(Request $request) {
         if (!empty($request['id'])) {
-            $id = $request['id'];
+            $id = $request['id'];            
             return view('appointment.medical.medicine_list', [
                 'id' => $id
             ]);
