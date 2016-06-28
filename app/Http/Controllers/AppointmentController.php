@@ -527,7 +527,7 @@ class AppointmentController extends Controller {
      * @return \resource\view\apptsetting\listappointment.blade.php
      */
     public function todayVisits() {
-        $appointments = Appointment::with('patient')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
+        $appointments = Appointment::with('patient', 'disease')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
         $patients = User::where('role', $this->patient_role)->get();
        // $doctors = User::where('role', $this->doctor_role)->get();
 
@@ -556,7 +556,7 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\today_visits.blade.php
      */
     public function labAppointments() {        
-        $appointments = Appointment::with('patient')->where('patient_status', '2')->get();
+        $appointments = Appointment::with('patient', 'disease')->where('patient_status', '2')->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_appointments', [

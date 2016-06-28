@@ -45,6 +45,7 @@
                         <th>App Date and Time</th>
                         <th>Patient</th>                        
                         <th>Source</th>
+                        <th>Reason of visit</th>
                         <th>Patient status</th>
                         <th>Actions</th>
                     </tr>
@@ -72,6 +73,7 @@
                                 }
                                 ?>
                             </div></td>
+                        <td class="table-text"><div>{{ $appointment->disease->title }}</div></td>
                         <td class="table-text"><div><?php
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
@@ -108,7 +110,7 @@
             <div class="form-group">
                 {{ Form::label('status', 'patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
-                    <?php $states = ['1' => 'Show', '2' => 'Send to Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
+                    <?php $states = [ '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}
