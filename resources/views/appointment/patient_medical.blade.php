@@ -42,6 +42,13 @@
                         </li>
                     </ul>
                 </div>
+				
+                @if(Session::has('flash_message'))
+					<div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
+                @elseif(Session::has('error_message'))
+					<div class="col-sm-12"><div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><em> {!! session('error_message') !!}</em></div></div>					
+				@endif
+				
                 {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->base64Id], 'id' => 'patientMedical', 'files' => true, 'class'=>'form-horizontal']) !!}
                 {!! csrf_field() !!}
                 <div class="tab-content">
@@ -89,35 +96,27 @@
                                     {{ Form::label('w3-gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <div class="radio">
-                                            <?php
-                                            if ($patient['patientDetail']->gender === 'Female') {
-                                                $female = true;
-                                                $male = false;
-                                            } else {
-                                                $male = true;
-                                                $female = false;
-                                            }
-                                            ?>
                                             <label>
-                                                {{ Form::radio('gender', 'Male', $male, ['id' => 'optionsRadios1']) }}
+                                                {{ Form::radio('gender', 'Male', $patient['patientDetail']->gender == 'Male', ['id' => 'optionsRadios1']) }}
                                                 Male
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                {{ Form::radio('gender', 'Female', $female, ['id' => 'optionsRadios2']) }}
+                                                {{ Form::radio('gender', 'Female', $patient['patientDetail']->gender == 'Female', ['id' => 'optionsRadios2']) }}
                                                 Female
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     {{ Form::label('w3-marital', 'Marital Status', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; ?>
-                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, null, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
+                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, $marital[$patient['patientDetail']->marital_status], ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +199,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-mobile', 'Mobile', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('mobile', null, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
+                                        {{ Form::text('mobile', $patient['patientDetail']->mobile, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +210,7 @@
                                     {{ Form::label('w3-call', 'Best Time To Call', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <?php $patientCallHour = callHourTime(); ?>
-                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, null, ['class' => 'form-control input', 'id' => 'bestTime']) }}
+                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, $patient['patientDetail']->call_time, ['class' => 'form-control input', 'id' => 'bestTime']) }}
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +228,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-work', 'Work', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('employer', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
+                                        {{ Form::text('employer', $patient['patientDetail']->employer, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +236,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-employment', 'Place of Employment', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('employment_place', null, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
+                                        {{ Form::text('employment_place', $patient['patientDetail']->employment_place, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +246,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-occupation', 'Occupation', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('occupation', null, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
+                                        {{ Form::text('occupation', $patient['patientDetail']->occupation, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
                                     </div>
                                 </div>
                             </div>
@@ -258,11 +257,11 @@
                                 {{ Form::label('w3-height', 'Height & Weight', array('class' => 'col-sm-2 control-label')) }}
                                 <div class="col-sm-4">
                                     <?php $commonHeight = commonHeight(); ?>
-                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, null, ['class' => 'form-control input', 'id' => 'height']) }}
+                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, $patient['patientDetail']->height, ['class' => 'form-control input', 'id' => 'height']) }}
                                 </div>
                                 <div class="col-sm-4">
                                     <?php $commonWeight = commonWeight(); ?>
-                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, null, ['class' => 'form-control input', 'id' => 'weight']) }}
+                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, $patient['patientDetail']->weight, ['class' => 'form-control input', 'id' => 'weight']) }}
                                 </div>
                             </div>
                         </div>
@@ -272,7 +271,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-physician', 'Primary Physician', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('primary_physician', null, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
+                                        {{ Form::text('primary_physician', $patient['patientDetail']->primary_physician, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +279,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-physician_phone', 'Physician Phone', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm phone', 'placeholder' => 'Physician Phone']) }}
+                                        {{ Form::text('physician_phone', $patient['patientDetail']->physician_phone, ['class' => 'form-control input-sm phone', 'placeholder' => 'Physician Phone']) }}
                                     </div>
                                 </div>
                             </div>
@@ -1594,7 +1593,7 @@
      * Click on the Allergies then a pop-up will show corresponding that
      * */
 //    $(document).on("click", "#vitamin_taken1", function(ev) {
-//        $('#common_modal .panel-title').text('List of Vitamins');
+//        $('#common_modal .panel-title').text('List of testosterone');
 //        $.magnificPopup.open({
 //            items: {
 //                src: '#common_modal',

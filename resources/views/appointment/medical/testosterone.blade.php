@@ -23,11 +23,12 @@
                                 {{ Form::label('harmone', 'Have you Ever Received Harmone Therapy? IF Yes What Type?', ['class' => 'col-sm-9 control-label']) }}
                                 <div class="col-sm-3 toggle-radio-custom">
                                     <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('harmone_therapy', '1', false, ['id' => 'harmone_therapy1']) }}
+										{{ Form::radio('harmone_therapy', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('harmone_therapy', '1', $testosterone && $testosterone->harmone_therapy == '1', ['id' => 'harmone_therapy1']) }}
                                         {{ Form::label('harmone_therapy1', 'Yes') }}
                                     </div>
                                     <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('harmone_therapy', '0', false, ['id' => 'harmone_therapy2']) }}
+                                        {{ Form::radio('harmone_therapy', '0', $testosterone && $testosterone->harmone_therapy == '0', ['id' => 'harmone_therapy2']) }}
                                         {{ Form::label('harmone_therapy2', 'No') }}
                                     </div>
                                 </div>
@@ -50,11 +51,12 @@
                                 {{ Form::label('usa_military', 'Are you now or are you planning to be in the United States Active Military or Reserve?', ['class' => 'col-sm-9 control-label']) }}
                                 <div class="col-sm-3 toggle-radio-custom">
                                     <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('usa_military', '1', false, ['id' => 'usa_military1']) }}
+										{{ Form::radio('usa_military', '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('usa_military', '1', $testosterone && $testosterone->usa_military == '1', ['id' => 'usa_military1']) }}
                                         {{ Form::label('usa_military1', 'Yes') }}
                                     </div>
                                     <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('usa_military', '0', false, ['id' => 'usa_military2']) }}
+                                        {{ Form::radio('usa_military', '0', $testosterone && $testosterone->usa_military == '1', ['id' => 'usa_military2']) }}
                                         {{ Form::label('usa_military2', 'No') }}
                                     </div>
                                 </div>
