@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Today Visits</h2>
+        <h2>Lab Appointments</h2>
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li>                    
-                    <span>Today Visits</span>                   
+                    <span>Lab Appointment</span>                   
                 </li>
             </ol>
 
@@ -30,7 +30,7 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
 
-            <h2 class="panel-title">Today Visits</h2>
+            <h2 class="panel-title">Lab Appointments</h2>
         </header>
         <div class="panel-body">
             <div class="row">
@@ -87,9 +87,7 @@
                                 }
                                 ?></div></td>
                         <td class="actions">                            
-                            @if($appointment->patient_status < 1)
-                                <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
-                            @endif
+                            <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
                         </td>
                     </tr>

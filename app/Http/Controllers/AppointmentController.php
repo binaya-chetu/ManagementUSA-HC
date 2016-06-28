@@ -535,5 +535,32 @@ class AppointmentController extends Controller {
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }
+
+    /**
+     * Function for the saving the patient status in the appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function savePatientStatus(Request $request) {        
+        
+        $values = ['patient_status' => $request->patient_status];
+        Appointment::where('id', $request->appointment_id)->update($values);
+        //echo '<pre>';print_r($request->all());die;
+        \Session::flash('flash_message', 'Patient Status updated successfully');
+        return redirect()->back();
+    }
     
+    /**
+     * Function for the showing the result for the LaB Appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function labAppointments() {        
+        $appointments = Appointment::with('patient')->where('patient_status', '2')->get();
+        $patients = User::where('role', $this->patient_role)->get();
+
+        return view('appointment.lab_appointments', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
+    }
 }

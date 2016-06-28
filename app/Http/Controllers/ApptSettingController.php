@@ -184,7 +184,7 @@ class ApptSettingController extends Controller {
             if (isset($request->email_invitation)) {
                 $apptRequest->email_invitation = 1;  
             }
-            //$apptRequest->save();
+            $apptRequest->save();
             /* save the data in user, patient_detail, appointment with Set status */
             if ($request->status == '1') {
                
@@ -195,7 +195,7 @@ class ApptSettingController extends Controller {
                                     ->get()->first();  
 									
                     $user->hash = $this->getPatientHash($user->id);
-                    $values = ['hash' => $user->hash, 'disease_id' => $request->disease_id];
+                    $values = ['hash' => $user->hash];
                     App\Patient::where('user_id', $user->id)->update($values);
                 }else{
                     $user = new User;
