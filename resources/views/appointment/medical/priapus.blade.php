@@ -81,7 +81,7 @@
                                     {{ Form::label('pump_past', 'Have you ever used a penis pump in the past?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+											{{ Form::radio('pump_past', '', true, ['class' => 'hidden']) }}
                                             {{ Form::radio('pump_past', '1', $priapus && $priapus->pump_past == '1', ['id' => 'pump_past1']) }}
                                             {{ Form::label('pump_past1', 'Yes') }} 
                                         </div>
@@ -99,7 +99,7 @@
                                     {{ Form::label('implants', 'Have you ever had any  type of Penile implants or Surgeries?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+											{{ Form::radio('implant_surgery', '', true, ['class' => 'hidden']) }}
                                             {{ Form::radio('implant_surgery', '1', $priapus && $priapus->implant_surgery == '1', ['id' => 'implant_surgery1']) }}
                                             {{ Form::label('implant_surgery1', 'Yes') }} 
                                         </div>
@@ -118,7 +118,7 @@
                                 {{ Form::label('get_erection', 'How Often Are you Able to Get an Erection During Sexual activity?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-										{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+										{{ Form::radio('pre_activity_score', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('pre_activity_score', '1', $priapus && $priapus->pre_activity_score == '1', ['id' => 'pre_erection_sexual1']) }}
                                         {{ Form::label('pre_erection_sexual1', 'Almost Never or Never') }}                                                            
                                     </div>
@@ -146,7 +146,7 @@
                                 {{ Form::label('prp_stimulation_score', 'When you have erections with sexual stimulation how often were your erections hard enough for Penetration?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-										{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+										{{ Form::radio('prp_stimulation_score', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('prp_stimulation_score', '1', $priapus && $priapus->prp_stimulation_score == '1', ['id' => 'pre_stimulation1']) }}
                                         {{ Form::label('pre_stimulation1', 'Almost Never or Never') }}                                                            
                                     </div>
@@ -174,7 +174,7 @@
                                 {{ Form::label('prp_intercourse', 'When you attempted Intercourse how often were you able to penetrate your partner?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-										{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+										{{ Form::radio('prp_intercourse_score', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('prp_intercourse_score', '1', $priapus && $priapus->prp_intercourse_score == '1', ['id' => 'prp_intercourse1']) }}
                                         {{ Form::label('prp_intercourse1', 'Almost Never or Never') }}                                                            
                                     </div>
@@ -202,7 +202,7 @@
                                 {{ Form::label('prp_maintain', 'During sexual Intercourse, how often were you able to maintain your erection after you had penetrated your partner?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-										{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+										{{ Form::radio('prp_maintain_score', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('prp_maintain_score', '1', $priapus && $priapus->prp_maintain_score == '1', ['id' => 'prp_maintain1']) }}
                                         {{ Form::label('prp_maintain1', 'Almost Never or Never') }}                                                            
                                     </div>
@@ -230,7 +230,7 @@
                                 {{ Form::label('prp_difficult', 'During sexual intercourse how difficult is it to maintain your erection through completion (orgasm) after you have penetrated  Your Partner?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-										{{ Form::radio('abnormal', '', true, ['class' => 'hidden']) }}
+										{{ Form::radio('prp_difficult_score', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('prp_difficult_score', '1', $priapus && $priapus->prp_difficult_score == '1', ['id' => 'prp_difficult1']) }}
                                         {{ Form::label('prp_difficult1', 'Almost Never or Never') }}                                                            
                                     </div>

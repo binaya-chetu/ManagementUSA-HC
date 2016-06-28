@@ -115,8 +115,10 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-marital', 'Marital Status', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; ?>
-                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, $marital[$patient['patientDetail']->marital_status], ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
+                                        <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; 
+										$value = ($patient['patientDetail'] && $patient['patientDetail']->marital_status) ? $marital[$patient['patientDetail']->marital_status] : null;
+										?>
+                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, $value, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
                                     </div>
                                 </div>
                             </div>
@@ -1404,19 +1406,60 @@
     </div>
  
 </section>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
 
         $('.selectSmoke').hide();
+		if($("input[name='smoke_status']:checked").val() == 1){
+			$('.selectSmoke').show();
+		}
+	
         $('.selectDrink').hide();
+        if($("input[name='drink_status']:checked").val() == 1){
+			$('.selectDrink').show();
+		}
+		
         $('.selectExercise').hide();
+        if($("input[name='exercise_status']:checked").val() == 1){
+			$('.selectExercise').show();
+		}
+		
         $('.selectSex').hide();
+        if($("input[name='sex_status']:checked").val() == 1){
+			$('.selectSex').show();
+		}
+		
         $('#ed_pd_form').hide();
+        if($("input[name='ed_pd']").prop("checked")){
+			$('#ed_pd_form').show();
+		}
+		
         $('#weight_loss_form').hide();
+		if($("input[name='weight_loss']").prop('checked')){
+			$('#weight_loss_form').show();
+		}
+		
         $('#priapus_form').hide();
+        if($("input[name='prp']").prop("checked")){
+			$('#priapus_form').show();
+		}
+		
         $('#testosterone_form').hide();
+        if($("input[name='testosterone_therapy']").prop("checked")){
+			$('#testosterone_form').show();
+		}
+		
         $('#vitamin_form').hide();
+        if($("input[name='vitamin_therapy']").prop("checked")){
+			$('#vitamin_form').show();
+		}
+		
         $('#cosmetic_form').hide();
+        if($("input[name='cosmetics']").prop("checked")){
+			$('#cosmetic_form').show();
+		}
+	
         /** 
          * Checked the Checkbox for the ED/PD
          *  */
