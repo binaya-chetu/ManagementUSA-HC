@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-sm-6 mt-md">
                                 <div class="col-sm-6 mt-md">
-                                    <h2 class="h2 mt-none mb-sm text-dark text-weight-bold">Invoice For Services</h2>
+                                    <span class="mt-none mb-sm text-dark text-weight-bold">Invoice For Services</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 text-right mt-md mb-md">
@@ -77,8 +77,8 @@
                         <table class="table invoice-items">
                             <thead>
                                 <tr class="h4 text-dark">
-                                    <th id="cell-id"     class="text-weight-semibold">Product Purchased</th>
-                                    <th id="cell-item"   class="text-weight-semibold"> UI </th>
+                                    <th id="cell-item"     class="text-weight-semibold">Product Purchased</th>
+                                    <th id="cell-id"   class="text-weight-semibold"> UI </th>
                                     <th id="cell-desc"   class="text-weight-semibold">Qty</th>
                                     <th id="cell-price"  class="text-center text-weight-semibold">Unit Price</th>
                                     <th id="cell-qty"    class="text-center text-weight-semibold">Total</th>
@@ -86,18 +86,18 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>123456</td>
-                                    <td class="text-weight-semibold text-dark">Porto HTML5 Template</td>
-                                    <td>Multipourpouse Website Template</td>
-                                    <td class="text-center">$14.00</td>
-                                    <td class="text-center">2</td>
+                                    <td> Pre Drawn Custom Trimix Injection Therapy - Permanent Dose </td>
+                                    <td class="text-weight-semibold text-dark">INJ</td>
+                                    <td>40</td>
+                                    <td class="text-center">$55.00</td>
+                                    <td class="text-center">$2,200.00</td>
                                 </tr>
                                 <tr>
-                                    <td>654321</td>
-                                    <td class="text-weight-semibold text-dark">Tucson HTML5 Template</td>
-                                    <td>Awesome Website Template</td>
-                                    <td class="text-center">$17.00</td>
-                                    <td class="text-center">1</td>
+                                    <td> Allowable Trimix Diagnostic Re-Doses During Membership Period	</td>
+                                    <td class="text-weight-semibold text-dark">INJ</td>
+                                    <td>15</td>
+                                    <td class="text-center">$55.00</td>
+                                    <td class="text-center">$825.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -110,7 +110,7 @@
                                     <tbody>
                                         <tr class="b-top-none">
                                             <td colspan="2">Subtotal</td>
-                                            <td class="text-left">$73.00</td>
+                                            <td class="text-left">$3025.00</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">Shipping</td>
@@ -118,7 +118,7 @@
                                         </tr>
                                         <tr class="h4">
                                             <td colspan="2">Grand Total</td>
-                                            <td class="text-left">$73.00</td>
+                                            <td class="text-left">$3025.00</td>
                                         </tr>
                                     </tbody>
                                 </table>
