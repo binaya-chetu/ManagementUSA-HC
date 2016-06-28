@@ -42,6 +42,13 @@
                         </li>
                     </ul>
                 </div>
+				
+                @if(Session::has('flash_message'))
+					<div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
+                @elseif(Session::has('error_message'))
+					<div class="col-sm-12"><div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><em> {!! session('error_message') !!}</em></div></div>					
+				@endif
+				
                 {!! Form::model($patient, ['method' => 'post','url' => ['/appointment/savePatientMedicalRecord', $patient->base64Id], 'id' => 'patientMedical', 'files' => true, 'class'=>'form-horizontal']) !!}
                 {!! csrf_field() !!}
                 <div class="tab-content">
@@ -89,35 +96,29 @@
                                     {{ Form::label('w3-gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <div class="radio">
-                                            <?php
-                                            if ($patient['patientDetail']->gender === 'Female') {
-                                                $female = true;
-                                                $male = false;
-                                            } else {
-                                                $male = true;
-                                                $female = false;
-                                            }
-                                            ?>
                                             <label>
-                                                {{ Form::radio('gender', 'Male', $male, ['id' => 'optionsRadios1']) }}
+                                                {{ Form::radio('gender', 'Male', $patient['patientDetail']->gender == 'Male', ['id' => 'optionsRadios1']) }}
                                                 Male
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                {{ Form::radio('gender', 'Female', $female, ['id' => 'optionsRadios2']) }}
+                                                {{ Form::radio('gender', 'Female', $patient['patientDetail']->gender == 'Female', ['id' => 'optionsRadios2']) }}
                                                 Female
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     {{ Form::label('w3-marital', 'Marital Status', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; ?>
-                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, null, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
+                                        <?php $marital = ['Married' => 'Married', 'Divorced' => 'Divorced', 'Widowed' => 'Widowed', 'Single' => 'Single']; 
+										$value = ($patient['patientDetail'] && $patient['patientDetail']->marital_status) ? $marital[$patient['patientDetail']->marital_status] : null;
+										?>
+                                        {{ Form::select('marital_status', ['0' => 'Please Select Marital Status'] + $marital, $value, ['class' => 'form-control input', 'id' => 'maritalStatus']) }}
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +201,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-mobile', 'Mobile', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('mobile', null, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
+                                        {{ Form::text('mobile', $patient['patientDetail']->mobile, ['class' => 'form-control input-sm', 'id' => 'w3-mobile', 'placeholder' => 'Mobile Number']) }}
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +212,7 @@
                                     {{ Form::label('w3-call', 'Best Time To Call', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <?php $patientCallHour = callHourTime(); ?>
-                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, null, ['class' => 'form-control input', 'id' => 'bestTime']) }}
+                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, $patient['patientDetail']->call_time, ['class' => 'form-control input', 'id' => 'bestTime']) }}
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +230,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-work', 'Work', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('employer', null, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
+                                        {{ Form::text('employer', $patient['patientDetail']->employer, ['class' => 'form-control input-sm', 'id' => 'w3-work', 'placeholder' => 'Work']) }}
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +238,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-employment', 'Place of Employment', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('employment_place', null, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
+                                        {{ Form::text('employment_place', $patient['patientDetail']->employment_place, ['class' => 'form-control input-sm', 'id' => 'w3-employment', 'placeholder' => 'place of Employment']) }}
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +248,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-occupation', 'Occupation', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('occupation', null, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
+                                        {{ Form::text('occupation', $patient['patientDetail']->occupation, ['class' => 'form-control input-sm', 'id' => 'w3-occupation', 'placeholder' => 'Occupation']) }}
                                     </div>
                                 </div>
                             </div>
@@ -258,11 +259,11 @@
                                 {{ Form::label('w3-height', 'Height & Weight', array('class' => 'col-sm-2 control-label')) }}
                                 <div class="col-sm-4">
                                     <?php $commonHeight = commonHeight(); ?>
-                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, null, ['class' => 'form-control input', 'id' => 'height']) }}
+                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, $patient['patientDetail']->height, ['class' => 'form-control input', 'id' => 'height']) }}
                                 </div>
                                 <div class="col-sm-4">
                                     <?php $commonWeight = commonWeight(); ?>
-                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, null, ['class' => 'form-control input', 'id' => 'weight']) }}
+                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, $patient['patientDetail']->weight, ['class' => 'form-control input', 'id' => 'weight']) }}
                                 </div>
                             </div>
                         </div>
@@ -272,7 +273,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-physician', 'Primary Physician', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('primary_physician', null, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
+                                        {{ Form::text('primary_physician', $patient['patientDetail']->primary_physician, ['class' => 'form-control input-sm', 'id' => 'w3-physician', 'placeholder' => 'Primary Care Physician Name']) }}
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +281,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-physician_phone', 'Physician Phone', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('physician_phone', null, ['class' => 'form-control input-sm phone', 'placeholder' => 'Physician Phone']) }}
+                                        {{ Form::text('physician_phone', $patient['patientDetail']->physician_phone, ['class' => 'form-control input-sm phone', 'placeholder' => 'Physician Phone']) }}
                                     </div>
                                 </div>
                             </div>
@@ -292,7 +293,7 @@
                                 {{ Form::label('libido_rate', 'How would you rate your libido (sex drive)?', ['class' => 'col-sm-12 control-label']) }}
                                 <div class="col-sm-12 toggle-radio-custom">
                                     <div class="col-sm-2 radio-custom radio-primary">
-                                        {{ Form::radio('libido_rate', $adamsQuestionaires && $adamsQuestionaires->libido_rate == '', true, ['class' => 'hidden']) }}
+                                        {{ Form::radio('libido_rate', '', true, ['class' => 'hidden']) }}
                                         {{ Form::radio('libido_rate', '1', $adamsQuestionaires && $adamsQuestionaires->libido_rate == 1, ['id' => 'libido_rate1']) }}
                                         {{ Form::label('libido_rate1', 'Terrible') }}                                                            
                                     </div>
@@ -652,11 +653,12 @@
                                                         {{ Form::label('cardiovascular', 'Cardiovascular Disease', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cardiovascular', '1', false, ['id' => 'cardio1']) }}
+																{{ Form::radio('cardiovascular', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('cardiovascular', '1', $medHistories && $medHistories->cardiovascular == '1', ['id' => 'cardio1']) }}
                                                                 {{ Form::label('cardio1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cardiovascular', '0', false, ['id' => 'cardio2']) }}
+                                                                {{ Form::radio('cardiovascular', '0', $medHistories && $medHistories->cardiovascular == '0', ['id' => 'cardio2']) }}
                                                                 {{ Form::label('cardio2', 'No') }}
                                                             </div>
 
@@ -668,11 +670,12 @@
                                                         {{ Form::label('hypertension', 'Hypertension', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertension', '1', false, ['id' => 'hyper1']) }}
+																{{ Form::radio('hypertension', '',  true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('hypertension', '1', $medHistories && $medHistories->hypertension == '1', ['id' => 'hyper1']) }}
                                                                 {{ Form::label('hyper1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertension', '0', false, ['id' => 'hyper2']) }}
+                                                                {{ Form::radio('hypertension', '0', $medHistories && $medHistories->hypertension == '0', ['id' => 'hyper2']) }}
                                                                 {{ Form::label('hyper2', 'No') }}
                                                             </div>                                                           
                                                         </div>
@@ -685,11 +688,12 @@
                                                         {{ Form::label('enocrine', 'Diabetes, Thyroid, or other Enocrine Disorder', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('enocrine_disorder', '1', false, ['id' => 'encorine1']) }}
+                                                                {{ Form::radio('enocrine_disorder', '', true, ['class' => 'hidden']) }}
+																{{ Form::radio('enocrine_disorder', '1', $medHistories && $medHistories->enocrine_disorder == '1', ['id' => 'encorine1']) }}
                                                                 {{ Form::label('encorine1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('enocrine_disorder', '0', false, ['id' => 'encorine2']) }}
+                                                                {{ Form::radio('enocrine_disorder', '0', $medHistories && $medHistories->enocrine_disorder == '0', ['id' => 'encorine2']) }}
                                                                 {{ Form::label('encorine2', 'No') }}
                                                             </div> 
                                                         </div>
@@ -700,11 +704,12 @@
                                                         {{ Form::label('prostate', 'Prostate Cancer', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('prostate', '1', false, ['id' => 'prostate1']) }}
+																{{ Form::radio('prostate', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('prostate', '1', $medHistories && $medHistories->enocrine_disorder == '1', ['id' => 'prostate1']) }}
                                                                 {{ Form::label('prostate1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('prostate', '0', false, ['id' => 'prostate2']) }}
+                                                                {{ Form::radio('prostate', '0', $medHistories && $medHistories->enocrine_disorder == '0', ['id' => 'prostate2']) }}
                                                                 {{ Form::label('prostate2', 'No') }}
                                                             </div>
                                                         </div>
@@ -717,11 +722,12 @@
                                                         {{ Form::label('lipid', 'Lipid or Blood Disorder', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('lipid', '1', false, ['id' => 'lipid1']) }}
+																{{ Form::radio('lipid', '', true, ['class' => 'hidden']) }}															
+                                                                {{ Form::radio('lipid', '1', $medHistories && $medHistories->lipid == '1', ['id' => 'lipid1']) }}
                                                                 {{ Form::label('lipid1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('lipid', '0', false, ['id' => 'lipid2']) }}
+                                                                {{ Form::radio('lipid', '0', $medHistories && $medHistories->lipid == '0', ['id' => 'lipid2']) }}
                                                                 {{ Form::label('lipid2', 'No') }}
                                                             </div>
                                                         </div>
@@ -732,11 +738,12 @@
                                                         {{ Form::label('cancer_forms', 'Other Forms of Cancer', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cancer_form', '1', false, ['id' => 'cancer1']) }}
+																{{ Form::radio('cancer_form', '', true, ['class' => 'hidden']) }}															
+                                                                {{ Form::radio('cancer_form', '1', $medHistories && $medHistories->cancer_form == '1', ['id' => 'cancer1']) }}
                                                                 {{ Form::label('cancer1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cancer_form', '0', false, ['id' => 'cancer2']) }}
+                                                                {{ Form::radio('cancer_form', '0', $medHistories && $medHistories->cancer_form == '0', ['id' => 'cancer2']) }}
                                                                 {{ Form::label('cancer2', 'No') }}
                                                             </div>
                                                         </div>
@@ -754,11 +761,12 @@
                                                     {{ Form::label('smoke', 'Do You Smoke.  If Yes How Often How Much?', ['class' => 'col-sm-6 control-label']) }}
                                                     <div class="col-sm-6 toggle-radio-custom">
                                                         <div class="col-sm-3 radio-custom radio-primary">
-                                                            {{ Form::radio('smoke_status', '1', false, ['id' => 'smoke1']) }}
+															{{ Form::radio('smoke_status', '', true, ['class' => 'hidden']) }}														
+                                                            {{ Form::radio('smoke_status', '1', $medHistories && $medHistories->smoke_status == '1', ['id' => 'smoke1']) }}
                                                             {{ Form::label('smoke1', 'Yes') }}
                                                         </div>
                                                         <div class="col-sm-3 radio-custom radio-primary">
-                                                            {{ Form::radio('smoke_status', '0', false, ['id' => 'smoke2']) }}
+                                                            {{ Form::radio('smoke_status', '0', $medHistories && $medHistories->smoke_status == '0', ['id' => 'smoke2']) }}
                                                             {{ Form::label('smoke2', 'No') }}
                                                         </div>
                                                     </div>
@@ -769,8 +777,9 @@
                                                     <div class="form-group">
                                                         {{ Form::label('smoke_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
-                                                            <?php $drinkTime = [ 'Daily' => 'Daily', 'Occasionally' => 'Occasionally']; ?>
-                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, null, ['class' => 'form-control input']) }}
+                                                            <?php $drinkTime = [ 'Daily' => 'Daily', 'Occasionally' => 'Occasionally']; 
+															?>
+                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, $medHistories->smoke_often, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -779,7 +788,7 @@
                                                         {{ Form::label('smoke_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $smokedose = [ 'less than 1 pack' => 'less than 1 pack', '1 pack' => '1 pack', '2 packs' => '2 packs', 'over 2 packs' => 'over 2 packs']; ?>
-                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, null, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, $medHistories->smoke_quantity, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -789,11 +798,12 @@
                                                     {{ Form::label('drink_status', 'Do You Drink.  If Yes How Often How Much?', ['class' => 'col-sm-6 control-label']) }}
                                                     <div class="col-sm-6 toggle-radio-custom">
                                                         <div class="col-sm-3 radio-custom radio-primary">
-                                                            {{ Form::radio('drink_status', '1', false, ['id' => 'drink1']) }}
+															{{ Form::radio('drink_status', '', true, ['class' => 'hidden']) }}														
+                                                            {{ Form::radio('drink_status', '1', $medHistories && $medHistories->drink_status == '1', ['id' => 'drink1']) }}
                                                             {{ Form::label('drink1', 'Yes') }}                                                            
                                                         </div>
                                                         <div class="col-sm-3 radio-custom radio-primary">
-                                                            {{ Form::radio('drink_status', '0', false, ['id' => 'drink2']) }}
+                                                            {{ Form::radio('drink_status', '0', $medHistories && $medHistories->drink_status == '0', ['id' => 'drink2']) }}
                                                             {{ Form::label('drink2', 'No') }}
                                                         </div>
                                                     </div>
@@ -804,7 +814,8 @@
                                                     <div class="form-group">
                                                         {{ Form::label('drink_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
-                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, null, ['class' => 'form-control input', 'id' => 'drink_often']) }}
+															{{ Form::radio('prostate', '', true, ['class' => 'hidden']) }}
+                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, $medHistories->drink_often, ['class' => 'form-control input', 'id' => 'drink_often']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -813,7 +824,7 @@
                                                         {{ Form::label('drink_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $drinkdose = [ 'less than 1 drink' => 'less than 1 drink', '1 drink' => '1 drink', '2 drinks' => '2 drinks', 'over 2 drinks' => 'Over 2 drinks']; ?>
-                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, null, ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
+                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, $medHistories->drink_quantity, ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -823,7 +834,7 @@
                                                     {{ Form::label('activity_level', 'Please Rate Your Daily Activity Level', ['class' => 'col-sm-6 control-label']) }}
                                                     <div class="col-sm-6">
                                                         <?php $activityLevel = [ 'Heavy' => 'Heavy', 'Medium' => 'Medium', 'Low' => 'Low']; ?>
-                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, null, ['class' => 'form-control input', 'id' => 'activity_level']) }}
+                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, $medHistories->activity_level, ['class' => 'form-control input', 'id' => 'activity_level']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -833,11 +844,12 @@
                                                         {{ Form::label('exercise_status', 'Do you Exercise? If So How Often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('exercise_status', '1', false, ['id' => 'exercise1']) }}
+																{{ Form::radio('exercise_status', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('exercise_status', '1', $medHistories && $medHistories->exercise_status == '1', ['id' => 'exercise1']) }}
                                                                 {{ Form::label('exercise1', 'Yes') }}                                                                
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('exercise_status', '0', false, ['id' => 'exercise2']) }}
+                                                                {{ Form::radio('exercise_status', '0', $medHistories && $medHistories->exercise_status == '0', ['id' => 'exercise2']) }}
                                                                 {{ Form::label('exercise2', 'No') }}
                                                             </div>
 
@@ -849,7 +861,7 @@
                                                         {{ Form::label('exercise_often', 'How Often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $exercise = [ 'Daily' => 'daily', 'Weekly' => 'Weekly', '<Monthly' => 'less than Monthly', 'Monthly' => 'Monthly']; ?>
-                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, null, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, $medHistories->exercise_often, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -865,11 +877,12 @@
                                                         {{ Form::label('deficiency', 'Any Known Deficiency Including Minerals and Electrolytes', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('deficiency_status', '1', false, ['id' => 'deficiency1']) }}
+																{{ Form::radio('deficiency_status', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('deficiency_status', '1', $medHistories && $medHistories->deficiency_status == '1', ['id' => 'deficiency1']) }}
                                                                 {{ Form::label('deficiency1', 'Yes') }}  
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('deficiency_status', '1', false, ['id' => 'deficiency2']) }}
+                                                                {{ Form::radio('deficiency_status', '0', $medHistories && $medHistories->deficiency_status == '0', ['id' => 'deficiency2']) }}
                                                                 {{ Form::label('deficiency2', 'No') }}
                                                             </div>
 
@@ -881,11 +894,12 @@
                                                         {{ Form::label('chemical', 'Chemical Dependency', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('chemical_dependency', '1', false, ['id' => 'dependency1']) }}
+																{{ Form::radio('chemical_dependency', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('chemical_dependency', '1', $medHistories && $medHistories->chemical_dependency == '1', ['id' => 'dependency1']) }}
                                                                 {{ Form::label('dependency1', 'Yes') }}  
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('chemical_dependency', '0', false, ['id' => 'dependency2']) }}
+                                                                {{ Form::radio('chemical_dependency', '0', $medHistories && $medHistories->chemical_dependency == '0', ['id' => 'dependency2']) }}
                                                                 {{ Form::label('dependency2', 'No') }}  
                                                             </div>
                                                         </div>
@@ -898,11 +912,12 @@
                                                         {{ Form::label('blood', 'Blood Disorders', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('blood_disorder', '1', false, ['id' => 'blood1']) }}
+																{{ Form::radio('blood_disorder', '',true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('blood_disorder', '1', $medHistories && $medHistories->blood_disorder == '1', ['id' => 'blood1']) }}
                                                                 {{ Form::label('blood1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('blood_disorder', '0', false, ['id' => 'blood2']) }}
+                                                                {{ Form::radio('blood_disorder', '0', $medHistories && $medHistories->blood_disorder == '0', ['id' => 'blood2']) }}
                                                                 {{ Form::label('blood2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -913,11 +928,12 @@
                                                         {{ Form::label('orthopedic', 'Orthopedic or muscle disorder including fracture or Joint disorders.', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('orthopedic_disorder', '1', false, ['id' => 'ortho1']) }}
+																{{ Form::radio('orthopedic_disorder', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('orthopedic_disorder', '1', $medHistories && $medHistories->orthopedic_disorder == '1', ['id' => 'ortho1']) }}
                                                                 {{ Form::label('ortho1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('orthopedic_disorder', '0', false, ['id' => 'ortho2']) }}
+                                                                {{ Form::radio('orthopedic_disorder', '0', $medHistories && $medHistories->orthopedic_disorder == '0', ['id' => 'ortho2']) }}
                                                                 {{ Form::label('ortho2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -930,11 +946,12 @@
                                                         {{ Form::label('deficiency', 'Any Known Deficiency Including Minerals and Electrolytes', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('known_deficiency', '1', false, ['id' => 'known1']) }}
+																{{ Form::radio('known_deficiency', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('known_deficiency', '1', $medHistories && $medHistories->known_deficiency == '1', ['id' => 'known1']) }}
                                                                 {{ Form::label('known1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('known_deficiency', '0', false, ['id' => 'known2']) }}
+                                                                {{ Form::radio('known_deficiency', '0', $medHistories && $medHistories->known_deficiency == '0', ['id' => 'known2']) }}
                                                                 {{ Form::label('known2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -945,11 +962,12 @@
                                                         {{ Form::label('carpal', 'Carpal Tunnel Syndrome', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('carpal_syndrome', '1', false, ['id' => 'carpal1']) }}
+																{{ Form::radio('carpal_syndrome', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('carpal_syndrome', '1', $medHistories && $medHistories->carpal_syndrome == '1', ['id' => 'carpal1']) }}
                                                                 {{ Form::label('carpal1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('carpal_syndrome', '0', false, ['id' => 'carpal2']) }}
+                                                                {{ Form::radio('carpal_syndrome', '0', $medHistories && $medHistories->carpal_syndrome == '0', ['id' => 'carpal2']) }}
                                                                 {{ Form::label('carpal2', 'No') }}
                                                             </div>
                                                         </div>
@@ -962,11 +980,12 @@
                                                         {{ Form::label('Immune', 'Immune Disorders ', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('immune_disorder', '1', false, ['id' => 'immune1']) }}
+																{{ Form::radio('immune_disorder', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('immune_disorder', '1', $medHistories && $medHistories->immune_disorder == '1', ['id' => 'immune1']) }}
                                                                 {{ Form::label('immune1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('immune_disorder', '0', false, ['id' => 'immune2']) }}
+                                                                {{ Form::radio('immune_disorder', '0', $medHistories && $medHistories->immune_disorder == '0', ['id' => 'immune2']) }}
                                                                 {{ Form::label('immune2', 'No') }}
                                                             </div>
                                                         </div>
@@ -977,11 +996,12 @@
                                                         {{ Form::label('heart', 'Heart disease including Atheroscelerosis, Angina, Heart Failure, or Heart Attack', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('heart_disease', '1', false, ['id' => 'heart1']) }}
+																{{ Form::radio('heart_disease', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('heart_disease', '1', $medHistories && $medHistories->heart_disease == '1', ['id' => 'heart1']) }}
                                                                 {{ Form::label('heart1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('heart_disease', '1', false, ['id' => 'heart2']) }}
+                                                                {{ Form::radio('heart_disease', '0', $medHistories && $medHistories->heart_disease == '0', ['id' => 'heart2']) }}
                                                                 {{ Form::label('heart2', 'No') }}
                                                             </div>
                                                         </div>
@@ -994,11 +1014,12 @@
                                                         {{ Form::label('lung', 'Lung Disorders', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('lung_disorder', '1', false, ['id' => 'lung1']) }}
+																{{ Form::radio('lung_disorder', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('lung_disorder', '1', $medHistories && $medHistories->lung_disorder == '1', ['id' => 'lung1']) }}
                                                                 {{ Form::label('lung1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('lung_disorder', '0', false, ['id' => 'lung2']) }}
+                                                                {{ Form::radio('lung_disorder', '0', $medHistories && $medHistories->lung_disorder == '0', ['id' => 'lung2']) }}
                                                                 {{ Form::label('lung2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1009,11 +1030,12 @@
                                                         {{ Form::label('cancers', 'Cancers', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cancer_status', '1', false, ['id' => 'cancer1']) }}
+																{{ Form::radio('cancer_status', '',true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('cancer_status', '1', $medHistories && $medHistories->cancer_status == '1', ['id' => 'cancer1']) }}
                                                                 {{ Form::label('cancer1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('cancer_status', '0', false, ['id' => 'cancer2']) }}
+                                                                {{ Form::radio('cancer_status', '0', $medHistories && $medHistories->cancer_status == '0', ['id' => 'cancer2']) }}
                                                                 {{ Form::label('cancer2', 'No') }}                                                                
                                                             </div>
 
@@ -1027,11 +1049,12 @@
                                                         {{ Form::label('surgeries', 'Major Surgeries', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('surgeries', '1', false, ['id' => 'surgeries1', 'class' => 'modelShow']) }}
+																{{ Form::radio('surgeries', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('surgeries', '1', $medHistories && $medHistories->surgeries == '1', ['id' => 'surgeries1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('surgeries1', 'Yes') }}                                                                
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('surgeries', '0', false, ['id' => 'surgeries2']) }}
+                                                                {{ Form::radio('surgeries', '0', $medHistories && $medHistories->surgeries == '0', ['id' => 'surgeries2']) }}
                                                                 {{ Form::label('surgeries2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1042,11 +1065,12 @@
                                                         {{ Form::label('renal', 'Renal Disease (Kidneys)', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('renal', '1', false, ['id' => 'renal1']) }}
+																{{ Form::radio('renal', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('renal', '1', $medHistories && $medHistories->renal == '1', ['id' => 'renal1']) }}
                                                                 {{ Form::label('renal1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('renal', '0', false, ['id' => 'renal2']) }}
+                                                                {{ Form::radio('renal', '0', $medHistories && $medHistories->renal == '0', ['id' => 'renal2']) }}
                                                                 {{ Form::label('renal2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1059,11 +1083,12 @@
                                                         {{ Form::label('upper', 'Upper Respitory Problems', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('upper', '1', false, ['id' => 'upper1']) }}
+																{{ Form::radio('upper', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('upper', '1', $medHistories && $medHistories->upper == '1', ['id' => 'upper1']) }}
                                                                 {{ Form::label('upper1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('upper', '0', false, ['id' => 'upper2']) }}
+                                                                {{ Form::radio('upper', '0', $medHistories && $medHistories->upper == '0', ['id' => 'upper2']) }}
                                                                 {{ Form::label('upper2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1074,11 +1099,12 @@
                                                         {{ Form::label('allergies', 'Allergies to Medications', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('allergies', '1', false, ['id' => 'allergies1', 'class' => 'modelShow']) }}
+																{{ Form::radio('allergies', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('allergies', '1', $medHistories && $medHistories->allergies == '1', ['id' => 'allergies1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('allergies1', 'Yes') }}                                                                 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('allergies', '0', false, ['id' => 'allergies2']) }}
+                                                                {{ Form::radio('allergies', '0', $medHistories && $medHistories->allergies == '0', ['id' => 'allergies2']) }}
                                                                 {{ Form::label('allergies2', 'No') }} 
                                                             </div>
 
@@ -1093,11 +1119,12 @@
                                                         {{ Form::label('genital', 'Genital - Urinary Disorder', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('genital', '1', false, ['id' => 'genital1']) }}
+																{{ Form::radio('genital', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('genital', '1', $medHistories && $medHistories->genital == '1', ['id' => 'genital1']) }}
                                                                 {{ Form::label('genital1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('genital', '0', false, ['id' => 'genital2']) }}
+                                                                {{ Form::radio('genital', '0', $medHistories && $medHistories->genital == '0', ['id' => 'genital2']) }}
                                                                 {{ Form::label('genital2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1107,12 +1134,13 @@
                                                     <div class="form-group">
                                                         {{ Form::label('retention', 'Edema / Excess fluid retention', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
-                                                            <div class="col-sm-3 radio-custom radio-primary">                                                                
-                                                                {{ Form::radio('retention', '1', false, ['id' => 'retention1']) }}
+                                                            <div class="col-sm-3 radio-custom radio-primary">                                                            
+																{{ Form::radio('retention', '', true, ['class' => 'hidden']) }}		
+                                                                {{ Form::radio('retention', '1', $medHistories && $medHistories->retention == '1', ['id' => 'retention1']) }}
                                                                 {{ Form::label('retention', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('retention', '0', false, ['id' => 'retention2']) }}
+                                                                {{ Form::radio('retention', '0', $medHistories && $medHistories->retention == '0', ['id' => 'retention2']) }}
                                                                 {{ Form::label('retention2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1126,11 +1154,12 @@
                                                         {{ Form::label('endocrine', 'Thyroid, Diabetes or other endocrine disorder including insulin resistance', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('endocrine', '1', false, ['id' => 'endocrine1']) }}
+																{{ Form::radio('endocrine', '',true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('endocrine', '1', $medHistories && $medHistories->endocrine == '1', ['id' => 'endocrine1']) }}
                                                                 {{ Form::label('endocrine1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('endocrine', '0', false, ['id' => 'endocrine2']) }}
+                                                                {{ Form::radio('endocrine', '0', $medHistories && $medHistories->endocrine == '0', ['id' => 'endocrine2']) }}
                                                                 {{ Form::label('endocrine2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1141,11 +1170,12 @@
                                                         {{ Form::label('hyperlipidemia', 'Hyperlipidemia (Cholesterol)', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hyperlipidema', '1', false, ['id' => 'hyperlipidema1']) }}
+																{{ Form::radio('hyperlipidema', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('hyperlipidema', '1', $medHistories && $medHistories->hyperlipidema == '1', ['id' => 'hyperlipidema1']) }}
                                                                 {{ Form::label('hyperlipidema1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hyperlipidema', '0', false, ['id' => 'hyperlipidema2']) }}
+                                                                {{ Form::radio('hyperlipidema', '0', $medHistories && $medHistories->hyperlipidema == '0', ['id' => 'hyperlipidema2']) }}
                                                                 {{ Form::label('hyperlipidema2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1159,11 +1189,12 @@
                                                         {{ Form::label('healing', 'Poor Wound Healing', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('healing', '1', false, ['id' => 'healing1']) }}
+																{{ Form::radio('healing', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('healing', '1',  $medHistories && $medHistories->healing == '1', ['id' => 'healing1']) }}
                                                                 {{ Form::label('healing1', 'Yes') }} 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('healing', '0', false, ['id' => 'healing2']) }}
+                                                                {{ Form::radio('healing', '0',  $medHistories && $medHistories->healing == '0', ['id' => 'healing2']) }}
                                                                 {{ Form::label('healing2', 'No') }} 
                                                             </div>
                                                         </div>
@@ -1174,11 +1205,12 @@
                                                         {{ Form::label('neuro', 'Neurological Disorders', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('neurological', '1', false, ['id' => 'neurological1']) }}
+																{{ Form::radio('neurological', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('neurological', '1', $medHistories && $medHistories->neurological == '1', ['id' => 'neurological1']) }}
                                                                 {{ Form::label('neurological1', 'Yes') }}                                                                 
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('neurological', '0', false, ['id' => 'neurological2']) }}
+                                                                {{ Form::radio('neurological', '0', $medHistories && $medHistories->neurological == '0', ['id' => 'neurological2']) }}
                                                                 {{ Form::label('neurological2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1190,12 +1222,13 @@
                                                     <div class="form-group">
                                                         {{ Form::label('emotional', 'Emotional disorders / Depression', ['class' => 'col-sm-6 control-label']) }}                                                                                                                
                                                         <div class="col-sm-6 toggle-radio-custom">
-                                                            <div class="col-sm-3 radio-custom radio-primary">                                                                
-                                                                {{ Form::radio('emotional', '1', false, ['id' => 'emotional1']) }}
+                                                            <div class="col-sm-3 radio-custom radio-primary">    
+																{{ Form::radio('emotional', '', true, ['class' => 'hidden']) }}															
+                                                                {{ Form::radio('emotional', '1', $medHistories && $medHistories->emotional == '1', ['id' => 'emotional1']) }}
                                                                 {{ Form::label('emotional1', 'Yes') }}                    
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">                                                   
-                                                                {{ Form::radio('emotional', '0', false, ['id' => 'emotional2']) }}
+                                                                {{ Form::radio('emotional', '0', $medHistories && $medHistories->emotional == '0', ['id' => 'emotional2']) }}
                                                                 {{ Form::label('emotional2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1206,11 +1239,12 @@
                                                         {{ Form::label('Hypertention', 'Hypertention(High Blood Pressure)', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertention_hbp', '1', false, ['id' => 'hypertention1']) }}
+																{{ Form::radio('hypertention_hbp', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('hypertention_hbp', '1', $medHistories && $medHistories->hypertention_hbp == '1', ['id' => 'hypertention1']) }}
                                                                 {{ Form::label('hypertention1', 'Yes') }}   
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('hypertention_hbp', '0', false, ['id' => 'hypertention2']) }}
+                                                                {{ Form::radio('hypertention_hbp', '0', $medHistories && $medHistories->hypertention_hbp == '0', ['id' => 'hypertention2']) }}
                                                                 {{ Form::label('hypertention2', 'No') }}  
                                                             </div>
                                                         </div>
@@ -1223,11 +1257,12 @@
                                                         {{ Form::label('illness', 'Other Illnesses', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('other_illness', '1', false, ['id' => 'illness1', 'class' => 'modelShow']) }}
+																{{ Form::radio('other_illness', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('other_illness', '1',  $medHistories && $medHistories->other_illness == '1', ['id' => 'illness1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('illness1', 'yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('other_illness', '0', false, ['id' => 'illness2']) }}
+                                                                {{ Form::radio('other_illness', '0',  $medHistories && $medHistories->other_illness == '0', ['id' => 'illness2']) }}
                                                                 {{ Form::label('illness2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1238,11 +1273,12 @@
                                                         {{ Form::label('arthritis', 'Arthritis', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('arthritis', '1', false, ['id' => 'arthritis1']) }}
+																{{ Form::radio('arthritis', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('arthritis', '1', $medHistories && $medHistories->arthritis == '1', ['id' => 'arthritis1']) }}
                                                                 {{ Form::label('arthritis1', 'Yes') }}                                                                
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('arthritis', '0', false, ['id' => 'arthritis2']) }}
+                                                                {{ Form::radio('arthritis', '0', $medHistories && $medHistories->arthritis == '0', ['id' => 'arthritis2']) }}
                                                                 {{ Form::label('arthritis2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1255,11 +1291,12 @@
                                                         {{ Form::label('drugs', 'Do you use any form of Recreational Drugs?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('recreational_drug', '1', false, ['id' => 'recreational_drug1']) }}
+																{{ Form::radio('recreational_drug', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('recreational_drug', '1', $medHistories && $medHistories->recreational_drug == '1', ['id' => 'recreational_drug1']) }}
                                                                 {{ Form::label('recreational_drug1', 'Yes') }}                                                                
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('recreational_drug', '0', false, ['id' => 'recreational_drug2']) }}
+                                                                {{ Form::radio('recreational_drug', '0', $medHistories && $medHistories->recreational_drug == '0', ['id' => 'recreational_drug2']) }}
                                                                 {{ Form::label('recreational_drug2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1270,11 +1307,12 @@
                                                         {{ Form::label('neurological', 'Neurological Disorders', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('neurological', '1', false, ['id' => 'neurological1']) }}
+																{{ Form::radio('neurological', '',true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('neurological', '1', $medHistories && $medHistories->neurological == '1', ['id' => 'neurological1']) }}
                                                                 {{ Form::label('neurological1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('neurological', '0', false, ['id' => 'neurological2']) }}
+                                                                {{ Form::radio('neurological', '0', $medHistories && $medHistories->neurological == '0', ['id' => 'neurological2']) }}
                                                                 {{ Form::label('neurological2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1286,21 +1324,22 @@
                                                     {{ Form::label('blood_test', 'When was the last time you had a comprehensive Blood Test or Blood Test of anykind?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                     <div class="col-sm-6">
                                                         <?php $bloodTestTime = ['1 Month' => '1 Month', '3 Months' => '3 Months', '6 Months' => '6 Months', '>1' => '1 Year or Longer', 'Never' => 'Never']; ?>
-                                                        {{ Form::select('state', ['' => 'Please Select'] + $bloodTestTime, null, ['class' => 'form-control input', 'id' => 'state']) }}
+                                                        {{ Form::select('blood_test', ['' => 'Please Select'] + $bloodTestTime, $medHistories->blood_test, ['class' => 'form-control input', 'id' => 'blood_test']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
                                             <div class="col-sm-12 inputRow">
                                                 <div class="col-sm-6">
-                                                    <div class="form-group">
+                                                    <div class="form-group">					
                                                         {{ Form::label('health_isurance', 'Do you have any form of Health Insurance?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('health_insurance', '1', false, ['id' => 'health_insurance1']) }}
+																{{ Form::radio('health_insurance', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('health_insurance', '1', $medHistories && $medHistories->health_insurance == '1', ['id' => 'health_insurance1']) }}
                                                                 {{ Form::label('health_insurance1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('health_insurance', '0', false, ['id' => 'health_insurance2']) }}
+                                                                {{ Form::radio('health_insurance', '0', $medHistories && $medHistories->health_insurance == '0', ['id' => 'health_insurance2']) }}
                                                                 {{ Form::label('health_insurance2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1311,7 +1350,7 @@
                                                         {{ Form::label('kind', 'Kind of Health Insurance', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6">
                                                             <?php $insuranceKind = ['Medicare' => 'Medicare', 'HMO' => 'HMO', 'PPO' => 'PPO', 'Medicaid' => 'Medicaid']; ?>
-                                                            {{ Form::select('state', ['' => 'Please Select'] + $insuranceKind, null, ['class' => 'form-control input', 'id' => 'state']) }}
+                                                            {{ Form::select('kind_of_hi', ['' => 'Please Select'] + $insuranceKind, $medHistories->kind_of_hi, ['class' => 'form-control input', 'id' => 'kind_of_hi']) }}
                                                         </div>
                                                     </div> 
                                                 </div>
@@ -1322,11 +1361,12 @@
                                                         {{ Form::label('medication', 'Are you Currently Taking Any Medications?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('medication', '1', false, ['id' => 'medication1', 'class' => 'modelShow']) }}
+																{{ Form::radio('medication', '', true, ['class' => 'hidden']) }}
+                                                                {{ Form::radio('medication', '1', $medHistories && $medHistories->medication == '1', ['id' => 'medication1', 'class' => 'modelShow']) }}
                                                                 {{ Form::label('medication1', 'Yes') }}
                                                             </div>
                                                             <div class="col-sm-3 radio-custom radio-primary">
-                                                                {{ Form::radio('medication', '0', false, ['id' => 'medication2']) }}
+                                                                {{ Form::radio('medication', '0', $medHistories && $medHistories->medication == '0', ['id' => 'medication2']) }}
                                                                 {{ Form::label('medication2', 'No') }}
                                                             </div>
                                                         </div>
@@ -1367,19 +1407,60 @@
     </div>
  
 </section>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
 
         $('.selectSmoke').hide();
+		if($("input[name='smoke_status']:checked").val() == 1){
+			$('.selectSmoke').show();
+		}
+	
         $('.selectDrink').hide();
+        if($("input[name='drink_status']:checked").val() == 1){
+			$('.selectDrink').show();
+		}
+		
         $('.selectExercise').hide();
+        if($("input[name='exercise_status']:checked").val() == 1){
+			$('.selectExercise').show();
+		}
+		
         $('.selectSex').hide();
+        if($("input[name='sex_status']:checked").val() == 1){
+			$('.selectSex').show();
+		}
+		
         $('#ed_pd_form').hide();
+        if($("input[name='ed_pd']").prop("checked")){
+			$('#ed_pd_form').show();
+		}
+		
         $('#weight_loss_form').hide();
+		if($("input[name='weight_loss']").prop('checked')){
+			$('#weight_loss_form').show();
+		}
+		
         $('#priapus_form').hide();
+        if($("input[name='prp']").prop("checked")){
+			$('#priapus_form').show();
+		}
+		
         $('#testosterone_form').hide();
+        if($("input[name='testosterone_therapy']").prop("checked")){
+			$('#testosterone_form').show();
+		}
+		
         $('#vitamin_form').hide();
+        if($("input[name='vitamin_therapy']").prop("checked")){
+			$('#vitamin_form').show();
+		}
+		
         $('#cosmetic_form').hide();
+        if($("input[name='cosmetics']").prop("checked")){
+			$('#cosmetic_form').show();
+		}
+	
         /** 
          * Checked the Checkbox for the ED/PD
          *  */
@@ -1556,7 +1637,7 @@
      * Click on the Allergies then a pop-up will show corresponding that
      * */
 //    $(document).on("click", "#vitamin_taken1", function(ev) {
-//        $('#common_modal .panel-title').text('List of Vitamins');
+//        $('#common_modal .panel-title').text('List of testosterone');
 //        $.magnificPopup.open({
 //            items: {
 //                src: '#common_modal',

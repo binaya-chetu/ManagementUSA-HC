@@ -24,11 +24,12 @@
                                     {{ Form::label('facial_surgeries', 'Have you Ever Had Any Type of Facial Surgeries or Facial Enhancements? If So What Kind?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('facial_surgeries', '1', false, ['id' => 'facial_surgeries1']) }}
+											{{ Form::radio('facial_surgeries', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('facial_surgeries', '1', $cosmetics && $cosmetics->facial_surgeries == '1', ['id' => 'facial_surgeries1']) }}
                                             {{ Form::label('facial_surgeries1', 'Yes') }}
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('facial_surgeries', '0', false, ['id' => 'facial_surgeries2']) }}
+                                            {{ Form::radio('facial_surgeries', '0', $cosmetics && $cosmetics->facial_surgeries == '0', ['id' => 'facial_surgeries2']) }}
                                             {{ Form::label('facial_surgeries2', 'No') }}
                                         </div>
                                     </div>
@@ -104,11 +105,12 @@
                                     {{ Form::label('crowsfeet', 'Do you have Crowsfeet(Wrinkles around the eyes)', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('crowsfeet', '1', false, ['id' => 'crowsfeet1']) }}
+											{{ Form::radio('crowsfeet', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('crowsfeet', '1', $cosmetics && $cosmetics->crowsfeet == '1', ['id' => 'crowsfeet1']) }}
                                             {{ Form::label('crowsfeet1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('crowsfeet', '0', false, ['id' => 'crowsfeet2']) }}
+                                            {{ Form::radio('crowsfeet', '0', $cosmetics && $cosmetics->crowsfeet == '0', ['id' => 'crowsfeet2']) }}
                                             {{ Form::label('crowsfeet2', 'No') }} 
                                         </div>
                                     </div>
@@ -119,11 +121,12 @@
                                     {{ Form::label('facial_expression', 'When you Change your facial Expression do you see your forehead wrinkle up?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('facial_expression', '1', false, ['id' => 'facial_expression1']) }}
+											{{ Form::radio('facial_expression', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('facial_expression', '1', $cosmetics && $cosmetics->facial_expression == '1', ['id' => 'facial_expression1']) }}
                                             {{ Form::label('facial_expression1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('facial_expression', '0', false, ['id' => 'facial_expression2']) }}
+                                            {{ Form::radio('facial_expression', '0', $cosmetics && $cosmetics->facial_expression == '0', ['id' => 'facial_expression2']) }}
                                             {{ Form::label('facial_expression2', 'No') }} 
                                         </div>
                                     </div>
@@ -136,11 +139,12 @@
                                     {{ Form::label('sunken', 'Has your face become more sunken in over the years?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('sunken', '1', false, ['id' => 'sunken1']) }}
+											{{ Form::radio('sunken', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('sunken', '1', $cosmetics && $cosmetics->sunken == '1', ['id' => 'sunken1']) }}
                                             {{ Form::label('sunken1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('sunken', '0', false, ['id' => 'sunken2']) }}
+                                            {{ Form::radio('sunken', '0', $cosmetics && $cosmetics->sunken == '0', ['id' => 'sunken2']) }}
                                             {{ Form::label('sunken2', 'No') }} 
                                         </div>
                                     </div>
@@ -151,11 +155,12 @@
                                     {{ Form::label('bullfrog_looking', 'Do you have excessive fat below your chin on your kneck? (Bullfrog Looking)', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('bullfrog_looking', '1', false, ['id' => 'bullfrog_looking1']) }}
+											{{ Form::radio('bullfrog_looking', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('bullfrog_looking', '1', $cosmetics && $cosmetics->bullfrog_looking == '1', ['id' => 'bullfrog_looking1']) }}
                                             {{ Form::label('bullfrog_looking1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('bullfrog_looking', '0', false, ['id' => 'bullfrog_looking2']) }}
+                                            {{ Form::radio('bullfrog_looking', '0', $cosmetics && $cosmetics->bullfrog_looking == '0', ['id' => 'bullfrog_looking2']) }}
                                             {{ Form::label('bullfrog_looking2', 'No') }} 
                                         </div>
                                     </div>
@@ -168,11 +173,12 @@
                                     {{ Form::label('loose_skin', 'Does your face have a lot of Loose skin which has developed over time?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('loose_skin', '1', false, ['id' => 'loose_skin1']) }}
+											{{ Form::radio('loose_skin', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('loose_skin', '1', $cosmetics && $cosmetics->loose_skin == '1', ['id' => 'loose_skin1']) }}
                                             {{ Form::label('loose_skin1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('loose_skin', '0', false, ['id' => 'loose_skin2']) }}
+                                            {{ Form::radio('loose_skin', '0', $cosmetics && $cosmetics->loose_skin == '0', ['id' => 'loose_skin2']) }}
                                             {{ Form::label('loose_skin2', 'No') }} 
                                         </div>
                                     </div>
@@ -183,11 +189,12 @@
                                     {{ Form::label('thin_lip', 'Do you feel your lips are too thin?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('thin_lip', '1', false, ['id' => 'thin_lip1']) }}
+											{{ Form::radio('thin_lip', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('thin_lip', '1', $cosmetics && $cosmetics->thin_lip == '1', ['id' => 'thin_lip1']) }}
                                             {{ Form::label('thin_lip1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('thin_lip', '0', false, ['id' => 'thin_lip2']) }}
+                                            {{ Form::radio('thin_lip', '0', $cosmetics && $cosmetics->thin_lip == '0', ['id' => 'thin_lip2']) }}
                                             {{ Form::label('thin_lip2', 'No') }} 
                                         </div>
                                     </div>
@@ -200,11 +207,12 @@
                                     {{ Form::label('face_spot', 'Have you noticed dark, grey, red or other permanent spots on your face?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('face_spot', '1', false, ['id' => 'face_spot1']) }}
+											{{ Form::radio('face_spot', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('face_spot', '1', $cosmetics && $cosmetics->face_spot == '1', ['id' => 'face_spot1']) }}
                                             {{ Form::label('face_spot1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('face_spot', '0', false, ['id' => 'face_spot2']) }}
+                                            {{ Form::radio('face_spot', '0', $cosmetics && $cosmetics->face_spot == '0', ['id' => 'face_spot2']) }}
                                             {{ Form::label('face_spot2', 'No') }} 
                                         </div>
                                     </div>
@@ -215,11 +223,12 @@
                                     {{ Form::label('acne', 'Do you suffer from Acne or have Acne Scars?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('acne', '1', false, ['id' => 'acne1']) }}
+											{{ Form::radio('acne', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('acne', '1', $cosmetics && $cosmetics->acne == '1', ['id' => 'acne1']) }}
                                             {{ Form::label('acne1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('acne', '0', false, ['id' => 'acne2']) }}
+                                            {{ Form::radio('acne', '0', $cosmetics && $cosmetics->acne == '0', ['id' => 'acne2']) }}
                                             {{ Form::label('acne2', 'No') }} 
                                         </div>
                                     </div>
@@ -232,11 +241,12 @@
                                     {{ Form::label('skin_tag', 'Have you noticed Skin Tags or broken blood vessels on the nose or on your face?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('skin_tag', '1', false, ['id' => 'skin_tag1']) }}
+											{{ Form::radio('skin_tag', '', true, ['class' => 'hidden']) }}
+                                            {{ Form::radio('skin_tag', '1', $cosmetics && $cosmetics->skin_tag == '0', ['id' => 'skin_tag1']) }}
                                             {{ Form::label('skin_tag1', 'Yes') }} 
                                         </div>
                                         <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('skin_tag', '0', false, ['id' => 'skin_tag2']) }}
+                                            {{ Form::radio('skin_tag', '0', $cosmetics && $cosmetics->skin_tag == '0', ['id' => 'skin_tag2']) }}
                                             {{ Form::label('skin_tag2', 'No') }} 
                                         </div>
                                     </div>

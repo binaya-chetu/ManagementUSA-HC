@@ -264,17 +264,17 @@ class ApptSettingController extends Controller {
                     $patient->dob = date('Y-m-d', strtotime($request->dob));
                 }
 
-                $patient->hash = $this->getPatientHash($patient->user_id);
-                $user->hash = $patient->hash;
-                $patient->save();
-
-                $adamQ = new AdamsQuestionaires();
-                $adamQ->patient_id = $user->id;
-                $adamQ->save();
-
-                if(!empty($request->email) && isset($request->email_invitation)){
-                        $this->emailPatientEditForm($user);
-                }
+				$patient->hash = $this->getPatientHash($patient->user_id);
+				$user->hash = $patient->hash;
+				$patient->save();
+				
+				/* $adamQ = new AdamsQuestionaires();
+				$adamQ->patient_id = $user->id;
+				$adamQ->save(); */
+				
+				if(!empty($request->email) && isset($request->email_invitation)){
+					$this->emailPatientEditForm($user);
+				}
 				
                 $appointment = new Appointment;
                 $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
