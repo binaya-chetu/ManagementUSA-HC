@@ -1367,6 +1367,7 @@
     </div>
  
 </section>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
 

@@ -359,7 +359,7 @@ class AppointmentController extends Controller {
     public function followup() {
         $followup = Followup::with(['appointment', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->get();
+            }])->get();           
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -420,7 +420,7 @@ class AppointmentController extends Controller {
      */
     public function checkList(Request $request) {
         if (!empty($request['id'])) {
-            $id = $request['id'];
+            $id = $request['id'];            
             return view('appointment.medical.medicine_list', [
                 'id' => $id
             ]);
@@ -439,7 +439,7 @@ class AppointmentController extends Controller {
         $doctors = User::where('role', $this->doctor_role)->get();
 
         return view('appointment.listappointment', [
-            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'type' => 'upcoming'
         ]);
     }
     /**
@@ -520,6 +520,20 @@ class AppointmentController extends Controller {
 			echo $i.'<br>';
 		} */
 
+    }
+    /*
+     * Find the list of all appointment which appointment time are within 24 Hours.
+     * 
+     * @return \resource\view\apptsetting\listappointment.blade.php
+     */
+    public function todayVisits() {
+        $appointments = Appointment::with('patient')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
+        $patients = User::where('role', $this->patient_role)->get();
+       // $doctors = User::where('role', $this->doctor_role)->get();
+
+        return view('appointment.today_visits', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
     }
     
 }
