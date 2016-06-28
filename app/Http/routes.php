@@ -259,7 +259,6 @@ Route::group(['middleware' => 'web'], function () {
         ]);
 
     // Doctor route
-
     Route::get('/doctor', [
             'uses' => 'DoctorController@index',
             'as' => 'doctor',
@@ -298,7 +297,6 @@ Route::group(['middleware' => 'web'], function () {
 
 
     // route for User
-
     Route::get('/user/addUser', [
             'uses' => 'UserController@addUser',
             'as' => 'user.addUser',
@@ -339,18 +337,26 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'user.viewUser',
             'middleware' => ['acl:user_read']
         ]);
-		// Route for categories
-	Route::get('/categories/listCategories', [
+    
+    // Route for categories
+    Route::get('/categories/listCategories', [
             'uses' => 'CategoriesController@listCategories',
             'as' => 'categories.listCategories',
-			'middleware' => ['acl:user_write']
+            //'middleware' => ['acl:user_write']
         ]);
 		
-	Route::get('/categories/categoryDetails/{id}', [
+    Route::get('/categories/categoryDetails/{id}', [
             'uses' => 'CategoriesController@categoryDetails',
             'as' => 'categories.categoryDetails',
-			'middleware' => ['acl:user_write']
+            //'middleware' => ['acl:user_write']
         ]);
+    
+    Route::get('/categories/newCategory', [
+            'uses' => 'CategoriesController@addNewCategory',
+            'as' => 'categories.addNewCategory',
+            //'middleware' => ['acl:user_write']
+        ]);
+<<<<<<< HEAD
 
 	Route::get('/clientapi', [
             'uses' => 'ClientapiController@getApiResponse',
@@ -381,18 +387,41 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'ApptSettingController@directWalkins',
 			'middleware' => ['acl:user_write']
         ]);
+    
+    Route::post('/categories/saveCategory', [
+            'uses' => 'CategoriesController@saveCategory',
+            'as' => 'CategoriesController.saveCategory',
+            //'middleware' => ['acl:user_write']
+        ]);
+    
+    
+    // shop code
+   Route::post('/addProduct', [
+            'uses' => 'CartController@addItem',
+            //'middlaware' => ['acl:user_write']
+       ]);
+   Route::get('/removeItem/{productId}', [
+            'uses' => 'CartController@removeItem',
+            //'middleware' => ['acl:user_write']
+       ]);
+   Route::get('/cart', [
+            'uses' => 'CartController@showCart',
+            //'middleware' => ['acl:user_write']
+       ]);
+
 		
-	Route::get('/products/addproducts', [
+    Route::get('/products/addproducts', [
             'uses' => 'ProductsController@addproducts',
             'as' => 'products.addproducts',
-			//'middleware' => ['acl:add_products']	
+            //'middleware' => ['acl:add_products']	
 	]);	
 	
-	Route::post('/products/saveProducts', [
+    Route::post('/products/saveProducts', [
             'uses' => 'ProductsController@saveProducts',
             'as' => 'products.saveproducts',
-			//'middleware' => ['acl:save_products']	
+            //'middleware' => ['acl:save_products']	
 	]);	
+
 	
 	Route::get('/categories/addcategories', [
             'uses' => 'CategoriesController@addcategories',
@@ -405,5 +434,7 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'categories.savecategories',
 			//'middleware' => ['acl:save_categories']	
 	]);	
+
+
 });
 

@@ -59,7 +59,10 @@
 				</div>
 				<h2 class="panel-title"></h2>
 			</header>
-			<div class="panel-body">						
+			<div class="panel-body">
+                            @if(Session::has('flash_message'))
+                                <div class="alert alert-warning"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div>
+                            @endif
 				<div class="table-responsive packages-table">
 					<table class="table table-bordered pricing-table table-condensed mb-none">
 						<thead>
@@ -69,15 +72,30 @@
 								</th>
 								<th class="bronze plan" colspan="2">
 									<h3 class="bronze">Bronze<span>${{ $details['Bronze']['total_price'] }}</span></h3>
-									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
+									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+                                                                            {{ csrf_field() }}
+                                                                            <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
+                                                                            <input type="hidden" name="category_type" value="1" />
+                                                                          <p align="center"><button class="btn btn-lg btn-primary">Buy Now</button></p>
+                                                                        </form>
 								</th>
 								<th class="silver plan" colspan="2">
 									<h3 class="silver">Silver<span>${{ $details['Silver']['total_price'] }}</span></h3>
-									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
+									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+                                                                            {{ csrf_field() }}
+                                                                            <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
+                                                                            <input type="hidden" name="category_type" value="2" />
+                                                                          <p align="center"><button class="btn btn-lg btn-primary">Buy Now</button></p>
+                                                                        </form>
 								</th>
 								<th class="gold plan" colspan="2">
 									<h3 class="gold">Gold<span>${{ $details['Gold']['total_price'] }}</span></h3>
-									<a class="btn btn-lg btn-primary" href="#">Buy Now</a>
+									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+                                                                            {{ csrf_field() }}
+                                                                            <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
+                                                                            <input type="hidden" name="category_type" value="3" />
+                                                                          <p align="center"><button class="btn btn-lg btn-primary">Buy Now</button></p>
+                                                                        </form>
 								</th>								
 							</tr>
 							<tr>

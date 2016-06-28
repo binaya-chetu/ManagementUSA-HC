@@ -26,13 +26,38 @@ class CategoriesController extends Controller
         $this->middleware('auth');
     }
   
-     public function listCategories() {
+    public function listCategories() {
        
         $categories = DB :: table('categories')->get();
         return view('categories.categories', [
             'categories' => $categories
         ]);
     }
+    
+    public function addNewCategory() {
+        
+        return view('categories.add_new_category');
+    }
+    
+    public function saveCategory(Request $request) {
+
+        $this->validate($request, [
+            'cat_name' => 'required|unique:categories',
+            'duration_months' => 'required'
+        ]);
+
+        $category = new Categories();
+        $category->cat_name = $request->cat_name;
+        $category->duration_months = $request->duration_months;
+        
+        if ($category->save()) {
+            \Session::flash('flash_message', 'New Category Added successfully.');
+            return redirect('/categories/listCategories');
+        } else {
+            return redirect('/categories/newCategory');
+        }
+    }
+    
     public function categoryDetails( $id = null, Request $request){
         try{
             $id = base64_decode($id);
@@ -50,7 +75,9 @@ class CategoriesController extends Controller
                         'category_types.name as package_type'
                 )
                 ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
-            
+
+            //echo "<pre>";print_r($category_details);die;
+
             $category_info = [];
             $pck_type = '';
             $total_price = 0;
@@ -82,7 +109,7 @@ class CategoriesController extends Controller
 				$products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
 				$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price; 
 			}
-
+                        
             return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products]);            
         } catch(\Exception $e){
             App::abort(404, $e->getMessage());
@@ -192,6 +219,7 @@ class CategoriesController extends Controller
 
 
 
+
 	
 	public function saveCategories(Request $request){
 		$data = Input::all();
@@ -249,4 +277,5 @@ class CategoriesController extends Controller
     public function addcategories(){
         return view('categories.add_categories');
 	}	
+
 }

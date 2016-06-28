@@ -32,12 +32,15 @@ $(function() {
     // common validation for add/edit users.
     $('#addUser').validate();
 	
-	
-	//validation for followup pop-up form.
+    //validation for followup pop-up form.
     $('#followUp').validate();
-
+    
+    //validation for followup pop-up form.
+    $('#newCategory').validate();
+    
     //validation for followup pop-up form.
     $('#editAppointment').validate();
+    
     $('#addAppointment').validate({
           rules: {
             email: {
