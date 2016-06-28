@@ -777,8 +777,9 @@
                                                     <div class="form-group">
                                                         {{ Form::label('smoke_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
-                                                            <?php $drinkTime = [ 'Daily' => 'Daily', 'Occasionally' => 'Occasionally']; ?>
-                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, null, ['class' => 'form-control input']) }}
+                                                            <?php $drinkTime = [ 'Daily' => 'Daily', 'Occasionally' => 'Occasionally']; 
+															?>
+                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, $medHistories->smoke_often, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -787,7 +788,7 @@
                                                         {{ Form::label('smoke_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $smokedose = [ 'less than 1 pack' => 'less than 1 pack', '1 pack' => '1 pack', '2 packs' => '2 packs', 'over 2 packs' => 'over 2 packs']; ?>
-                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, null, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, $medHistories->smoke_quantity, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -814,7 +815,7 @@
                                                         {{ Form::label('drink_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
 															{{ Form::radio('prostate', '', true, ['class' => 'hidden']) }}
-                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, null, ['class' => 'form-control input', 'id' => 'drink_often']) }}
+                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, $medHistories->drink_often, ['class' => 'form-control input', 'id' => 'drink_often']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -823,7 +824,7 @@
                                                         {{ Form::label('drink_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $drinkdose = [ 'less than 1 drink' => 'less than 1 drink', '1 drink' => '1 drink', '2 drinks' => '2 drinks', 'over 2 drinks' => 'Over 2 drinks']; ?>
-                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, null, ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
+                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, $medHistories->drink_quantity, ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -833,7 +834,7 @@
                                                     {{ Form::label('activity_level', 'Please Rate Your Daily Activity Level', ['class' => 'col-sm-6 control-label']) }}
                                                     <div class="col-sm-6">
                                                         <?php $activityLevel = [ 'Heavy' => 'Heavy', 'Medium' => 'Medium', 'Low' => 'Low']; ?>
-                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, null, ['class' => 'form-control input', 'id' => 'activity_level']) }}
+                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, $medHistories->activity_level, ['class' => 'form-control input', 'id' => 'activity_level']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -860,7 +861,7 @@
                                                         {{ Form::label('exercise_often', 'How Often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $exercise = [ 'Daily' => 'daily', 'Weekly' => 'Weekly', '<Monthly' => 'less than Monthly', 'Monthly' => 'Monthly']; ?>
-                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, null, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, $medHistories->exercise_often, ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1323,7 +1324,7 @@
                                                     {{ Form::label('blood_test', 'When was the last time you had a comprehensive Blood Test or Blood Test of anykind?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                     <div class="col-sm-6">
                                                         <?php $bloodTestTime = ['1 Month' => '1 Month', '3 Months' => '3 Months', '6 Months' => '6 Months', '>1' => '1 Year or Longer', 'Never' => 'Never']; ?>
-                                                        {{ Form::select('blood_test', ['' => 'Please Select'] + $bloodTestTime, null, ['class' => 'form-control input', 'id' => 'blood_test']) }}
+                                                        {{ Form::select('blood_test', ['' => 'Please Select'] + $bloodTestTime, $medHistories->blood_test, ['class' => 'form-control input', 'id' => 'blood_test']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -1349,7 +1350,7 @@
                                                         {{ Form::label('kind', 'Kind of Health Insurance', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6">
                                                             <?php $insuranceKind = ['Medicare' => 'Medicare', 'HMO' => 'HMO', 'PPO' => 'PPO', 'Medicaid' => 'Medicaid']; ?>
-                                                            {{ Form::select('kind_of_hi', ['' => 'Please Select'] + $insuranceKind, null, ['class' => 'form-control input', 'id' => 'kind_of_hi']) }}
+                                                            {{ Form::select('kind_of_hi', ['' => 'Please Select'] + $insuranceKind, $medHistories->kind_of_hi, ['class' => 'form-control input', 'id' => 'kind_of_hi']) }}
                                                         </div>
                                                     </div> 
                                                 </div>

@@ -412,7 +412,6 @@ class AppointmentController extends Controller {
 			}
 		}
         $states = State::lists('name', 'id')->toArray();
-
         return view('appointment.patient_medical', [
             'patient' => $patient,
 			'adamsQuestionaires' => $adamsQ,
