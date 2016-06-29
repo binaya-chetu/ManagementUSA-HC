@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
+use App\AdamsQuestionaires;
 use App\Doctor;
 use App\User;
 use App\Followup;
@@ -25,8 +26,8 @@ class AppointmentController extends Controller {
     public $success = true;
     public $error = false;
 
-    public function __construct(Request $request) {
-		if($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash'){
+    public function __construct(Request $request){ 		
+		if(($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash') && $request->segment(2) != 'savePatientMedicalRecord'){ 
 			$this->middleware('auth');
 		}
     }
@@ -384,28 +385,31 @@ class AppointmentController extends Controller {
      * @param $id
      *
      * @return \resource\view\appointment\patient_medical
-     */
+    */
     public function patientMedical($id = null, $hash = null) {
         $id = base64_decode($id);
 		$hash = $hash;
-        if (!($patient = User::with('patientDetail')->find($id))) {
+						
+		$patient = User::with('patientDetail')->find($id);
+		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
+        if (!$patient)
+		{
             App::abort(404, 'Patient with given id was not found.');
         }
 		
+		$patient->base64Id = base64_encode($patient->id);
 		if($hash != null){
-			$patHash = $patient->toArray()['patient_detail']['hash'];
+			$patHash = $patient->toArray()['patient_detail']['hash'];				
 			if($patHash != $hash){
 				App::abort(404, 'The url seeme to be expired or invalid.');
-			}else{
-				$hash = md5(uniqid($id, true));
-				
-				App\Patient::where('user_id', $id)->update(['hash' => $hash]);
 			}
 		}
         $states = State::lists('name', 'id')->toArray();
         return view('appointment.patient_medical', [
             'patient' => $patient,
-            'states' => $states
+			'adamsQuestionaires' => $adamsQ,
+            'states' => $states,
+			'hash' => $hash
         ]);
     }
 
@@ -446,7 +450,75 @@ class AppointmentController extends Controller {
      * @return \resource\view\appointment\patient_medical
      */
     public function savePatientMedicalRecord($id, Request $response) {
-        echo '<pre>'; print_r($response->all());die;
+		$formData = $response->all();
+		$id = base64_decode($id);
+
+		$user = App\User::firstOrCreate(['id' => $id]);
+		$user->first_name		= $formData['first_name'];
+		$user->middle_name		= $formData['middle_name'];
+		$user->last_name		= $formData['last_name'];
+		$user->email			= $formData['email'];
+		$user->role				= $formData['gender'];		
+		$user->save();
+
+		$patient = App\Patient::firstOrCreate(['user_id' => $id]);
+		$patient->dob			= $formData['dob'];
+		$patient->gender		= $formData['gender'];
+		$patient->phone			= $formData['phone'];
+		$patient->address1		= $formData['address1'];
+		$patient->address2		= $formData['address2'];
+		$patient->city			= $formData['city'];
+		$patient->state			= $formData['state'];
+		$patient->zipCode		= $formData['zipCode'];
+		$patient->employer		= $formData['employer'];
+		$patient->occupation	= $formData['occupation'];
+		//$patient->height		= $formData['height'];
+		//$patient->weight		= $formData['weight'];
+		//$patient->primary_physician = $formData['primary_physician'];
+		//$patient->physician_phone = $formData['physician_phone'];
+		//$patient->work			= $formData['employer'];
+		//$patient->call_time		= $formData['call_time'];
+		//$patient->mobile		= $formData['mobile'];
+		//$patient->image			= $formData[''];
+		//$patient->marital_status = $formData['marital_status'];
+		//$patient->driving_license = $formData['driving_license'];		
+		// $patient->payment_bill	= $formData[''];
+		// $patient->never_treat_status = $formData[''];
+		$patient->save();
+		
+		// $erectileD = App\ErectileDysfunctions::firstOrCreate(['patient_id' => $id]);
+		
+		
+		$adamsQ = App\AdamsQuestionaires::firstOrCreate(['patient_id' => $id]);		
+		$adamsQ->patient_id			= $id;
+		$adamsQ->libido_rate		= $formData['libido_rate'];
+		$adamsQ->energy_rate		= $formData['energy_rate'];
+		$adamsQ->strength_rate		= $formData['strength_rate'];
+		$adamsQ->enjoy_rate			= $formData['enjoy_rate'];
+		$adamsQ->happiness_rate		= $formData['happiness_rate'];
+		$adamsQ->erection_rate		= $formData['erection_rate'];
+		$adamsQ->performance_rate	= $formData['performance_rate'];
+		$adamsQ->sleep_rate			= $formData['sleep_rate'];
+		$adamsQ->sport_rate			= $formData['sport_rate'];
+		$adamsQ->lost_height_rate	= $formData['lost_height_rate'];
+		$adamsQ->save();
+
+		$patientHash = DB::table('patient_details')->where('user_id', $id)->pluck('hash')[0];
+        \Session::flash('flash_message', 'Patient details saved successfully');		
+		if(Auth::check()){
+			return redirect('/appointment/listappointment');	
+		} elseif(!empty($formData['hash']) && $formData['hash'] == $patientHash){
+			$hash = md5(uniqid($id, true));
+			App\Patient::where('user_id', $id)->update(['hash' => $hash]);
+			return redirect('/common/messages');
+		} else{
+			App::abort(404, '');
+		}
+	
+       //echo '<pre>'; print_r($response->all());die;
+/* 		foreach($response->all() as $i => $v){
+			echo $i.'<br>';
+		} */
 
     }
     

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReasonCodes extends Migration
+class CreateCartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,13 @@ class ReasonCodes extends Migration
      */
     public function up()
     {
-        Schema::create('reason_codes', function (Blueprint $table) {
+       Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reason');
-            $table->integer('type')->comment('1=>Set, 1=> No Set');
-            $table->integer('status');
+            $table->integer('user_id');  
+            $table->integer('category_id')->nullable();   
+            $table->decimal('package_price',2);   
+			$table->decimal('discount_price',2);
+            $table->decimal('total_amount',2);  
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHashColumnToPatientDetailsTable extends Migration
+class AddColumnDiseaseIdToAppointmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,9 @@ class AddHashColumnToPatientDetailsTable extends Migration
      */
     public function up()
     {
-		Schema::table('patient_details', function ($table) {
-			$table->string('hash', 255);
-			$table->index('hash');
-		});			
+         Schema::table('appointments', function ($table) {
+			$table->integer('disease_id');
+		});
     }
 
     /**

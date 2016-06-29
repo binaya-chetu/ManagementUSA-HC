@@ -63,11 +63,11 @@
                                 </a>
                                 <ul class="nav nav-children">
 
-                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
+<!--                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('/appointment/newAppointment') }}">
                                             New Appointment
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('appointment/listappointment') }}">
                                             List Appointments
@@ -98,11 +98,11 @@
                                     Patients
                                 </a>
                                 <ul class="nav nav-children">
-                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
+<!--                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
                                         <a href="/patient/addpatient">
                                             New Patient
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                         <a href="/patient">
                                             List Patients
@@ -187,11 +187,25 @@
                         </ul>
                     </li>       
                     @endif
-                     <li class="{{ Request::segment(2) === 'listCategories' ? 'nav-active nav-expanded' : null }}">
-                        <a href="{{ url('categories/listCategories') }}">
+
+                     <li class="nav-parent {{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                        <a>
+
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
+                         <ul class="nav nav-children">
+                            <li class="{{ Request::segment(2) === 'newCategory'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/categories/newCategory') }}">
+                                    Add New Category
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'listCategories'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/categories/listCategories') }}">
+                                    List All Categories
+                                </a>
+                            </li>
+                        </ul>
                     </li> 
                     <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/addcategories') }}">

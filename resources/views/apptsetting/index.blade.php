@@ -281,7 +281,12 @@
                         </div>
                     </div>
                     <div  id="setAppointment">
-
+                        <div class="form-group">
+                            {{ Form::label('disease_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                {{ Form::select('disease_id', ['' => 'Choose the Reason'] + $diseases, null, ['class' => 'form-control required']) }}
+                            </div>
+                        </div>
                         <div class="form-group">
                             {{ Form::label('appDate', 'Appointment Time', array('class' => 'col-sm-3 control-label mandatory')) }}
 

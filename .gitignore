@@ -7,7 +7,12 @@ Homestead.yaml
 Homestead.json
 .env
  /nbproject
+<<<<<<< HEAD
  /1_RESOURCES
 /public/documents/upload_products/*
 /storage
 
+=======
+ /storage
+/storage
+>>>>>>> feature-product

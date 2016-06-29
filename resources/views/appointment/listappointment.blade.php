@@ -36,10 +36,10 @@
                 @if(Session::has('flash_message'))
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
-                <div class="col-md-12 text-left">
+<!--                <div class="col-md-12 text-left">
                     <a href="javascript:void(0)"><button id="add-view-appointment" class="btn btn-primary" >Add Appointment <i class="fa fa-plus"></i></button></a>
                     <a href="{{ url('/patient/addpatient') }}"><button id="addToTable" class="btn btn-primary" >Add Patient    <i class="fa fa-plus"></i></button></a>
-                </div>
+                </div>-->
             </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
