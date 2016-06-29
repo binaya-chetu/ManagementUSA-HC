@@ -146,6 +146,11 @@
                                     Upcoming Appointments
                                 </a>
                             </li>
+                            <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/todayVisits') }}">
+                                    Today Visits
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <?php } ?>

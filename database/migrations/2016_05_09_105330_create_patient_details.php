@@ -15,7 +15,6 @@ class CreatePatientDetails extends Migration
         Schema::create('patient_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unique();
-            $table->integer('disease_id');
             $table->date('dob')->nullable();
             $table->enum('gender', ['Male', 'Female'])->default('Male');
             $table->string('marital_status', 15);
@@ -29,7 +28,7 @@ class CreatePatientDetails extends Migration
             $table->integer('state');
             $table->string('zipCode',11);       
             $table->string('height',15);
-            $table->string('width',15);
+            $table->string('weight',15);
             $table->string('employment_place');
             $table->string('primary_physician');
             $table->string('physician_phone');
@@ -39,6 +38,7 @@ class CreatePatientDetails extends Migration
             $table->string('payment_bill')->nullable();
             $table->string('hash');
             $table->boolean('never_treat_status')->default(0);
+            $table->boolean('form_status')->default(0);
             $table->timestamps();
         }); 
     }

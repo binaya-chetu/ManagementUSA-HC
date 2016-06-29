@@ -55,7 +55,7 @@ class CreateMedicalHistoriesTable extends Migration {
             $table->tinyInteger('arthritis')->nullable()->comment('0=>No, 1=> Yes');
             $table->tinyInteger('recreational_drug')->nullable()->comment('0=>No, 1=> Yes');
             $table->string('blood_test');
-            $table->tinyInteger('health_isurance')->nullable()->comment('0=>No, 1=> Yes');
+            $table->tinyInteger('health_insurance')->nullable()->comment('0=>No, 1=> Yes');
             $table->string('kind_of_hi');  
             $table->tinyInteger('medication')->nullable()->comment('0=>No, 1=> Yes');
             $table->timestamps();

@@ -178,7 +178,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.upcomingappointments',
             //'middleware' => ['acl:appointment_read']
         ]);
- 
+    Route::get('/appointment/todayVisits', [
+            'uses' => 'AppointmentController@todayVisits',
+            'as' => 'appointment.todayVisits',
+            //'middleware' => ['acl:appointment_read']
+        ]);
     Route::post('/appointment/savePatientMedicalRecord/{id}', [
             'uses' => 'AppointmentController@savePatientMedicalRecord',
             'as' => 'appointment.savePatientMedicalRecord',
