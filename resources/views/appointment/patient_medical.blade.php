@@ -1,6 +1,7 @@
-@extends('layouts.common')
+@extends( (!empty(Request::segment(4)) || !empty(Request::segment(5))) ? 'layouts.medical' : 'layouts.common')
 
 @section('content')
+@if(empty(Request::segment(4)) || empty(Request::segment(5)))
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Edit patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
@@ -15,6 +16,7 @@
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
+@endif
     <div class="row">
         <section class="panel form-wizard" id="w3">
             <header class="panel-heading">
@@ -1405,8 +1407,9 @@
                 
         </section>
     </div>
- 
+@if(empty(Request::segment(4)) || empty(Request::segment(5))) 
 </section>
+@endif
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
