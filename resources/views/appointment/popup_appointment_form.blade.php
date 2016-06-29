@@ -205,7 +205,6 @@
                     @endif
                 </div>
             </div>
-
         </div><br/>
         <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
             {{ Form::label('comment', 'Comment', ['class' => 'col-sm-4 control-label mandatory']) }}

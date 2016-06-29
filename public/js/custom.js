@@ -560,3 +560,11 @@ $(document).on("click", ".patient_status", function(event) {
             }
         });
     });
+    
+    
+        $(document).ready(function(){
+             $("#print_invoice").click(function(){
+                 window.print();
+             });
+        });
+   

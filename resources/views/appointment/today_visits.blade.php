@@ -50,14 +50,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i=1; ?>
+                    <?php $i = 1; ?>
                     @foreach ($appointments as $appointment)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-                        
+
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {
