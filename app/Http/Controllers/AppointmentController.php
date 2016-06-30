@@ -391,8 +391,12 @@ class AppointmentController extends Controller {
 		$hash = $hash;
 						
 		$patient = User::with('patientDetail')->find($id);
-		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
+		
+		$disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at','DESC')->limit(1)->pluck('disease_id');
+		$disease_id = !empty($disease_id)? $disease_id[0] : '';
 
+		$diseases = DB::table('diseases')->pluck('title','id');
+		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
 		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
 		$erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
 		$weightL = DB::table('weight_loss')->where('patient_id', $id)->first();
@@ -416,6 +420,8 @@ class AppointmentController extends Controller {
         $states = State::lists('name', 'id')->toArray();
         return view('appointment.patient_medical', [
             'patient' => $patient,
+			'disease_id' => $disease_id,
+			'diseases' => $diseases,
 			'adamsQuestionaires' => $adamsQ,
 			'medHistories' => $medHistories,
 			'erectileD' => $erectileD,
@@ -524,6 +530,10 @@ class AppointmentController extends Controller {
 		//$patient->payment_bill	= $formData[''];
 		//$patient->never_treat_status = $formData[''];
 		$patient->save();
+
+		$appt = App\Appointment::orderBy('id', 'DESC')->firstOrCreate(['patient_id' => $id]);
+		$appt->disease_id = $formData['disease_id'];
+		$appt->save();
 		
 		$adamsQ = App\AdamsQuestionaires::firstOrCreate(['patient_id' => $id]);		
 		$adamsQ->patient_id			= $id;
@@ -610,7 +620,7 @@ class AppointmentController extends Controller {
 		$erectileD->side_effect		= $formData['side_effect'];
 		$erectileD->erection_time	= $formData['erection_time'];
 		$erectileD->erection_kind	= $formData['erection_kind'];
-		//$erectileD->erection_strength = $formData['erection_strength'];
+		$erectileD->erection_strength = $formData['erection_strength'];
 		$erectileD->activity_score	= $formData['activity_score'];
 		$erectileD->stimulation_score = $formData['stimulation_score'];
 		$erectileD->intercourse_score = $formData['intercourse_score'];
@@ -647,35 +657,36 @@ class AppointmentController extends Controller {
 		$priapus->prp_maintain_score	= $formData['prp_maintain_score'];
 		$priapus->prp_difficult_score	= $formData['prp_difficult_score'];
 		$priapus->save();	 
-	
+
  		$testosterone = App\HighTestosterone::firstOrCreate(['patient_id' => $id]);
 		$testosterone->harmone_therapy		= $formData['harmone_therapy'];
 		$testosterone->harmone_therapy_type = $formData['harmone_therapy_type'];
 		$testosterone->usa_military			= $formData['usa_military'];
-		$testosterone->lack_increment		= isset($formData['lack_increment'])? $formData['lack_increment']: '';
-		$testosterone->increase_fat			= isset($formData['increase_fat'])? $formData['increase_fat']: '';
-		$testosterone->depression			= isset($formData['depression'])? $formData['depression']: '';
-		$testosterone->mood_increment		= isset($formData['mood_increment'])? $formData['mood_increment']: '';
-		$testosterone->sleep_difficulty		= isset($formData['sleep_difficulty'])? $formData['sleep_difficulty']: '';
-		$testosterone->wrinkle_increment	= isset($formData['wrinkle_increment'])? $formData['wrinkle_increment']: '';
-		$testosterone->sagging_increment	= isset($formData['sagging_increment'])? $formData['sagging_increment']: '';
-		$testosterone->hot_flash			= isset($formData['hot_flash'])? $formData['hot_flash']: '';
-		$testosterone->loss_activity		= isset($formData['loss_activity'])? $formData['loss_activity']: '';
-		$testosterone->stess_increment		= isset($formData['stess_increment'])? $formData['stess_increment']: '';
-		$testosterone->loss_interest		= isset($formData['loss_interest'])? $formData['loss_interest']: '';
-		$testosterone->loose_skin			= isset($formData['loose_skin'])? $formData['loose_skin']: '';
-		$testosterone->exercise_ability		= isset($formData['exercise_ability'])? $formData['exercise_ability']: '';
-		$testosterone->memory_decrement		= isset($formData['memory_decrement'])? $formData['memory_decrement']: '';
-		$testosterone->loss_muscle			= isset($formData['loss_muscle'])? $formData['loss_muscle']: '';
-		$testosterone->endurance			= isset($formData['endurance'])? $formData['endurance']: '';
-		$testosterone->muscle_decrement		= isset($formData['muscle_decrement'])? $formData['muscle_decrement']: '';
-		$testosterone->loss_hair			= isset($formData['loss_hair'])? $formData['loss_hair']: '';
-		$testosterone->sense_decrement		= isset($formData['sense_decrement'])? $formData['sense_decrement']: '';
-		$testosterone->testicle_decrement	= isset($formData['testicle_decrement'])? $formData['']: '';
-		$testosterone->shrinkage			= isset($formData['shrinkage'])? $formData['shrinkage']: '';
-		$testosterone->osteoporosis			= isset($formData['osteoporosis'])? $formData['osteoporosis']: '';
-		$testosterone->intolerance			= isset($formData['intolerance'])? $formData['intolerance']: '';
-		$testosterone->unexplained_weight	= isset($formData['unexplained_weight'])? $formData['unexplained_weight']: '';$testosterone->save();	 
+		$testosterone->lack_increment		= isset($formData['lack_increment'])? 1: '';
+		$testosterone->increase_fat			= isset($formData['increase_fat'])? 1: '';
+		$testosterone->depression			= isset($formData['depression'])? 1: '';
+		$testosterone->mood_increment		= isset($formData['mood_increment'])? 1: '';
+		$testosterone->sleep_difficulty		= isset($formData['sleep_difficulty'])? 1: '';
+		$testosterone->wrinkle_increment	= isset($formData['wrinkle_increment'])? 1: '';
+		$testosterone->sagging_increment	= isset($formData['sagging_increment'])? 1: '';
+		$testosterone->hot_flash			= isset($formData['hot_flash'])? 1: '';
+		$testosterone->loss_activity		= isset($formData['loss_activity'])? 1: '';
+		$testosterone->stess_increment		= isset($formData['stess_increment'])? 1: '';
+		$testosterone->loss_interest		= isset($formData['loss_interest'])? 1: '';
+		$testosterone->loose_skin			= isset($formData['loose_skin'])? 1: '';
+		$testosterone->exercise_ability		= isset($formData['exercise_ability'])? 1: '';
+		$testosterone->memory_decrement		= isset($formData['memory_decrement'])? 1: '';
+		$testosterone->loss_muscle			= isset($formData['loss_muscle'])? 1: '';
+		$testosterone->endurance			= isset($formData['endurance'])? 1: '';
+		$testosterone->muscle_decrement		= isset($formData['muscle_decrement'])? 1: '';
+		$testosterone->loss_hair			= isset($formData['loss_hair'])? 1: '';
+		$testosterone->sense_decrement		= isset($formData['sense_decrement'])? 1: '';
+		$testosterone->testicle_decrement	= isset($formData['testicle_decrement'])? 1: '';
+		$testosterone->shrinkage			= isset($formData['shrinkage'])? 1: '';
+		$testosterone->osteoporosis			= isset($formData['osteoporosis'])? 1: '';
+		$testosterone->intolerance			= isset($formData['intolerance'])? 1: '';
+		$testosterone->unexplained_weight	= isset($formData['unexplained_weight'])? 1: '';
+		$testosterone->save();	 
 		
  		$vitamins = App\Vitamins::firstOrCreate(['patient_id' => $id]);
 		$vitamins->needle_afraid		=  isset($formData['needle_afraid'])? $formData['needle_afraid'] : '';

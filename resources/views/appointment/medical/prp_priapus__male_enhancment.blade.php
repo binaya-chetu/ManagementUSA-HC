@@ -1,3 +1,4 @@
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -43,7 +44,7 @@
                                     {{ Form::label('abnormal_type', 'What Type?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $type = [ 'Unnatural Curve' => 'Unnatural Curve', 'Unusual Shrinkage' => 'Unusual Shrinkage', 'Unusual Appearance' => 'Unusual Appearance', 'Other' => 'Other']; ?>
-                                        {{ Form::select('abnormal_type', ['' => 'Please Select'] + $type, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('abnormal_type', ['' => 'Please Select'] + $type, $priapus ? $priapus->abnormal_type : '', ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +54,7 @@
                                 {{ Form::label('priapus_goal', 'What is your primary Goal By getting the Priapus Shot?', ['class' => 'col-sm-6 control-label']) }}
                                 <div class="col-sm-6">
                                         <?php $goal = [ 'Penile Enlargment' => 'Penile Enlargment', 'Increased Sensetivity' => 'Increased Sensetivity', 'Erectile Dysfuntion Treatment' => 'Erectile Dysfuntion Treatment', 'Peyronies Disease Treatment' => 'Peyronies Disease Treatment']; ?>
-                                        {{ Form::select('priapus_goal', ['' => 'Please Select'] + $goal, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('priapus_goal', ['' => 'Please Select'] + $goal, $priapus ? $priapus->priapus_goal : '', ['class' => 'form-control input']) }}
                                 </div>
                             </div>
                         </div>
@@ -266,6 +267,9 @@
          * ED/PD file javascript code
          */
         $('.abnormalActive').hide();
+		if($("input[name='abnormal']:checked").val() == 1){
+			$('.abnormalActive').show();
+		}
         /** 
          * If patient take the sexual medicine then show the corresponding fields
          *  */

@@ -1,3 +1,4 @@
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -40,7 +41,7 @@
                                     {{ Form::label('kind', 'What Kind?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $kind = [ 'Liposuction ' => 'Liposuction', 'Gastrol Sugery' => 'Gastrol Sugery', 'Laser Enhanced' => 'Laser Enhanced']; ?>
-                                        {{ Form::select('surgeries_kind', ['' => 'Please Select'] + $kind, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('surgeries_kind', ['' => 'Please Select'] + $kind, $weightL? $weightL->surgeries_kind : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@
                                     {{ Form::label('type', 'What type?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $type = [ 'Phentermine ' => 'Phentermine', 'Thyroid' => 'Thyroid', 'testosterone' => 'testosterone', 'Over The Counter Pills' => 'Over The Counter Pills']; ?>
-                                        {{ Form::select('supplement_type', ['' => 'Please Select'] + $type, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('supplement_type', ['' => 'Please Select'] + $type, $weightL? $weightL->supplement_type : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +242,14 @@
 <script>
     $(document).ready(function() {
        $('.surgeriesActive').hide();
+	   if($("input[name='weight_surgeries']:checked").val() == 1){
+		   $('.surgeriesActive').show();
+	   }
+	   
        $('.supplementActive').hide();
+	   if($("input[name='weight_supplement']:checked").val() == 1){
+		   $('.supplementActive').show();
+	   }	   
        /** 
          * If Patient has the weight loss surgeries then show the corresponding fields
          *  */

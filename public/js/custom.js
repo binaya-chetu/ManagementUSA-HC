@@ -421,6 +421,17 @@ $(document).ready(function() {
             }
         });	 
 	})
+	
+	
+	$(document).on('click', '.addMedicineListRow', function(){
+		var clone = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last').clone('true');
+		var lastRow = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last');
+		
+		var n = parseInt(clone.find('td:first').html());
+		n += 1;
+		clone.find('td:first').html(n);
+		clone.insertAfter(lastRow);		
+	});
 });
 
         (function($) {

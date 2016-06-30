@@ -179,42 +179,41 @@
             <table class="table table-bordered mb-none">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Name Of Vitamin Supplement</th>     
                         <th>Dosage in MG</th>  
                         <th>How Often</th>            
-                        <th>Condition Taken For</th> 
+                        <th>Condition Taken For</th>
+						<th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td>{{ Form::text('vitamin_1', null, ['class' => 'form-control input-sm', 'id' => 'vitamin_1', 'placeholder' => 'Suppliment Name', 'data-count' => 1]) }}</td>
+                        <td>{{ Form::text('vitamin_1', null, ['class' => 'form-control input-sm', 'id' => 'vitamin_1', 'placeholder' => 'Suppliment Name', 'data-count' => 1]) }}</td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><a href=""><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
-                        <td>2</td>
+                        <td>{{ Form::text('vitamin_2', null, ['class' => 'form-control input-sm', 'id' => 'vitamin_2', 'placeholder' => 'Suppliment Name', 'data-count' => 2]) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href=""><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
-                        <td>3</td>
+                        <td>{{ Form::text('vitamin_3', null, ['class' => 'form-control input-sm', 'id' => 'vitamin_3', 'placeholder' => 'Suppliment Name', 'data-count' => 3]) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href=""><i class="fa fa-times"></i></a></td>
                     </tr>
                     <tr>
-                        <td>4</td>
+                        <td>{{ Form::text('vitamin_4', null, ['class' => 'form-control input-sm', 'id' => 'vitamin_4', 'placeholder' => 'Suppliment Name', 'data-count' => 4]) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href=""><i class="fa fa-times"></i></a></td>
                     </tr>
                 </tbody>
             </table>
@@ -225,6 +224,7 @@
 <footer class="panel-footer">
     <div class="row">
         <div class="col-md-12 text-right">                        
+            <button class="btn btn-default addMedicineListRow">Add Row</button>
             <button class="btn btn-default closePop">Cancel</button>
         </div>
     </div>
