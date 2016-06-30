@@ -72,19 +72,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('lack_increment', null, $testosterone->lack_increment, ['id' => 'for-lack']) }}
+                                        {{ Form::checkbox('lack_increment', null, $testosterone? $testosterone->lack_increment : null, ['id' => 'for-lack']) }}
                                         {{ Form::label('for-lack', 'Increased Lack of Drive') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('increase_fat', null, $testosterone->increase_fat, ['id' => 'for-fat']) }}
+                                        {{ Form::checkbox('increase_fat', null, $testosterone? $testosterone->increase_fat : null, ['id' => 'for-fat']) }}
                                         {{ Form::label('for-fat', 'Increased Fat Deposits around the abdomen and / or Thighs') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('depression', null, $testosterone->depression, ['id' => 'for-depression']) }}
+                                        {{ Form::checkbox('depression', null, $testosterone? $testosterone->depression : null, ['id' => 'for-depression']) }}
                                         {{ Form::label('for-depression', 'Depression') }}                                         
                                     </div>
                                 </div>
@@ -92,19 +92,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('mood_increment', null, $testosterone->mood_increment, ['id' => 'for-mood']) }}
+                                        {{ Form::checkbox('mood_increment', null, $testosterone? $testosterone->mood_increment : null, ['id' => 'for-mood']) }}
                                         {{ Form::label('for-mood', 'Increasing Mood Swings') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sleep_difficulty', null, $testosterone->sleep_difficulty, ['id' => 'for-sleep']) }}
+                                        {{ Form::checkbox('sleep_difficulty', null, $testosterone? $testosterone->sleep_difficulty : null, ['id' => 'for-sleep']) }}
                                         {{ Form::label('for-sleep', 'Difficulty Sleeping') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('wrinkle_increment', null, $testosterone->wrinkle_increment, ['id' => 'for-wrinkle']) }}
+                                        {{ Form::checkbox('wrinkle_increment', null, $testosterone? $testosterone->wrinkle_increment : null, ['id' => 'for-wrinkle']) }}
                                         {{ Form::label('for-wrinkle', 'Increasing Wrinkles') }}                                         
                                     </div>
                                 </div>
@@ -112,19 +112,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sagging_increment', null, $testosterone->sagging_increment, ['id' => 'for-sagging']) }}
+                                        {{ Form::checkbox('sagging_increment', null, $testosterone? $testosterone->sagging_increment : null, ['id' => 'for-sagging']) }}
                                         {{ Form::label('for-sagging', 'Increasing sagging muscles or breasts.') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('hot_flash', null, $testosterone->hot_flash, ['id' => 'for-flash']) }}
+                                        {{ Form::checkbox('hot_flash', null, $testosterone? $testosterone->hot_flash : null, ['id' => 'for-flash']) }}
                                         {{ Form::label('for-flash', 'Hot Flashes') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_activity', null, $testosterone->loss_activity, ['id' => 'for-loss_activity']) }}
+                                        {{ Form::checkbox('loss_activity', null, $testosterone? $testosterone->loss_activity : null, ['id' => 'for-loss_activity']) }}
                                         {{ Form::label('for-loss_activity', 'Loss of concentration, sociability, and activity.') }}                                         
                                     </div>
                                 </div>
@@ -133,19 +133,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('stess_increment', null, $testosterone->stess_increment, ['id' => 'for-stess']) }}
+                                        {{ Form::checkbox('stess_increment', null, $testosterone? $testosterone->stess_increment : null, ['id' => 'for-stess']) }}
                                         {{ Form::label('for-stess', 'Increasingly stessed') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_interest', null, $testosterone->loss_interest, ['id' => 'for-loss_interest']) }}
+                                        {{ Form::checkbox('loss_interest', null, $testosterone? $testosterone->loss_interest : null, ['id' => 'for-loss_interest']) }}
                                         {{ Form::label('for-loss_interest', 'Loss of interest in Sex') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loose_skin', null, $testosterone->loose_skin, ['id' => 'for-loose_skin']) }}
+                                        {{ Form::checkbox('loose_skin', null, $testosterone? $testosterone->loose_skin : null, ['id' => 'for-loose_skin']) }}
                                         {{ Form::label('for-loose_skin', 'Sagging or Loose Skin') }}                                         
                                     </div>
                                 </div>
@@ -153,19 +153,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('exercise_ability', null, $testosterone->exercise_ability, ['id' => 'for-ability']) }}
+                                        {{ Form::checkbox('exercise_ability', null, $testosterone? $testosterone->exercise_ability : null, ['id' => 'for-ability']) }}
                                         {{ Form::label('for-ability', 'Decreased desire and ability to exercise') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('memory_decrement', null, $testosterone->memory_decrement, ['id' => 'for-memory_decrement']) }}
+                                        {{ Form::checkbox('memory_decrement', null, $testosterone? $testosterone->memory_decrement : null, ['id' => 'for-memory_decrement']) }}
                                         {{ Form::label('for-memory_decrement', 'Decreasing memory') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_muscle', null, $testosterone->loss_muscle, ['id' => 'for-muscle']) }}
+                                        {{ Form::checkbox('loss_muscle', null, $testosterone? $testosterone->loss_muscle : null, ['id' => 'for-muscle']) }}
                                         {{ Form::label('for-muscle', 'Muscle loss') }}                                         
                                     </div>
                                 </div>
@@ -173,19 +173,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('endurance', null, $testosterone->endurance, ['id' => 'for-endurance']) }}
+                                        {{ Form::checkbox('endurance', null, $testosterone? $testosterone->endurance : null, ['id' => 'for-endurance']) }}
                                         {{ Form::label('for-endurance', 'Decreased energy or endurance') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('muscle_decrement', null, $testosterone->muscle_decrement, ['id' => 'for-muscle_decrement']) }}
+                                        {{ Form::checkbox('muscle_decrement', null, $testosterone? $testosterone->muscle_decrement : null, ['id' => 'for-muscle_decrement']) }}
                                         {{ Form::label('for-muscle_decrement', 'Decreasing muscle strength') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_hair', null, $testosterone->loss_hair, ['id' => 'for-loss_hair']) }}
+                                        {{ Form::checkbox('loss_hair', null, $testosterone? $testosterone->loss_hair : null, ['id' => 'for-loss_hair']) }}
                                         {{ Form::label('for-loss_hair', 'Thinning or loss of hair') }}                                         
                                     </div>
                                 </div>
@@ -193,19 +193,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sense_decrement', null, $testosterone->sense_decrement, ['id' => 'for-sense_decrement']) }}
+                                        {{ Form::checkbox('sense_decrement', null, $testosterone? $testosterone->sense_decrement : null, ['id' => 'for-sense_decrement']) }}
                                         {{ Form::label('for-sense_decrement', 'Decreased sense of well-being') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('testicle_decrement', null, $testosterone->testicle_decrement, ['id' => 'for-testicle_decrement']) }}
+                                        {{ Form::checkbox('testicle_decrement', null, $testosterone? $testosterone->testicle_decrement : null, ['id' => 'for-testicle_decrement']) }}
                                         {{ Form::label('for-testicle_decrement', 'Decreasing Size of Testicles') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('shrinkage', null, $testosterone->shrinkage, ['id' => 'for-shrinkage']) }}
+                                        {{ Form::checkbox('shrinkage', null, $testosterone? $testosterone->shrinkage : null, ['id' => 'for-shrinkage']) }}
                                         {{ Form::label('for-shrinkage', 'Penis Shrinkage / Urogenital Atrophy') }}                                         
                                     </div>
                                 </div>
@@ -213,19 +213,19 @@
                         <div class="col-sm-12">
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('osteoporosis', null, $testosterone->osteoporosis, ['id' => 'for-osteoporosis']) }}
+                                        {{ Form::checkbox('osteoporosis', null, $testosterone? $testosterone->osteoporosis : null, ['id' => 'for-osteoporosis']) }}
                                         {{ Form::label('for-osteoporosis', 'Progressive osteoporosis, decreasing bone mass or stooped posture') }}                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('intolerance', null, $testosterone->intolerance, ['id' => 'for-intolerance']) }}
+                                        {{ Form::checkbox('intolerance', null, $testosterone ? $testosterone->intolerance : null, ['id' => 'for-intolerance']) }}
                                         {{ Form::label('for-intolerance', 'Cold or Heat Intolerance') }}                                         
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('unexplained_weight', null, $testosterone->unexplained_weight, ['id' => 'for-unexplained_weight']) }}
+                                        {{ Form::checkbox('unexplained_weight', null, $testosterone? $testosterone->unexplained_weight : null, ['id' => 'for-unexplained_weight']) }}
                                         {{ Form::label('for-unexplained_weight', 'Unexplained Weight Gain or Weight Loss') }}                                         
                                     </div>
                                 </div>
