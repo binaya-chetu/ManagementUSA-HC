@@ -22,7 +22,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting'  ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Appt. Settings</span>
@@ -49,58 +49,6 @@
                                     Direct Walkins
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                    <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
-                    <li class="nav-parent {{ Request::segment(1) === 'patient' || 
-                                Request::segment(1) === 'doctor' || 
-                                Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
-                        <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>POS System</span>
-                        </a>
-                        <ul class="nav nav-children">
-                            @if(in_array('patient_module', $permissions))
-                            <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
-                                <a>
-                                    Patients
-                                </a>
-                                <ul class="nav nav-children">
-                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
-                                        <a href="/patient/addpatient">
-                                            New Patient
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
-                                        <a href="/patient">
-                                            List Patients
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            @endif
-                            @if(in_array('doctor_module', $permissions)) 
-				<li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
-                                <a>
-                                    Doctor
-                                </a>
-                                <ul class="nav nav-children">
-                                   
-                                   <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/doctor/addDoctor') }}">
-                                            New Doctor
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
-                                        <a href="/doctor">
-                                            List Doctor
-                                        </a>
-                                    </li>
-
-                                </ul>
-                           </li>
-                            @endif
-
                             @if(in_array('appointment_module', $permissions))
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
@@ -110,11 +58,11 @@
                                 </a>
                                 <ul class="nav nav-children">
 
-                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
+<!--                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('/appointment/newAppointment') }}">
                                             New Appointment
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('appointment/listappointment') }}">
                                             List Appointments
@@ -145,6 +93,64 @@
                                     Today Visits
                                 </a>
                             </li>
+                            <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/labAppointments') }}">
+                                    Lab Appointments
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
+                    <li class="nav-parent {{ Request::segment(1) === 'patient' || 
+                                Request::segment(1) === 'doctor' || 
+                                Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>POS System</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            @if(in_array('patient_module', $permissions))
+                            <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
+                                <a>
+                                    Patients
+                                </a>
+                                <ul class="nav nav-children">
+<!--                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
+                                        <a href="/patient/addpatient">
+                                            New Patient
+                                        </a>
+                                    </li>-->
+                                    <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
+                                        <a href="/patient">
+                                            List Patients
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endif
+                            @if(in_array('doctor_module', $permissions)) 
+				<li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
+                                <a>
+                                    Doctor
+                                </a>
+                                <ul class="nav nav-children">
+                                   
+                                   <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/doctor/addDoctor') }}">
+                                            New Doctor
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
+                                        <a href="/doctor">
+                                            List Doctor
+                                        </a>
+                                    </li>
+
+                                </ul>
+                           </li>
+                            @endif
+
+                            
                         </ul>
                     </li>
                     <?php } ?>

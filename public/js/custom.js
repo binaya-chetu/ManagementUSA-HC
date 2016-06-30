@@ -556,18 +556,17 @@ $('#patient_id').on('change', function(){
             });
         });
 $(document).on("click", ".patient_status", function(event) {
-        event.preventDefault();
-        
-        var appointmentId = $('#appointment_id').val();       
-        $('#followup_appointment_id').val(appointmentId);
+        event.preventDefault();        
+        var appointmentId = $(this).attr('rel');       
+        $('#patient_appt_id').val(appointmentId);
         // If popup close first time & open another time then unset the previous option for followup
-        $('input:radio[name="action"]').removeAttr('checked');
-        $('#showOnSchedule').hide();
-        $.magnificPopup.close();
+       // $('input:radio[name="action"]').removeAttr('checked');
+        //$('#showOnSchedule').hide();
         $.magnificPopup.open({
             items: {
-                src: '#modal-followup-status',
+                src: '#modal-change-patient-status',
                 type: 'inline'
             }
         });
     });
+    $('#changeStatus').validate();
