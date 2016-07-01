@@ -13,51 +13,65 @@ use Session;
 use App;
 use Auth;
 
-class ProductsController extends Controller
-{
-	protected $success = false;
-	
-	public function saveProducts(Request $request){
-		$data = Input::all();
+class ProductsController extends Controller {
+
+    protected $success = false;
+
+    public function saveProducts(Request $request) {
+        $data = Input::all();
         $messages = [
             'mimes' => 'Please upload a valid excel file'
         ];
 
         $validator = Validator::make($data, [
-			'productFile' =>'required|mimes:xls,xlsx'
-		], $messages);
+                    'productFile' => 'required|mimes:xls,xlsx'
+                        ], $messages);
 
         if ($validator->fails()) {
             return Redirect::to('/products/addproducts')->withInput()->withErrors($validator->errors());
-        }		
-
- 		\Excel::load($data['productFile']->getPathname(), function($reader) {
-			// Getting all results
-			$productList = $reader->select(array('name', 'unit_of_measurement', 'price'))->get()->toArray();
-			$list = [];
-			foreach($productList as $i => $n){
- 				if(!isset($n['name']) || !isset($n['price']) || !isset($n['unit_of_measurement']) || empty($n['name']) || empty($n['price'])){
-					unset($productList[$i]);
-				}			
-			}
-		
-			if(!empty($productList)){
-				$this->success = Product::insert($productList);
-			}
-		});
-		if($this->success){
-			Session::flash('success_message', 'Products added successfully.');
-		} else{
-			Session::flash('error_message', 'Products not added successfully. Please try again.');
-		}
-		return redirect()->back();
-	}
-	
-    public function addproducts(){
-        return view('products.add_products');
-	}
-        
-        public function generateInvoice(){
-            return view('products.invoice');
         }
+
+        \Excel::load($data['productFile']->getPathname(), function($reader) {
+            // Getting all results
+            $productList = $reader->select(array('name', 'unit_of_measurement', 'price'))->get()->toArray();
+            $list = [];
+            foreach ($productList as $i => $n) {
+                if (!isset($n['name']) || !isset($n['price']) || !isset($n['unit_of_measurement']) || empty($n['name']) || empty($n['price'])) {
+                    unset($productList[$i]);
+                }
+            }
+
+            if (!empty($productList)) {
+                $this->success = Product::insert($productList);
+            }
+        });
+        if ($this->success) {
+            Session::flash('success_message', 'Products added successfully.');
+        } else {
+            Session::flash('error_message', 'Products not added successfully. Please try again.');
+        }
+        return redirect()->back();
+    }
+
+    public function addproducts() {
+        return view('products.add_products');
+    }
+
+    public function generateInvoice() {
+        return view('products.invoice');
+    }
+    public function emailInvoice($user){
+        //$input = Input::all();
+        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
+        {
+            $message->to('mail@domain.net');
+            $message->subject('Welcome to Laravel');
+            $message->from('sender@domain.net');
+            $message->attach('path_to_pdf_file', array(
+                'as' => 'pdf-report.zip', 
+                'mime' => 'application/pdf')
+            );
+        });
+    }
+
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReasonCodesTable extends Migration
+class CreateAppointmentReasonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreateReasonCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('reason_codes', function (Blueprint $table) {
+        Schema::create('appointment_reasons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reason');  
-            $table->tinyInteger('type')->comment('1=> Set, 2=> No Set');
-            $table->timestamps();           
+            $table->integer('patient_id');  
+            $table->integer('reason_id');            
+            $table->timestamps();
         });
     }
 

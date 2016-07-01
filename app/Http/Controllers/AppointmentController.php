@@ -388,11 +388,9 @@ class AppointmentController extends Controller {
     */
     public function patientMedical($id = null, $hash = null) {
         $id = base64_decode($id);
-		$hash = $hash;
-						
+		$hash = $hash;		
 		$patient = User::with('patientDetail')->find($id);
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
-
 		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
 		$erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
 		$weightL = DB::table('weight_loss')->where('patient_id', $id)->first();

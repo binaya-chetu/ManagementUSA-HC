@@ -18,7 +18,7 @@ class CreateAppointmentFollowupsTable extends Migration
             $table->integer('reason_id'); 
             $table->tinyInteger('appt_type')->default(0)->comment('1=>Web_leads, 2=> Marketing calls');            
             $table->string('comment');  
-            $table->date('followup_date');
+            $table->dateTime('followup_date');
             $table->tinyInteger('followup_status')->comment('0=> Not Show , 1=>Show in Listing');  
             $table->tinyInteger('status')->comment('1=>Set, 2=>No Set');            
             $table->timestamps();

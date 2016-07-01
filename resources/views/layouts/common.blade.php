@@ -40,6 +40,9 @@
 
         <!-- Theme Custom CSS -->
         <link rel="stylesheet" href="{{ URL::asset('css/theme-custom.css') }}">
+        
+          <!-- Theme Custom for print CSS -->
+          <link rel="stylesheet" href="{{ URL::asset('css/theme-print.css') }}" media="print" rel = "stylesheet">
 
         <!-- Head Libs -->
 

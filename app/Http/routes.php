@@ -455,5 +455,27 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'categories.savecategories',
 			//'middleware' => ['acl:save_categories']	
 
-	]);	
+	]);
+        
+        /*
+         * for invoice section
+         */
+        Route::post('/products/generateInvoice', [
+        'uses' => 'ProductsController@generateInvoice',
+        'as' => 'products.generateInvoice',
+            //'middleware' => ['acl:save_categories']	
+    ]);
+        
+        /*
+         * for sending email with invoice
+         */
+    
+            Route::get('pdf/{invoice_id}', function($invoice_id) {
+            $item = [
+
+                'items' => App\Products::all(),
+                'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
+            ];
+            return PDF::loadView('invoices.pdf5', $factory)->stream();
+        });
 });

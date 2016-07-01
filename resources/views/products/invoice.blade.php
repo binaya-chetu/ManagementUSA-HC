@@ -1,79 +1,8 @@
 @extends('layouts.common')
 
 @section('content')
-<style type="text/css">
-/*----------------------------------------------------------------------*/
-/* Print Styles
-/*----------------------------------------------------------------------*/
 
-@media print {
-	 * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
-	-ms-filter: none !important; } /* Black prints faster: sanbeiji.com/archives/953 */
-	a, a:visited { color: #444 !important; text-decoration: underline; }
-	a[href]:after { content: " (" attr(href) ")"; }
-	abbr[title]:after { content: " (" attr(title) ")"; }
-	.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
-	pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
-	thead { display: table-header-group; } /* css-discuss.incutio.com/wiki/Printing_Tables */
-	tr, img { page-break-inside: avoid; }
-	@page { margin: 0.5cm; }
-	p, h2, h3 { orphans: 3; widows: 3; }
-	h2, h3{ page-break-after: avoid; }
-	hr { border-top:1px solid #000 !important;border-bottom:0 !important; }
-	
-	#documenter_sidebar{
-		-moz-box-shadow:none;
-		-webkit-box-shadow:none;
-		box-shadow:none;
-		position:absolute;
-		left:10px;
-		top:0;
-		width:100%;
-		margin-top:500px;
-	}
-	#documenter_sidebar ul:before { content: "Table of Contents"; }
-	
-	#documenter_sidebar ul{
-		border:0 !important;
-	}
-	#documenter_sidebar ul li{
-		border:0 !important;
-		text-align:left;
-	}
-	#documenter_sidebar ul li a{
-		border:0 !important;
-		text-align:left;
-		padding:4px;
-	}
-	#documenter_sidebar ul li a:hover{
-		border:0 !important;
-	}
-	#documenter_sidebar #documenter_logo{
-		display:none;
-	}
-	#documenter_sidebar #documenter_copyright{
-		display:none;
-	}
-	#documenter_content{
-		left:10px;
-	}
-	#documenter_cover{
-		margin-bottom:300px;
-	}
-	#documenter_content .warning{
-		background-image:url(img/warning.png) !important;
-		background-repeat:no-repeat !important;
-		background-position: 8px 11px !important;
-	}
-	#documenter_content .info{
-		background-image:url(img/info.png) !important;
-		background-repeat:no-repeat !important;
-		background-position: 8px 11px !important;
-	}
-    
-}
-    </style>
-<section role="main" class="content-body">
+<section role="main" class="content-body" id = "printable">
     <header class="page-header">
         <h2>Invoice</h2>
     </header>
@@ -183,21 +112,6 @@
                                 <td class="text-center">$1.00</td>
                                 <td class="text-center">$5.00</td>
                             </tr>
-<!--                              <tr>
-                                <td> Doctor Office Visits During Membership</td>
-                                <td class="text-weight-semibold text-dark">INJ</td>
-                                <td>40</td>
-                                <td class="text-center">$55.00</td>
-                                <td class="text-center">$2,200.00</td>
-                            </tr>
-                            <tr>
-                                <td> Allowable Trimix Diagnostic Re-Doses During Membership Period	</td>
-                                <td class="text-weight-semibold text-dark">INJ</td>
-                                <td>15</td>
-                                <td class="text-center">$55.00</td>
-                                <td class="text-center">$825.00</td>
-                            </tr>-->
-
                         </tbody>
                     </table>
                 </div>
@@ -228,7 +142,7 @@
             {{ Form::open(array('url' => '/apptsetting/saveApptFollowup', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
             <div class="panel-body">
                 <div class="form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="email_invoice_container">
                         {{ Form::checkbox('email_envoice',null, false, ['class' => 'email_invoice','id' =>'email_invoice','onCheck' => 'send_email' ]) }}
                         {{ Form::label('email_envoice', 'Email envoice', array('class' => 'col-sm-4')) }}
                     </div>
@@ -236,10 +150,9 @@
 
 
                 </div>
-
             </div>
             {{ Form::close() }}
-            <div class="text-right mr-lg">
+            <div class="text-right mr-lg" id = "print-button">
                 <a href="#" id ="print_invoice" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
             </div>
         </div>
