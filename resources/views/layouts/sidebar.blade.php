@@ -22,7 +22,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting'  ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Appt. Settings</span>
@@ -49,11 +49,13 @@
                                     Direct Walkins
                                 </a>
                             </li>
+
                             <li class="{{ Request::segment(4) === 'requestFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/requestFollowUp') }}">
                                    Request Follow-up
                                 </a>
                             </li>
+
                             @if(in_array('appointment_module', $permissions))
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
@@ -81,6 +83,29 @@
                                 </ul>
                             </li>
                             @endif
+
+                            @if(in_array('follow_up_appointment_module', $permissions))
+                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/followup') }}">
+                                    Follow-up Appointment
+                                </a>
+                            </li>
+                            @endif
+                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/upcomingappointments') }}">
+                                    Upcoming Appointments
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/todayVisits') }}">
+                                    Today Visits
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/labAppointments') }}">
+                                    Lab Appointments
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
@@ -132,7 +157,6 @@
                                 </ul>
                            </li>
                             @endif
-
                            
                             @if(in_array('follow_up_appointment_module', $permissions))
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
@@ -151,6 +175,7 @@
                                     Today Visits
                                 </a>
                             </li>
+
                         </ul>
                     </li>
                     <?php } ?>

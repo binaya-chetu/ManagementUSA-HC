@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Today Visits</h2>
+        <h2>Lab Appointments</h2>
         <div class="right-wrapper pull-right">
             <ol class="breadcrumbs">
                 <li>
@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li>                    
-                    <span>Today Visits</span>                   
+                    <span>Lab Appointment</span>                   
                 </li>
             </ol>
 
@@ -30,7 +30,7 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
 
-            <h2 class="panel-title">Today Visits</h2>
+            <h2 class="panel-title">Lab Appointments</h2>
         </header>
         <div class="panel-body">
             <div class="row">
@@ -45,20 +45,20 @@
                         <th>App Date and Time</th>
                         <th>Patient</th>                        
                         <th>Source</th>
-                        <th>Reason for Visit</th>
+                        <th>Reason of visit</th>
                         <th>Patient status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1; ?>
+                    <?php $i=1; ?>
                     @foreach ($appointments as $appointment)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-
+                        
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {
@@ -89,9 +89,7 @@
                                 }
                                 ?></div></td>
                         <td class="actions">                            
-                            @if($appointment->patient_status < 2)
-                                <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
-                            @endif
+                            <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
                         </td>
                     </tr>
@@ -112,7 +110,7 @@
             <div class="form-group">
                 {{ Form::label('status', 'patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
-                    <?php $states = ['1' => 'Show', '2' => 'Send to Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
+                    <?php $states = [ '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}

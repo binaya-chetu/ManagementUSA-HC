@@ -1,3 +1,4 @@
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -5,7 +6,7 @@
                 <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
             </div>
             <h2 class="panel-title">IV Vitamin Therapy</h2>
-        </header>
+        </header>		
         <div class="panel-body">
             <div class="tabs tabs-primary">
                 <ul class="nav nav-tabs">
@@ -16,6 +17,7 @@
                         <a href="#vitamin_treatment" data-toggle="tab">Treatment Questions</a>
                     </li>                    
                 </ul>
+			
                 <div class="tab-content">
                     <div id="vitamin_beginning" class="tab-pane active">
                         <div class="col-sm-12 inputRow">
@@ -41,18 +43,19 @@
                                     {{ Form::label('afraid_limit', 'How Afraid?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $limit = [ 'Very ' => 'Very', 'Somewhat' => 'Somewhat', 'just a little' => 'just a little']; ?>
-                                        {{ Form::select('afraid_limit', ['' => 'Please Select'] + $limit, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('afraid_limit', ['' => 'Please Select'] + $limit, $vitamins? $vitamins->afraid_limit : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
                         </div>
+					
                         <div class="col-sm-12 inputRow">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     {{ Form::label('injectable_type', 'What are you seeking from IV or Injectable Vitamin Therapy?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $type = [ 'Wellness ' => 'Wellness', 'Pain Management' => 'Pain Management', 'Anti-aging' => 'Anti-aging', 'Wound Healing' => 'Wound Healing', 'Preventative Care' => 'Preventative Care']; ?>
-                                        {{ Form::select('injectable_type', ['' => 'Please Select'] + $type, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('injectable_type', ['' => 'Please Select'] + $type, $vitamins? $vitamins->injectable_type : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>                              
                             </div>
@@ -61,7 +64,7 @@
                                     {{ Form::label('total_wellness', 'How do you feel about your total wellness?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $wellness = [ 'Poor ' => 'Poor', 'Ok' => 'Ok', 'Good' => 'Good', 'Great' => 'Great']; ?>
-                                        {{ Form::select('total_wellness', ['' => 'Please Select'] + $wellness, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('total_wellness', ['' => 'Please Select'] + $wellness, $vitamins? $vitamins->total_wellness : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +92,7 @@
                                     {{ Form::label('knowledge', 'How Much do you know about testosterone and how they work in your body?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $knowledge = [ 'Nothing' => 'Nothing', 'Very Little' => 'Very Little', 'Some' => 'Some', 'Expert' => 'Expert']; ?>
-                                        {{ Form::select('vitamin_knowledge', ['' => 'Please Select'] + $knowledge, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('vitamin_knowledge', ['' => 'Please Select'] + $knowledge, $vitamins? $vitamins->vitamin_knowledge : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -158,6 +161,9 @@
 <script>
     $(document).ready(function() {
         $('.needleAfraidActive').hide();
+		if($("input[name='needle_afraid']:checked").val() == 1){
+			$('.needleAfraidActive').show();
+		}
         /** 
          * If Patient has the weight loss surgeries then show the corresponding fields
          *  */

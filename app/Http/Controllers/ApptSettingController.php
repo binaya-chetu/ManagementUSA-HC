@@ -10,9 +10,9 @@ use App\User;
 use App\WebLead;
 use App\AppointmentRequest;
 use App\AppointmentSource;
+use App\AppointmentReason;
 use App\ReasonCode;
 use App\AppointmentFollowup;
-use App\Disease;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -48,24 +48,10 @@ class ApptSettingController extends Controller {
     public function index($value = null) {
         $patients = AppointmentRequest::groupBy('first_name')->get(['id', 'first_name', 'last_name', 'email']);
         $resources = AppointmentSource::lists('name', 'id');
-        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
-        $diseases = Disease::lists('title', 'id')->toArray();
+        $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+        $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
         return view('apptsetting.index', [
-            'value' => $value, 'patients' => $patients, 'resources' => $resources, 'reasonCode' => $reasonCode, 'diseases' => $diseases
-        ]);
-    }
-
-    /**
-     * Listing all the Call List from the Api
-     *
-     * @return \resource\view\apptsetting\call_list
-     */
-    public function marketingCall() {
-        $patients = AppointmentRequest::get(['id', 'first_name', 'last_name', 'email']);
-        $resources = AppointmentSource::lists('name', 'id');
-        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
-        return view('apptsetting.marketing_call', [
-            'reasonCode' => $reasonCode, 'patients' => $patients, 'resources' => $resources
+            'value' => $value, 'patients' => $patients, 'resources' => $resources, 'noSetReasonCode' => $noSetReasonCode, 'setReasonCode' => $setReasonCode
         ]);
     }
 
@@ -201,8 +187,6 @@ class ApptSettingController extends Controller {
         return ['response' => true, 'msg' => $url];
     }
 
-	
-
     /*
      * Common function to save the Followup with the patient details from Webleads & Telemarketing calls
      * 
@@ -212,12 +196,13 @@ class ApptSettingController extends Controller {
      */
 
     public function saveApptFollowup(Request $request) {
-       
+        //echo '<pre>';print_r($request->all());die;
         $apptRequest = new AppointmentRequest;
         $apptRequest->appt_source = $request->appt_source;
         $apptRequest->comment = $request->comment;
         $apptRequest->created_by = $request->created_by;
         $apptRequest->status = $request->status;
+        $apptRequest->reason_id = $request->reason_id;
         $apptRequest->created_at = date('Y-m-d H:i:s', strtotime($request->created . " " . $request->created_time));
         if(isset($request->marketing_phone)){
             $apptRequest->marketing_phone = $request->marketing_phone;
@@ -228,10 +213,9 @@ class ApptSettingController extends Controller {
             if (isset($request->email_invitation)) {
                 $apptRequest->email_invitation = 1;  
             }
-            $apptRequest->reason_id = $request->disease_id;
+            
         } else { 
-        // Case of NO Set for the Appointment request
-            $apptRequest->reason_id = $request->reason_id;
+        // Case of NO Set for the Appointment request            
             if (isset($request->followup_status)) {
                 //$apptRequest->followup_date = date('Y-m-d', strtotime($request->followup_date));
                 $apptRequest->followup_date = date('Y-m-d', strtotime('+7 days'));
@@ -243,8 +227,7 @@ class ApptSettingController extends Controller {
         }
         // Case of selecting patient from drop down 
         if (!empty($request->patient_id)) {            
-            $requestPatient = AppointmentRequest::find($request->patient_id);
-            
+            $requestPatient = AppointmentRequest::find($request->patient_id);            
             $apptRequest->first_name = $requestPatient->first_name;
             $apptRequest->last_name = $requestPatient->last_name;
             $apptRequest->email = $requestPatient->email;
@@ -256,8 +239,7 @@ class ApptSettingController extends Controller {
             }
             $apptRequest->save();
             /* save the data in user, patient_detail, appointment with Set status */
-            if ($request->status == '1') {
-               
+            if ($request->status == '1') {               
                 // If already appointment request email exist or not                
                  if(!empty($requestPatient->email)){
                     $user = User::where('email', $requestPatient->email)
@@ -281,7 +263,6 @@ class ApptSettingController extends Controller {
                     if (isset($request->dob)) {
                         $patient->dob = date('Y-m-d', strtotime($request->dob));
                     }
-
                     $patient->hash = $this->getPatientHash($patient->user_id);
                     $user->hash = $patient->hash;
                                                                                 
@@ -299,8 +280,11 @@ class ApptSettingController extends Controller {
                 $appointment->appt_source = $request->appt_source;
                 $appointment->request_id = $apptRequest->id;
                 $appointment->comment = $request->comment;     
-                $appointment->disease_id = $request->disease_id;
                 $appointment->save();
+                $apptReason = new AppointmentReason();
+                $apptReason->reason_id = $request->reason_id;
+                $apptReason->patient_id = $user->id;
+                $apptReason->save();
             }
         } else {
              
@@ -356,9 +340,12 @@ class ApptSettingController extends Controller {
                 $appointment->createdBy = Auth::user()->id;
                 $appointment->appt_source = $request->appt_source;
                 $appointment->request_id = $apptRequest->id;
-                $appointment->comment = $request->comment;
-                $appointment->disease_id = $request->disease_id;
+                $appointment->comment = $request->comment;                
                 $appointment->save();
+                $apptReason = new AppointmentReason();
+                $apptReason->reason_id = $request->reason_id;
+                $apptReason->patient_id = $user->id;
+                $apptReason->save();
            }
         }
         if ($request->status == '1') {

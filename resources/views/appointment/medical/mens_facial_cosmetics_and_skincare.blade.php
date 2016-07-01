@@ -1,3 +1,4 @@
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -41,7 +42,7 @@
                                     {{ Form::label('facial_kind', 'What kind?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $kind = [ 'Botox/Fillers' => 'Botox/Fillers', 'Plastic Sugery' => 'Plastic Sugery', 'Spa Facials' => 'Spa Facials']; ?>
-                                        {{ Form::select('facial_kind', ['' => 'Please Select'] + $kind, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('facial_kind', ['' => 'Please Select'] + $kind, $cosmetics ? $cosmetics->facial_kind:null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +53,7 @@
                                     {{ Form::label('face_wash', 'What Do you wash your face with?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $type = [ 'Whatevers On Sale' => 'Whatevers On Sale', 'Basic Soap' => 'Basic Soap', 'Specialty Soap' => 'Specialty Soap', 'Skincare Product' => 'Skincare Product']; ?>
-                                        {{ Form::select('face_wash', ['' => 'Please Select'] + $type, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('face_wash', ['' => 'Please Select'] + $type, $cosmetics ? $cosmetics->face_wash:null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>                              
                             </div>
@@ -61,7 +62,7 @@
                                     {{ Form::label('exposure', 'How Much Exposure do you have to the sun?  (Consider Work, Recreation, and Daily life)', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $exposure = [ 'A lot' => 'A lot', 'Fair Amount' => 'Fair Amount', 'Average' => 'Average', 'Very Little' => 'Very Little']; ?>
-                                        {{ Form::select('exposure', ['' => 'Please Select'] + $exposure, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('exposure', ['' => 'Please Select'] + $exposure, $cosmetics ? $cosmetics->exposure : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +73,7 @@
                                     {{ Form::label('skin_look', 'Choose the way you feel about how you feel your skin looks.', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $type = [ 'Leathery' => 'Leathery', 'Sun Damaged' => 'Sun Damaged', 'Old and loose' => 'Old and loose', 'Looks Great' => 'Looks Great']; ?>
-                                        {{ Form::select('skin_look', ['' => 'Please Select'] + $type, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('skin_look', ['' => 'Please Select'] + $type, $cosmetics ? $cosmetics->skin_look : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>                              
                             </div>
@@ -81,7 +82,7 @@
                                     {{ Form::label('look_score', 'On a Scale of 1-10  (10 Being Very Important) How Important is it for you to look good for work, dating, spouse, or Just for your personel confidence?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $scale = commonScale(); ?>
-                                        {{ Form::select('look_score', ['' => 'Please Select'] + $scale, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('look_score', ['' => 'Please Select'] + $scale, $cosmetics ? $cosmetics->look_score : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@
                                 <div class="form-group">
                                     {{ Form::label('happy_score', 'On a Scale of 1-10  (10 Being Very Happy) How Happy Are you with the way you look?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
-                                        {{ Form::select('happy_score', ['' => 'Please Select'] + $scale, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('happy_score', ['' => 'Please Select'] + $scale, $cosmetics ? $cosmetics->happy_score : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>                              
                             </div>                            
@@ -264,6 +265,9 @@
 <script>
     $(document).ready(function() {
         $('.facialActive').hide();
+		if($("input[name='facial_surgeries']:checked").val() == 1){
+			$('.facialActive').show();
+		}
         /** 
          * If Patient has the facial surgeries then show the corresponding fields
          *  */

@@ -1,3 +1,4 @@
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -39,11 +40,11 @@
                         </div>
                         <div class="col-sm-12 inputRow selectSex">
                             <div class="col-sm-6">
-                                <div class="form-group">
+                                <div class="form-group">								
                                     {{ Form::label('sex_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $often = [ 'Weekly' => 'Weekly', 'Monthly' => 'Monthly', 'Less Than Monthly' => 'Less Than Monthly']; ?>
-                                        {{ Form::select('sex_often', ['' => 'Please Select'] + $often, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('sex_often', ['' => 'Please Select'] + $often, $erectileD? $erectileD->sex_often : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +53,7 @@
                                     {{ Form::label('with', 'With Who?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6">
                                         <?php $who = [ 'Spouse' => 'Spouse', 'Girlfriend' => 'Girlfriend', 'Casual Date' => 'Casual Date']; ?>
-                                        {{ Form::select('sex_with', ['' => 'Please Select'] + $who, null, ['class' => 'form-control input']) }}
+                                        {{ Form::select('sex_with', ['' => 'Please Select'] + $who, $erectileD? $erectileD->sex_with : null, ['class' => 'form-control input']) }}
                                     </div>
                                 </div>
                             </div>
@@ -289,7 +290,7 @@
                                         {{ Form::label('medicine_name', 'Which One?', ['class' => 'col-sm-6 control-label']) }}
                                         <div class="col-sm-6 toggle-radio-custom">
                                             <?php $name = [ 'Viegra' => 'Viegra', 'Levitra' => 'Levitra', 'Cialis' => 'Cialis', 'One or more' => 'One or More']; ?>
-                                            {{ Form::select('medicine_name', ['' => 'Please Select'] + $name, null, ['class' => 'form-control input']) }}                                    
+                                            {{ Form::select('medicine_name', ['' => 'Please Select'] + $name, $erectileD? $erectileD->medicine_name : null, ['class' => 'form-control input']) }}                                    
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +321,7 @@
                                                 '2.5 years' => '2.5 years', '3 years' => '3 years', '3.5 years' => '3.5 years', '4 years' => '4 years', '4.5 years' => '4.5 years', '5 years' => '5 years',
                                                 '5.5 years' => '5.5 years', '6 years' => '6 years', '6.5 years' => '6.5 years', '7 years' => '7 years', '7.5 years' => '7.5 years', '8 years' => '8 years', '8.5 years' => '8.5 years', '9 years' => '9 years', '9.5 years' => '9.5 years', '10 years' => '10 years'];
                                             ?>
-                                            {{ Form::select('last_used', ['' => 'Please Select'] + $lastTime, null, ['class' => 'form-control input']) }}                                    
+                                            {{ Form::select('last_used', ['' => 'Please Select'] + $lastTime, $erectileD? $erectileD->last_used : null, ['class' => 'form-control input']) }}                                    
                                         </div>
                                     </div>
                                 </div>
@@ -329,7 +330,7 @@
                                         {{ Form::label('still_work', 'Does it still Work?', ['class' => 'col-sm-6 control-label']) }}                                        
                                         <div class="col-sm-6 toggle-radio-custom">
                                             <?php $work = [ 'Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally']; ?>
-                                            {{ Form::select('still_work', ['' => 'Please Select'] + $work, null, ['class' => 'form-control input']) }}                                    
+                                            {{ Form::select('still_work', ['' => 'Please Select'] + $work, $erectileD? $erectileD->still_work : null, ['class' => 'form-control input']) }}                                    
                                         </div>                                  
                                     </div>
                                 </div>
@@ -359,7 +360,7 @@
                                     {{ Form::label('erection', 'When Was the last Time you had a morning Erection?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <?php $erectionTime = [ 'Today' => 'Today', 'This Week' => 'This Week', 'This Month' => 'This Month', 'Long Time Ago' => 'Long Time Ago']; ?>
-                                        {{ Form::select('erection_time', ['' => 'Please Select'] + $erectionTime, null, ['class' => 'form-control input']) }}                                    
+                                        {{ Form::select('erection_time', ['' => 'Please Select'] + $erectionTime, $erectileD? $erectileD->erection_time : null, ['class' => 'form-control input']) }}                                    
                                     </div>
                                 </div>
                             </div>
@@ -368,7 +369,7 @@
                                     {{ Form::label('erection_kind', 'When Was the last Time you had a of Any Kind Erection?', ['class' => 'col-sm-6 control-label']) }}                                        
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <?php $kind = [ 'Today' => 'Today', 'This Week' => 'This Week', 'This Month' => 'This Month', 'Last 6 months' => 'Last 6 months', 'This year' => 'This Year', 'Long Time Ago' => 'Long Time Ago']; ?>
-                                        {{ Form::select('erection_kind', ['' => 'Please Select'] + $kind, null, ['class' => 'form-control input']) }}                                    
+                                        {{ Form::select('erection_kind', ['' => 'Please Select'] + $kind, $erectileD? $erectileD->erection_kind : null, ['class' => 'form-control input']) }}                                    
                                     </div>                                  
                                 </div>
                             </div>
@@ -379,7 +380,7 @@
                                     {{ Form::label('erection_strength', 'On a scale of 1 - 10(10 being completely Erect), What was the strength of that last  known erection?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
                                         <?php $strength = commonScale(); ?>;
-                                        {{ Form::select('erection_strength', ['' => 'Please Select'] + $strength, null, ['class' => 'form-control input']) }}                                    
+                                        {{ Form::select('erection_strength', ['' => 'Please Select'] + $strength, $erectileD? $erectileD->erection_strength : null, ['class' => 'form-control input']) }}                                    
                                     </div>    
                                 </div>
                             </div>
@@ -540,6 +541,10 @@
          * ED/PD file javascript code
          */
         $('.medicineProperty').hide();
+		
+		if($("input[name='sex_medicine']:checked").val() == 1){
+			$('.medicineProperty').show();
+		}
         /** 
          * If patient take the sexual medicine then show the corresponding fields
          *  */

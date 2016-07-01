@@ -8,8 +8,6 @@ class CreateAppointmentsTable extends Migration {
     public function up() {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('disease_id');
-            //$table->datetime('created_at');
             $table->datetime('apptTime'); //appointment_time
             $table->tinyInteger('status')->default(1)->comment('1=>Active, 2=>Reschedule, 3=>Cancel, 4=>Confirm, 5=> Never Treat');
             $table->integer('createdBy')->unsigned; //user_id

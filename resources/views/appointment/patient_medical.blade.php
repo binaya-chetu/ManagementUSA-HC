@@ -1,6 +1,7 @@
-@extends('layouts.common')
+@extends( (!empty(Request::segment(4)) || !empty(Request::segment(5))) ? 'layouts.medical' : 'layouts.common')
 
 @section('content')
+@if(empty(Request::segment(4)) || empty(Request::segment(5)))
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Edit patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
@@ -15,6 +16,7 @@
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
+@endif
     <div class="row">
         <section class="panel form-wizard" id="w3">
             <header class="panel-heading">
@@ -175,7 +177,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-state', 'State', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::select('state', ['' => 'Please Select State'] + $states, $patient['patientDetail']->state, ['class' => 'form-control input', 'id' => 'state']) }}
+                                        {{ Form::select('state', ['' => 'Please Select State'] + $states, $patient['patientDetail'] ? $patient['patientDetail']->state : '', ['class' => 'form-control input', 'id' => 'state']) }}
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +214,7 @@
                                     {{ Form::label('w3-call', 'Best Time To Call', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
                                         <?php $patientCallHour = callHourTime(); ?>
-                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, $patient['patientDetail']->call_time, ['class' => 'form-control input', 'id' => 'bestTime']) }}
+                                        {{ Form::select('call_time', ['' => 'Please Select Best Time To Call'] + $patientCallHour, $patient['patientDetail'] ? $patient['patientDetail']->call_time : '', ['class' => 'form-control input', 'id' => 'bestTime']) }}
                                     </div>
                                 </div>
                             </div>
@@ -259,11 +261,11 @@
                                 {{ Form::label('w3-height', 'Height & Weight', array('class' => 'col-sm-2 control-label')) }}
                                 <div class="col-sm-4">
                                     <?php $commonHeight = commonHeight(); ?>
-                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, $patient['patientDetail']->height, ['class' => 'form-control input', 'id' => 'height']) }}
+                                    {{ Form::select('height', ['' => 'Please Select The Height'] + $commonHeight, $patient['patientDetail'] ? $patient['patientDetail']->height : '', ['class' => 'form-control input', 'id' => 'height']) }}
                                 </div>
                                 <div class="col-sm-4">
                                     <?php $commonWeight = commonWeight(); ?>
-                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, $patient['patientDetail']->weight, ['class' => 'form-control input', 'id' => 'weight']) }}
+                                    {{ Form::select('weight', ['' => 'Please Select The Weight'] + $commonWeight, $patient['patientDetail'] ? $patient['patientDetail']->weight : '', ['class' => 'form-control input', 'id' => 'weight']) }}
                                 </div>
                             </div>
                         </div>
@@ -571,75 +573,33 @@
 
                     </div>
                     <div id="w3-medical" class="tab-pane">
-                        <div class="form-group">
-                            {{ Form::label('medical_title', 'Why are you coming to see us, or why are you today?', array('class' => 'col-sm-5 control-label medicalTitle')) }}
-                            <div class="col-sm-12">
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('ed_pd', null, false, ['id' => 'for-ed_pd']) }}
-                                        {{ Form::label('for-ed_pd', 'Erectile Dysfunction / Premature Ejaculation') }}
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('testosterone_therapy', null, false, ['id' => 'for-testosterone']) }}
-                                        {{ Form::label('for-testosterone', 'HGH Testosterone Therapy') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('weight_loss', null, false, ['id' => 'for-weight']) }}
-                                        {{ Form::label('for-weight', 'Medical Weight Loss') }}
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('vitamin_therapy', null, false, ['id' => 'for-vitamin']) }}
-                                        {{ Form::label('for-vitamin', 'IV Vitamin Therapy') }}
-                                    </div>
-                                </div>    
-                            </div>    
-                            <div class="col-sm-12">
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('prp', null, false, ['id' => 'for-prp']) }}
-                                        {{ Form::label('for-prp', 'PRP Priapus  Male Enhancment') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('cosmetics', null, false, ['id' => 'for-cosmetics']) }}
-                                        {{ Form::label('for-cosmetics', 'Mens Facial Cosmetics and Skincare') }}                                         
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>                
-
-                        <div class="row" id="ed_pd_form" >
-                            @include('appointment.medical.ed_pd')
-                        </div>
-
-                        <div class="row" id="weight_loss_form">
-                            @include('appointment.medical.weight_loss')
-                        </div>
-
-                        <div class="row" id="priapus_form">
-                            @include('appointment.medical.priapus')
-                        </div>
-
-                        <div class="row" id="testosterone_form">
-                            @include('appointment.medical.testosterone')
-                        </div>
-
-                        <div class="row" id="vitamin_form">
-                            @include('appointment.medical.vitamin')
-                        </div>  
-
-                        <div id="cosmetic_form">
-                            @include('appointment.medical.cosmetic')
-                        </div> 
+				
+						<div class="form-group">
+							{{ Form::label('medical_title', 'Why are you coming to see us, or why are you today?', array('class' => 'col-sm-5 control-label medicalTitle')) }}
+							<div class="col-sm-12">
+								@foreach($diseases as $i => $v)
+								<div class="col-sm-6">
+									<div class="checkbox-custom chekbox-primary reason_disease">
+										{{ Form::checkbox('reason-'.$i, $i, $disease_id == $i, ['id' => 'reason-'.$i, 'data-target' => '#disease-form-box-'.$i]) }}
+										{{ Form::label('reason-'.$i, $v) }}
+									</div>
+								</div>
+								@endforeach
+							</div>
+						</div> 
+							
+						<?php 
+						$splChars = ['\\', '/', ':', '*', '?', '"', '<', '>', '|', ' '];
+						$replace = ['','','','','','','','','','_'];
+						?>
+						<!-- Tab panes -->
+						<div class="tab-content" style="padding:0">
+							@foreach($diseases as $i => $v)
+								<div role="tabpanel" class="row tab-pane {{ str_replace($splChars, $replace, strtolower($v)) }}" id="disease-form-box-{{ $i }}">
+									@include('appointment.medical.'.str_replace($splChars, $replace, strtolower($v)))
+								</div>
+							@endforeach		
+						</div>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -779,7 +739,7 @@
                                                         <div class="col-sm-6">
                                                             <?php $drinkTime = [ 'Daily' => 'Daily', 'Occasionally' => 'Occasionally']; 
 															?>
-                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, $medHistories->smoke_often, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('smoke_often', ['' => 'Please Select'] + $drinkTime, $medHistories? $medHistories->smoke_often : '', ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -788,7 +748,7 @@
                                                         {{ Form::label('smoke_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $smokedose = [ 'less than 1 pack' => 'less than 1 pack', '1 pack' => '1 pack', '2 packs' => '2 packs', 'over 2 packs' => 'over 2 packs']; ?>
-                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, $medHistories->smoke_quantity, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('smoke_quantity', ['' => 'Please Select'] + $smokedose, $medHistories ? $medHistories->smoke_quantity : '', ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -815,7 +775,7 @@
                                                         {{ Form::label('drink_often', 'How often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
 															{{ Form::radio('prostate', '', true, ['class' => 'hidden']) }}
-                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, $medHistories->drink_often, ['class' => 'form-control input', 'id' => 'drink_often']) }}
+                                                            {{ Form::select('drink_often', ['' => 'Please Select'] + $drinkTime, $medHistories ? $medHistories->drink_often : '', ['class' => 'form-control input', 'id' => 'drink_often']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -824,7 +784,7 @@
                                                         {{ Form::label('drink_quantity', 'How much?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $drinkdose = [ 'less than 1 drink' => 'less than 1 drink', '1 drink' => '1 drink', '2 drinks' => '2 drinks', 'over 2 drinks' => 'Over 2 drinks']; ?>
-                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, $medHistories->drink_quantity, ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
+                                                            {{ Form::select('drink_quantity', ['' => 'Please Select'] + $drinkdose, $medHistories ? $medHistories->drink_quantity : '', ['class' => 'form-control input', 'id' => 'drink_quantity']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -834,7 +794,7 @@
                                                     {{ Form::label('activity_level', 'Please Rate Your Daily Activity Level', ['class' => 'col-sm-6 control-label']) }}
                                                     <div class="col-sm-6">
                                                         <?php $activityLevel = [ 'Heavy' => 'Heavy', 'Medium' => 'Medium', 'Low' => 'Low']; ?>
-                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, $medHistories->activity_level, ['class' => 'form-control input', 'id' => 'activity_level']) }}
+                                                        {{ Form::select('activity_level', ['' => 'Please Select'] + $activityLevel, $medHistories ? $medHistories->activity_level : '', ['class' => 'form-control input', 'id' => 'activity_level']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -861,7 +821,7 @@
                                                         {{ Form::label('exercise_often', 'How Often?', ['class' => 'col-sm-6 control-label']) }}
                                                         <div class="col-sm-6">
                                                             <?php $exercise = [ 'Daily' => 'daily', 'Weekly' => 'Weekly', '<Monthly' => 'less than Monthly', 'Monthly' => 'Monthly']; ?>
-                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, $medHistories->exercise_often, ['class' => 'form-control input']) }}
+                                                            {{ Form::select('exercise_often', ['' => 'Please Select'] + $exercise, $medHistories ? $medHistories->exercise_often : '', ['class' => 'form-control input']) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1112,7 +1072,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-12 inputRow">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
@@ -1147,7 +1106,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-12 inputRow">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
@@ -1182,7 +1140,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-12 inputRow">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
@@ -1324,7 +1281,7 @@
                                                     {{ Form::label('blood_test', 'When was the last time you had a comprehensive Blood Test or Blood Test of anykind?', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                     <div class="col-sm-6">
                                                         <?php $bloodTestTime = ['1 Month' => '1 Month', '3 Months' => '3 Months', '6 Months' => '6 Months', '>1' => '1 Year or Longer', 'Never' => 'Never']; ?>
-                                                        {{ Form::select('blood_test', ['' => 'Please Select'] + $bloodTestTime, $medHistories->blood_test, ['class' => 'form-control input', 'id' => 'blood_test']) }}
+                                                        {{ Form::select('blood_test', ['' => 'Please Select'] + $bloodTestTime, $medHistories ? $medHistories->blood_test : '', ['class' => 'form-control input', 'id' => 'blood_test']) }}
                                                     </div>
                                                 </div>                                      
                                             </div>
@@ -1350,7 +1307,7 @@
                                                         {{ Form::label('kind', 'Kind of Health Insurance', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6">
                                                             <?php $insuranceKind = ['Medicare' => 'Medicare', 'HMO' => 'HMO', 'PPO' => 'PPO', 'Medicaid' => 'Medicaid']; ?>
-                                                            {{ Form::select('kind_of_hi', ['' => 'Please Select'] + $insuranceKind, $medHistories->kind_of_hi, ['class' => 'form-control input', 'id' => 'kind_of_hi']) }}
+                                                            {{ Form::select('kind_of_hi', ['' => 'Please Select'] + $insuranceKind, $medHistories ? $medHistories->kind_of_hi : '', ['class' => 'form-control input', 'id' => 'kind_of_hi']) }}
                                                         </div>
                                                     </div> 
                                                 </div>
@@ -1405,13 +1362,15 @@
                 
         </section>
     </div>
- 
+@if(empty(Request::segment(4)) || empty(Request::segment(5))) 
 </section>
+@endif
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
-
-        $('.selectSmoke').hide();
+		
+        
+		$('.selectSmoke').hide();
 		if($("input[name='smoke_status']:checked").val() == 1){
 			$('.selectSmoke').show();
 		}
@@ -1430,97 +1389,26 @@
         if($("input[name='sex_status']:checked").val() == 1){
 			$('.selectSex').show();
 		}
-		
-        $('#ed_pd_form').hide();
-        if($("input[name='ed_pd']").prop("checked")){
-			$('#ed_pd_form').show();
-		}
-		
-        $('#weight_loss_form').hide();
-		if($("input[name='weight_loss']").prop('checked')){
-			$('#weight_loss_form').show();
-		}
-		
-        $('#priapus_form').hide();
-        if($("input[name='prp']").prop("checked")){
-			$('#priapus_form').show();
-		}
-		
-        $('#testosterone_form').hide();
-        if($("input[name='testosterone_therapy']").prop("checked")){
-			$('#testosterone_form').show();
-		}
-		
-        $('#vitamin_form').hide();
-        if($("input[name='vitamin_therapy']").prop("checked")){
-			$('#vitamin_form').show();
-		}
-		
-        $('#cosmetic_form').hide();
-        if($("input[name='cosmetics']").prop("checked")){
-			$('#cosmetic_form').show();
-		}
+
+		// show tab corresponding to checkbox checked
+		var reason_disease = $(".reason_disease");
+		$.each(reason_disease, function(i,v){
+			input = $(v).find('input');
+			if($(input).attr('checked') == 'checked'){
+				$(input).tab('show');
+				$('#disease_id').remove();
+				$(input).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+$(input).val()+'">');
+			}
+		});	
+
+		$(".reason_disease").find('input').on('click',function(){
+			$(".reason_disease").find('input').not(this).attr('checked',false);
+			$(this).tab('show');
+			$('#disease_id').remove();
+			$(this).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+$(this).val()+'">');
+		});		
 	
-        /** 
-         * Checked the Checkbox for the ED/PD
-         *  */
-        $("input[name='ed_pd']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#ed_pd_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#ed_pd_form').hide();
-            }
-        });
-        /** 
-         * Checked the Checkbox for the Weight Loss
-         *  */
-        $("input[name='weight_loss']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#weight_loss_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#weight_loss_form').hide();
-            }
-        });
-        /** 
-         * Checked the Checkbox for the PRP
-         *  */
-        $("input[name='prp']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#priapus_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#priapus_form').hide();
-            }
-        });
-        /** 
-         * Checked the Checkbox for the testosterone therapy
-         *  */
-        $("input[name='testosterone_therapy']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#testosterone_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#testosterone_form').hide();
-            }
-        });
-        /** 
-         * Checked the Checkbox for the Vitamin therapy
-         *  */
-        $("input[name='vitamin_therapy']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#vitamin_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#vitamin_form').hide();
-            }
-        });
-        /** 
-         * Checked the Checkbox for the Cosmetics
-         *  */
-        $("input[name='cosmetics']").click(function() {
-            if ($(this).prop("checked") == true) {
-                $('#cosmetic_form').show();
-            } else if ($(this).prop("checked") == false) {
-                $('#cosmetic_form').hide();
-            }
-        });
+ 
         /** 
          * If Patient Drink Status is true then show the corresponding fields
          *  */
