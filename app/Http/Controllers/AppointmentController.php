@@ -392,8 +392,7 @@ class AppointmentController extends Controller {
 						
 		$patient = User::with('patientDetail')->find($id);
 		
-		$disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at','DESC')->limit(1)->pluck('disease_id');
-		$disease_id = !empty($disease_id)? $disease_id[0] : '';
+		$disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->pluck('reason_id');
 
 		$diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason','id');
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
@@ -455,13 +454,13 @@ class AppointmentController extends Controller {
             die;
         }
     }
+	
     /*
      * Find the list of all appointment which appointment time are within 24 Hours.
      * 
      * @return \resource\view\apptsetting\listappointment.blade.php
      */
-    public function upcomingappointments() {
-        
+    public function upcomingappointments() {       
         $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
@@ -548,6 +547,17 @@ class AppointmentController extends Controller {
 				$vitaminList->how_often	 = $row->how_often;
 				$vitaminList->taken_for	 = $row->condition;
 				$vitaminList->save();
+			}
+		}
+		
+		if(isset($formData['disease_id']) && !empty($formData['disease_id'])){
+			$data = json_decode($formData['disease_id']);
+			$deletedCount = App\AppointmentReasons::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$reason = new App\AppointmentReasons;
+				$reason->patient_id = $id;
+				$reason->reason_id  = $row;
+				$reason->save();
 			}
 		}
 	
