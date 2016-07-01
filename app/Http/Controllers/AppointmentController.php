@@ -395,7 +395,7 @@ class AppointmentController extends Controller {
 		$disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at','DESC')->limit(1)->pluck('disease_id');
 		$disease_id = !empty($disease_id)? $disease_id[0] : '';
 
-		$diseases = DB::table('diseases')->pluck('title','id');
+		$diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason','id');
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
 		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
 		$erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
@@ -404,7 +404,7 @@ class AppointmentController extends Controller {
 		$testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
 		$vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
 		$cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
-
+		
         if (!$patient)
 		{
             App::abort(404, 'Patient with given id was not found.');
@@ -443,9 +443,14 @@ class AppointmentController extends Controller {
      */
     public function checkList(Request $request) {
         if (!empty($request['id'])) {
-            $id = $request['id'];            
+            $id = $request['id']; 
+			if($id == 'vitamin_taken1' ){
+				$patientId = $request['patientId'];
+				$data = DB::table('patient_vitamin_list')->where('patient_id', $patientId)->get();
+			}
             return view('appointment.medical.medicine_list', [
-                'id' => $id
+                'id' => $id,
+				'data' => (isset($data) && !empty($data)) ? $data : ''
             ]);
             die;
         }
@@ -465,6 +470,7 @@ class AppointmentController extends Controller {
             'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'type' => 'upcoming'
         ]);
     }
+	
     /**
      * Save the patient medical form for different diseases
      * 
@@ -531,6 +537,20 @@ class AppointmentController extends Controller {
 		//$patient->never_treat_status = $formData[''];
 		$patient->save();
 
+		if(isset($formData['vitaminSuppliments']) && !empty($formData['vitaminSuppliments'])){
+			$data = json_decode($formData['vitaminSuppliments']);
+			$deletedCount = App\PatientVitaminList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$vitaminList = new App\PatientVitaminList;
+				$vitaminList->patient_id = $id;
+				$vitaminList->name		 = $row->name;
+				$vitaminList->dosage	 = $row->dosage;
+				$vitaminList->how_often	 = $row->how_often;
+				$vitaminList->taken_for	 = $row->condition;
+				$vitaminList->save();
+			}
+		}
+	
 		$appt = App\Appointment::orderBy('id', 'DESC')->firstOrCreate(['patient_id' => $id]);
 		$appt->disease_id = $formData['disease_id'];
 		$appt->save();

@@ -63,6 +63,7 @@
 										{{ Form::hidden('hash', $hash) }}
                                         {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
                                     </div>
+									<div id="vitaminSupplimentBox"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6" >
@@ -1356,11 +1357,7 @@
 
     </div>
     <div id="common_modal" class="modal-block modal-block-primary mfp-hide">
-        <section class="panel panel-primary" id="listContent">
-           
-                    
-                
-        </section>
+        <section class="panel panel-primary" id="listContent"></section>
     </div>
 @if(empty(Request::segment(4)) || empty(Request::segment(5))) 
 </section>
@@ -1368,8 +1365,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
     $(document).ready(function() {
-		
-        
 		$('.selectSmoke').hide();
 		if($("input[name='smoke_status']:checked").val() == 1){
 			$('.selectSmoke').show();
@@ -1473,22 +1468,24 @@
      * */
     
     $(document).on("click", ".modelShow", function(ev) {
-       
+        var userId = <?php echo $patient->id; ?>	
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         var radioId = $(this).attr('id');
-        $.ajax({
-        type: "POST",
-                url: ajax_url + "/appointment/checkList",
-                data: {"id": radioId },
-                success: function(response) {
-                    $('#listContent').html(response);
-                }
-            }); 
-        $('#common_modal .panel-title').text('List of Medications');
+		if($("#vitaminMedList").length == 0){
+			$.ajax({
+			type: "POST",
+					url: ajax_url + "/appointment/checkList",
+					data: {"id": radioId,"patientId": userId },
+					success: function(response) {
+						$('#listContent').html(response);
+					}
+				}); 
+			$('#common_modal .panel-title').text('List of Medications');
+		}
         $.magnificPopup.open({
             items: {
                 src: '#common_modal',

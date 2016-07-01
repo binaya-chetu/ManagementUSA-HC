@@ -427,10 +427,40 @@ $(document).ready(function() {
 		var clone = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last').clone('true');
 		var lastRow = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last');
 		
-		var n = parseInt(clone.find('td:first').html());
+		var n = parseInt($(lastRow).data('count'));
 		n += 1;
-		clone.find('td:first').html(n);
+		$(clone).attr('data-count', n);
+		clone.find('.name input').attr({'id': 'name_'+n, 'name': 'name_'+n, 'value': ''});
+		clone.find('.dosage input').attr({'id': 'dosage_'+n, 'name': 'dosage_'+n, 'value': ''});
+		clone.find('.how_often input').attr({'id': 'how_often_'+n, 'name': 'how_often_'+n, 'value': ''});
+		clone.find('.condition input').attr({'id': 'condition_'+n, 'name': 'condition_'+n, 'value': ''});
 		clone.insertAfter(lastRow);		
+	});
+	
+	$(document).on('click', '.saveMedicineList', function(){
+		$('#vitaminSupplimentBox').html('');
+		var data = [];
+		$(".vitSupInput").closest('tr').each(function(i,v){
+			row = {};
+			row['name'] = $(v).find('.name input').val();
+			row['dosage'] = $(v).find('.dosage input').val();
+			row['how_often'] = $(v).find('.how_often input').val();
+			row['condition'] = $(v).find('.condition input').val();
+			if(row['name'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'vitaminSuppliments'
+		});
+		$('#vitaminSupplimentBox').append(input);
+	});
+	
+	$(document).on('click', '.deleteVitListRow', function(){
+		$(this).closest('tr').remove();
 	});
 });
 
