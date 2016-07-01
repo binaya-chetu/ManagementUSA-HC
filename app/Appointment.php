@@ -10,7 +10,6 @@ class Appointment extends Model {
     //
     protected $fillable = [
         'comment',
-		'disease_id',
         'clinic',
         'marketer', //user_id
         'patient_id',
