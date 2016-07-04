@@ -25,14 +25,16 @@ class Patient extends Model
         'mobile',
         'call_time',
         'driving_license',
-        'work',
+        'employer',
         'height',
         'weight',
+		'employment_place',
         'primary_physician',
         'physician_phone',
         'payment_bill',
-        'never_treat_status'
-        
+        'never_treat_status',
+        'form_status',
+		'hash'
     ];
 	
     public function appointmentp() {

@@ -12,10 +12,10 @@ class CreateReasonCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('reason_ codes', function (Blueprint $table) {
+        Schema::create('reason_codes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reason');  
-            $table->boolean('status');
+            $table->tinyInteger('type')->comment('1=> Set, 2=> No Set');
             $table->timestamps();           
         });
     }

@@ -35,6 +35,9 @@
                         @if(Session::has('flash_message'))
                             <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                         @endif
+                        @if(Session::has('error_message'))
+                            <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
+                        @endif
                     </div>
                     @if($type == 'Tele-Marketing Call')
                     <div class="form-group">
@@ -241,7 +244,7 @@
                         <div class="form-group">
                             {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
-                                {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $reasonCode, null, ['class' => 'form-control required']) }}
+                                {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
 
                             </div>
                         </div>
@@ -276,9 +279,9 @@
                     </div>
                     <div  id="setAppointment">
                         <div class="form-group">
-                            {{ Form::label('disease_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            {{ Form::label('reason_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
-                                {{ Form::select('disease_id', ['' => 'Choose the Reason'] + $diseases, null, ['class' => 'form-control required']) }}
+                                {{ Form::select('reason_id', ['' => 'Choose the Reason'] + $setReasonCode, null, ['class' => 'form-control required']) }}
                             </div>
                         </div>
                         <div class="form-group">

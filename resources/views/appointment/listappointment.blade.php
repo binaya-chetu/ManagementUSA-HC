@@ -4,10 +4,33 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
+<<<<<<< HEAD
         <h2>Appointments List </h2>
 
         <div class="right-wrapper pull-right">
             {!! Breadcrumbs::render('appointment.listappointment') !!}
+=======
+        @if(isset($type) && $type == 'upcoming')
+            <h2>Upcoming Appointments</h2>
+        @else
+            <h2>List Appointments</h2>
+        @endif
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li>
+                    @if(isset($type) && $type == 'upcoming')
+                        <span>Upcoming Appointments</span>
+                    @else
+                        <span>List Appointments</span>
+                    @endif      
+                </li>
+            </ol>
+>>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
 
             <a class="sidebar-right-toggle" data-open="sidebar-right">
                 <i class="fa fa-chevron-left"></i>
@@ -22,17 +45,26 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
 
+<<<<<<< HEAD
             <h2 class="panel-title">Appointments List</h2>
+=======
+            <h2 class="panel-title">
+                @if(isset($type) && $type == 'upcoming')
+                    Upcoming Appointments
+                @else
+                    List Appointments
+                @endif</h2>
+>>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
         </header>
         <div class="panel-body">
             <div class="row">
                 @if(Session::has('flash_message'))
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
-                <div class="col-md-12 text-left">
+<!--                <div class="col-md-12 text-left">
                     <a href="javascript:void(0)"><button id="add-view-appointment" class="btn btn-primary" >Add Appointment <i class="fa fa-plus"></i></button></a>
                     <a href="{{ url('/patient/addpatient') }}"><button id="addToTable" class="btn btn-primary" >Add Patient    <i class="fa fa-plus"></i></button></a>
-                </div>
+                </div>-->
             </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>

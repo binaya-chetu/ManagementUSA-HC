@@ -380,8 +380,12 @@ class AppointmentController extends Controller
     {
         $followup = Followup::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
+<<<<<<< HEAD
             }])->get();
             
+=======
+            }])->get();           
+>>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -415,7 +419,19 @@ class AppointmentController extends Controller
 		$hash = $hash;
 						
 		$patient = User::with('patientDetail')->find($id);
+		
+		$disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->pluck('reason_id');
+
+		$diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason','id');
 		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
+		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
+		$erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
+		$weightL = DB::table('weight_loss')->where('patient_id', $id)->first();
+		$priapus = DB::table('priapus')->where('patient_id', $id)->first();
+		$testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
+		$vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
+		$cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
+		
         if (!$patient)
 		{
             App::abort(404, 'Patient with given id was not found.');
@@ -431,7 +447,17 @@ class AppointmentController extends Controller
         $states = State::lists('name', 'id')->toArray();
         return view('appointment.patient_medical', [
             'patient' => $patient,
+			'disease_id' => $disease_id,
+			'diseases' => $diseases,
 			'adamsQuestionaires' => $adamsQ,
+			'medHistories' => $medHistories,
+			'erectileD' => $erectileD,
+			'weightL' => $weightL,
+			'priapus' => $priapus,
+			'testosterone' => $testosterone,
+			'testosterone' => $testosterone,
+			'cosmetics' => $cosmetics,
+			'vitamins' => $vitamins,
             'states' => $states,
 			'hash' => $hash
         ]);
@@ -445,28 +471,52 @@ class AppointmentController extends Controller
     public function checkList(Request $request)
     {
         if (!empty($request['id'])) {
-            $id = $request['id'];
+            $id = $request['id']; 
+			if($id == 'vitamin_taken1' ){
+				$patientId = $request['patientId'];
+				$data = DB::table('patient_vitamin_list')->where('patient_id', $patientId)->get();
+			} elseif($id == 'surgeries1' ){
+				$patientId = $request['patientId'];
+				$data = DB::table('surgery_list')->where('patient_id', $patientId)->get();
+			} elseif($id == 'allergies1'){
+				$patientId = $request['patientId'];
+				$data = DB::table('allergies_list')->where('patient_id', $patientId)->get();				
+			} elseif($id == 'illness1'){
+				$patientId = $request['patientId'];
+				$data = DB::table('illness_list')->where('patient_id', $patientId)->get();					
+			}
             return view('appointment.medical.medicine_list', [
-                'id' => $id
+                'id' => $id,
+				'data' => (isset($data) && !empty($data)) ? $data : ''
             ]);
             die;
         }
     }
+	
     /*
      * Find the list of all appointment which appointment time are within 24 Hours.
      * 
      * @return \resource\view\apptsetting\listappointment.blade.php
      */
+<<<<<<< HEAD
     public function upcomingappointments()
     { 
+=======
+    public function upcomingappointments() {       
+>>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
         $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
         return view('appointment.listappointment', [
+<<<<<<< HEAD
             'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
+=======
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'type' => 'upcoming'
+>>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
         ]);
     }
+	
     /**
      * Save the patient medical form for different diseases
      * 
@@ -487,7 +537,29 @@ class AppointmentController extends Controller
 		$user->save();
 
 		$patient = App\Patient::firstOrCreate(['user_id' => $id]);
-		$patient->dob			= $formData['dob'];
+		
+		if(Input::hasFile('driving_license')){
+			$file = array('image' => Input::file('driving_license'));
+			$rules = array('image' => 'mimes:jpeg,png,pdf',); //mimes:jpeg,bmp,png and for max size max:10000
+			$validator = Validator::make($file, $rules);
+			if ($validator->fails()) {
+				\Session::flash('error_message', 'Please upload a valid driving license image (jpeg,png,pdf).');
+				return redirect()->back();
+				//return Redirect::to('upload')->withInput()->withErrors($validator);
+			} else {
+				if (Input::file('driving_license')->isValid()) {
+					$destinationPath = 'uploads/driving_license'; // upload path
+					$extension = Input::file('driving_license')->getClientOriginalExtension();
+					$patient->driving_license = md5(uniqid(time(), true)).'.'.$extension; 
+					Input::file('driving_license')->move($destinationPath, $patient->driving_license); 
+				} else {
+					\Session::flash('error_message', 'Please upload a valid driving license image (jpeg,png,pdf).');
+					return redirect()->back();
+				}
+			}
+		} 		
+		
+		$patient->dob			= date('Y/m/d', strtotime($formData['dob']));
 		$patient->gender		= $formData['gender'];
 		$patient->phone			= $formData['phone'];
 		$patient->address1		= $formData['address1'];
@@ -497,22 +569,83 @@ class AppointmentController extends Controller
 		$patient->zipCode		= $formData['zipCode'];
 		$patient->employer		= $formData['employer'];
 		$patient->occupation	= $formData['occupation'];
-		//$patient->height		= $formData['height'];
-		//$patient->weight		= $formData['weight'];
-		//$patient->primary_physician = $formData['primary_physician'];
-		//$patient->physician_phone = $formData['physician_phone'];
-		//$patient->work			= $formData['employer'];
-		//$patient->call_time		= $formData['call_time'];
-		//$patient->mobile		= $formData['mobile'];
+		$patient->height		= $formData['height'];
+		$patient->weight		= $formData['weight'];
+		$patient->employment_place = $formData['employment_place'];
+		$patient->primary_physician = $formData['primary_physician'];
+		$patient->physician_phone = $formData['physician_phone'];
+		$patient->employer			= $formData['employer'];
+		$patient->call_time		= $formData['call_time'];
+		$patient->mobile		= $formData['mobile'];
 		//$patient->image			= $formData[''];
-		//$patient->marital_status = $formData['marital_status'];
-		//$patient->driving_license = $formData['driving_license'];		
-		// $patient->payment_bill	= $formData[''];
-		// $patient->never_treat_status = $formData[''];
+		$patient->marital_status = $formData['marital_status'];
+		//$patient->payment_bill	= $formData[''];
+		//$patient->never_treat_status = $formData[''];
 		$patient->save();
+
+		if(isset($formData['vitaminSuppliments']) && !empty($formData['vitaminSuppliments'])){
+			$data = json_decode($formData['vitaminSuppliments']);
+			$deletedCount = App\PatientVitaminList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$vitaminList = new App\PatientVitaminList;
+				$vitaminList->patient_id = $id;
+				$vitaminList->name		 = $row->name;
+				$vitaminList->dosage	 = $row->dosage;
+				$vitaminList->how_often	 = $row->how_often;
+				$vitaminList->taken_for	 = $row->condition;
+				$vitaminList->save();
+			}
+		}
 		
-		// $erectileD = App\ErectileDysfunctions::firstOrCreate(['patient_id' => $id]);
+		if(isset($formData['surgeryList']) && !empty($formData['surgeryList'])){
+			$data = json_decode($formData['surgeryList']);
+			$deletedCount = App\SurgeryList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$surgeryList 				= new App\SurgeryList;
+				$surgeryList->patient_id 	= $id;
+				$surgeryList->type_of_surgery = $row->type_of_surgery;
+				$surgeryList->date	= $row->surgery_date;
+				$surgeryList->reason = $row->surgery_reason;
+				$surgeryList->save();
+			}
+		}
 		
+		if(isset($formData['allergiesList']) && !empty($formData['allergiesList'])){
+			$data = json_decode($formData['allergiesList']);
+			$deletedCount = App\AllergiesList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$allergiesList 				= new App\AllergiesList;
+				$allergiesList->patient_id 	= $id;
+				$allergiesList->allergic_medicine = $row->allergic_medicine;
+				$allergiesList->save();
+			}
+		}
+
+		if(isset($formData['illness']) && !empty($formData['illness'])){
+			$data = json_decode($formData['illness']);
+			$deletedCount = App\IllnessList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+			 	$reason = new App\IllnessList;
+				$reason->patient_id = $id;
+				$reason->illness  = $row->illness;
+				$reason->save();
+			}
+		} 
+		
+		if(isset($formData['disease_id']) && !empty($formData['disease_id'])){
+			$data = json_decode($formData['disease_id']);
+			$deletedCount = App\AppointmentReasons::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$reason = new App\AppointmentReasons;
+				$reason->patient_id = $id;
+				$reason->reason_id  = $row;
+				$reason->save();
+			}
+		}
+	
+		$appt = App\Appointment::orderBy('id', 'DESC')->firstOrCreate(['patient_id' => $id]);
+		$appt->disease_id = $formData['disease_id'];
+		$appt->save();
 		
 		$adamsQ = App\AdamsQuestionaires::firstOrCreate(['patient_id' => $id]);		
 		$adamsQ->patient_id			= $id;
@@ -527,7 +660,177 @@ class AppointmentController extends Controller
 		$adamsQ->sport_rate			= $formData['sport_rate'];
 		$adamsQ->lost_height_rate	= $formData['lost_height_rate'];
 		$adamsQ->save();
+		
+		$medHistory = App\MedicalHistories::firstOrCreate(['patient_id' => $id]);	
+		$medHistory->cardiovascular			= $formData['cardiovascular'];
+		$medHistory->hypertension			= $formData['hypertension'];
+		$medHistory->enocrine_disorder		= $formData['enocrine_disorder'];
+		$medHistory->prostate				= $formData['prostate'];
+		$medHistory->lipid					= $formData['lipid'];
+		$medHistory->cancer_form			= $formData['cancer_form'];
+		$medHistory->smoke_status			= $formData['smoke_status'];
+		$medHistory->smoke_often			= $formData['smoke_often'];
+		$medHistory->smoke_quantity			= $formData['smoke_quantity'];
+		$medHistory->drink_status			= $formData['drink_status'];
+		$medHistory->drink_often			= $formData['drink_often'];
+		$medHistory->drink_quantity			= $formData['drink_quantity'];
+		$medHistory->activity_level			= $formData['activity_level'];
+		$medHistory->exercise_status		= $formData['exercise_status'];
+		$medHistory->exercise_often			= $formData['exercise_often'];
+		$medHistory->deficiency_status		= $formData['deficiency_status'];
+		$medHistory->chemical_dependency	= $formData['chemical_dependency'];
+		$medHistory->blood_disorder			= $formData['blood_disorder'];
+		$medHistory->orthopedic_disorder	= $formData['orthopedic_disorder'];
+		$medHistory->known_deficiency		= $formData['known_deficiency'];
+		$medHistory->carpal_syndrome		= $formData['carpal_syndrome'];
+		$medHistory->immune_disorder		= $formData['immune_disorder'];
+		$medHistory->heart_disease			= $formData['heart_disease'];
+		$medHistory->lung_disorder			= $formData['lung_disorder'];
+		$medHistory->cancer_status			= $formData['cancer_status'];
+		$medHistory->surgeries				= $formData['surgeries'];
+		$medHistory->renal					= $formData['renal'];
+		$medHistory->upper					= $formData['upper'];
+		$medHistory->allergies				= $formData['allergies'];
+		$medHistory->genital				= $formData['genital'];
+		$medHistory->retention				= $formData['retention'];
+		$medHistory->endocrine				= $formData['endocrine'];
+		$medHistory->hyperlipidema			= $formData['hyperlipidema'];
+		$medHistory->healing				= $formData['healing'];
+		$medHistory->neurological			= $formData['neurological'];
+		$medHistory->emotional				= $formData['emotional'];
+		$medHistory->hypertention_hbp		= $formData['hypertention_hbp'];
+		$medHistory->other_illness			= $formData['other_illness'];
+		$medHistory->arthritis				= $formData['arthritis'];
+		$medHistory->recreational_drug		= $formData['recreational_drug'];
+		$medHistory->blood_test				= $formData['blood_test'];
+		$medHistory->health_insurance		= $formData['health_insurance'];
+		$medHistory->kind_of_hi				= $formData['kind_of_hi'];
+		$medHistory->medication				= $formData['medication'];
+		$medHistory->save();
 
+		$erectileD = App\ErectileDysfunctions::firstOrCreate(['patient_id' => $id]);
+		$erectileD->sex_status		= $formData['sex_status'];
+		$erectileD->sex_often		= $formData['sex_often'];
+		$erectileD->sex_with		= $formData['sex_with'];
+		$erectileD->pronography		= $formData['pronography'];
+		$erectileD->prostate_removal= $formData['prostate_removal'];
+		$erectileD->nerve_damage	= $formData['nerve_damage'];
+		$erectileD->erectile		= $formData['erectile'];
+		$erectileD->implant			= $formData['implant'];
+		$erectileD->penis_pump		= $formData['penis_pump'];
+		$erectileD->recreational	= $formData['recreational'];
+		$erectileD->ejaculate		= $formData['ejaculate'];
+		$erectileD->medicine_used	= $formData['medicine_used'];
+		$erectileD->sickle			= $formData['sickle'];
+		$erectileD->dwarfing		= $formData['dwarfing'];
+		$erectileD->hiv				= $formData['hiv'];
+		$erectileD->sex_medicine	= $formData['sex_medicine'];
+		$erectileD->medicine_name	= $formData['medicine_name'];
+		$erectileD->medicine_work	= $formData['medicine_work'];
+		$erectileD->last_used		= $formData['last_used'];
+		$erectileD->still_work		= $formData['still_work'];
+		$erectileD->side_effect		= $formData['side_effect'];
+		$erectileD->erection_time	= $formData['erection_time'];
+		$erectileD->erection_kind	= $formData['erection_kind'];
+		$erectileD->erection_strength = $formData['erection_strength'];
+		$erectileD->activity_score	= $formData['activity_score'];
+		$erectileD->stimulation_score = $formData['stimulation_score'];
+		$erectileD->intercourse_score = $formData['intercourse_score'];
+		$erectileD->maintain_score	= $formData['maintain_score'];
+		$erectileD->difficult_score = $formData['difficult_score'];
+		$erectileD->save();
+		
+		$weightL = App\WeightLoss::firstOrCreate(['patient_id' => $id]);
+		$weightL->weight_surgeries	= $formData['weight_surgeries'];
+		$weightL->surgeries_kind	= $formData['surgeries_kind'];
+		$weightL->weight_supplement	= $formData['weight_supplement'];
+		$weightL->supplement_type	= $formData['supplement_type'];
+		$weightL->liver_disease		= $formData['liver_disease'];
+		$weightL->diabetes			= $formData['diabetes'];
+		$weightL->thyroid_treated	= $formData['thyroid_treated'];
+		$weightL->hormone_treated	= $formData['hormone_treated'];
+		$weightL->seizures			= $formData['seizures'];
+		$weightL->kidney_disorder	= $formData['kidney_disorder'];
+		$weightL->eating_disorder	= $formData['eating_disorder'];
+		$weightL->frequently_eat	= $formData['frequently_eat'];
+		$weightL->eat_more			= $formData['eat_more'];
+		$weightL->save();
+
+ 		$priapus  = App\Priapus::firstOrCreate(['patient_id' => $id]);
+		$priapus->abnormal				= $formData['abnormal'];
+		$priapus->abnormal_type			= $formData['abnormal_type'];
+		$priapus->priapus_goal			= $formData['priapus_goal'];
+		$priapus->prp_before			= $formData['prp_before'];
+		$priapus->pump_past				= $formData['pump_past'];
+		$priapus->implant_surgery		= $formData['implant_surgery'];
+		$priapus->pre_activity_score	= $formData['pre_activity_score'];
+		$priapus->prp_stimulation_score = $formData['prp_stimulation_score'];
+		$priapus->prp_intercourse_score = $formData['prp_intercourse_score'];
+		$priapus->prp_maintain_score	= $formData['prp_maintain_score'];
+		$priapus->prp_difficult_score	= $formData['prp_difficult_score'];
+		$priapus->save();	 
+
+ 		$testosterone = App\HighTestosterone::firstOrCreate(['patient_id' => $id]);
+		$testosterone->harmone_therapy		= $formData['harmone_therapy'];
+		$testosterone->harmone_therapy_type = $formData['harmone_therapy_type'];
+		$testosterone->usa_military			= $formData['usa_military'];
+		$testosterone->lack_increment		= isset($formData['lack_increment'])? 1: '';
+		$testosterone->increase_fat			= isset($formData['increase_fat'])? 1: '';
+		$testosterone->depression			= isset($formData['depression'])? 1: '';
+		$testosterone->mood_increment		= isset($formData['mood_increment'])? 1: '';
+		$testosterone->sleep_difficulty		= isset($formData['sleep_difficulty'])? 1: '';
+		$testosterone->wrinkle_increment	= isset($formData['wrinkle_increment'])? 1: '';
+		$testosterone->sagging_increment	= isset($formData['sagging_increment'])? 1: '';
+		$testosterone->hot_flash			= isset($formData['hot_flash'])? 1: '';
+		$testosterone->loss_activity		= isset($formData['loss_activity'])? 1: '';
+		$testosterone->stess_increment		= isset($formData['stess_increment'])? 1: '';
+		$testosterone->loss_interest		= isset($formData['loss_interest'])? 1: '';
+		$testosterone->loose_skin			= isset($formData['loose_skin'])? 1: '';
+		$testosterone->exercise_ability		= isset($formData['exercise_ability'])? 1: '';
+		$testosterone->memory_decrement		= isset($formData['memory_decrement'])? 1: '';
+		$testosterone->loss_muscle			= isset($formData['loss_muscle'])? 1: '';
+		$testosterone->endurance			= isset($formData['endurance'])? 1: '';
+		$testosterone->muscle_decrement		= isset($formData['muscle_decrement'])? 1: '';
+		$testosterone->loss_hair			= isset($formData['loss_hair'])? 1: '';
+		$testosterone->sense_decrement		= isset($formData['sense_decrement'])? 1: '';
+		$testosterone->testicle_decrement	= isset($formData['testicle_decrement'])? 1: '';
+		$testosterone->shrinkage			= isset($formData['shrinkage'])? 1: '';
+		$testosterone->osteoporosis			= isset($formData['osteoporosis'])? 1: '';
+		$testosterone->intolerance			= isset($formData['intolerance'])? 1: '';
+		$testosterone->unexplained_weight	= isset($formData['unexplained_weight'])? 1: '';
+		$testosterone->save();	 
+		
+ 		$vitamins = App\Vitamins::firstOrCreate(['patient_id' => $id]);
+		$vitamins->needle_afraid		=  isset($formData['needle_afraid'])? $formData['needle_afraid'] : '';
+		$vitamins->afraid_limit			= $formData['afraid_limit'];
+		$vitamins->injectable_type		= $formData['injectable_type'];
+		$vitamins->total_wellness		= $formData['total_wellness'];
+		$vitamins->weight_supplement	= $formData['weight_supplement'];
+		$vitamins->vitamin_knowledge	= $formData['vitamin_knowledge'];
+		$vitamins->vitamin_taken		= $formData['vitamin_taken'];
+		$vitamins->wellness_tested		= $formData['wellness_tested'];
+		$vitamins->vitamin_drip			= $formData['vitamin_drip'];	
+		$vitamins->save();
+		
+ 		$cosmetics = App\Cosmetics::firstOrCreate(['patient_id' => $id]);
+		$cosmetics->facial_surgeries = $formData['facial_surgeries'];
+		$cosmetics->facial_kind		= $formData['facial_kind'];
+		$cosmetics->face_wash		= $formData['face_wash'];
+		$cosmetics->exposure		= $formData['exposure'];
+		$cosmetics->skin_look		= $formData['skin_look'];
+		$cosmetics->look_score		= $formData['look_score'];
+		$cosmetics->happy_score		= $formData['happy_score'];
+		$cosmetics->crowsfeet		= $formData['crowsfeet'];
+		$cosmetics->facial_expression = $formData['facial_expression'];
+		$cosmetics->sunken			= $formData['sunken'];
+		$cosmetics->bullfrog_looking = $formData['bullfrog_looking'];
+		$cosmetics->loose_skin		= $formData['loose_skin'];
+		$cosmetics->thin_lip		= $formData['thin_lip'];
+		$cosmetics->face_spot		= $formData['face_spot'];
+		$cosmetics->acne			= $formData['acne'];
+		$cosmetics->skin_tag		= $formData['skin_tag'];	
+		$cosmetics->save();	 
+		
 		$patientHash = DB::table('patient_details')->where('user_id', $id)->pluck('hash')[0];
         \Session::flash('flash_message', 'Patient details saved successfully');		
 		if(Auth::check()){
@@ -546,5 +849,46 @@ class AppointmentController extends Controller
 		} */
 
     }
+    /*
+     * Find the list of all appointment which appointment time are within 24 Hours.
+     * 
+     * @return \resource\view\apptsetting\listappointment.blade.php
+     */
+    public function todayVisits() {
+        $appointments = Appointment::with('patient', 'disease')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
+        $patients = User::where('role', $this->patient_role)->get();
+       // $doctors = User::where('role', $this->doctor_role)->get();
+
+        return view('appointment.today_visits', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
+    }
+
+    /**
+     * Function for the saving the patient status in the appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function savePatientStatus(Request $request) {        
+        
+        $values = ['patient_status' => $request->patient_status];
+        Appointment::where('id', $request->appointment_id)->update($values);
+        //echo '<pre>';print_r($request->all());die;
+        \Session::flash('flash_message', 'Patient Status updated successfully');
+        return redirect()->back();
+    }
     
+    /**
+     * Function for the showing the result for the LaB Appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function labAppointments() {        
+        $appointments = Appointment::with('patient', 'disease')->where('patient_status', '2')->get();
+        $patients = User::where('role', $this->patient_role)->get();
+
+        return view('appointment.lab_appointments', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
+    }
 }

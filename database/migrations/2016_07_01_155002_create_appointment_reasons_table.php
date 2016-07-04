@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePatientDiseasesTable extends Migration
+class CreateAppointmentReasonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreatePatientDiseasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('patient_diseases', function (Blueprint $table) {
+        Schema::create('appointment_reasons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id');  
-            $table->integer('appt_id')->nullable();   
-            $table->tinyInteger('disease_id');   
+            $table->integer('reason_id');            
             $table->timestamps();
         });
     }

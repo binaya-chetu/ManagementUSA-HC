@@ -6,8 +6,6 @@ use App\Patient;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model {
-
-    //
     protected $fillable = [
         'comment',
         'clinic',
@@ -37,6 +35,10 @@ class Appointment extends Model {
 
     public function doctor() {
         return $this->belongsTo('App\User', 'doctor_id');
+    }
+    
+    public function disease() {
+        return $this->belongsTo('App\Disease', 'disease_id');
     }
 
     public function followup() {
