@@ -89,23 +89,6 @@ class ApptSettingController extends Controller {
         return view('apptsetting.missed_call');
     }
 
-    /**
-     * Listing all the Call List from the Api
-     *
-     * @return \resource\view\apptsetting\call_list
-     */
-    public function webLead() {
-
-        $webLeads = WebLead::where('status', 0)->get();
-        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
-        $follows = AppointmentFollowup::with('web_lead')
-                ->where(['appt_type' => 1, 'followup_status' => 1, 'followup_date' => date('Y-m-d')])
-                ->get();
-        return view('apptsetting.web_lead', [
-            'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
-        ]);
-    }
-
 
     /**
      * Listing all the Call List from the Api
@@ -389,6 +372,25 @@ class ApptSettingController extends Controller {
             echo json_decode($this->error);
         }
         die;
+    }
+
+    
+    /**
+     * Listing all the Call List from the Api
+     *
+     * @return \resource\view\apptsetting\call_list
+     */
+    public function webLead() {
+
+        $webLeads = WebLead::where('status', 0)->get();
+        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
+        $follows = AppointmentFollowup::with('web_lead')
+                ->where(['appt_type' => 1, 'followup_status' => 1, 'followup_date' => date('Y-m-d')])
+                ->get();
+
+        return view('apptsetting.web_lead', [
+            'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
+        ]);
     }
 
 }
