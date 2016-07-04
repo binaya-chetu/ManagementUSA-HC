@@ -78,7 +78,7 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.findAppointmentDetail',
             //'middleware' => ['acl:appointment_write']
         ]);
-<<<<<<< HEAD
+
     Route::get('/apptsetting/requestFollowUp', [
             'uses' => 'ApptSettingController@requestFollowUp',
             'as' => 'apptsetting.requestFollowUp',
@@ -91,8 +91,6 @@ Route::group(['middleware' => 'web'], function () {
             //'middleware' => ['acl:appointment_read']
         ]);
    
-=======
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
     
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
@@ -553,7 +551,6 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('pdf/{invoice_id}', function($invoice_id) {
             $item = [
             //'middleware' => ['acl:save_products']
-	]);
 
                 'items' => App\Products::all(),
                 'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
