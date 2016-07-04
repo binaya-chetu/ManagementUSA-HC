@@ -61,17 +61,25 @@ class ProductsController extends Controller {
         return view('products.invoice');
     }
     public function emailInvoice($user){
-        //$input = Input::all();
-        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
-        {
-            $message->to('mail@domain.net');
-            $message->subject('Welcome to Laravel');
-            $message->from('sender@domain.net');
-            $message->attach('path_to_pdf_file', array(
-                'as' => 'pdf-report.zip', 
-                'mime' => 'application/pdf')
-            );
+//        $input = Input::all();
+//        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
+//        {
+//            $message->to('mail@domain.net');
+//            $message->subject('Welcome to Laravel');
+//            $message->from('sender@domain.net');
+//            $message->attach('path_to_pdf_file', array(
+//                'as' => 'pdf-report.zip', 
+//                'mime' => 'application/pdf')
+//            );
+//        });
+        
+        $this->user = $user;
+        /**************start from here*********************/
+        $first_name = App::make('url')->to($url);
+        \Mail::send('emails.patientInvoice', ['first_name' => $first_name],['last_name' => $last_name], function($message) {
+            $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!');
         });
+        return ['response' => true, 'msg' => $url];
     }
 
 }

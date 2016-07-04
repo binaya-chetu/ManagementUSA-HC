@@ -143,12 +143,9 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-6" id="email_invoice_container">
-                        {{ Form::checkbox('email_envoice',null, false, ['class' => 'email_invoice','id' =>'email_invoice','onCheck' => 'send_email' ]) }}
+                        {{ Form::checkbox('email_envoice',null, false, ['class' => 'email_invoice','id' =>'email_invoice','value' => 'sureshc@chetu.com' ]) }}
                         {{ Form::label('email_envoice', 'Email envoice', array('class' => 'col-sm-4')) }}
                     </div>
-
-
-
                 </div>
             </div>
             {{ Form::close() }}

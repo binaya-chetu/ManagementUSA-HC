@@ -485,6 +485,6 @@ Route::group(['middleware' => 'web'], function () {
                 'items' => App\Products::all(),
                 'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
             ];
-            return PDF::loadView('invoices.pdf5', $factory)->stream();
+            return PDF::loadView('invoice.pdf', $factory)->stream();
         });
 });

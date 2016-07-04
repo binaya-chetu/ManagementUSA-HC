@@ -4,10 +4,11 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Patient Profile link</h2>
+<h2>Hi User...</h2>
+<h3>Here is your Invoice</h3>
 
     <div>
-        <a href="{{ $url }}"><?php echo $url; ?></a>
+        Download it from the attachment.
     </div>
 
 </body>

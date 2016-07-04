@@ -575,6 +575,9 @@ $(document).on("click", ".patient_status", function(event) {
              $("#print_invoice").click(function(){
                  window.print();
              });
+             $("#email_invoice").change(function(){
+                 
+             });
         });
    
 
