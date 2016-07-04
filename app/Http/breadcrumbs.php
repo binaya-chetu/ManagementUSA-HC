@@ -143,3 +143,23 @@ Breadcrumbs::register('user.editUser', function ($breadcrumbs, $id) {
 Breadcrumbs::register('user.viewUser', function ($breadcrumbs, $id) {
     $breadcrumbs->push('User Management / View User', route('user.viewUser', $id));
 });
+
+// Home / Product Categories / Add New Category
+Breadcrumbs::register('categories.addNewCategory', function ($breadcrumbs) {
+    $breadcrumbs->push('Product Categories / Add New Category', route('categories.addNewCategory'));
+});
+
+// Home / Product Categories / Categories List
+Breadcrumbs::register('categories.listCategories', function ($breadcrumbs) {
+    $breadcrumbs->push('Product Categories / Categories List', route('categories.listCategories'));
+});
+
+// Home / Product Categories / Package Details
+Breadcrumbs::register('categories.categoryDetails', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('Product Categories / Package Details', route('categories.categoryDetails', $id));
+});
+
+// Home / Imports Product
+Breadcrumbs::register('categories.addcategories', function ($breadcrumbs) {
+    $breadcrumbs->push('Imports Product', route('categories.addcategories'));
+});
