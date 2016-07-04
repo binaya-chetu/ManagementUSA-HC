@@ -64,6 +64,9 @@
                                         {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
                                     </div>
 									<div id="vitaminSupplimentBox"></div>
+									<div id="surgeryListBox"></div>
+									<div id="allergiesListBox"></div>
+									<div id="illnessListBox"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6" >
@@ -594,7 +597,7 @@
 						$replace = ['','','','','','','','','','_'];
 						?>
 						<!-- Tab panes -->
-						<div class="reason-tab-content" style="padding:0">
+						<div class="tab-content" style="padding:0">
 							@foreach($diseases as $i => $v)
 								<div class="hidden row {{ str_replace($splChars, $replace, strtolower($v)) }}" id="disease-form-box-{{ $i }}">
 									@include('appointment.medical.'.str_replace($splChars, $replace, strtolower($v)))
@@ -1495,7 +1498,7 @@
             }
         });
         var radioId = $(this).attr('id');
-		if($("#vitaminMedList").length == 0){
+		if((radioId == 'vitamin_taken1' && $("#vitaminMedList").length == 0) || (radioId == 'surgeries1' && $("#surgeryList").length == 0) || (radioId == 'allergies1' && $("#allergiesList").length == 0) || (radioId == 'illness1' && $("#illnessList").length == 0)){
 			$.ajax({
 			type: "POST",
 					url: ajax_url + "/appointment/checkList",
@@ -1504,7 +1507,7 @@
 						$('#listContent').html(response);
 					}
 				}); 
-			$('#common_modal .panel-title').text('List of Medications');
+			//$('#common_modal .panel-title').text('List of Medications');
 		}
         $.magnificPopup.open({
             items: {

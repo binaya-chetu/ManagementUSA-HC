@@ -6,8 +6,6 @@ use App\Patient;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model {
-
-    //
     protected $fillable = [
         'comment',
 		'disease_id',

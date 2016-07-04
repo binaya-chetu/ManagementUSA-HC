@@ -446,6 +446,15 @@ class AppointmentController extends Controller {
 			if($id == 'vitamin_taken1' ){
 				$patientId = $request['patientId'];
 				$data = DB::table('patient_vitamin_list')->where('patient_id', $patientId)->get();
+			} elseif($id == 'surgeries1' ){
+				$patientId = $request['patientId'];
+				$data = DB::table('surgery_list')->where('patient_id', $patientId)->get();
+			} elseif($id == 'allergies1'){
+				$patientId = $request['patientId'];
+				$data = DB::table('allergies_list')->where('patient_id', $patientId)->get();				
+			} elseif($id == 'illness1'){
+				$patientId = $request['patientId'];
+				$data = DB::table('illness_list')->where('patient_id', $patientId)->get();					
 			}
             return view('appointment.medical.medicine_list', [
                 'id' => $id,
@@ -549,6 +558,41 @@ class AppointmentController extends Controller {
 				$vitaminList->save();
 			}
 		}
+		
+		if(isset($formData['surgeryList']) && !empty($formData['surgeryList'])){
+			$data = json_decode($formData['surgeryList']);
+			$deletedCount = App\SurgeryList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$surgeryList 				= new App\SurgeryList;
+				$surgeryList->patient_id 	= $id;
+				$surgeryList->type_of_surgery = $row->type_of_surgery;
+				$surgeryList->date	= $row->surgery_date;
+				$surgeryList->reason = $row->surgery_reason;
+				$surgeryList->save();
+			}
+		}
+		
+		if(isset($formData['allergiesList']) && !empty($formData['allergiesList'])){
+			$data = json_decode($formData['allergiesList']);
+			$deletedCount = App\AllergiesList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$allergiesList 				= new App\AllergiesList;
+				$allergiesList->patient_id 	= $id;
+				$allergiesList->allergic_medicine = $row->allergic_medicine;
+				$allergiesList->save();
+			}
+		}
+
+		if(isset($formData['illness']) && !empty($formData['illness'])){
+			$data = json_decode($formData['illness']);
+			$deletedCount = App\IllnessList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+			 	$reason = new App\IllnessList;
+				$reason->patient_id = $id;
+				$reason->illness  = $row->illness;
+				$reason->save();
+			}
+		} 
 		
 		if(isset($formData['disease_id']) && !empty($formData['disease_id'])){
 			$data = json_decode($formData['disease_id']);
