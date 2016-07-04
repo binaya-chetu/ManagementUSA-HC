@@ -149,50 +149,6 @@
                                 </ul>
                            </li>
                             @endif
-
-<<<<<<< HEAD
-                            @if(in_array('appointment_module', $permissions))
-                            <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
-                                        Request::segment(2) === 'listappointment' ||
-                                        Request::segment(2) === 'viewappointment' || Request::segment(2) === 'patientMedical' ? 'nav-expanded' : null }}">
-                                <a>
-                                    Appointments
-                                </a>
-                                <ul class="nav nav-children">
-
-                                    <li class="{{ Request::segment(2) === 'newAppointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointment/newAppointment') }}">
-                                            New Appointment
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('appointment/listappointment') }}">
-                                            Appointments List
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(2) === 'viewappointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('appointment/viewappointment') }}">
-                                            View Appointments
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            @endif
-                            @if(in_array('follow_up_appointment_module', $permissions))
-                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/followup') }}">
-                                    Appointments Followup List
-                                </a>
-                            </li>
-                            @endif
-                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/upcomingappointments') }}">
-                                    Upcoming Appointments
-                                </a>
-                            </li>
-=======
-                            
->>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
                         </ul>
                     </li>
                     <?php } ?>

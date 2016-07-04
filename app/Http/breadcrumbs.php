@@ -59,9 +59,9 @@ Breadcrumbs::register('appointment.viewFollowup', function ($breadcrumbs, $follo
     );
 });
 
-// Home / Appt. Settings / Appointments Followup List / View Followup
+// Home / Appt. Settings / Upcoming Appointments
 Breadcrumbs::register('appointment.upcomingappointments', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Appointments Followup List / View Followup', route('appointment.upcomingappointments'));
+    $breadcrumbs->push('Appt. Settings / Upcoming Appointments', route('appointment.upcomingappointments'));
 });
 
 // Home / POS / Patients / Add New Patient

@@ -380,12 +380,8 @@ class AppointmentController extends Controller
     {
         $followup = Followup::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-<<<<<<< HEAD
-            }])->get();
-            
-=======
             }])->get();           
->>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
+
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -498,22 +494,15 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\apptsetting\listappointment.blade.php
      */
-<<<<<<< HEAD
-    public function upcomingappointments()
-    { 
-=======
     public function upcomingappointments() {       
->>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
+
         $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
+        
         return view('appointment.listappointment', [
-<<<<<<< HEAD
-            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
-=======
-            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'type' => 'upcoming'
->>>>>>> f0e4e7b92b44518ee9345fa8be533d4047d9b239
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus, 'type' => 'upcoming'
         ]);
     }
 	
