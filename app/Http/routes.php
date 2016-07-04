@@ -518,16 +518,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/products/saveProducts', [
             'uses' => 'ProductsController@saveProducts',
             'as' => 'products.saveproducts',
-<<<<<<< HEAD
             //'middleware' => ['acl:save_products']	
 	]);	
 
 	
-        Route::get('/products/generateInvoice', [
-            'uses' => 'ProductsController@generateInvoice',
-            'as' => 'products.generateInvoice',
-             //'middleware' => ['acl:save_products']	
-	]);	
+     
 	
 	Route::get('/categories/addcategories', [
             'uses' => 'CategoriesController@addcategories',
@@ -557,10 +552,8 @@ Route::group(['middleware' => 'web'], function () {
     
             Route::get('pdf/{invoice_id}', function($invoice_id) {
             $item = [
-=======
             //'middleware' => ['acl:save_products']
 	]);
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
 
                 'items' => App\Products::all(),
                 'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
