@@ -102,8 +102,7 @@
                     </li>
                     <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
                     <li class="nav-parent {{ Request::segment(1) === 'patient' || 
-                                Request::segment(1) === 'doctor' || 
-                                Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
+                                Request::segment(1) === 'doctor' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>POS System</span>
@@ -191,9 +190,8 @@
                     </li>       
                     @endif
 
-                     <li class="nav-parent {{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'categories' && Request::segment(2) != 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a>
-
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
@@ -205,7 +203,7 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'listCategories'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/listCategories') }}">
-                                    List All Categories
+                                    Categories List
                                 </a>
                             </li>
                         </ul>
