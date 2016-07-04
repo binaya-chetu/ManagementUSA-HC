@@ -4,17 +4,10 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>List Appointments</h2>
+        <h2>Appointments List </h2>
 
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>List Appointments</span></li>
-            </ol>
+            {!! Breadcrumbs::render('appointment.listappointment') !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right">
                 <i class="fa fa-chevron-left"></i>
@@ -29,7 +22,7 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
 
-            <h2 class="panel-title">List Appointments</h2>
+            <h2 class="panel-title">Appointments List</h2>
         </header>
         <div class="panel-body">
             <div class="row">

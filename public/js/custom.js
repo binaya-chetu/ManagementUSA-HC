@@ -228,7 +228,7 @@ $(document).ready(function() {
                 $('#patient_come [type=text], #patient_come [type=email]').val('');
                 $('#patient_come').show();
                 $('#patient_id').val('');
-                $('#addAppPatient').html('Del Patient <i class="fa fa-minus"></i>');
+                $('#addAppPatient').html('Choose Patient <i class="fa fa-minus"></i>');
                 $('.patient_id').hide();
                 i = 2;
         } else

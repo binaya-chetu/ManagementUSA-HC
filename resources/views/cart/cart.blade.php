@@ -15,7 +15,7 @@
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
-<div class="row">
+    <div class="row">
         <div class="col-lg-12">	
             <section class="panel panel-primary">
                 <header class="panel-heading">
@@ -88,7 +88,7 @@
                         <td class="col-sm-1 col-md-1 text-center">{{ $items->category->duration_months }}</td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>${{ $items->package_price }}</strong></td>
                         <td class="col-sm-1 col-md-1">
-                            <a href="/removeItem/{{$items->id}}"> <button type="button" class="btn btn-danger">
+                            <a href="/cart/removeItem/{{$items->id}}"> <button type="button" class="btn btn-danger">
                                     <span class="fa fa-remove"></span> Remove
                                 </button>
                             </a>
@@ -141,4 +141,4 @@
     .desc_tab {
         text-align: center;
     }
-    </style>
+</style>

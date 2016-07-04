@@ -68,12 +68,12 @@
                                 <ul class="nav nav-children">
                                     <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
                                         <a href="/patient/addpatient">
-                                            New Patient
+                                            Add New Patient
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                         <a href="/patient">
-                                            List Patients
+                                            Patients List
                                         </a>
                                     </li>
                                 </ul>
@@ -82,18 +82,18 @@
                             @if(in_array('doctor_module', $permissions)) 
 				<li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
                                 <a>
-                                    Doctor
+                                    Doctors
                                 </a>
                                 <ul class="nav nav-children">
                                    
                                    <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
                                         <a href="{{ url('/doctor/addDoctor') }}">
-                                            New Doctor
+                                            Add New Doctor
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                         <a href="/doctor">
-                                            List Doctor
+                                            Doctors List
                                         </a>
                                     </li>
 
@@ -104,20 +104,20 @@
                             @if(in_array('appointment_module', $permissions))
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
-                                        Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
+                                        Request::segment(2) === 'viewappointment' || Request::segment(2) === 'patientMedical' ? 'nav-expanded' : null }}">
                                 <a>
                                     Appointments
                                 </a>
                                 <ul class="nav nav-children">
 
-                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
+                                    <li class="{{ Request::segment(2) === 'newAppointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('/appointment/newAppointment') }}">
                                             New Appointment
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('appointment/listappointment') }}">
-                                            List Appointments
+                                            Appointments List
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(2) === 'viewappointment' ? 'nav-active' : null }}">
@@ -131,7 +131,7 @@
                             @if(in_array('follow_up_appointment_module', $permissions))
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
-                                    Follow-up Appointment
+                                    Appointments Followup List
                                 </a>
                             </li>
                             @endif
@@ -170,12 +170,12 @@
                         <ul class="nav nav-children">
                             <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/addUser') }}">
-                                    Add User
+                                    Add New User
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/listUsers') }}">
-                                    All User
+                                    Users List
                                 </a>
                             </li>
                         </ul>

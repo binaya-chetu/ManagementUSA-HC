@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Appointment;
 use App\User;
 use App\Role;
+use App\FollowupStatus;
 
 /**
 * This class is used to handle home page related action
@@ -62,8 +63,9 @@ class HomeController extends Controller
         $patients = User::where('role', $this->patient_role)->get();
         // get all doctors list
         $doctors = User::where('role', $this->doctor_role)->get();
+         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
         return view('appointment.viewappointment', [
-            'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors
+            'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
     }
 }
