@@ -170,12 +170,12 @@
                         <ul class="nav nav-children">
                             <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/addUser') }}">
-                                    Add User
+                                    Add New User
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/listUsers') }}">
-                                    All User
+                                    Users List
                                 </a>
                             </li>
                         </ul>

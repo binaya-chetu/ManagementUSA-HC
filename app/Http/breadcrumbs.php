@@ -123,3 +123,23 @@ Breadcrumbs::register('acl.editRole', function ($breadcrumbs, $role) {
 Breadcrumbs::register('acl.listPermission', function ($breadcrumbs, $roleId) {
     $breadcrumbs->push('ACL Management / Permission Setting', route('acl.listPermission', $roleId));
 });
+
+// Home / User Management / Add New User
+Breadcrumbs::register('user.addUser', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / Add New User', route('user.addUser'));
+});
+
+// Home / User Management / Users List
+Breadcrumbs::register('user.listUsers', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / Users List', route('user.listUsers'));
+});
+
+// Home / User Management / Edit User
+Breadcrumbs::register('user.editUser', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('User Management / Edit User', route('user.editUser', $id));
+});
+
+// Home / User Management / View User
+Breadcrumbs::register('user.viewUser', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('User Management / View User', route('user.viewUser', $id));
+});
