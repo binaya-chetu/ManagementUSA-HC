@@ -6,7 +6,7 @@
         <h2>Roles List</h2>
 
         <div class="right-wrapper pull-right">
-            
+            {!! Breadcrumbs::render('acl.listRole') !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>

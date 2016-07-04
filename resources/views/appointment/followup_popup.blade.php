@@ -14,7 +14,7 @@
                     @foreach($followupStatus as $followup)
                     <div class="radio">
                         <label>
-                            {{ Form::radio('action', $followup->id, false, ['id' => 'optionsRadios', 'class' => 'required']) }}
+                            {{ Form::radio('action', $followup->id, false, ['id' => 'optionsRadios'.++$i, 'class' => 'required']) }}
                             {{ $followup->title }}
                         </label>
                     </div>

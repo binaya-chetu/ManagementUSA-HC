@@ -14,8 +14,8 @@ class CreateFollowupStatusTable extends Migration
     {
         Schema::create('followup_status', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('title');
-			$table->boolean('status');
+            $table->string('title');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

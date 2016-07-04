@@ -55,7 +55,7 @@
                                 <label>Follow-up Action :</label>
                             </div>
                             <div class="col-sm-9">
-                              {{ $followup->action }} 
+                              {{ $followup->followupStatus->title }} 
                             </div>
                         </div>
 

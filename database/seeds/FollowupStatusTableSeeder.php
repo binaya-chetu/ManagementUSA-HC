@@ -11,7 +11,13 @@ class FollowupStatusTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('followup_status')->insert([
+        DB::table('followup_status')->insert([ 
+			[
+				'title' => 'Follow-up Later',
+				'status' => 1,
+				'created_at' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s'),
+			],
 			[
 				'title' => 'Reschedule Appointment',
 				'status' => 1,
@@ -26,12 +32,6 @@ class FollowupStatusTableSeeder extends Seeder
 			],
 			[
 				'title' => 'Confirmed Appointment',
-				'status' => 1,
-				'created_at' => date('Y-m-d H:i:s'),
-				'updated_at' => date('Y-m-d H:i:s'),
-			],
-			[
-				'title' => 'Follow-up Later',
 				'status' => 1,
 				'created_at' => date('Y-m-d H:i:s'),
 				'updated_at' => date('Y-m-d H:i:s'),
