@@ -7,15 +7,19 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
+                
                 {{ Form::label('status', 'Followup Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
+                    {{-- */$i=0;/* --}}
+                    @foreach($followupStatus as $followup)
                     <div class="radio">
                         <label>
-                            {{ Form::radio('action', 'Reschedule', false, ['id' => 'optionsRadios1', 'class' => 'required']) }}
-                            Reschedule Appointment
+                            {{ Form::radio('action', $followup->id, false, ['id' => 'optionsRadios'.++$i, 'class' => 'required']) }}
+                            {{ $followup->title }}
                         </label>
                     </div>
-                    <div class="radio">
+                    @endforeach
+                    <!--<div class="radio">
                         <label>
                             {{ Form::radio('action', 'Cancel', false, ['id' => 'optionsRadios2', 'class' => 'required']) }}
                             Cancel Appointment
@@ -38,7 +42,7 @@
                             {{ Form::radio('action', 'Never Treat', false, ['id' => 'optionsRadios5', 'class' => 'required']) }}
                             Never Treat
                         </label>
-                    </div>
+                    </div>-->
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'followup_appointment_id')) }}
             </div>

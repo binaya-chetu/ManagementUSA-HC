@@ -5,14 +5,8 @@
     <header class="page-header">
         <h2>Add New Patient</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="/">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-               
-            </ol>
+            {!! Breadcrumbs::render('patient.addpatient') !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>

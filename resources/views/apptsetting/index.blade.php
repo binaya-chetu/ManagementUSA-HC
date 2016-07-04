@@ -14,14 +14,7 @@
         ?>
         <h2>Create Appointment From {{ $type }}</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>{{ $type }}</span></li>
-            </ol>
+            {!! Breadcrumbs::render('apptsetting.index') !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>

@@ -33,3 +33,7 @@
 #add_marketing_call { margin-bottom: 5px;}
 .followup_check { margin-top: 10px !important; }
 .radio-custom .error { margin-top: 0px; }
+
+.wizard-steps li a, html.dark .wizard-progress .wizard-steps li a {
+         word-break: break-word !important; 
+}

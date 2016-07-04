@@ -228,7 +228,7 @@ $(document).ready(function() {
                 $('#patient_come [type=text], #patient_come [type=email]').val('');
                 $('#patient_come').show();
                 $('#patient_id').val('');
-                $('#addAppPatient').html('Del Patient <i class="fa fa-minus"></i>');
+                $('#addAppPatient').html('Choose Patient <i class="fa fa-minus"></i>');
                 $('.patient_id').hide();
                 i = 2;
         } else
@@ -421,19 +421,131 @@ $(document).ready(function() {
             }
         });	 
 	})
-	
-	
+
 	$(document).on('click', '.addMedicineListRow', function(){
-		var clone = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last').clone('true');
-		var lastRow = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last');
-		
-		var n = parseInt(clone.find('td:first').html());
-		n += 1;
-		clone.find('td:first').html(n);
-		clone.insertAfter(lastRow);		
+		new emrFormNewPopUpRow();
+	});
+	
+	$(document).on('click', '.saveMedicineList', function(){
+		$('#vitaminSupplimentBox').html('');
+		var data = [];
+		$(".vitSupInput").closest('tr').each(function(i,v){
+			row = {};
+			row['name'] = $(v).find('.name input').val();
+			row['dosage'] = $(v).find('.dosage input').val();
+			row['how_often'] = $(v).find('.how_often input').val();
+			row['condition'] = $(v).find('.condition input').val();
+			if(row['name'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'vitaminSuppliments'
+		});
+		$('#vitaminSupplimentBox').append(input);
+	});
+	
+	$(document).on('click', '.saveIllnessList', function(){
+		$('#illnessListBox').html('');
+		var data = [];
+		$(".illnessInput").closest('tr').each(function(i,v){
+			row = {};
+			row['illness'] = $(v).find('.illness input').val();
+			if(row['illness'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'illness'
+		});
+		$('#illnessListBox').append(input);
+	});
+	
+	$(document).on('click', '.saveSurgeryList', function(){
+		$('#surgeryListBox').html('');
+		var data = [];
+		$(".surgeryInput").closest('tr').each(function(i,v){
+			row = {};
+			row['type_of_surgery']	= $(v).find('.type_of_surgery input').val();
+			row['surgery_date']		= $(v).find('.surgery_date input').val();
+			row['surgery_reason']	= $(v).find('.surgery_reason input').val();
+			if(row['type_of_surgery'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'surgeryList'
+		});
+		$('#surgeryListBox').append(input);
+	});
+	
+	$(document).on('click', '.saveAllergiesList', function(){
+		new saveEmrPopupList();
+	});
+	
+	
+	
+	$(document).on('click', '.deleteVitListRow', function(){
+		$(this).closest('tr').remove();
 	});
 });
 
+	/**
+	* saveEmrPopupList: saves lsit data from emr form popup to database
+	*/
+	function saveEmrPopupList(){
+		$('#allergiesListBox').html('');
+		var data = [];
+		$(".allergiesInput").closest('tr').each(function(i,v){
+			row = {};
+			row['allergic_medicine']	= $(v).find('.allergic_medicine input').val();
+			if(row['allergic_medicine'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'allergiesList'
+		});
+		$('#allergiesListBox').append(input);		
+	};
+
+	/**
+	* emrFormNewPopUpRow: adds new empty row to popup forms within patient emr form
+	* 
+	*/
+	function emrFormNewPopUpRow(){
+		var clone = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last').clone('true');
+		var lastRow = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last');
+		
+		var n = parseInt($(lastRow).data('count'));
+		n += 1;
+		$(clone).attr('data-count', n);
+
+		$.each(clone.find('td'), function(i,v){
+			if($(v).find('input').length > 0){
+				id = $(v).find('input').attr('id');
+				name = $(v).find('input').attr('name');
+				id = id.substring(0, id.lastIndexOf('_'))+'_'+n;
+				name = name.substring(0, name.lastIndexOf('_'))+'_'+n;
+				$(v).find('input').attr({'id': id, 'name': name});
+				$(v).find('input').val('');
+			}
+		});
+		
+		clone.insertAfter(lastRow);		
+	}	
         (function($) {
 
         'use strict';

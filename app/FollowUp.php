@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Appointment;
+use App\FollowupStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Followup extends Model {
@@ -16,5 +17,9 @@ class Followup extends Model {
 
     public function appointment() {
         return $this->belongsTo('App\Appointment', 'appt_id')->select('id', 'apptTime', 'patient_id', 'doctor_id', 'comment');
+    }
+    
+    public function followupStatus() {
+        return $this->belongsTo('App\FollowupStatus', 'action')->select('id', 'title');
     }
 }

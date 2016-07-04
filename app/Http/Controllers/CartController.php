@@ -13,12 +13,21 @@ use DB;
  
 class CartController extends Controller
 {
- 
+    /**
+     * Constructor function to check the auth permission
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
- 
+    
+    /**
+     * Add the item in cart
+     *
+     * @return \resource\view\cart\cart
+     */
     public function addItem (Request $request){
         
         $categoryId = $request->category_id;
@@ -72,7 +81,7 @@ class CartController extends Controller
                 $cartItem->total_price = $category_detail->spl_price;
                 $cartItem->save();
             }
-            return redirect('/cart');
+            return redirect('/cart/cart');
         }
         else
         {
@@ -83,7 +92,12 @@ class CartController extends Controller
         
  
     }
- 
+    
+    /**
+     * Show the items in cart.
+     *
+     * @return \resource\view\cart\cart
+     */
     public function showCart(){
         $cart = Cart::with('cartItems', 'category', 'cartItems.product')->where('user_id',Auth::user()->id)->first();
         //echo "<pre>";print_r($cart);die;
@@ -95,11 +109,16 @@ class CartController extends Controller
         return view('cart.cart',['items'=>$cart, 'cart_items' => $cart_items, ]);
     }
  
+    /**
+     * Remove an item from cart
+     *
+     * @return \resource\view\cart\cart
+     */
     public function removeItem($id){
  
         Cart::destroy($id);
         DB::table('cart_items')->where('cart_id', '=', $id)->delete();
-        return redirect('/cart');
+        return redirect('/cart/cart');
     }
  
 }

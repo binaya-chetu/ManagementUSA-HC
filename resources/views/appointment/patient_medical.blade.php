@@ -6,13 +6,8 @@
     <header class="page-header">
         <h2>Edit patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="/">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+            {!! Breadcrumbs::render('appointment.patientMedical', $patient) !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -63,6 +58,10 @@
 										{{ Form::hidden('hash', $hash) }}
                                         {{ Form::text('first_name', null, ['class' => 'form-control input-sm required', 'id' => 'w3-first_name', 'placeholder' => 'First Name']) }}
                                     </div>
+									<div id="vitaminSupplimentBox"></div>
+									<div id="surgeryListBox"></div>
+									<div id="allergiesListBox"></div>
+									<div id="illnessListBox"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6" >
@@ -580,7 +579,7 @@
 								@foreach($diseases as $i => $v)
 								<div class="col-sm-6">
 									<div class="checkbox-custom chekbox-primary reason_disease">
-										{{ Form::checkbox('reason-'.$i, $i, $disease_id == $i, ['id' => 'reason-'.$i, 'data-target' => '#disease-form-box-'.$i]) }}
+										{{ Form::checkbox('reason-'.$i, $i, in_array($i, $disease_id), ['id' => 'reason-'.$i, 'data-target' => '#disease-form-box-'.$i]) }}
 										{{ Form::label('reason-'.$i, $v) }}
 									</div>
 								</div>
@@ -595,7 +594,7 @@
 						<!-- Tab panes -->
 						<div class="tab-content" style="padding:0">
 							@foreach($diseases as $i => $v)
-								<div role="tabpanel" class="row tab-pane {{ str_replace($splChars, $replace, strtolower($v)) }}" id="disease-form-box-{{ $i }}">
+								<div class="hidden row {{ str_replace($splChars, $replace, strtolower($v)) }}" id="disease-form-box-{{ $i }}">
 									@include('appointment.medical.'.str_replace($splChars, $replace, strtolower($v)))
 								</div>
 							@endforeach		
@@ -1356,20 +1355,15 @@
 
     </div>
     <div id="common_modal" class="modal-block modal-block-primary mfp-hide">
-        <section class="panel panel-primary" id="listContent">
-           
-                    
-                
-        </section>
+        <section class="panel panel-primary" id="listContent"></section>
     </div>
 @if(empty(Request::segment(4)) || empty(Request::segment(5))) 
 </section>
 @endif
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script>
+	var Appointment = {};
     $(document).ready(function() {
-		
-        
 		$('.selectSmoke').hide();
 		if($("input[name='smoke_status']:checked").val() == 1){
 			$('.selectSmoke').show();
@@ -1389,23 +1383,42 @@
         if($("input[name='sex_status']:checked").val() == 1){
 			$('.selectSex').show();
 		}
+		
+		Appointment.reasonArray = [];
 
 		// show tab corresponding to checkbox checked
 		var reason_disease = $(".reason_disease");
 		$.each(reason_disease, function(i,v){
 			input = $(v).find('input');
-			if($(input).attr('checked') == 'checked'){
-				$(input).tab('show');
+			if($(input).prop('checked')){
+				id = $(input).data('target');
+				$(id).removeClass('hidden');
 				$('#disease_id').remove();
-				$(input).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+$(input).val()+'">');
+				Appointment.reasonArray.push(parseInt($(input).val()));
 			}
-		});	
+		});
+		var reasonArrayData = JSON.stringify(Appointment.reasonArray);
+		if(reasonArrayData.length > 0){
+			$(input).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+reasonArrayData+'">');				
+		}		
 
 		$(".reason_disease").find('input').on('click',function(){
-			$(".reason_disease").find('input').not(this).attr('checked',false);
-			$(this).tab('show');
+			var id = $(this).data('target');
+			var val = parseInt($(this).val());
+			if($(this).prop('checked')){
+				$(id).removeClass('hidden');
+				Appointment.reasonArray.push(val);
+			} else{
+				$(id).addClass('hidden');
+				Appointment.reasonArray = $.grep(Appointment.reasonArray, function(value){
+											return value != val;
+										});
+			}			
 			$('#disease_id').remove();
-			$(this).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+$(this).val()+'">');
+			var reasonArrayData = JSON.stringify(Appointment.reasonArray);
+			if(reasonArrayData.length > 0){
+				$(this).closest('.form-group').append('<input type="hidden" id="disease_id" name="disease_id" value="'+reasonArrayData+'">');				
+			}			
 		});		
 	
  
@@ -1473,22 +1486,24 @@
      * */
     
     $(document).on("click", ".modelShow", function(ev) {
-       
+        var userId = <?php echo $patient->id; ?>	
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         var radioId = $(this).attr('id');
-        $.ajax({
-        type: "POST",
-                url: ajax_url + "/appointment/checkList",
-                data: {"id": radioId },
-                success: function(response) {
-                    $('#listContent').html(response);
-                }
-            }); 
-        $('#common_modal .panel-title').text('List of Medications');
+		if((radioId == 'vitamin_taken1' && $("#vitaminMedList").length == 0) || (radioId == 'surgeries1' && $("#surgeryList").length == 0) || (radioId == 'allergies1' && $("#allergiesList").length == 0) || (radioId == 'illness1' && $("#illnessList").length == 0)){
+			$.ajax({
+			type: "POST",
+					url: ajax_url + "/appointment/checkList",
+					data: {"id": radioId,"patientId": userId },
+					success: function(response) {
+						$('#listContent').html(response);
+					}
+				}); 
+			//$('#common_modal .panel-title').text('List of Medications');
+		}
         $.magnificPopup.open({
             items: {
                 src: '#common_modal',
