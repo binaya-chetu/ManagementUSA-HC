@@ -91,7 +91,11 @@ Route::group(['middleware' => 'web'], function () {
             //'middleware' => ['acl:appointment_read']
         ]);
    
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
             'as' => 'ApptSettingController@directWalkins',
@@ -548,6 +552,7 @@ Route::group(['middleware' => 'web'], function () {
         /*
          * for sending email with invoice
          */
+
         Route::get('/products/emailInvoice/{invoice_id}', [
            'uses' => 'ProductsController@emailInvoice',
            'as' => 'products.emailInvoice',
@@ -563,4 +568,15 @@ Route::group(['middleware' => 'web'], function () {
 //              //return $pdf->download('invoice.pdf');
 //        //    return PDF::loadView('invoice.pdf', $factory)->stream();
 //        });
+
+    
+            Route::get('pdf/{invoice_id}', function($invoice_id) {
+            $item = [
+            //'middleware' => ['acl:save_products']
+                'items' => App\Products::all(),
+                'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
+            ];
+            return PDF::loadView('invoice.pdf', $factory)->stream();
+        });
+
 });
