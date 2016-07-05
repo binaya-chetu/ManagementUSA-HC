@@ -35,54 +35,54 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/apptsetting/index/{val?}', [
             'uses' => 'ApptSettingController@index',
             'as' => 'apptsetting.index',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
 
     Route::get('/apptsetting/marketingCall', [
             'uses' => 'ApptSettingController@marketingCall',
             'as' => 'apptsetting.marketingCall',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
 
     Route::get('/apptsetting/missedCall', [
             'uses' => 'ApptSettingController@missedCall',
             'as' => 'apptsetting.missedCall',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::get('/apptsetting/webLead', [
             'uses' => 'ApptSettingController@webLead',
             'as' => 'apptsetting.webLead',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::post('/apptsetting/saveApptFollowup', [
             'uses' => 'ApptSettingController@saveApptFollowup',
             'as' => 'apptsetting.saveApptFollowup',
-           // 'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/apptsetting/saveMarketingCall', [
             'uses' => 'ApptSettingController@saveMarketingCall',
             'as' => 'apptsetting.saveMarketingCall',
-           // 'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     Route::get('/apptsetting/uniqueEmail/{email?}', [
             'uses' => 'ApptSettingController@uniqueEmail',
             'as' => 'apptsetting.uniqueEmail',
-            //'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/apptsetting/findAppointmentDetail', [
             'uses' => 'ApptSettingController@findAppointmentDetail',
             'as' => 'apptsetting.findAppointmentDetail',
-            //'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
             'as' => 'ApptSettingController@directWalkins',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     
@@ -90,43 +90,43 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/patient', [
             'uses' => 'PatientController@index',
             'as' => 'patient',
-            'middleware' => ['acl:patient_read']
+            'middleware' => ['acl:pos_read']
         ]);
 
     Route::get('/patient/addpatient', [
             'uses' => 'PatientController@addPatient',
             'as' => 'patient.addpatient',
-            'middleware' => ['acl:patient_write']
+            'middleware' => ['acl:pos_write']
         ]);
 
     Route::get('/patient/edit/{id}', [
             'uses' => 'PatientController@edit',
             'as' => 'patient.edit',
-            'middleware' => ['acl:patient_write']
+            'middleware' => ['acl:pos_write']
         ]);
 
     Route::get('/patient/delete/{id}', [
             'uses' => 'PatientController@delete',
             'as' => 'patient.delete',
-            'middleware' => ['acl:patient_write']
+            'middleware' => ['acl:pos_write']
         ]);
 
     Route::get('/patient/view/{id}', [
             'uses' => 'PatientController@view',
             'as' => 'patient.view',
-            'middleware' => ['acl:patient_read']
+            'middleware' => ['acl:pos_read']
         ]);
 
     Route::post('/patient/savePatient', [
             'uses' => 'PatientController@save',
             'as' => 'patient.savePatient',
-            'middleware' => ['acl:patient_write']
+            'middleware' => ['acl:pos_write']
         ]);
 
     Route::post('/patient/updatePatient/{id}', [
             'uses' => 'PatientController@updatePatient',
             'as' => 'patient.updatePatient',
-            'middleware' => ['acl:patient_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     
@@ -134,150 +134,150 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/doctor', [
             'uses' => 'DoctorController@index',
             'as' => 'doctor',
-            'middleware' => ['acl:doctor_read']
+            'middleware' => ['acl:pos_read']
         ]);
     
     Route::get('/doctor/addDoctor', [
             'uses' => 'DoctorController@addDoctor',
             'as' => 'doctor.addDoctor',
-            'middleware' => ['acl:doctor_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     Route::post('/doctor/saveDoctor', [
             'uses' => 'DoctorController@create',
             'as' => 'doctor.saveDoctor',
-            'middleware' => ['acl:doctor_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     Route::get('/doctor/edit/{id}', [
             'uses' => 'DoctorController@edit',
             'as' => 'doctor.edit',
-            'middleware' => ['acl:doctor_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     Route::post('/doctor/updateDoctor/{id}', [
             'uses' => 'DoctorController@update',
             'as' => 'doctor.updateDoctor',
-            'middleware' => ['acl:doctor_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     Route::get('/doctor/delete/{id}', [
             'uses' => 'DoctorController@delete',
             'as' => 'doctor.delete',
-            'middleware' => ['acl:doctor_write']
+            'middleware' => ['acl:pos_write']
         ]);
     
     Route::get('/doctor/view/{id}', [
             'uses' => 'doctorController@view',
             'as' => 'doctor.view',
-            'middleware' => ['acl:doctor_read']
+            'middleware' => ['acl:pos_read']
         ]);
 
     
-    // Route for AppointmentController in POS Module
+    // Route for AppointmentController in Appointment Setting Module
     Route::get('/appointment/newAppointment/{id?}', [
             'uses' => 'AppointmentController@index',
             'as' => 'appointment.newAppointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::get('/appointment/listappointment', [
             'uses' => 'AppointmentController@listappointment',
             'as' => 'appointment.listappointment',
-            'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::get('/appointment/viewappointment', [
             'uses' => 'AppointmentController@viewappointment',
             'as' => 'appointment.viewappointment',
-            'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::post('/appointment/addappointment', [
             'uses' => 'AppointmentController@addappointment',
             'as' => 'appointment.addappointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::get('/appointment/show', [
             'uses' => 'AppointmentController@viewappointment',
             'as' => 'appointment.show',
-            'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::post('/appointment/editappointment', [
             'uses' => 'AppointmentController@editappointment',
             'as' => 'appointment.editappointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/appointment/saveappointment', [
             'uses' => 'AppointmentController@saveappointment',
             'as' => 'appointment.saveappointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::get('/appointment/delete/{id}', [
             'uses' => 'AppointmentController@deleteappointment',
             'as' => 'appointment.delete',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/appointment/editpatientappointment', [
             'uses' => 'AppointmentController@editpatientappointment',
             'as' => 'appointment.editpatientappointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::get('/appointment/uniquePatientEmail/{email?}', [
             'uses' => 'AppointmentController@uniquePatientEmail',
             'as' => 'appointment.uniquePatientEmail',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/appointment/addPatAppointment', [
             'uses' => 'AppointmentController@addPatAppointment',
             'as' => 'appointment.addPatAppointment',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]); 
     
     Route::post('/appointment/saveAppointmentFolloup', [
             'uses' => 'AppointmentController@saveAppointmentFolloup',
             'as' => 'appointment.saveAppointmentFolloup',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     Route::post('/appointment/checkList', [
             'uses' => 'AppointmentController@checkList',
             'as' => 'appointment.checkList',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     Route::post('/appointment/savePatientStatus', [
             'uses' => 'AppointmentController@savePatientStatus',
             'as' => 'appointment.savePatientStatus',
-           // 'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     Route::get('/appointment/labAppointments', [
             'uses' => 'AppointmentController@labAppointments',
             'as' => 'appointment.labAppointments',
-            //'middleware' => ['acl:followupappointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     Route::get('/appointment/followup', [
             'uses' => 'AppointmentController@followup',
             'as' => 'appointment.followup',
-            'middleware' => ['acl:followupappointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::get('/appointment/viewFollowup/{id}', [
             'uses' => 'AppointmentController@viewfollowup',
             'as' => 'appointment.viewFollowup',
-            'middleware' => ['acl:followupappointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     
     Route::get('/appointment/patientMedical/{id}', [
             'uses' => 'AppointmentController@patientMedical',
             'as' => 'appointment.patientMedical',
-            'middleware' => ['acl:followupappointment_read']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     // Do not add middleware to this route
@@ -290,23 +290,23 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/getdoctorschedule', [
             'uses' => 'AppointmentController@getdoctorschedule',
             'as' => 'doctor.getSchedule',
-            'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
 
     Route::get('/appointment/upcomingappointments', [
             'uses' => 'AppointmentController@upcomingappointments',
             'as' => 'appointment.upcomingappointments',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     Route::get('/appointment/todayVisits', [
             'uses' => 'AppointmentController@todayVisits',
             'as' => 'appointment.todayVisits',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_setting_read']
         ]);
     Route::post('/appointment/savePatientMedicalRecord/{id}', [
             'uses' => 'AppointmentController@savePatientMedicalRecord',
             'as' => 'appointment.savePatientMedicalRecord',
-            //'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     
@@ -314,49 +314,49 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/acl/listRole', [
             'uses' => 'AclController@listRoles',
             'as' => 'acl.listRole',
-            'middleware' => ['acl:role_read']
+            'middleware' => ['acl:acl_management_read']
         ]);
     
     Route::get('/acl/addRole', [
             'uses' => 'AclController@addRole',
             'as' => 'acl.addRole',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::post('/acl/saveRole', [
             'uses' => 'AclController@saveRole',
             'as' => 'acl.saveRole',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::get('/acl/deleteRole/{id}', [
             'uses' => 'AclController@deleteRole',
             'as' => 'acl.deleteRole',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::get('/acl/editRole/{id}', [
             'uses' => 'AclController@editRole',
             'as' => 'acl.editRole',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::post('/acl/updateRole/{id}', [
             'uses' => 'AclController@updateRole',
             'as' => 'acl.updateRole',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::get('/acl/listPermission/{id}', [
             'uses' => 'AclController@listPermissions',
             'as' => 'acl.listPermission',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     Route::post('/acl/listPermission/updatePermission', [
             'uses' => 'AclController@updatePermission',
             'as' => 'acl.listPermission',
-            'middleware' => ['acl:role_write']
+            'middleware' => ['acl:acl_management_write']
         ]);
     
     
@@ -364,49 +364,49 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/user/addUser', [
             'uses' => 'UserController@addUser',
             'as' => 'user.addUser',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::post('/user/saveUser', [
             'uses' => 'UserController@saveUser',
             'as' => 'user.saveUser',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::get('/user/listUsers', [
             'uses' => 'UserController@listUsers',
             'as' => 'user.listUsers',
-            'middleware' => ['acl:user_read']
+            'middleware' => ['acl:user_management_read']
         ]);
     
     Route::post('/user/updateUserStatus', [
             'uses' => 'UserController@updateUserStatus',
             'as' => 'user.updateUserStatus',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::get('/user/deleteUser/{id}', [
             'uses' => 'UserController@deleteUser',
             'as' => 'user.deleteUser',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::get('/user/editUser/{id}', [
             'uses' => 'UserController@editUser',
             'as' => 'user.editUser',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::post('/user/updatedUser/{id}', [
             'uses' => 'UserController@updateUser',
             'as' => 'user.updatedUser',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:user_management_write']
         ]);
     
     Route::get('/user/viewUser/{id}', [
             'uses' => 'UserController@viewUser',
             'as' => 'user.viewUser',
-            'middleware' => ['acl:user_read']
+            'middleware' => ['acl:user_management_read']
         ]);
     
 
@@ -414,37 +414,37 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/categories/listCategories', [
             'uses' => 'CategoriesController@listCategories',
             'as' => 'categories.listCategories',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:product_categories_read']
         ]);
 
     Route::get('/categories/categoryDetails/{id}', [
             'uses' => 'CategoriesController@categoryDetails',
             'as' => 'categories.categoryDetails',
-            'middleware' => ['acl:user_write']
+            'middleware' => ['acl:product_categories_read']
         ]);
     
     Route::get('/categories/newCategory', [
             'uses' => 'CategoriesController@addNewCategory',
             'as' => 'categories.addNewCategory',
-            //'middleware' => ['acl:user_write']
+            'middleware' => ['acl:product_categories_write']
         ]);
        
     Route::get('/categories/addcategories', [
             'uses' => 'CategoriesController@addcategories',
             'as' => 'categories.addcategories',
-            //'middleware' => ['acl:add_categories']
+            'middleware' => ['acl:product_categories_write']
         ]);
     
     Route::post('/categories/saveCategories', [
             'uses' => 'CategoriesController@saveCategories',
             'as' => 'categories.savecategories',
-                    //'middleware' => ['acl:save_categories']	
+            'middleware' => ['acl:product_categories_write']	
         ]);
     
     Route::post('/categories/saveCategory', [
             'uses' => 'CategoriesController@saveCategory',
             'as' => 'CategoriesController.saveCategory',
-            //'middleware' => ['acl:user_write']
+            'middleware' => ['acl:product_categories_write']
         ]);
 
 
@@ -497,13 +497,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/products/addproducts', [
             'uses' => 'ProductsController@addproducts',
             'as' => 'products.addproducts',
-            //'middleware' => ['acl:add_products']
+            'middleware' => ['acl:product_imports_write']
 	]);
 
     Route::post('/products/saveProducts', [
             'uses' => 'ProductsController@saveProducts',
             'as' => 'products.saveproducts',
-            //'middleware' => ['acl:save_products']
+            'middleware' => ['acl:product_imports_write']
 	]);
 
 });

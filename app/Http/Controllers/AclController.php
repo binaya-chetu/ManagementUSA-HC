@@ -86,7 +86,7 @@ class AclController extends Controller {
     }
 
     public function editRole($id = null) {
-        if (!($role = Role::find($id))) {
+        if (!($role = Role::find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
         return view('acl.edit_role', [
@@ -95,10 +95,10 @@ class AclController extends Controller {
     }
 
     public function deleteRole($id = null) {
-        if (!($role = Role::find($id))) {
+        if (!($role = Role::find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
-        Role::destroy($id);
+        Role::destroy(base64_decode($id));
         \Session::flash('flash_message', 'Data deleted successfully.');
         return Redirect::back();
     }
@@ -127,10 +127,10 @@ class AclController extends Controller {
      */
     public function listPermissions($roleId = null) {
         $parents = Permission::with('children', 'parent')->get();
-        $permissionRoleData = PermissionRole::where('role_id', $roleId)->get();
+        $permissionRoleData = PermissionRole::where('role_id', base64_decode($roleId))->get();
         return view('acl.permission', [
             'permissions' => $parents,
-            'roleId' => $roleId,
+            'roleId' => base64_decode($roleId),
             'permissionRoleDatas' => $permissionRoleData
         ]);
     }
@@ -166,5 +166,4 @@ class AclController extends Controller {
             }
         }
     }
-
 }
