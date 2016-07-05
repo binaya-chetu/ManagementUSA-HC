@@ -23,7 +23,7 @@
                 </header>	
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
-                    {!! Form::model($role, ['method' => 'post','url' => ['updateRole', $role->id], 'id' => 'addRole']) !!}
+                    {!! Form::model($role, ['method' => 'post','url' => ['/acl/updateRole', $role->id], 'id' => 'addRole']) !!}
                     {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('role_title') ? ' has-error' : '' }}">
                             {{ Form::label('role_title', 'Role Title', array('class' => 'col-sm-3 control-label mandatory')) }}
