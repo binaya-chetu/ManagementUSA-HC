@@ -28,18 +28,12 @@ class AppointmentController extends Controller
     public $success = true;
     public $error = false;
 
-<<<<<<< HEAD
-    public function __construct(Request $request) {
-        if (($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash') && $request->segment(2) != 'savePatientMedicalRecord') {
-            $this->middleware('auth');
-        }
-=======
 
     public function __construct(Request $request){ 		
 		if(($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash') && $request->segment(2) != 'savePatientMedicalRecord'){ 
 			$this->middleware('auth');
 		}
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
+
     }
 
     /**
@@ -68,13 +62,11 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
+
 
     public function fetchDoctorSchedule($doctor_id) {
-=======
-    public function fetchDoctorSchedule($doctor_id)
-    {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
+
+  
         $appointment = new Appointment;
         $appointments = $appointment->where('doctor_id', $doctor_id)->get();
 
@@ -97,14 +89,10 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
 
-    public function addPatAppointment(Request $request) {
-
-=======
     public function addPatAppointment(Request $request)
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
+
         $appointment = new Appointment;
         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
         $appointment->createdBy = $request->createdBy;
@@ -128,13 +116,9 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\appointment\newappointment.blade.php or \resource\view\appointment\viewappointment.blade.php
      */
-<<<<<<< HEAD
 
-    public function addappointment(Request $request) {
-=======
     public function addappointment(Request $request)
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $data = Input::all();
         $date = $data['appDate'];
         $time = $data['appTime'];
@@ -175,13 +159,9 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\appointment\viewappointment.blade.php
      */
-<<<<<<< HEAD
 
-    public function show() {
-=======
     public function show()
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $appointment = new Appointment;
         $appointments = $appointment->get();
 
@@ -195,13 +175,9 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
 
-    public function getdoctorschedule() {
-=======
     public function getdoctorschedule()
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $doctor_id = Input::get('doctor_id');
         $collevent = $this->fetchDoctorSchedule($doctor_id);
         echo json_encode($collevent);
@@ -212,13 +188,9 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\appointment\listappointment.blade.php
      */
-<<<<<<< HEAD
 
-    public function listappointment() {
-=======
     public function listappointment()
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
 
         $appointments = Appointment::with('patient')->orderBy('id', 'desc')->get();
         $patients = User::where('role', $this->patient_role)->get();
@@ -235,15 +207,10 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\appointment\viewappointment.blade.php
      */
-<<<<<<< HEAD
 
-    public function viewappointment() {
-        $appointments = Appointment::with('patient.patientDetail')->whereIn('status', [1, 4])->get();
-=======
     public function viewappointment()
     {
         $appointments = Appointment::with('patient.patientDetail')->whereIn('status', [2, 4])->get();
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
@@ -274,13 +241,9 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
 
-    public function editappointment(Request $request) {
-=======
     public function editappointment(Request $request)
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $appointment = Appointment::with('patient.patientDetail')->find($request['id']);
         $patient = $appointment->patient;
         $doctor = $appointment->doctor;
@@ -299,13 +262,9 @@ class AppointmentController extends Controller
      * 
      * @return \Illuminate\View\View
      */
-<<<<<<< HEAD
 
-    public function saveappointment(Request $request) {
-=======
     public function saveappointment(Request $request)
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
 
         $appointment = Appointment::find($request->appointment_id);
         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
@@ -340,13 +299,9 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
 
-    public function deleteappointment($id = null) {
-=======
     public function deleteappointment($id = null)
     {
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
         $id = base64_decode($id);
         if (Appointment::find($id)->delete()) {
             \Session::flash('flash_message', 'Appointment deleted successfully.');
@@ -439,12 +394,8 @@ class AppointmentController extends Controller
     {
         $followup = Followup::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-<<<<<<< HEAD
-            }])->get();
-=======
-            }])->get();           
 
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
+            }])->get();           
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -475,7 +426,6 @@ class AppointmentController extends Controller
     public function patientMedical($id = null, $hash = null) {
 
         $id = base64_decode($id);
-<<<<<<< HEAD
         $hash = $hash;
         $patient = User::with('patientDetail')->find($id);
         $disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->limit(1)->pluck('disease_id');
@@ -489,28 +439,8 @@ class AppointmentController extends Controller
         $testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
         $vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
         $cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
-
-        if (!$patient) {
-=======
-		$hash = $hash;
-						
-		$patient = User::with('patientDetail')->find($id);
-		
-		$disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->pluck('reason_id');
-
-		$diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason','id');
-		$adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
-		$medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
-		$erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
-		$weightL = DB::table('weight_loss')->where('patient_id', $id)->first();
-		$priapus = DB::table('priapus')->where('patient_id', $id)->first();
-		$testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
-		$vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
-		$cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
-		
         if (!$patient)
 		{
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
             App::abort(404, 'Patient with given id was not found.');
         }
 
@@ -548,9 +478,7 @@ class AppointmentController extends Controller
     public function checkList(Request $request)
     {
         if (!empty($request['id'])) {
-<<<<<<< HEAD
-            $id = $request['id'];
-=======
+
             $id = $request['id']; 
 			if($id == 'vitamin_taken1' ){
 				$patientId = $request['patientId'];
@@ -565,7 +493,6 @@ class AppointmentController extends Controller
 				$patientId = $request['patientId'];
 				$data = DB::table('illness_list')->where('patient_id', $patientId)->get();					
 			}
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
             return view('appointment.medical.medicine_list', [
                 'id' => $id,
 				'data' => (isset($data) && !empty($data)) ? $data : ''
@@ -573,22 +500,14 @@ class AppointmentController extends Controller
             die;
         }
     }
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
     /*
      * Find the list of all appointment which appointment time are within 24 Hours.
      * 
      * @return \resource\view\apptsetting\listappointment.blade.php
      */
-<<<<<<< HEAD
 
-    public function upcomingappointments() {
-=======
     public function upcomingappointments() {       
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
 
         $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
@@ -599,11 +518,7 @@ class AppointmentController extends Controller
             'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus, 'type' => 'upcoming'
         ]);
     }
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
     /**
      * Save the patient medical form for different diseases
      * 
@@ -612,7 +527,6 @@ class AppointmentController extends Controller
      * @return \resource\view\appointment\patient_medical
      */
     public function savePatientMedicalRecord($id, Request $response) {
-<<<<<<< HEAD
         $formData = $response->all();
         $id = base64_decode($id);
 
@@ -646,8 +560,7 @@ class AppointmentController extends Controller
                 }
             }
         }
-=======
-		$formData = $response->all();
+	$formData = $response->all();
 		$id = base64_decode($id);
 
 		$user = App\User::firstOrCreate(['id' => $id]);
@@ -969,7 +882,6 @@ class AppointmentController extends Controller
 /* 		foreach($response->all() as $i => $v){
 			echo $i.'<br>';
 		} */
->>>>>>> 56c847e25cb17d89dc8555b14da1a83b8f09941a
 
         $patient->dob = date('Y/m/d', strtotime($formData['dob']));
         $patient->gender = $formData['gender'];

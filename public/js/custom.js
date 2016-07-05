@@ -683,14 +683,22 @@ $(document).on("click", ".patient_status", function(event) {
     });
 
     
-        $(document).ready(function(){
-             $("#print_invoice").click(function(){
-                 window.print();
-             });
-             $("#email_invoice").change(function(){
-                 
-             });
-        });
-   
-
-    $('#changeStatus').validate();
+                        $(document).ready(function(){
+                $("#print_invoice").click(function(){
+                if (document.getElementById("email_invoice").checked){
+                var invoice_id = $("#invoice_id").val();
+                        $.ajax({
+                        url: ajax_url+"products/emailInvoice/",
+                                data:{invoiceid:invoice_id},
+                                success: function(result){
+                                alert("hello");
+                                           // $("#div1").html(result);
+                                         }});
+                                    //  window.print();
+                                }
+                                else{
+                                window.print();
+                                }
+                            });
+                });
+                        $('#changeStatus').validate();

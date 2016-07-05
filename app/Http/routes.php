@@ -538,23 +538,28 @@ Route::group(['middleware' => 'web'], function () {
         /*
          * for invoice section
          */
-        Route::post('/products/generateInvoice', [
+        Route::get('/products/generateInvoice', [
         'uses' => 'ProductsController@generateInvoice',
         'as' => 'products.generateInvoice',
             //'middleware' => ['acl:save_categories']	
-    ]);
+         ]);
         
         /*
          * for sending email with invoice
          */
-    
-            Route::get('pdf/{invoice_id}', function($invoice_id) {
-            $item = [
-            //'middleware' => ['acl:save_products']
-
-                'items' => App\Products::all(),
-                'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
-            ];
-            return PDF::loadView('invoice.pdf', $factory)->stream();
-        });
+        Route::get('/products/emailInvoice/{invoice_id}', [
+           'uses' => 'ProductsController@emailInvoice',
+           'as' => 'products.emailInvoice',
+               //'middleware' => ['acl:save_categories']	
+            ]);
+//            Route::get('/products/emailInvoice/{invoiceid}', function($invoice_id) {
+////            $item = [
+////                 //'middleware' => ['acl:save_products']
+////                //'items' => App\Products::all(),
+////               // 'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
+////            ];
+//             // $pdf = PDF::loadView('pdf.invoice', $data);
+//              //return $pdf->download('invoice.pdf');
+//        //    return PDF::loadView('invoice.pdf', $factory)->stream();
+//        });
 });

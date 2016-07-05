@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Config\Repository;
+use App\User;
 use Session;
 use App;
 use Auth;
@@ -57,10 +58,14 @@ class ProductsController extends Controller {
         return view('products.add_products');
     }
 
-    public function generateInvoice() {
-        return view('products.invoice');
+    public function generateInvoice(Request $request) {
+            $user_id = 35;
+            return view('products.invoice',['id' => $user_id]);
     }
-    public function emailInvoice($user){
+   
+    public function emailInvoice($id){
+        echo $id;
+       
 //        $input = Input::all();
 //        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
 //        {
@@ -73,11 +78,11 @@ class ProductsController extends Controller {
 //            );
 //        });
         
-        $this->user = $user;
+        // $this->user = $user;
         /**************start from here*********************/
-        $first_name = App::make('url')->to($url);
+//        $first_name = App::make('url')->to($url);
         \Mail::send('emails.patientInvoice', ['first_name' => $first_name],['last_name' => $last_name], function($message) {
-            $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!');
+            $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!')->attachment();
         });
         return ['response' => true, 'msg' => $url];
     }

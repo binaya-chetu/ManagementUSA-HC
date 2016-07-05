@@ -145,6 +145,8 @@
                     <div class="col-md-6" id="email_invoice_container">
                         {{ Form::checkbox('email_envoice',null, false, ['class' => 'email_invoice','id' =>'email_invoice','value' => 'sureshc@chetu.com' ]) }}
                         {{ Form::label('email_envoice', 'Email envoice', array('class' => 'col-sm-4')) }}
+                        {{ Form::hidden('invoice_id' , $id ,['id' => 'invoice_id']) }}
+                        
                     </div>
                 </div>
             </div>
