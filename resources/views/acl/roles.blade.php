@@ -52,8 +52,8 @@
                         <td>{{ $role->role_slug }}</td>                      
                         <td><?php if($role->status == 1){ echo "Active" ; } else { echo "Inactive"; } ?></td>  
                         <td class="actions">
-                           <a href="/acl/editRole/{{ $role->id }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a> | 
-                            <a href="/acl/listPermission/{{ $role->id }}"  class="on-default remove-row" title="Permission Setting"><i class="fa fa-wrench"></i></a> 
+                           <a href="/acl/editRole/{{ base64_encode($role->id) }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a> | 
+                            <a href="/acl/listPermission/{{ base64_encode($role->id) }}"  class="on-default remove-row" title="Permission Setting"><i class="fa fa-wrench"></i></a> 
                             <!--<a href="javascript:void(0)" data-href="/deleteRole/{{ $role->id }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a>-->
                         </td>
                     </tr>

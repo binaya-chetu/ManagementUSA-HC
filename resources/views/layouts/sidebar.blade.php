@@ -22,6 +22,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    @if(in_array('appointment_setting', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -50,6 +51,7 @@
                                 </a>
                             </li>
 
+
                             <li class="{{ Request::segment(4) === 'requestFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/requestFollowUp') }}">
                                    Request Follow-up
@@ -57,6 +59,7 @@
                             </li>
 
                             @if(in_array('appointment_module', $permissions))
+
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
                                         Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
@@ -85,12 +88,12 @@
                             @endif
 
                             @if(in_array('follow_up_appointment_module', $permissions))
+
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment
                                 </a>
                             </li>
-                            @endif
                             <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/upcomingappointments') }}">
                                     Upcoming Appointments
@@ -108,16 +111,15 @@
                             </li>
                         </ul>
                     </li>
-                    <?php if(in_array('patient_module', $permissions) || in_array('doctor_module', $permissions) || in_array('appointment_module', $permissions) || in_array('follow_up_appointment_module', $permissions)) { ?>
+                    @endif
+                    @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'patient' || 
-                                Request::segment(1) === 'doctor' || 
-                                Request::segment(1) === 'appointment' ? 'nav-active nav-expanded' : null }}">
+                                Request::segment(1) === 'doctor' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>POS System</span>
                         </a>
                         <ul class="nav nav-children">
-                            @if(in_array('patient_module', $permissions))
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
                                 <a>
                                     Patients
@@ -135,15 +137,12 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endif
-                            @if(in_array('doctor_module', $permissions)) 
-				<li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
+                            <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
                                 <a>
                                     Doctors
                                 </a>
                                 <ul class="nav nav-children">
-                                   
-                                   <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
+                                    <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
                                         <a href="{{ url('/doctor/addDoctor') }}">
                                             Add New Doctor
                                         </a>
@@ -153,14 +152,12 @@
                                             Doctors List
                                         </a>
                                     </li>
-
                                 </ul>
-                           </li>
-                            @endif
+                            </li>
                         </ul>
                     </li>
-                    <?php } ?>
-                    @if(in_array('role_module', $permissions))
+                    @endif
+                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -178,7 +175,7 @@
                         </ul>
                     </li>
                     @endif
-                     @if(in_array('user_module', $permissions))
+                    @if(in_array('user_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'user' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -198,10 +195,9 @@
                         </ul>
                     </li>       
                     @endif
-
-                     <li class="nav-parent {{ Request::segment(1) === 'categories' ? 'nav-active nav-expanded' : null }}">
+                    @if(in_array('product_categories', $permissions) || (Auth::user()->role == '1'))
+                    <li class="nav-parent {{ Request::segment(1) === 'categories' && Request::segment(2) != 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a>
-
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
@@ -213,17 +209,20 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'listCategories'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/listCategories') }}">
-                                    List All Categories
+                                    Categories List
                                 </a>
                             </li>
                         </ul>
-                    </li> 
+                    </li>
+                    @endif
+                    @if(in_array('product_imports', $permissions) || (Auth::user()->role == '1'))
                     <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/addcategories') }}">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Imports Product</span>
                         </a>
-                    </li> 
+                    </li>
+                    @endif
                 </ul>
             </nav>
         </div>

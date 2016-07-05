@@ -5,14 +5,7 @@
     <header class="page-header">     
         <h2> {{ $category[0]->cat_name }} </h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>List Categories</span></li>
-            </ol>
+            {!! Breadcrumbs::render('categories.categoryDetails', $category[0]->id) !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
