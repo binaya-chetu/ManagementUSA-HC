@@ -5,14 +5,7 @@
     <header class="page-header">     
         <h2> {{ $category[0]->cat_name }} </h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>List Categories</span></li>
-            </ol>
+            {!! Breadcrumbs::render('categories.categoryDetails', $category[0]->id) !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
@@ -72,7 +65,7 @@
 								</th>
 								<th class="bronze plan" colspan="2">
 									<h3 class="bronze">Bronze<span>${{ $details['Bronze']['total_price'] }}</span></h3>
-									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+									<form action="/cart/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
                                                                             {{ csrf_field() }}
                                                                             <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
                                                                             <input type="hidden" name="category_type" value="1" />

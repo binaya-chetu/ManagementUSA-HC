@@ -5,13 +5,8 @@
     <header class="page-header">
         <h2>Add New Role</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="{{url('/')}}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+            {!! Breadcrumbs::render('acl.addRole') !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>

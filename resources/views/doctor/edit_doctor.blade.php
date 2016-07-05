@@ -5,14 +5,8 @@
     <header class="page-header">
         <h2>Edit Doctor </h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="/">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-               
-            </ol>
+            {!! Breadcrumbs::render('doctor.edit', $doctor) !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>

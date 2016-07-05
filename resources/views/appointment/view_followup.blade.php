@@ -5,13 +5,8 @@
     <header class="page-header">
         <h2>View Followup</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="{{ url('/') }}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+            {!! Breadcrumbs::render('appointment.viewFollowup', $followup) !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -60,7 +55,7 @@
                                 <label>Follow-up Action :</label>
                             </div>
                             <div class="col-sm-9">
-                              {{ $followup->action }} 
+                              {{ $followup->followupStatus->title }} 
                             </div>
                         </div>
 

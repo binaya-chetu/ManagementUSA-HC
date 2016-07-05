@@ -37,3 +37,6 @@ table.solidTdTags, table.solidTdTags td{ border: 1px solid #dddddd; }
 .background-gold{ background: #DAA520; }
 .background-silver{ background: #C0C0C0; }
 .background-bronze{ background: #cd7f32; color: #fff; }
+.wizard-steps li a, html.dark .wizard-progress .wizard-steps li a {
+         word-break: break-word !important; 
+}

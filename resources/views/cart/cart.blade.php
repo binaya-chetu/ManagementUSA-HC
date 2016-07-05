@@ -106,7 +106,6 @@
 						{{ $category_sum->total_amount }}
 						</td>
 					</tr>
-
                 @else 
                     <tr> <td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
                     <td class="col-sm-8 col-md-6"><h5><a href="/categories/listCategories"> <button type="button" class="btn btn-default">
@@ -128,4 +127,4 @@
     .desc_tab {
         text-align: center;
     }
-    </style>
+</style>
