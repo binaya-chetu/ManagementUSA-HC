@@ -91,11 +91,7 @@ Route::group(['middleware' => 'web'], function () {
             //'middleware' => ['acl:appointment_read']
         ]);
    
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
             'as' => 'ApptSettingController@directWalkins',
