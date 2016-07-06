@@ -203,7 +203,12 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-	$('#external-events').hide();
+    showAppointmentCount();
+        setInterval(function() {
+            showAppointmentCount();
+        }, 5000);
+    
+    $('#external-events').hide();
 	$('select.chosen').chosen();
 	$('.add-appointment-submit').submit(function(event) {
 		event.preventDefault();
@@ -671,9 +676,6 @@ $(document).on("click", ".patient_status", function(event) {
         event.preventDefault();        
         var appointmentId = $(this).attr('rel');       
         $('#patient_appt_id').val(appointmentId);
-        // If popup close first time & open another time then unset the previous option for followup
-       // $('input:radio[name="action"]').removeAttr('checked');
-        //$('#showOnSchedule').hide();
         $.magnificPopup.open({
             items: {
                 src: '#modal-change-patient-status',
@@ -681,24 +683,44 @@ $(document).on("click", ".patient_status", function(event) {
             }
         });
     });
-
+     $(document).ready(function(){
+        $("#print_invoice").click(function(){
+        if (document.getElementById("email_invoice").checked){
+        var invoice_id = $("#invoice_id").val();
+                $.ajax({
+                url: ajax_url+"products/emailInvoice/",
+                        data:{invoiceid:invoice_id},
+                        success: function(result){
+                        alert("hello");
+                                   // $("#div1").html(result);
+                                 }});
+                            //  window.print();
+                        }
+                        else{
+                        window.print();
+                        }
+                    });
+        });
+                $('#changeStatus').validate();
+    $('#changeStatus').validate();
     
-                        $(document).ready(function(){
-                $("#print_invoice").click(function(){
-                if (document.getElementById("email_invoice").checked){
-                var invoice_id = $("#invoice_id").val();
-                        $.ajax({
-                        url: ajax_url+"products/emailInvoice/",
-                                data:{invoiceid:invoice_id},
-                                success: function(result){
-                                alert("hello");
-                                           // $("#div1").html(result);
-                                         }});
-                                    //  window.print();
-                                }
-                                else{
-                                window.print();
-                                }
-                            });
-                });
-                        $('#changeStatus').validate();
+    
+function showAppointmentCount(){
+    $.ajaxSetup({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+    });
+    $.ajax({
+    type: "POST",
+            url: ajax_url + "/appointment/countAppointments",
+            success: function(response) {
+                var combine = JSON.parse(response);
+                if(parseInt(combine.lab_appointment) > 0)
+                    $('.badge').text(combine.lab_appointment);
+                else
+                    $('.badge').hide();
+            }
+    });
+}
+

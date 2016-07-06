@@ -49,7 +49,7 @@
                         <th>Id</th>
                         <th>App Date and Time</th>
                         <th>Patient</th>
-                        <th>Comment</th>
+                        <th>Reason for Visit</th>
                         <th>Source</th>
                         <th>Actions</th>
                     </tr>
@@ -62,7 +62,13 @@
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-                        <td class="table-text"><div>{{ $appointment->comment }}</div></td>
+                        <td class="table-text"><div><?php 
+                                $reasonArr = $appointment->patient->reason->toArray();
+                                $reasonArray = array_column($reasonArr, 'reason_code');
+                                $reasonList = array_column($reasonArray, 'reason');
+                                $reason = implode(',', $reasonList); 
+                                echo $reason; ?>                                
+                            </div></td>
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {

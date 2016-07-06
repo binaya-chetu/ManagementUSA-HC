@@ -40,3 +40,4 @@ table.solidTdTags, table.solidTdTags td{ border: 1px solid #dddddd; }
 .wizard-steps li a, html.dark .wizard-progress .wizard-steps li a {
          word-break: break-word !important; 
 }
+li a .badge { background: #D2312D; color: #FFF;	font-size: 10px; font-weight: normal; height: 16px; padding: 3px 5px 3px 5px; margin-left: 5px; right: -8px; top: -3px; }

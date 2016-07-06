@@ -324,4 +324,4 @@ $(function() {
 			tab.nextAll().removeClass('completed');
 		}
 	});
-$('.phone').usphone();    
+$('.phone').usphone();   

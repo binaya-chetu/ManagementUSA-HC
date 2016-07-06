@@ -106,10 +106,15 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/labAppointments') }}">
-                                    Lab Appointments
+                                    Lab Appointments<span class="badge"></span>                                    
                                 </a>
                             </li>
-							@endif
+                            <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/labReadyAppointments') }}">
+                                    Lab Ready Appointments                                    
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </li>
                     @endif

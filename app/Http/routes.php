@@ -321,9 +321,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.savePatientMedicalRecord',
             'middleware' => ['acl:appointment_setting_write']
         ]);
-    
-    
-    // Route For AclController in ACL Management
+    Route::post('/appointment/countAppointments', [
+            'uses' => 'AppointmentController@countAppointments',
+            'as' => 'appointment.countAppointments',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
+    Route::get('/appointment/labReadyAppointments', [
+            'uses' => 'AppointmentController@labReadyAppointments',
+            'as' => 'appointment.labReadyAppointments',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
+    // route for ACL
     Route::get('/acl/listRole', [
             'uses' => 'AclController@listRoles',
             'as' => 'acl.listRole',

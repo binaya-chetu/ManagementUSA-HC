@@ -39,9 +39,9 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         // get all appointments which status is active
-        $appointments = Appointment::with('patient.patientDetail' )->whereIn('status', [1, 4])->get();
+        $appointments = Appointment::with('patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode' )->whereIn('status', [1, 4])->get();
         
         $collevent = array();
         $i = 0;
@@ -49,7 +49,12 @@ class HomeController extends Controller
         {
             $events = array();
             $events ['id'] = $appointment->id;
-            $events ['title'] = 'Appointment#' . $appointment->id;
+            
+            $reasonArr = $appointment->patient->reason->toArray();
+            $reasonArray = array_column($reasonArr, 'reason_code');
+            $reasonList = array_column($reasonArray, 'reason');
+            $reason = implode(',', $reasonList);             
+            $events ['title'] = $reason;
             $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
             $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;

@@ -192,7 +192,7 @@ class AppointmentController extends Controller
     public function listappointment()
     {
 
-        $appointments = Appointment::with('patient')->orderBy('id', 'desc')->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -207,16 +207,19 @@ class AppointmentController extends Controller
      * 
      * @return \resource\view\appointment\viewappointment.blade.php
      */
-
-    public function viewappointment()
-    {
-        $appointments = Appointment::with('patient.patientDetail')->whereIn('status', [2, 4])->get();
+    public function viewappointment() {
+        $appointments = Appointment::with('patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
             $events = array();
             $events ['id'] = $appointment->id;
-            $events ['title'] = 'Appointment#' . $appointment->id;
+            
+            $reasonArr = $appointment->patient->reason->toArray();
+            $reasonArray = array_column($reasonArr, 'reason_code');
+            $reasonList = array_column($reasonArray, 'reason');
+            $reason = implode(',', $reasonList);             
+            $events ['title'] = $reason;
             $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
             $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;
@@ -1120,7 +1123,8 @@ class AppointmentController extends Controller
      */
 
     public function todayVisits() {
-        $appointments = Appointment::with('patient', 'disease')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get() ;
+         //print_r(Session::all());die;
         $patients = User::where('role', $this->patient_role)->get();
         // $doctors = User::where('role', $this->doctor_role)->get();
 
@@ -1148,11 +1152,40 @@ class AppointmentController extends Controller
      *
      * @return \resource\view\Appointment\today_visits.blade.php
      */
-    public function labAppointments() {
-        $appointments = Appointment::with('patient', 'disease')->where('patient_status', '2')->get();
+    public function labAppointments() {        
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '2')->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_appointments', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
+    }
+        /*
+     * Find the counting for the Appointmennts
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function countAppointments() {        
+        $appointment = array();
+        
+        \Session::forget('CountLabAppointment');
+        $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();      
+        \Session::put('CountLabAppointment', $labAppointment);
+        $appointment['lab_appointment'] = $labAppointment;        
+        echo json_encode($appointment);                
+        die;
+    }
+    
+        /**
+     * Function for the showing the result for the LaB Appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function labReadyAppointments() {        
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
+        $patients = User::where('role', $this->patient_role)->get();
+
+        return view('appointment.lab_ready_appointments', [
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }
