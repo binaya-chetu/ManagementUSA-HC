@@ -73,7 +73,13 @@
                                 }
                                 ?>
                             </div></td>
-                        <td class="table-text"><div>{{ $appointment->disease->title }}</div></td>
+                        <td class="table-text"><div><?php 
+                                $reasonArr = $appointment->patient->reason->toArray();
+                                $reasonArray = array_column($reasonArr, 'reason_code');
+                                $reasonList = array_column($reasonArray, 'reason');
+                                $reason = implode(',', $reasonList); 
+                                echo $reason; ?>                                
+                            </div></td>
                         <td class="table-text"><div><?php
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
@@ -82,7 +88,7 @@
                                         break;
                                     case 3: echo "Waiting for Lab Report";
                                         break;
-                                    case 3: echo "Lab Report Ready";
+                                    case 4: echo "Lab Report Ready";
                                         break;
                                     default: echo "None";
                                         break;

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReasonCodes extends Migration
+class CreateAllergiesListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,13 @@ class ReasonCodes extends Migration
      */
     public function up()
     {
-        Schema::create('reason_codes', function (Blueprint $table) {
+        Schema::create('allergies_list', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reason');
-            $table->integer('type')->comment('1=>Set, 1=> No Set');
-            $table->integer('status');
+            $table->integer('patient_id');  
+            $table->string('allergic_medicine', 150);           
             $table->timestamps();
-        });
+        }); 
     }
-
     /**
      * Reverse the migrations.
      *

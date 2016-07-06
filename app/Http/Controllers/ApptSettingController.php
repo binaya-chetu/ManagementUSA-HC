@@ -88,8 +88,7 @@ class ApptSettingController extends Controller {
     public function missedCall() {
         return view('apptsetting.missed_call');
     }
-
-
+    
     /**
      * Listing all the Call List from the Api
      *

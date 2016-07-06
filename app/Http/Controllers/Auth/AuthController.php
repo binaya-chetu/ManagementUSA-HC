@@ -103,7 +103,6 @@ public function postRegister(Request $request)
     }
 
    $this->create($request->all());
-
     return redirect()->route('/login');
 }
 }
