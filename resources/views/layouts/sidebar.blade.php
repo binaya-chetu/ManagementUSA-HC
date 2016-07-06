@@ -109,6 +109,7 @@
                                     Lab Appointments
                                 </a>
                             </li>
+							@endif
                         </ul>
                     </li>
                     @endif
