@@ -512,7 +512,7 @@ class AppointmentController extends Controller
 
     public function upcomingappointments() {       
 
-        $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
