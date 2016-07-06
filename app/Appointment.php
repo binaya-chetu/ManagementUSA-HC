@@ -36,7 +36,6 @@ class Appointment extends Model {
     public function doctor() {
         return $this->belongsTo('App\User', 'doctor_id');
     }
-
     public function followup() {
         return $this->hasOne('App\Followup');
     }
