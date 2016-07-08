@@ -45,11 +45,11 @@ class CartController extends Controller
             $cart->category_id = $categoryId;
             $cart->category_type_id = $categoryType;
             $cart->save();			
-            return redirect('/cart');
+            return redirect('/cart/cart');
   		} 
 		else			
         {
-            \Session::flash('flash_message', 'There is already one package in your cart with name. <a href="/cart">Click</a> here to access your cart');
+            \Session::flash('flash_message', 'There is already one package in your cart with name. <a href="/cart/cart">Click</a> here to access your cart');
             return Redirect::back();
         }
     }
