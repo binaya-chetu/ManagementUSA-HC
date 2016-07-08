@@ -431,9 +431,11 @@ class AppointmentController extends Controller
         $id = base64_decode($id);
         $hash = $hash;
         $patient = User::with('patientDetail')->find($id);
-        $disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->limit(1)->pluck('disease_id');
-        $disease_id = !empty($disease_id) ? $disease_id[0] : '';
-        $diseases = DB::table('diseases')->pluck('title', 'id');
+        //$disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->limit(1)->pluck('disease_id');
+        //$disease_id = !empty($disease_id) ? $disease_id[0] : '';
+        
+        $disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->pluck('reason_id');        
+        $diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason', 'id');     
         $adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
         $medHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
         $erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
@@ -512,7 +514,7 @@ class AppointmentController extends Controller
 
     public function upcomingappointments() {       
 
-        $appointments = Appointment::with('patient')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -1182,7 +1184,8 @@ class AppointmentController extends Controller
      * @return \resource\view\Appointment\today_visits.blade.php
      */
     public function labReadyAppointments() {        
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
+        $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
+        //echo '<pre>'; print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_ready_appointments', [

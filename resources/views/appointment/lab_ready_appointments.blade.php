@@ -46,7 +46,7 @@
                         <th>Patient</th>                        
                         <th>Source</th>
                         <th>Reason of visit</th>
-                        <th>Patient status</th>
+                        <th>Phone</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -80,20 +80,7 @@
                                 $reason = implode(',', $reasonList); 
                                 echo $reason; ?>                                
                             </div></td>
-                        <td class="table-text"><div><?php
-                                switch ($appointment->patient_status) {
-                                    case 1: echo "Show";
-                                        break;
-                                    case 2: echo "Send to Lab";
-                                        break;
-                                    case 3: echo "Waiting for Lab Report";
-                                        break;
-                                    case 4: echo "Lab Report Ready";
-                                        break;
-                                    default: echo "None";
-                                        break;
-                                }
-                                ?></div></td>
+                        <td class="table-text"><div>{{ $appointment->patient->patientDetail->phone }}</div></td>
                         <td class="actions">                            
 <!--                            <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>-->
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
@@ -105,33 +92,4 @@
         </div>
     </section>
 </section>
-<div id="modal-change-patient-status" class="modal-block modal-block-primary mfp-hide">  
-    {{ Form::open(array('url' => '/appointment/savePatientStatus', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'changeStatus')) }}
-    {!! csrf_field() !!}
-    <section class="panel panel-primary">
-        <header class="panel-heading">
-            <h2 class="panel-title">Select Patient Status</h2>
-        </header>
-        <div class="panel-body">
-            <div class="form-group">
-                {{ Form::label('status', 'patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
-                <div class="col-md-6">
-                    <?php $states = [ '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
-                    {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
-                </div>
-                {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}
-            </div>
-            
-        </div>
-        <footer class="panel-footer">
-            <div class="row">
-                <div class="col-md-8 text-right">
-                    {{ Form::button('Submit', ['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}    
-                    <button class="btn btn-default closePop">Cancel</button>
-                </div>
-            </div>
-        </footer>
-    </section>
-    {{ Form::close() }}  
-</div>
 @endsection
