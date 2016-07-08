@@ -71,7 +71,7 @@
                             <div class="col-sm-6 form-group{{ $errors->has('role') ? ' has-error' : '' }}">
                                 {{ Form::label('role', 'Role', array('class' => 'col-sm-3 control-label mandatory')) }}
                                 <div class="col-sm-9">
-                                    {{ Form::select('role', array_merge(['' => 'Please Select Role'], $roles), null, ['class' => 'form-control input required', 'id' => 'role']) }}
+                                    {{ Form::select('role', (['' => 'Please Select Role'] + $roles), null, ['class' => 'form-control input required', 'id' => 'role']) }}
                                     @if ($errors->has('role'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('role') }}</strong>
