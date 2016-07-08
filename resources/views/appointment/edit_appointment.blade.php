@@ -58,19 +58,16 @@
         <!-- Patient Edited Details -->
         <div class="form-group"> 
             {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
-            <div class="col-sm-6"> 
+            <div class="col-sm-4"> 
                 {{ Form::hidden('id') }}      
                 {{ Form::text('first_name', old('first_name'), ['class' => 'form-control required', 'id' => 'first-name', 'placeholder' => 'First Name']) }}
                 <span class="help-block firstName">
                 </span> 
             </div> 
-        </div> 
-        <div class="form-group"> 
-            {{ Form::label('last_name', 'Last Name', array('class' => 'col-sm-4 control-label mandatory')) }}
-            <div class="col-sm-6"> 
+            <div class="col-sm-4">
                 {{ Form::text('last_name', old('last_name'), ['class' => 'form-control required', 'id' => 'last-name', 'placeholder' => 'Last Name']) }}
-                <span class="help-block lastName">
-                </span>
+                <span class="help-block firstName">
+                </span> 
             </div> 
         </div> 
         <div class="form-group"> 
@@ -101,7 +98,7 @@
                 @endif 
             </div> 
         </div> 
-        <div class="form-group"> 
+<!--        <div class="form-group"> 
             {{ Form::label('gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
                 <div class="col-sm-3"> 
@@ -119,7 +116,7 @@
                     </div> 
                 </div> 
             </div> 
-        </div> 
+        </div> -->
         <div class="form-group"> 
             {{ Form::label('address', 'Address line 1', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
@@ -130,7 +127,7 @@
         <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
             {{ Form::label('comment', 'Comment', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-6">
-                {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter Comment', 'id' => 'appointmentComment', 'rows' => '3']) }}
+                {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter Comment', 'id' => 'appointmentComment', 'rows' => '2']) }}
                 @if ($errors->has('comment'))
                 <span class="help-block">
                     <strong>{{ $errors->first('comment') }}</strong>
@@ -141,9 +138,11 @@
     </div>
     <footer class="panel-footer">
         <div class="row">
+            @if(isset($type) && $type == 'upcoming')
             <div class="col-md-4 followButton">
                 {{ Form::button('Follow Up', [ 'class' => 'btn btn-primary followUp' ]) }}
             </div>
+            @endif            
             <div class="col-md-8 text-right">
                 {{ Form::button( 'Submit', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit')) }}
                 <a href="javascript:void(0)" class="btn btn-default remove-row confirmation-callback" id = "deleteAppointmentFromCalendar"><i class="fa fa-trash-o"></i> Delete</a> 

@@ -74,7 +74,7 @@
 								</th>
 								<th class="silver plan" colspan="2">
 									<h3 class="silver">Silver<span>${{ $details['Silver']['total_price'] }}</span></h3>
-									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+									<form action="/cart/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
                                                                             {{ csrf_field() }}
                                                                             <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
                                                                             <input type="hidden" name="category_type" value="2" />
@@ -83,7 +83,7 @@
 								</th>
 								<th class="gold plan" colspan="2">
 									<h3 class="gold">Gold<span>${{ $details['Gold']['total_price'] }}</span></h3>
-									<form action="/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
+									<form action="/cart/addProduct" name="add_to_cart" method="post" accept-charset="UTF-8">
                                                                             {{ csrf_field() }}
                                                                             <input type="hidden" name="category_id" value="{{ $category[0]->id }}" />
                                                                             <input type="hidden" name="category_type" value="3" />

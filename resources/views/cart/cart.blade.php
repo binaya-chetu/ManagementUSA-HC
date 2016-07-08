@@ -21,12 +21,12 @@
                 <header class="panel-heading">
                     <div class="panel-actions">
 					@if(isset($cart))
-						<a href="/removeItem/{{$cart->id}}"> 
+						<a href="#"> 
 						<button type="button" class="btn btn-success">
 							<span class="fa fa-check"></span> Checkout
 						</button>
 						</a>
-						<a href="/removeItem/{{$cart->id}}"> 
+						<a href="/cart/removeItem/{{$cart->id}}"> 
 						<button type="button" class="btn btn-danger">
 							<span class="fa fa-remove"></span> Empty cart
 						</button>

@@ -26,13 +26,13 @@
             @if(Session::has('flash_message'))
             <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div>
             @endif	
-            <div class="row">
+            <!--div class="row">
                 <div class="col-sm-6">
                     <div class="mb-md">
                         <a id="addToTable" class="btn btn-primary" href='/patient/addpatient'>Add patient <i class="fa fa-plus"></i></a>
                     </div>
                 </div>
-            </div>
+            </div-->
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
                 <thead>
                     <tr>

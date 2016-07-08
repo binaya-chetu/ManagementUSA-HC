@@ -114,7 +114,7 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                {{ Form::label('status', 'patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
+                {{ Form::label('status', 'Patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
                     <?php $states = [ '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
