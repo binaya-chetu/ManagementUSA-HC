@@ -62,10 +62,13 @@ class ProductsController extends Controller {
             $user_id = 35;
             return view('products.invoice',['id' => $user_id]);
     }
-   
+    public function paymentForm(Request $request){
+        return view('products.payment');     
+
+    }
     public function emailInvoice($id){
-        echo $id;
-       
+           echo $id;
+           die;
 //        $input = Input::all();
 //        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
 //        {

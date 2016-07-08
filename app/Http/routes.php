@@ -562,6 +562,17 @@ Route::group(['middleware' => 'web'], function () {
            'as' => 'products.emailInvoice',
                //'middleware' => ['acl:save_categories']	
             ]);
+        /*
+         * for payment after checkout
+         */
+
+        Route::get('/products/paymentForm/', [
+           'uses' => 'ProductsController@paymentForm',
+           'as' => 'products.paymentForm',
+               //'middleware' => ['acl:save_categories']	
+            ]);
+        
+        
 //            Route::get('/products/emailInvoice/{invoiceid}', function($invoice_id) {
 ////            $item = [
 ////                 //'middleware' => ['acl:save_products']
