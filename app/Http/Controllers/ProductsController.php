@@ -68,7 +68,7 @@ class ProductsController extends Controller {
     }
     public function emailInvoice($id){
            echo $id;
-           die;
+          die;
 //        $input = Input::all();
 //        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
 //        {

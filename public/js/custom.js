@@ -672,17 +672,17 @@ $('#patient_id').on('change', function(){
                     }
             });
         });
-$(document).on("click", ".patient_status", function(event) {
-        event.preventDefault();        
-        var appointmentId = $(this).attr('rel');       
-        $('#patient_appt_id').val(appointmentId);
-        $.magnificPopup.open({
-            items: {
-                src: '#modal-change-patient-status',
-                type: 'inline'
-            }
-        });
-    });
+        $(document).on("click", ".patient_status", function(event) {
+                event.preventDefault();        
+                var appointmentId = $(this).attr('rel');       
+                $('#patient_appt_id').val(appointmentId);
+                $.magnificPopup.open({
+                    items: {
+                        src: '#modal-change-patient-status',
+                        type: 'inline'
+                    }
+                });
+            });
                         $(document).ready(function(){
                             $("#print_invoice").click(function(){
                                 if (document.getElementById("email_invoice").checked){

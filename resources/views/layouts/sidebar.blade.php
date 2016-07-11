@@ -52,7 +52,7 @@
                             </li>
 
 
-                            <li class="{{ Request::segment(4) === 'requestFollowup' ? 'nav-active' : null }}">
+                            <li class="{{ Request::segment(2) === 'requestFollowUp' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/requestFollowUp') }}">
                                    Request Follow-up
                                 </a>

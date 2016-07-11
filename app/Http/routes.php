@@ -82,7 +82,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/apptsetting/requestFollowUp', [
             'uses' => 'ApptSettingController@requestFollowUp',
             'as' => 'apptsetting.requestFollowUp',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_read']
         ]);
         
     Route::post('/apptsetting/saveRequestFollowUp', [
