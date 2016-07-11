@@ -130,7 +130,7 @@
                         <div class="col-sm-6 form-group">
                             {{ Form::label('state', 'State', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-9">
-                                {{ Form::select('state', array_merge(['' => 'Please Select State'], $states), null, ['class' => 'form-control input', 'id' => 'state']) }}
+                                {{ Form::select('state', array_merge(['0' => 'Please Select State'], $states), null, ['class' => 'form-control input', 'id' => 'state']) }}
                             </div>
                         </div>
                     </div>
