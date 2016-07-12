@@ -12,7 +12,7 @@ class CreateFollowupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('followUps', function (Blueprint $table) {
+        Schema::create('followups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('appt_id');
             $table->integer('created_by'); //user_who_created
