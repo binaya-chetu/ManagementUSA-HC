@@ -716,7 +716,7 @@ function showAppointmentCount(){
             url: ajax_url + "/appointment/countAppointments",
             success: function(response) {
                 var combine = JSON.parse(response);
-                $('.badge').text(combine.lab_appointment);
+                $('.labCount').text(combine.lab_appointment);
                 
             }
     });

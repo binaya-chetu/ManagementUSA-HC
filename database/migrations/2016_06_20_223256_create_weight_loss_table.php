@@ -16,9 +16,9 @@ class CreateWeightLossTable extends Migration
             $table->increments('id');
             $table->integer('patient_id');            
             $table->tinyInteger('weight_surgeries')->nullable()->comment('0=>No, 1=> Yes');            
-            $table->string('surgeries_kind'); 
+            $table->string('surgeries_kind', 63); 
             $table->tinyInteger('weight_supplement')->nullable()->comment('0=>No, 1=> Yes'); 
-            $table->string('supplement_type');  
+            $table->string('supplement_type', 63);  
             $table->tinyInteger('liver_disease')->nullable()->comment('0=>No, 1=> Yes'); 
             $table->tinyInteger('diabetes')->nullable()->comment('0=>No, 1=> Yes');
             $table->tinyInteger('thyroid_treated')->nullable()->comment('0=>No, 1=> Yes');

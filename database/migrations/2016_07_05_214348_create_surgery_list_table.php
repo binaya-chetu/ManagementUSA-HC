@@ -15,9 +15,9 @@ class CreateSurgeryListTable extends Migration
         Schema::create('surgery_list', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id');  
-            $table->string('type_of_surgery', 150);
+            $table->string('type_of_surgery');
             $table->date('date');            
-            $table->string('reason', 150);
+            $table->string('reason');
             $table->timestamps();
         });        
     }

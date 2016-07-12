@@ -15,7 +15,7 @@ class CreateAllergiesListTable extends Migration
         Schema::create('allergies_list', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id');  
-            $table->string('allergic_medicine', 150);           
+            $table->string('allergic_medicine');           
             $table->timestamps();
         }); 
     }

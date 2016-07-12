@@ -18,7 +18,6 @@ class CreatePermissionRoleTable extends Migration
             $table->integer('role_id');
             $table->integer('status');
             $table->timestamps();
-
         });
     }
 

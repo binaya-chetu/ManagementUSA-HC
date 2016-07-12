@@ -16,7 +16,7 @@ class CreateCallDetailsTable extends Migration
             $table->increments('id');
             $table->string('number', 20);  
             $table->tinyInteger('status'); //'missedcall, set or noset'
-            $table->string('source');  //'advertizing, digital media etc' 
+            $table->string('source', 31);  //'advertizing, digital media etc' 
             $table->timestamps();           
         });
     }

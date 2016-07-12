@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCartsTable extends Migration
+class CreatePatientMedicationListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateCartsTable extends Migration
      */
     public function up()
     {
-       Schema::create('carts', function (Blueprint $table) {
+        Schema::create('patient_medication_list', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');  
-            $table->integer('category_id')->nullable();   
-            $table->decimal('package_price',2);   
-			$table->decimal('discount_price',2);
-            $table->decimal('total_amount',2);  
+            $table->integer('patient_id');
+            $table->string('name');
+            $table->boolean('dosage');
+            $table->string('how_often', 31);
+            $table->string('taken_for', 31);    
             $table->timestamps();
         });
     }

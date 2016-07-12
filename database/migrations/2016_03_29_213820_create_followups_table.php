@@ -14,12 +14,12 @@ class CreateFollowupsTable extends Migration
     {
         Schema::create('followUps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('appt_id')->unsigned;
-            $table->integer('created_by')->unsigned;; //user_who_created
-            $table->string('action'); //filled_by_user
+            $table->integer('appt_id');
+            $table->integer('created_by'); //user_who_created
+            $table->tinyInteger('action'); //filled_by_user
             $table->tinyInteger('status')->default(0);// done/not_done
             $table->string('comment');
-			$table->date('followup_later_date');
+            $table->date('followup_later_date');
             $table->timestamps();
         });
     }

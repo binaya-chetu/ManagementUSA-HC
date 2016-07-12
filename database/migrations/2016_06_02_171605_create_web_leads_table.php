@@ -14,13 +14,13 @@ class CreateWebLeadsTable extends Migration
     {
          Schema::create('web_leads', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');  
-            $table->string('last_name');
+            $table->string('first_name', 31);  
+            $table->string('last_name', 31);
             $table->string('email');  
-            $table->string('phone');  
+            $table->string('phone', 15);  
             $table->string('location');  
             $table->timestamp('requested_date');  
-            $table->string('call_time');  
+            $table->string('call_time', 31);  
             $table->tinyInteger('status')->comment('0=> Pending, 1=>Completed');  
             $table->timestamps();           
         });
