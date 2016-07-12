@@ -6,7 +6,7 @@ use App\Appointment;
 use App\FollowupStatus;
 use Illuminate\Database\Eloquent\Model;
 
-class Followup extends Model {
+class FollowUp extends Model {
 
     protected $table = 'followups';
     protected $fillable = [
