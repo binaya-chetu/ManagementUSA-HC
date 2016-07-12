@@ -57,9 +57,6 @@
                                    Request Follow-up
                                 </a>
                             </li>
-
-                            @if(in_array('appointment_module', $permissions))
-
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
                                         Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
@@ -85,10 +82,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endif
-
-                            @if(in_array('follow_up_appointment_module', $permissions))
-
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment
@@ -114,7 +107,6 @@
                                     Lab Ready Appointments                                    
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </li>
                     @endif
