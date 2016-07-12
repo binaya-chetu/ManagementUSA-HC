@@ -69,7 +69,7 @@
 
                 </div>  
                 <div class="form-group">
-                    {{ Form::label('comment', 'Comment', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('comment', 'Comment', array('class' => 'col-sm-4 control-label mandatory')) }}
                     <div class="col-sm-6">
                         {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter the comment', 'rows' => 3]) }}
                     </div>

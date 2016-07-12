@@ -193,6 +193,7 @@ class AppointmentController extends Controller
     {
 
         $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
+//echo '<pre>'; print_r($appointments->toArray()); die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -497,7 +498,11 @@ class AppointmentController extends Controller
 			} elseif($id == 'illness1'){
 				$patientId = $request['patientId'];
 				$data = DB::table('illness_list')->where('patient_id', $patientId)->get();					
+			} elseif($id == 'medication1'){
+				$patientId = $request['patientId'];
+				$data = DB::table('patient_medication_list')->where('patient_id', $patientId)->get();					
 			}
+			
             return view('appointment.medical.medicine_list', [
                 'id' => $id,
 				'data' => (isset($data) && !empty($data)) ? $data : ''
@@ -532,40 +537,7 @@ class AppointmentController extends Controller
      * @return \resource\view\appointment\patient_medical
      */
     public function savePatientMedicalRecord($id, Request $response) {
-        $formData = $response->all();
-        $id = base64_decode($id);
-
-        $user = App\User::firstOrCreate(['id' => $id]);
-        $user->first_name = $formData['first_name'];
-        $user->middle_name = $formData['middle_name'];
-        $user->last_name = $formData['last_name'];
-        $user->email = $formData['email'];
-        $user->role = $formData['gender'];
-        $user->save();
-
-        $patient = App\Patient::firstOrCreate(['user_id' => $id]);
-
-        if (Input::hasFile('driving_license')) {
-            $file = array('image' => Input::file('driving_license'));
-            $rules = array('image' => 'mimes:jpeg,png,pdf',); //mimes:jpeg,bmp,png and for max size max:10000
-            $validator = Validator::make($file, $rules);
-            if ($validator->fails()) {
-                \Session::flash('error_message', 'Please upload a valid driving license image (jpeg,png,pdf).');
-                return redirect()->back();
-                //return Redirect::to('upload')->withInput()->withErrors($validator);
-            } else {
-                if (Input::file('driving_license')->isValid()) {
-                    $destinationPath = 'uploads/driving_license'; // upload path
-                    $extension = Input::file('driving_license')->getClientOriginalExtension();
-                    $patient->driving_license = md5(uniqid(time(), true)) . '.' . $extension;
-                    Input::file('driving_license')->move($destinationPath, $patient->driving_license);
-                } else {
-                    \Session::flash('error_message', 'Please upload a valid driving license image (jpeg,png,pdf).');
-                    return redirect()->back();
-                }
-            }
-        }
-	$formData = $response->all();
+		$formData = $response->all();
 		$id = base64_decode($id);
 
 		$user = App\User::firstOrCreate(['id' => $id]);
@@ -636,6 +608,20 @@ class AppointmentController extends Controller
 				$vitaminList->save();
 			}
 		}
+
+		if(isset($formData['medicationList']) && !empty($formData['medicationList'])){
+			$data = json_decode($formData['medicationList']);
+			$deletedCount = App\PatientMedicationList::where('patient_id', $id)->delete();
+			foreach($data as $row){
+				$medicationList = new App\PatientMedicationList;
+				$medicationList->patient_id = $id;
+				$medicationList->name		 = $row->name;
+				$medicationList->dosage	 = $row->dosage;
+				$medicationList->how_often	 = $row->how_often;
+				$medicationList->taken_for	 = $row->condition;
+				$medicationList->save();
+			}
+		}
 		
 		if(isset($formData['surgeryList']) && !empty($formData['surgeryList'])){
 			$data = json_decode($formData['surgeryList']);
@@ -684,7 +670,7 @@ class AppointmentController extends Controller
 		}
 	
 		$appt = App\Appointment::orderBy('id', 'DESC')->firstOrCreate(['patient_id' => $id]);
-		$appt->disease_id = $formData['disease_id'];
+		///$appt->disease_id = $formData['disease_id'];
 		$appt->save();
 		
 		$adamsQ = App\AdamsQuestionaires::firstOrCreate(['patient_id' => $id]);		

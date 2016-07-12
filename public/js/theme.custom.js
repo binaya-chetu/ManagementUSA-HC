@@ -24,13 +24,33 @@ $(function() {
     });
     
     // common validation for add/edit doctor.
-    $('#doctor').validate();
+    jQuery('#doctor').validate({
+        rules : {
+            password : {
+                minlength : 6
+            },
+            password_confirmation : {
+                minlength : 6,
+                equalTo : "#password"
+            }
+        }
+    });
     
     // common validation for add/edit roles.
     $('#addRole').validate();
     
     // common validation for add/edit users.
-    $('#addUser').validate();
+    jQuery('#addUser').validate({
+        rules : {
+            password : {
+                minlength : 6
+            },
+            password_confirmation : {
+                minlength : 6,
+                equalTo : "#password"
+            }
+        }
+    });
 	
     //validation for followup pop-up form.
     $('#followUp').validate();

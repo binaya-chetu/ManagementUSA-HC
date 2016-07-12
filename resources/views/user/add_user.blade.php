@@ -202,7 +202,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='/listUser' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                                <a href='/user/listUsers' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>

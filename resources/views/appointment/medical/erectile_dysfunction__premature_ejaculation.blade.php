@@ -379,7 +379,7 @@
                                 <div class="form-group">
                                     {{ Form::label('erection_strength', 'On a scale of 1 - 10(10 being completely Erect), What was the strength of that last  known erection?', ['class' => 'col-sm-6 control-label']) }}
                                     <div class="col-sm-6 toggle-radio-custom">
-                                        <?php $strength = commonScale(); ?>;
+                                        <?php $strength = commonScale(); ?>
                                         {{ Form::select('erection_strength', ['' => 'Please Select'] + $strength, $erectileD? $erectileD->erection_strength : null, ['class' => 'form-control input']) }}                                    
                                     </div>    
                                 </div>

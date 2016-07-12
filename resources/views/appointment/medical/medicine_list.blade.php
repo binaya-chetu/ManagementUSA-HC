@@ -99,46 +99,50 @@
 <div class="panel-body">
     <div class="table-responsive" >
         <div class="table-responsive">
-            <table class="table table-bordered mb-none">
+            <table class="table table-bordered mb-none" id="medicationList">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Name Of Medication</th>     
                         <th>Dosage in MG</th>  
-                        <th>How often</th>  
-                        <th>Condition Taken For</th>  
-                     
-                    </tr>
+                        <th>How Often</th>            
+                        <th>Condition Taken For</th>
+						<th>Delete</th>						
+					</tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+				@if($data && !empty($data))
+					@foreach($data as $i => $row)
+					<tr data-count="{{ $i }}">
+						<td class="name">{{ Form::text('name_'.$i, $row->name, ['class' => 'form-control medicationInput input-sm', 'id' => 'name_'.$i, 'placeholder' => 'Medication Name']) }}</td>
+						<td class="dosage">{{ Form::text('dosage_'.$i, $row->dosage, ['class' => 'form-control medicationInput input-sm', 'id' => 'dosage_'.$i, 'placeholder' => 'Dosage(in mg)']) }}</td>
+						<td class="how_often">{{ Form::text('how_often_'.$i, $row->how_often, ['class' => 'form-control medicationInput input-sm', 'id' => 'how_often_'.$i, 'placeholder' => 'How Often']) }}</td>
+						<td class="condition">{{ Form::text('condition_'.$i, $row->taken_for, ['class' => 'form-control medicationInput input-sm', 'id' => 'condition_'.$i, 'placeholder' => 'Condition taking for']) }}</td>
+						<td><a class="deleteVitListRow" href="#"><i class="fa fa-times"></i></a></td>
+					</tr>	
+					@endforeach
+				@else
+					<tr data-count="1">
+						<td class="name">{{ Form::text('name_1', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'name_1', 'placeholder' => 'Suppliment Name']) }}</td>
+						<td class="dosage">{{ Form::text('dosage_1', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'dosage_1', 'placeholder' => 'Dosage(in mg)']) }}</td>
+						<td class="how_often">{{ Form::text('how_often_1', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'how_often_1', 'placeholder' => 'How Often']) }}</td>
+						<td class="condition">{{ Form::text('condition_1', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'condition_1', 'placeholder' => 'Condition taking for']) }}</td>
+						<td><a class="deleteVitListRow" href="#"><i class="fa fa-times"></i></a></td>
+					</tr>
+					<tr data-count="2">
+						<td class="name">{{ Form::text('name_2', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'name_2', 'placeholder' => 'Suppliment Name']) }}</td>
+						<td class="dosage">{{ Form::text('dosage_2', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'dosage_2', 'placeholder' => 'Dosage(in mg)']) }}</td>
+						<td class="how_often">{{ Form::text('how_often_1', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'how_often_1', 'placeholder' => 'How Often']) }}</td>
+						<td class="condition">{{ Form::text('condition_2', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'condition_2', 'placeholder' => 'Condition taking for']) }}</td>
+						<td><a class="deleteVitListRow" href="#"><i class="fa fa-times"></i></a></td>
+					</tr>
+					<tr data-count="3">
+						<td class="name">{{ Form::text('name_3', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'name_3', 'placeholder' => 'Suppliment Name']) }}</td>
+						<td class="dosage">{{ Form::text('dosage_3', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'dosage_3', 'placeholder' => 'Dosage(in mg)']) }}</td>
+						<td class="how_often">{{ Form::text('how_often_3', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'how_often_3', 'placeholder' => 'How Often']) }}</td>
+						<td class="condition">{{ Form::text('condition_3', null, ['class' => 'form-control medicationInput input-sm', 'id' => 'condition_3', 'placeholder' => 'Condition taking for']) }}</td>
+						<td><a class="deleteVitListRow" href="#"><i class="fa fa-times"></i></a></td>
+					</tr>
+				@endif	
                 </tbody>
             </table>
         </div>
@@ -148,7 +152,7 @@
     <div class="row">
         <div class="col-md-12 text-right">                        
             <button class="btn btn-default addMedicineListRow">Add Row</button>
-            <button class="btn btn-default closePop saveMedicineList">Save</button>
+            <button class="btn btn-default closePop saveMedicationList">Save</button>
         </div>
     </div>
 </footer>  
