@@ -62,6 +62,7 @@
 									<div id="surgeryListBox"></div>
 									<div id="allergiesListBox"></div>
 									<div id="illnessListBox"></div>
+									<div id="medicationListBox"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6" >
@@ -1493,7 +1494,7 @@
             }
         });
         var radioId = $(this).attr('id');
-		if((radioId == 'vitamin_taken1' && $("#vitaminMedList").length == 0) || (radioId == 'surgeries1' && $("#surgeryList").length == 0) || (radioId == 'allergies1' && $("#allergiesList").length == 0) || (radioId == 'illness1' && $("#illnessList").length == 0)){
+		if((radioId == 'vitamin_taken1' && $("#vitaminMedList").length == 0) || (radioId == 'surgeries1' && $("#surgeryList").length == 0) || (radioId == 'allergies1' && $("#allergiesList").length == 0) || (radioId == 'illness1' && $("#illnessList").length == 0) || (radioId == 'medication1' && $("#medicationList").length == 0)){
 			$.ajax({
 			type: "POST",
 					url: ajax_url + "/appointment/checkList",

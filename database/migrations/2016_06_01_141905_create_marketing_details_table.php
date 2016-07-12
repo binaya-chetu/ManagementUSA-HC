@@ -15,7 +15,7 @@ class CreateMarketingDetailsTable extends Migration
        Schema::create('marketing_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number', 20);  
-            $table->string('name', 180); // name of the marketing agency
+            $table->string('name', 63); // name of the marketing agency
             $table->tinyInteger('status');  
             $table->timestamps();
             

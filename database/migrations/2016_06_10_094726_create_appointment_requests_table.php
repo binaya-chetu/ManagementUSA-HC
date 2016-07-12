@@ -14,15 +14,16 @@ class CreateAppointmentRequestsTable extends Migration
     {
         Schema::create('appointment_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');  
-            $table->string('last_name');
-            $table->string('email');
+            $table->string('first_name', 31);  
+            $table->string('last_name', 31);
+            $table->string('email', 63);
             $table->boolean('email_invitation');
-            $table->string('phone');  
+            $table->string('phone', 15);  
             $table->date('dob');
             $table->string('location');  
+            $table->string('marketing_phone',15);
             $table->dateTime('appt_time');  
-            $table->string('call_time');  
+            $table->string('call_time', 31);  
             $table->string('comment');  
             $table->integer('created_by'); 
             $table->integer('reason_id'); 
@@ -31,7 +32,8 @@ class CreateAppointmentRequestsTable extends Migration
             $table->date('followup_date');
             $table->tinyInteger('followup_status')->default(0)->comment('0=> Not Show , 1=>Show in Listing');  
             $table->tinyInteger('status')->comment('1=>Set, 2=>No Set');    
-            $table->timestamps();           
+            $table->timestamps();  
+            $table->softDeletes();
         });
     }
 

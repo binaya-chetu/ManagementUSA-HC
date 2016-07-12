@@ -16,7 +16,7 @@ class CreateHighTestosteroneTable extends Migration
             $table->increments('id');
             $table->integer('patient_id');            
             $table->tinyInteger('harmone_therapy')->nullable()->comment('1=> Yes');            
-            $table->string('harmone_therapy_type');             
+            $table->string('harmone_therapy_type', 63);             
             $table->tinyInteger('usa_military')->nullable()->comment('1=> Yes'); 
             $table->tinyInteger('lack_increment')->nullable()->comment('1=> Yes'); 
             $table->tinyInteger('increase_fat')->nullable()->comment('1=> Yes'); 

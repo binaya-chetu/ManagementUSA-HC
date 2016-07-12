@@ -14,18 +14,18 @@ class CreateDoctorDetails extends Migration
     {
         Schema::create('doctor_details', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('user_id')->unique();
-			$table->date('dob')->nullable();
-			$table->enum('gender', ['Male', 'Female'])->default('Male');
-			$table->string('phone', 15);			
-			$table->string('address1')->nullable();
-			$table->string('address2')->nullable();
-			$table->string('city')->nullable();
-			$table->integer('state');
-			$table->string('zipCode', 11);
-			$table->string('image')->nullable();
-			$table->string('employer')->nullable();
-			$table->string('specialization')->nullable();
+            $table->integer('user_id')->unique();
+            $table->date('dob')->nullable();
+            $table->enum('gender', ['Male', 'Female'])->default('Male');
+            $table->string('phone', 15);			
+            $table->string('address1')->nullable();
+            $table->string('address2')->nullable();
+            $table->string('city', 31)->nullable();
+            $table->integer('state');
+            $table->string('zipCode', 11);
+            $table->string('image', 63)->nullable();
+            $table->string('employer', 63)->nullable();
+            $table->string('specialization', 63)->nullable();
             $table->timestamps();
         });
     }

@@ -471,6 +471,28 @@ $(document).ready(function() {
 		});
 		$('#illnessListBox').append(input);
 	});
+
+	$(document).on('click', '.saveMedicationList', function(){
+		$('#medicationListBox').html('');
+		var data = [];
+		$(".medicationInput").closest('tr').each(function(i,v){
+			row = {};
+			row['name'] = $(v).find('.name input').val();
+			row['dosage'] = $(v).find('.dosage input').val();
+			row['how_often'] = $(v).find('.how_often input').val();
+			row['condition'] = $(v).find('.condition input').val();
+			if(row['name'] != ''){
+				data.push(row);
+			}
+		});
+		data = JSON.stringify(data);
+		input = jQuery('<input/>', {
+			type: 'hidden',
+			value: data,
+			name: 'medicationList'
+		});
+		$('#medicationListBox').append(input);
+	});
 	
 	$(document).on('click', '.saveSurgeryList', function(){
 		$('#surgeryListBox').html('');
@@ -719,7 +741,7 @@ function showAppointmentCount(){
             url: ajax_url + "/appointment/countAppointments",
             success: function(response) {
                 var combine = JSON.parse(response);
-                $('.badge').text(combine.lab_appointment);
+                $('.labCount').text(combine.lab_appointment);
                 
             }
     });
