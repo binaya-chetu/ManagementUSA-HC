@@ -66,7 +66,8 @@ class CategoriesController extends Controller
             $category = DB::table('categories')->where('id', $id)->get();
             
             if(empty($category)){
-                throw new Exception('Requested product category not found');
+                \Session::flash('error_message', 'Category Not found.');
+                return Redirect::back();
             }
        
             $category_details = DB::table('packages')
@@ -85,7 +86,8 @@ class CategoriesController extends Controller
             $total_price = 0;
 			$products = [];
 			if(empty($category_details)){
-				throw New Exception('Sorry no packages associated with this category');
+                            \Session::flash('error_message', 'This package is empty.');
+                            return Redirect::back();
 			}
             foreach($category_details as $cat){			
                 if($pck_type != $cat->package_type){
