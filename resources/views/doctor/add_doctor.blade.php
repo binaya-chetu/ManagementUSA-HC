@@ -135,7 +135,7 @@
                             <div class="col-sm-6 form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                  {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label mandatory')) }}
                                 <div class="col-sm-9">
-                                    {{ Form::text('phone', null, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                    {{ Form::text('phone', null, ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14', 'minlength' => '10']) }}
                                     @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
@@ -210,7 +210,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='/patient' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                                <a href='/doctor' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>
