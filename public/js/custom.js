@@ -496,12 +496,15 @@ $(document).ready(function() {
 	$(document).on('click', '.saveAllergiesList', function(){
 		new saveEmrPopupList();
 	});
-	
-	
-	
+
 	$(document).on('click', '.deleteVitListRow', function(){
 		$(this).closest('tr').remove();
 	});
+	/*  remove error message when next file is loaded on import products page */
+	$("#addcategories").find('#categoryFile').on('change', function(){
+		$(".help-block").remove();
+		$(".has-error").removeClass('has-error');
+	});	
 });
 
 	/**
