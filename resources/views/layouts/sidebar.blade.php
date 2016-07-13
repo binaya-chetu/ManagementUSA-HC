@@ -32,7 +32,7 @@
                               
                             <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/missedCall') }}">
-                                    Missed Call<span class="badge">3</span>
+                                    Missed Call<span class="badge">4</span>
                                 </a>
                             </li>  
                             <li class="{{ Request::segment(3) === 'marketingCall' ? 'nav-active' : null }}">

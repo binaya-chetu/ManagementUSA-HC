@@ -86,7 +86,7 @@ class ReasonCodesTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'reason' => 'PRP Priapus  Male Enhancment',
+                'reason' => 'PRP Priapus Male Enhancment',
                 'type' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

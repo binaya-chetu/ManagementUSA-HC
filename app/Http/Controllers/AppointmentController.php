@@ -8,7 +8,7 @@ use App\Appointment;
 use App\AdamsQuestionaires;
 use App\Doctor;
 use App\User;
-use App\Followup;
+use App\FollowUp;
 use App\State;
 use App\FollowupStatus;
 use Illuminate\Support\Facades\Redirect;
@@ -396,10 +396,10 @@ class AppointmentController extends Controller
      */
     public function followup()
     {
-        $followup = Followup::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
+        $followup = FollowUp::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
 
-            }])->get();           
+            }])->get(); 			
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -413,7 +413,7 @@ class AppointmentController extends Controller
     public function viewFollowup($id = null)
     {
         $id = base64_decode($id);
-        $followup = Followup::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
+        $followup = FollowUp::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name', 'email');
             }, 'appointment.patient.patientDetail'])->where('id', $id)->first();
 
