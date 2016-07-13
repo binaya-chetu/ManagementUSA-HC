@@ -124,12 +124,11 @@ class ApptSettingController extends Controller {
             $user->first_name = $rf->first_name;
             $user->last_name = $rf->last_name;
             $user->email = $rf->email;
-            $user->role = $patient_role;
+            $user->role = 6;
 
             if ($user->save()) {
                 $user_details = DB::table('users')->where('email', '=', $rf->email)->get();
                 foreach ($user_details AS $uDetails) {
-
                     $patient_details->user_id = $uDetails->id;
                     $patient_details->dob = $rf->dob;
                     $patient_details->phone = $rf->phone;

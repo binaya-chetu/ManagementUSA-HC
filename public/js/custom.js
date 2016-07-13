@@ -726,3 +726,29 @@ function showAppointmentCount(){
     });
 }
 
+$(document).ready(function(){
+    //alert("hello this is nivi");
+//    $("#selectTime").change( function() {
+//            // the input field
+//            alert("hello");
+//            var element = $(this), text;
+//            // get access to this Timepicker instance
+//            var timepicker = element.timepicker();
+//            text = 'Selected time is: ' + timepicker.format(time);
+//            element.siblings('span.help-line').text(text);
+//        });
+        
+        
+        $('#selectTime').timepicker({
+          onHourShow: function( hour ) { 
+           var now = new Date();
+        // compare selected date with today
+            alert(hour);
+            if ( hour <= now.getHours() ) {
+              $( "#selectTime" ).prop( "disabled", true );
+            }
+        
+        return true;
+    }
+});​
+});
