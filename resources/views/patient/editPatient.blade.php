@@ -226,7 +226,7 @@
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             {{ Form::label('height', 'Height', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-3">
+                            <div class="col-sm-9">
                                 <?php $commonHeight = commonHeight(); ?>
                                 {{ Form::select('height', array_merge(['0' => 'Please Select The Height'], $commonHeight), $patient['patientDetail']->height, ['class' => 'form-control input', 'id' => 'height']) }}
                             </div>
@@ -234,7 +234,7 @@
                         
                         <div class="col-sm-6 form-group">
                             {{ Form::label('height', 'Weight', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-3">
+                            <div class="col-sm-9">
                                 <?php $commonWeight = commonWeight();  ?>
                                 {{ Form::select('weight', array_merge(['0' => 'Please Select The Weight'], $commonWeight), $patient['patientDetail']->weight, ['class' => 'form-control input', 'id' => 'weight']) }}
                             </div>
