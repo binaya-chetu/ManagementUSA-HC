@@ -41,9 +41,9 @@
 								</div>
 							</div>						
 						@endif					
-                        <div class="col-sm-6 form-group{{ $errors->has('categoryFile') ? ' has-error' : '' }}">
-							{{ Form::label('categoryFile', 'Categories Data', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-sm-9">
+                        <div class="col-sm-12 form-group{{ $errors->has('categoryFile') ? ' has-error' : '' }}">
+							{{ Form::label('categoryFile', 'Categories Data', array('class' => 'col-sm-4 col-xs-6 control-label mandatory')) }}
+                            <div class="col-sm-6 col-xs-6">
 								{{ Form::file('categoryFile', ['class' => 'form-control required', 'id' => 'categoryFile']) }}	
                                 @if ($errors->has('categoryFile'))
                                 <span class="help-block">
