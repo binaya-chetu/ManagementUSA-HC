@@ -203,6 +203,7 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
+    
     showAppointmentCount();
         setInterval(function() {
             showAppointmentCount();
@@ -426,7 +427,18 @@ $(document).ready(function() {
             }
         });	 
 	})
+                    $('#selectTime').timepicker({
+          onHourShow: function(hour) {
+          var now = new Date();
+                  // compare selected date with today
+                  alert(hour);
+                  if (hour <= now.getHours()) {
+          $("#selectTime").prop("disabled", true);
+          }
 
+          return true;
+          }
+          }); ​
 	$(document).on('click', '.addMedicineListRow', function(){
 		new emrFormNewPopUpRow();
 	});
@@ -697,36 +709,41 @@ $('#patient_id').on('change', function(){
                     }
             });
         });
-$(document).on("click", ".patient_status", function(event) {
-        event.preventDefault();        
-        var appointmentId = $(this).attr('rel');       
-        $('#patient_appt_id').val(appointmentId);
-        $.magnificPopup.open({
-            items: {
-                src: '#modal-change-patient-status',
-                type: 'inline'
-            }
-        });
-    });
-     $(document).ready(function(){
-        $("#print_invoice").click(function(){
-        if (document.getElementById("email_invoice").checked){
-        var invoice_id = $("#invoice_id").val();
-                $.ajax({
-                url: ajax_url+"products/emailInvoice/",
-                        data:{invoiceid:invoice_id},
-                        success: function(result){
-                        alert("hello");
-                                   // $("#div1").html(result);
-                                 }});
-                            //  window.print();
-                        }
-                        else{
-                        window.print();
-                        }
-                    });
-        });
-                $('#changeStatus').validate();
+        $(document).on("click", ".patient_status", function(event) {
+                event.preventDefault();        
+                var appointmentId = $(this).attr('rel');       
+                $('#patient_appt_id').val(appointmentId);
+                $.magnificPopup.open({
+                    items: {
+                        src: '#modal-change-patient-status',
+                        type: 'inline'
+                    }
+                });
+            });
+                        $(document).ready(function(){
+                            $("#print_invoice").click(function(){
+                                if (document.getElementById("email_invoice").checked){
+                                var invoice_id = $("#invoice_id").val();
+                                        $.ajax({
+                                        url: ajax_url + "products/emailInvoice/",
+                                                data:{invoiceid:invoice_id},
+                                                success: function(result){
+                                                alert("hello");
+                                                        $("#div1").html(result);
+                                                }});
+                                        window.print();
+                                }
+                                else{
+                                window.print();
+                                }
+
+                            });
+                            
+                            $("#submitPayment").click(function(evt){
+                                evt.preventDefault();
+                            });
+                });
+             
     $('#changeStatus').validate();
     
     
@@ -741,9 +758,25 @@ function showAppointmentCount(){
             url: ajax_url + "/appointment/countAppointments",
             success: function(response) {
                 var combine = JSON.parse(response);
+                $('.badge').text(combine.lab_appointment);
                 $('.labCount').text(combine.lab_appointment);
-                
+               
             }
     });
 }
 
+$(document).ready(function(){
+    //alert("hello this is nivi");
+//    $("#selectTime").change( function() {
+//            // the input field
+//            alert("hello");
+//            var element = $(this), text;
+//            // get access to this Timepicker instance
+//            var timepicker = element.timepicker();
+//            text = 'Selected time is: ' + timepicker.format(time);
+//            element.siblings('span.help-line').text(text);
+//        });
+        
+        
+      
+});
