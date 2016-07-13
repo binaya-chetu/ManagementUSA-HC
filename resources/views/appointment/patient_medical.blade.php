@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     {{ Form::label('w3-email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('email', null, ['class' => 'form-control input-sm required', 'id' => 'w3-email', 'placeholder' => 'example@mail.com']) }}
+                                        {{ Form::text('email', null, ['class' => 'form-control input-sm required', 'id' => 'w3-email', 'placeholder' => 'example@mail.com', 'readonly' => 'readonly']) }}
                                     </div>
                                 </div>
                             </div>
