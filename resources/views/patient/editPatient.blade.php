@@ -64,7 +64,11 @@
                             <div class="col-sm-9">
                                  <div class="input-group">
                                     <span class="input-group-addon">@</span>
+                                    @if(!empty($patient->email))
                                 {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email', 'readonly']) }}
+                                @else
+                                {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email']) }}
+                                @endif
                                  </div>
                                 @if ($errors->has('email'))
                                 <span class="help-block">
