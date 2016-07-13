@@ -104,7 +104,7 @@
                             @endforeach
                         </div>
                     </div>                 
-                    <a href="{{ url('/acl/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default cancl-btn'>Cancel</a>
+                    <a href="{{ url('/acl/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default cancl-btn'>Back</a>
                 </div>
             </section>
         </div>

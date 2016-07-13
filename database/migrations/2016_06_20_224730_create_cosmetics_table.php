@@ -16,12 +16,12 @@ class CreateCosmeticsTable extends Migration
             $table->increments('id');
             $table->integer('patient_id');            
             $table->tinyInteger('facial_surgeries')->nullable()->comment('0=>No, 1=> Yes');            
-            $table->string('facial_kind'); 
-            $table->string('face_wash'); 
-            $table->string('exposure'); 
-            $table->string('skin_look'); 
-            $table->string('look_score'); 
-            $table->string('happy_score'); 
+            $table->string('facial_kind', 63); 
+            $table->string('face_wash', 63); 
+            $table->string('exposure', 63); 
+            $table->string('skin_look', 63); 
+            $table->string('look_score', 63); 
+            $table->string('happy_score', 63); 
             $table->tinyInteger('crowsfeet')->nullable()->comment('0=>No, 1=> Yes');
             $table->tinyInteger('facial_expression')->nullable()->comment('0=>No, 1=> Yes'); 
             $table->tinyInteger('sunken')->nullable()->comment('0=>No, 1=> Yes');

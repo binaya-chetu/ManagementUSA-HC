@@ -15,7 +15,7 @@ class CreatePatientVitaminListTable extends Migration
         Schema::create('patient_vitamin_list', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id');  
-            $table->string('name', 180);
+            $table->string('name');
             $table->tinyInteger('dosage')->nullable();
              $table->string('how_often', 31);         
             $table->string('taken_for', 31);

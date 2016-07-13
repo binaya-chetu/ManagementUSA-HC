@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFormStatusColumnToPatientDetails extends Migration
+class AddUnitsOfMeasurementColumnToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class AddFormStatusColumnToPatientDetails extends Migration
      */
     public function up()
     {
-         Schema::table('patient_details', function ($table) {
-			$table->tinyInteger('form_status');
+		Schema::table('products', function($table)
+		{
+			$table->string('unit_of_measurement', 10)->nullable();
 		});
     }
 

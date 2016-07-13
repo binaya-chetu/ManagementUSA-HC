@@ -17,9 +17,9 @@ class CreateCartItemsTable extends Migration
             $table->integer('cart_id'); 
             $table->integer('product_id');
             $table->string('product_sku');   
-			$table->decimal('product_price',2);
+            $table->decimal('product_price',2);
             $table->integer('quantity');  
-			$table->decimal('discount_price',2);
+            $table->decimal('discount_price',2);
             $table->decimal('total_price',2);   
             $table->timestamps();
         });

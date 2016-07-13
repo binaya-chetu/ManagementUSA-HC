@@ -58,8 +58,16 @@
 		<!-- Theme Initialization Files -->
 		<script src="{{ URL::asset('js/theme.init.js') }}"></script>
                 <script>
-                    $('#login').validate({
-                        
+                    jQuery('#login').validate({
+                        rules : {
+                            password : {
+                                minlength : 6
+                            },
+                            password_confirmation : {
+                                minlength : 6,
+                                equalTo : "#password"
+                            }
+                        }
                     });
                 </script>
     </body>

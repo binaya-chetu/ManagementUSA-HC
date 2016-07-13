@@ -15,7 +15,7 @@ class CreateIllnessListTable extends Migration
         Schema::create('illness_list', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id');  
-            $table->string('illness', 150);
+            $table->string('illness');
             $table->timestamps();
         }); 
     }

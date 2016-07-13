@@ -25,6 +25,9 @@
                 @if(Session::has('flash_message'))
                     <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em>{!! session('flash_message') !!}</em></div>
                 @endif
+                @if(Session::has('error_message'))
+                    <div class="alert alert-warning"><span class="glyphicon glyphicon-ok"></span><em>{!! session('error_message') !!}</em></div>
+                @endif
                     <div class="col-md-12">
                          @foreach($categories as $category)
                          <li><a  href="{{ url('/categories/categoryDetails/'.base64_encode($category->id))}}">{{$category->cat_name}}</a></li>

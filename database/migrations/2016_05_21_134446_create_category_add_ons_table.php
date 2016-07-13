@@ -16,7 +16,7 @@ class CreateCategoryAddOnsTable extends Migration
             $table->increments('id');
             $table->integer('category_id');  
             $table->string('add_on_name');  
-            $table->string('cost');  
+            $table->string('cost', 31);  
             $table->timestamps();
         });
     }

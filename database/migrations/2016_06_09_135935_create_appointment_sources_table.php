@@ -14,7 +14,7 @@ class CreateAppointmentSourcesTable extends Migration
     {
         Schema::create('appointment_sources', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name', 31);
             $table->string('description');
             $table->timestamps();
         });

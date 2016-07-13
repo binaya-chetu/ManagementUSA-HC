@@ -18,7 +18,7 @@ class CreatePackagesTable extends Migration
             $table->integer('category_id');
             $table->integer('product_count');  
             $table->double('product_price');  
-            $table->string('category_type');  
+            $table->string('category_type', 63);  
             $table->timestamps();
             
         });

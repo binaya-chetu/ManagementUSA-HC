@@ -32,7 +32,7 @@
                               
                             <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/missedCall') }}">
-                                    Missed Call
+                                    Missed Call<span class="badge">4</span>
                                 </a>
                             </li>  
                             <li class="{{ Request::segment(3) === 'marketingCall' ? 'nav-active' : null }}">
@@ -42,7 +42,7 @@
                             </li> 
                             <li class="{{ Request::segment(2) === 'webLead' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/webLead') }}">
-                                    Web Leads
+                                    Web Leads<span class="badge">5</span>
                                 </a>
                             </li> 
                             <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
@@ -57,9 +57,6 @@
                                    Request Follow-up
                                 </a>
                             </li>
-
-                            @if(in_array('appointment_module', $permissions))
-
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
                                         Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
@@ -85,10 +82,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endif
-
-                            @if(in_array('follow_up_appointment_module', $permissions))
-
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment
@@ -106,7 +99,7 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/labAppointments') }}">
-                                    Lab Appointments<span class="badge"></span>                                    
+                                    Lab Appointments<span class="badge labCount"></span>                                    
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
@@ -114,7 +107,6 @@
                                     Lab Ready Appointments                                    
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </li>
                     @endif

@@ -108,7 +108,7 @@
 					</tr>
                 @else 
                     <tr> <td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
-                    <td class="col-sm-8 col-md-6"><h5><a href="/categories/listCategories"> <button type="button" class="btn btn-default">
+                    <td class="col-sm-8 col-md-6" colspan=2><h5><a href="/categories/listCategories"> <button type="button" class="btn btn-default">
                                 <span class="fa fa-shopping-cart"></span> Continue Shopping
                             </button>
                         </a></h5></td>
