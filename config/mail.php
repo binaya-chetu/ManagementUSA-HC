@@ -1,5 +1,5 @@
 <?php
-die(config("constants.CLINIC_OPEN_TIME"));
+
 return [
 
     /*
