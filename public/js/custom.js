@@ -642,7 +642,7 @@ $(button).on( 'click', function (e) {
 $('#patient_id').on('change', function(){
     var appt_request_id = $(this).val();
     if(appt_request_id != ''){
-        
+        $('#patientMainDiv span.comment').remove();
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

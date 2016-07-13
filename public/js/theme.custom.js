@@ -256,13 +256,16 @@ $(function() {
             
        
     });
+
     $("#addApptRequest").on("submit", function(event) {
         var count = 0;
         $('.commentdiv .error').remove();
         if($('#addApptRequest').find('#patientMainDiv').is(':visible')){
             if ($("#patient_id").val() === undefined || $("#patient_id").val() === "")
                  {
-                     $('#patient_id').parent("#patientMainDiv").append('<span class="help-block comment error"><strong>Please Select Patient</strong></span>');                                   
+                     if( $("#patientMainDiv").find('span.comment').length == 0){
+                         $('#patient_id').parent("#patientMainDiv").append('<span class="help-block comment error"><strong>Please Select Patient</strong></span>');                                                           
+                     }
                          count = count + 1;
                  } 
         }
