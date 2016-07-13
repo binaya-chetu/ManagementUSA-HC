@@ -1,5 +1,5 @@
 <?php
-
+die(config("constants.CLINIC_OPEN_TIME"));
 return [
 
     /*
@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', config("constants.MAIL_DRIVER")),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mymails.chetu.com'),
+    'host' => env('MAIL_HOST', config("constants.MAIL_HOST")),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 465),
+    'port' => env('MAIL_PORT', config("constants.MAIL_PORT")),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'azmensclinic1@gmail.com', 'name' => 'azmensclinic1'],
+    'from' => ['address' => config("constants.MAIL_FROM_ADDRESS"), 'name' => config("constants.MAIL_FROM_NAME")],
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    'encryption' => env('MAIL_ENCRYPTION', config("constants.MAIL_ENCRYPTION")),
 
     /*
     |--------------------------------------------------------------------------
