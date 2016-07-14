@@ -19,12 +19,22 @@ $(function() {
         rules: {
             payment_bill: {
                 extension: "jpg|gif|png|pdf|doc|docx|csv|xls"
+            },
+            email: {
+              required: true,
+              email: true,
+              remote: ajax_url+ "/appointment/uniquePatientEmail"
             }
+        },
+        messages:{
+              email: {
+                  remote: 'Email already exists in database'
+              }
         }
     });
     
     // common validation for add/edit doctor.
-    jQuery('#doctor').validate({
+    jQuery('#doctor').validate({  
         rules : {
             password : {
                 minlength : 6
@@ -32,7 +42,17 @@ $(function() {
             password_confirmation : {
                 minlength : 6,
                 equalTo : "#password"
+            },
+            email: {
+              required: true,
+              email: true,
+              remote: ajax_url+ "/appointment/uniquePatientEmail"
             }
+        },
+        messages:{
+              email: {
+                  remote: 'Email already exists in database'
+              }
         }
     });
     
@@ -41,14 +61,24 @@ $(function() {
     
     // common validation for add/edit users.
     jQuery('#addUser').validate({
-        rules : {
+       rules : {
             password : {
                 minlength : 6
             },
             password_confirmation : {
                 minlength : 6,
                 equalTo : "#password"
+            },
+            email: {
+              required: true,
+              email: true,
+              remote: ajax_url+ "/appointment/uniquePatientEmail"
             }
+        },
+        messages:{
+              email: {
+                  remote: 'Email already exists in database'
+              }
         }
     });
 	
@@ -71,7 +101,7 @@ $(function() {
           },
           messages:{
               email: {
-                  remote: 'Email already registered'
+                  remote: 'Email already exist in database'
               }
           }
     });

@@ -73,7 +73,12 @@
         <div class="form-group"> 
             {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
+                {{old('email')}}
+                @if(!empty(old('email')))
                 {{ Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email', 'disabled' => true]) }}
+                @else
+                {{ Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) }}
+                @endif
                 <span class="help-block email">
                 </span> 
             </div> 
@@ -161,5 +166,4 @@
             }
         });
     });
-    
 </script>
