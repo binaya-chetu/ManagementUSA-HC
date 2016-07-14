@@ -24,11 +24,17 @@ $(function() {
               required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
+            },
+            phone: {
+                minlength: 14
             }
         },
         messages:{
               email: {
                   remote: 'Email already exists in database'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
               }
         }
     });
@@ -47,11 +53,17 @@ $(function() {
               required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
+            },
+            phone: {
+                minlength: 14
             }
         },
         messages:{
               email: {
                   remote: 'Email already exists in database'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
               }
         }
     });
@@ -73,11 +85,17 @@ $(function() {
               required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
+            },
+            phone: {
+                minlength: 14
             }
         },
         messages:{
               email: {
                   remote: 'Email already exists in database'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits'
               }
         }
     });
@@ -89,7 +107,26 @@ $(function() {
     $('#newCategory').validate();
     
     //validation for followup pop-up form.
-    $('#editAppointment').validate();
+    $('#editAppointment').validate({
+          rules: {
+            email: {
+              required: true,
+              email: true,
+              remote: ajax_url+ "/appointment/uniquePatientEmail"
+            },
+            phone: {
+                minlength: 14
+            }
+          },
+          messages:{
+              email: {
+                  remote: 'Email already exist in database'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
+              }
+          }
+    });
     
     $('#addAppointment').validate({
           rules: {
@@ -97,11 +134,17 @@ $(function() {
               required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
+            },
+            phone: {
+                minlength: 14
             }
           },
           messages:{
               email: {
                   remote: 'Email already exist in database'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
               }
           }
     });
