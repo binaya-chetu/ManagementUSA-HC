@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
@@ -98,7 +97,8 @@ class ApptSettingController extends Controller {
         //$patients = AppointmentRequest::get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source'])->orderBy('id', 'asc');
         $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
         $resources = AppointmentSource::lists('name', 'id');
-        $requestFollowups = AppointmentRequest::where('status', 2)->get();
+        $current_date = date('Y-m-d');
+        $requestFollowups = AppointmentRequest::where('status', 2)->where('followup_date', $current_date)->get();
         $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
         return view('apptsetting.requestFollowup', [
             'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode, 'patients' => $patients, 'resources' => $resources]);
@@ -124,12 +124,11 @@ class ApptSettingController extends Controller {
             $user->first_name = $rf->first_name;
             $user->last_name = $rf->last_name;
             $user->email = $rf->email;
-            $user->role = $patient_role;
+            $user->role = 6;
 
             if ($user->save()) {
                 $user_details = DB::table('users')->where('email', '=', $rf->email)->get();
                 foreach ($user_details AS $uDetails) {
-
                     $patient_details->user_id = $uDetails->id;
                     $patient_details->dob = $rf->dob;
                     $patient_details->phone = $rf->phone;
@@ -202,7 +201,7 @@ class ApptSettingController extends Controller {
                 //$apptRequest->followup_date = date('Y-m-d', strtotime($request->followup_date));
                 $apptRequest->followup_date = date('Y-m-d', strtotime('+7 days'));
                 $apptRequest->followup_status = 1;
-            }else if(isset($request->followup_status)){
+            }else {
                 $apptRequest->followup_date = date('Y-m-d', strtotime($request->followup_date));
                 $apptRequest->followup_status = 1;
             }

@@ -79,7 +79,7 @@
             </div> 
         </div> 
         <div class="form-group">             
-            {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label')) }}
+            {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-sm-6"> 
                 {{ Form::text('phone', old('phone'), ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
             </div> 

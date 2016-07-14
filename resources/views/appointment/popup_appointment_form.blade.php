@@ -50,7 +50,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-clock-o"></i>
                     </span>
-                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required', 'data-plugin-timepicker', 'placeholder' => 'Choose Date']) }}
+                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required', 'data-plugin-timepicker', 'placeholder' => 'Choose Date' ,'id' =>'selectTime']) }}
                 </div>
             </div>
             {{ Form::hidden('marketer', 1) }}
