@@ -202,7 +202,7 @@ class ApptSettingController extends Controller {
                 //$apptRequest->followup_date = date('Y-m-d', strtotime($request->followup_date));
                 $apptRequest->followup_date = date('Y-m-d', strtotime('+7 days'));
                 $apptRequest->followup_status = 1;
-            }else if(isset($request->followup_status)){
+            }else {
                 $apptRequest->followup_date = date('Y-m-d', strtotime($request->followup_date));
                 $apptRequest->followup_status = 1;
             }
