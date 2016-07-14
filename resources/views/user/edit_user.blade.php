@@ -19,7 +19,7 @@
                         <a class="panel-action panel-action-toggle" data-panel-toggle="" href="#"></a>
                         <a class="panel-action panel-action-dismiss" data-panel-dismiss="" href="#"></a>
                     </div>
-                    <h2 class="panel-title"><strong>Add User </strong> </h2>
+                    <h2 class="panel-title"><strong>Edit User </strong> </h2>
                 </header>
                 {!! Form::model($user, ['method' => 'post','url' => ['/user/updatedUser', $user->id], 'id' => 'addUser']) !!}
                 {{ csrf_field() }}
