@@ -82,7 +82,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/apptsetting/requestFollowUp', [
             'uses' => 'ApptSettingController@requestFollowUp',
             'as' => 'apptsetting.requestFollowUp',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_read']
         ]);
         
     Route::post('/apptsetting/saveRequestFollowUp', [
@@ -562,6 +562,17 @@ Route::group(['middleware' => 'web'], function () {
            'as' => 'products.emailInvoice',
                //'middleware' => ['acl:save_categories']	
             ]);
+        /*
+         * for payment after checkout
+         */
+
+        Route::get('/products/paymentForm/', [
+           'uses' => 'ProductsController@paymentForm',
+           'as' => 'products.paymentForm',
+               //'middleware' => ['acl:save_categories']	
+            ]);
+        
+        
 //            Route::get('/products/emailInvoice/{invoiceid}', function($invoice_id) {
 ////            $item = [
 ////                 //'middleware' => ['acl:save_products']
