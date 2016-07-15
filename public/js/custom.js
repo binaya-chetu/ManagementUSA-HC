@@ -686,11 +686,23 @@ $('#patient_id').on('change', function(){
               //required: true,
               email: true,
               remote: ajax_url+ "/apptsetting/uniqueEmail"
+            },
+             marketing_phone: {
+                minlength: 14
+            },
+             phone: {
+                minlength: 14
             }
           },
           messages:{
               email: {
                   remote: 'Email already registered'
+              },
+              marketing_phone: {
+                  minlength: 'Please enter at least 10 digits.'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
               }
           }
     });
@@ -748,7 +760,8 @@ function showAppointmentCount(){
             success: function(response) {
                 var combine = JSON.parse(response);
                 $('.labCount').text(combine.lab_appointment);
-                
+                $('.upcomingCount').text(combine.upcoming_appointment);
+                $('.visitCount').text(combine.visit_appointment);
             }
     });
 }

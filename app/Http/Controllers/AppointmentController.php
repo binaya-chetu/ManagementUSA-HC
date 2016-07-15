@@ -1081,11 +1081,8 @@ class AppointmentController extends Controller {
      */
 
     public function todayVisits() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();
-        //print_r(Session::all());die;
-        $patients = User::where('role', $this->patient_role)->get();
-        // $doctors = User::where('role', $this->doctor_role)->get();
-
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();        
+        $patients = User::where('role', $this->patient_role)->get();       
         return view('appointment.today_visits', [
             'appointments' => $appointments, 'patients' => $patients
         ]);
@@ -1111,7 +1108,7 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\today_visits.blade.php
      */
     public function labAppointments() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '2')->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereIn('patient_status', [2, 3])->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_appointments', [
@@ -1127,11 +1124,12 @@ class AppointmentController extends Controller {
 
     public function countAppointments() {
         $appointment = array();
-
-        \Session::forget('CountLabAppointment');
         $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();
-        \Session::put('CountLabAppointment', $labAppointment);
+        $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->count();
+        $visitAppointment = $appointments = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
         $appointment['lab_appointment'] = $labAppointment;
+        $appointment['upcoming_appointment'] = $upcomingAppointment;
+        $appointment['visit_appointment'] = $visitAppointment;        
         echo json_encode($appointment);
         die;
     }
