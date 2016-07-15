@@ -762,6 +762,9 @@ function showAppointmentCount(){
                 $('.labCount').text(combine.lab_appointment);
                 $('.upcomingCount').text(combine.upcoming_appointment);
                 $('.visitCount').text(combine.visit_appointment);
+                $('.readyCount').text(combine.ready_appointment);
+                $('.followupCount').text(combine.followup_appointment);
+                $('.appointmentCount').text(combine.appointments);
             }
     });
 }

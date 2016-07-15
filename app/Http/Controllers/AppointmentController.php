@@ -1124,12 +1124,18 @@ class AppointmentController extends Controller {
 
     public function countAppointments() {
         $appointment = array();
+        $appointments = Appointment::count();
         $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();
         $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->count();
         $visitAppointment = $appointments = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
+        $readyappointments = Appointment::where('patient_status', '4')->count();
+        $followup = FollowUp::count(); 
+        $appointment['appointments'] = $appointments;   
         $appointment['lab_appointment'] = $labAppointment;
         $appointment['upcoming_appointment'] = $upcomingAppointment;
-        $appointment['visit_appointment'] = $visitAppointment;        
+        $appointment['visit_appointment'] = $visitAppointment;   
+        $appointment['ready_appointment'] = $readyappointments;   
+        $appointment['followup_appointment'] = $followup;   
         echo json_encode($appointment);
         die;
     }
