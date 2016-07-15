@@ -89,12 +89,12 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/upcomingappointments') }}">
-                                    Upcoming Appointments
+                                    Upcoming Appointments<span class="badge upcomingCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/todayVisits') }}">
-                                    Today Visits
+                                    Today Visits<span class="badge visitCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
