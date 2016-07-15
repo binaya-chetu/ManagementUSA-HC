@@ -499,7 +499,6 @@ class AppointmentController extends Controller {
      */
 
     public function upcomingappointments() {
-
         $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
@@ -652,7 +651,6 @@ class AppointmentController extends Controller {
 		}
 	
 		$appt = App\Appointment::orderBy('id', 'DESC')->firstOrCreate(['patient_id' => $id]);
-		///$appt->disease_id = $formData['disease_id'];
 		$appt->save();
 		
 		$adamsQ = App\AdamsQuestionaires::firstOrCreate(['patient_id' => $id]);		
@@ -850,12 +848,6 @@ class AppointmentController extends Controller {
 		} else{
 			App::abort(404, '');
 		}
-	
-       //echo '<pre>'; print_r($response->all());die;
-/* 		foreach($response->all() as $i => $v){
-			echo $i.'<br>';
-		} */
-
 
         $patient->dob = date('Y/m/d', strtotime($formData['dob']));
         $patient->gender = $formData['gender'];
@@ -1080,11 +1072,6 @@ class AppointmentController extends Controller {
         } else {
             App::abort(404, '');
         }
-
-        //echo '<pre>'; print_r($response->all());die;
-        /* 		foreach($response->all() as $i => $v){
-          echo $i.'<br>';
-          } */
     }
 
     /*

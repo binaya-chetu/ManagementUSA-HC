@@ -280,7 +280,13 @@ $(document).ready(function() {
                         $('#appointmentComment').val(combine.appointment.comment);
                         $('#first-name').val(combine.patient.first_name);
                         $('#last-name').val(combine.patient.last_name);
-                        $('#email').val(combine.patient.email);
+                        if(combine.patient.email == ''){
+                            $('#email').val(combine.patient.email).prop('disabled', false);
+                        }
+                        else
+                        {
+                            $('#email').val(combine.patient.email).prop('disabled', true);
+                        }
                         $('#phone').val(combine.patient.patient_detail.phone);
                         $('#address1').val(combine.patient.patient_detail.address1);
                         $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
