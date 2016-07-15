@@ -205,7 +205,6 @@ class AppointmentController extends Controller {
         foreach ($appointments as $appointment) {
             $events = array();
             $events ['id'] = $appointment->id;
-
             $reasonArr = $appointment->patient->reason->toArray();
             $reasonArray = array_column($reasonArr, 'reason_code');
             $reasonList = array_column($reasonArray, 'reason');
