@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -10,25 +10,24 @@ use App\Role;
 use App\FollowupStatus;
 
 /**
-* This class is used to handle home page related action
-*
-* @category App\Http\Controllers;
-*
-* @return null
-*/
-class HomeController extends Controller
-{
+ * This class is used to handle home page related action
+ *
+ * @category App\Http\Controllers;
+ *
+ * @return null
+ */
+class HomeController extends Controller {
+
     // declear properties for patient role and doctor role
     protected $doctor_role = 5;
     protected $patient_role = 6;
-    
+
     /**
      * Create a new controller instance.
      *
      * @return null
      */
-    public function __construct()
-    {
+    public function __construct() {
         // uses auth middleware
         $this->middleware('auth');
     }
@@ -38,17 +37,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {        
+    public function index() {
         // get all appointments which status is active
-        $appointments = Appointment::with('patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode' )->whereIn('status', [1, 4])->get();
-        
+        $appointments = Appointment::with('patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
-        foreach ($appointments as $appointment) 
-        {
+        foreach ($appointments as $appointment) {
             $events = array();
             $events ['id'] = $appointment->id;
+
+            $reasonArr = $appointment->patient->reason->toArray();
+
+            $reasonArray = array_column($reasonArr, 'reason_code');
+            $reasonList = array_column($reasonArray, 'reason');
+            $reason = implode(',', $reasonList);
+
             
 			if($appointment->patient && $appointment->patient->reason){
 				$reasonArr = $appointment->patient->reason->toArray();
@@ -56,7 +59,7 @@ class HomeController extends Controller
 				$reasonList = array_column($reasonArray, 'reason');
 				$reason = implode(',', $reasonList);    				
 			}
-        
+
             $events ['title'] = $reason;
 			if($appointment->patient){
 				$events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
@@ -72,14 +75,15 @@ class HomeController extends Controller
             $collevent[$i] = $events;
             $i++;
         }
-        
+
         // get all patients list
         $patients = User::where('role', $this->patient_role)->get();
         // get all doctors list
         $doctors = User::where('role', $this->doctor_role)->get();
-         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
+        $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
         return view('appointment.viewappointment', [
             'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
     }
+
 }

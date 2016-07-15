@@ -10,5 +10,14 @@ return [
 	'MAIL_PORT'						=> 25, 
 	'MAIL_FROM_NAME'				=> 'azmensclinic1',
 	'MAIL_FROM_ADDRESS'				=> 'sureshc@chetu.com',
-	'MAIL_ENCRYPTION'				=> 'tls'
+	'MAIL_ENCRYPTION'				=> 'tls',
+	
+	'PATIENT_ROLE_SLUG'				=> 'patient',
+	'DOCTOR_ROLE_SLUG'				=> 'doctor',
+	'ADMIN_ROLE_SLUG'				=> 'admin',
+	'AUTHORS_ROLE_SLUG'				=> 'authors',
+	'USER_ROLE_SLUG'				=> 'user',
+	'APPOINTMENT_SET_FLAG'			=> 0,
+	'APPOINTMENT_NO_SET_FLAG'		=> 1
+	
 ];

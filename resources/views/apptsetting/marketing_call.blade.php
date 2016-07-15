@@ -1,7 +1,12 @@
 @extends('layouts.common')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @section('content')
-
+<style>
+    #awesome
+    {
+        
+    }
+</style>
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Create Appointment From Tele-Marketing Call</h2>
@@ -174,7 +179,10 @@
                             <div class="col-sm-3">
                                 <div class="radio-custom radio-primary">
                                     {{ Form::radio('status', '1', false, ['id' => 'awesome', 'class' => 'callStatus required']) }}
-                                    <label for="awesome">Set
+                                    <label for="awesome" style=" text-overflow: ellipsis;">Set
+                                    </label>
+                                     {{ Form::radio('status', '2', false, ['id' => 'very-awesome', 'class' => 'callStatus required']) }}
+                                    <label for="very-awesome">No Set
                                     </label>
                                     {{ Form::hidden('appt_id', null, ['id' => 'apptId']) }}
                                     {{ Form::hidden('appt_type', 1) }}
