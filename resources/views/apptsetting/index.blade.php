@@ -75,19 +75,6 @@
                                 ?>
                         {{ Form::hidden('appt_source', $appt_type)}}
                     </div>
-<!--                    <div class="form-group">
-                            {{ Form::label('appt_type', 'Appointment Type', array('class' => 'col-sm-3 control-label mandatory')) }}
-                            <div class="col-md-6">
-                                <?php if($value == 'marketingCall'){                                    
-                                        $type = '2';
-                                    }else if($value == 'walkin'){
-                                        $type = '3';
-                                    }
-                                ?>
-                                {{ Form::select('appt_source1',  $resources, $type, ['class' => 'form-control required', 'disabled' => true]) }}
-                                
-                            </div>
-                    </div>-->
                   
                     <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">
                         {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -225,14 +212,14 @@
                         <div class="col-sm-8">
                             <div class="col-sm-3">
                                 <div class="radio-custom radio-primary">
-                                    {{ Form::radio('status', '1', false, ['id' => 'awesome', 'class' => 'callStatus required']) }}
+                                    {{ Form::radio('status', '0', false, ['id' => 'awesome', 'class' => 'callStatus required']) }}
                                     <label for="awesome">Set
                                     </label>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="radio-custom radio-primary">
-                                    {{ Form::radio('status', '2', false, ['id' => 'very-awesome', 'class' => 'callStatus required']) }}
+                                    {{ Form::radio('status', '1', false, ['id' => 'very-awesome', 'class' => 'callStatus required']) }}
                                     <label for="very-awesome">No Set
                                     </label>
                                 </div>
@@ -345,7 +332,7 @@
     })
     $('.callStatus').on('click', function() {
         var call_value = $(this).val();
-        if (call_value == 1) {
+        if (call_value == 0) {
             $('#nosetAppointment').hide();
             $('#setAppointment').show();
         } else {

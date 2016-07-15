@@ -193,7 +193,6 @@ class AppointmentController extends Controller
     {
 
         $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
-//echo '<pre>'; print_r($appointments->toArray()); die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
