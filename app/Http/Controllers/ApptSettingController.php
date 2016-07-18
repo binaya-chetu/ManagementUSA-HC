@@ -133,7 +133,7 @@ class ApptSettingController extends Controller {
             $user->first_name = $rf->first_name;
             $user->last_name = $rf->last_name;
             $user->email = $rf->email;
-            $user->role = 6;
+            $user->role = $this->patient_role;
 
             if ($user->save()) {
                 $user_details = DB::table('users')->where('email', '=', $rf->email)->get();
@@ -324,5 +324,4 @@ class ApptSettingController extends Controller {
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
         ]);
     }
-
 }
