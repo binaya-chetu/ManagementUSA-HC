@@ -27,6 +27,7 @@ class ApptSettingController extends Controller {
     protected $doctor_role = 5;
     protected $success = true;
     protected $error = false;
+    protected $confirmedAppointmentStatus = 4;
 
     public function __construct() {
         $this->middleware('auth');
@@ -244,7 +245,7 @@ class ApptSettingController extends Controller {
         $reason->save();
 
         if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){			
-            $appointment = new App\Appointment;
+            $appointment = new App\Appointment;			
             $appointment->patient_id = $id;
             $appointment->apptTime = date('Y-m-d H:i:s', strtotime($formData['appDate'] . " " . $formData['appTime']));
             $appointment->createdBy = Auth::user()->id;
@@ -256,8 +257,22 @@ class ApptSettingController extends Controller {
                 $user->hash = $patient->hash;
                 $this->emailPatientEditForm($user);
             }
-            $appointment->save();
-        }
+			
+			$apptDate = date('Y-m-d', strtotime($formData['appDate']));
+			$today = date('Y-m-d');
+			if($today == $apptDate){
+				$appointment->status = $this->confirmedAppointmentStatus;
+				$appointment->save();
+				$followUp = new App\FollowUp;		
+				$followUp->action = $this->confirmedAppointmentStatus;
+				$followUp->appt_id = $appointment->id;
+				$followUp->created_by = Auth::user()->id;
+				$followUp->comment = $appointment_requests->comment;
+				$followUp->save();
+			} else{
+				$appointment->save();
+			}
+		}
 		// Case of selecting patient from drop down 
         if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){
             \Session::flash('flash_message', 'Appointment added successfully.');
