@@ -189,7 +189,7 @@ class ApptSettingController extends Controller {
         $formData = $request->all();
         
         if(!$formData){
-                App::abort(404, 'Empty form data.');
+            App::abort(404, 'Empty form data.');
         }
 
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
@@ -214,8 +214,8 @@ class ApptSettingController extends Controller {
 
         $patient = App\Patient::firstOrCreate(['user_id' => $id]);
         $patient->phone = $formData['phone'];
-        $patient->dob = $formData['dob'];
-        $patient->hash = $this->getPatientHash($id);
+        $patient->dob = date_create($formData['dob']);
+        $patient->hash = $this->getPatientHash($id);		
         $patient->save();
 
         //$appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
