@@ -115,7 +115,7 @@
                                 Request::segment(1) === 'doctor' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>POS System</span>
+                            <span>Front Office</span>
                         </a>
                         <ul class="nav nav-children">
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
@@ -217,7 +217,31 @@
                     <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/addcategories') }}">
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Imports Product</span>
+                            <span>Product Imports</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Accounting</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if(in_array('finance', $permissions) || (Auth::user()->role == '1'))
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if(in_array('inventory_management', $permissions) || (Auth::user()->role == '1'))
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Inventory Management</span>
                         </a>
                     </li>
                     @endif
