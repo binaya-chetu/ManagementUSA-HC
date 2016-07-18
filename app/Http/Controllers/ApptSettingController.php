@@ -184,7 +184,6 @@ class ApptSettingController extends Controller {
 
     public function saveApptFollowup(Request $request) {
         $formData = $request->all();
- <?php
 		if(!$formData){
             App::abort(404, 'Empty form data.');
         }
