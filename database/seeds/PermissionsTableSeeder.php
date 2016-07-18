@@ -40,7 +40,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'permission_title' => 'POS',
+                'permission_title' => 'Front Office',
                 'permission_slug' => 'pos',
                 'permission_description' => 'Permission for POS module.',
                 'parent_id' => '0',
