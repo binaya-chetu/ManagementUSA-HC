@@ -800,3 +800,52 @@ function checkAppointmentTime(){
         }
               
     }
+    
+        $(document).on("click", ".createAppointment", function(ev) {
+        $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        var appointmentId = $(this).attr('rel');
+        $.ajax({
+        type: "POST",
+            url: ajax_url + "/appointment/editappointment",
+            data: {"id": appointmentId },
+            success: function(response) {
+                var combine = JSON.parse(response);
+                if (combine.appointment.status < 2){
+                    $('.followButton').show();
+                } else{
+                    $('.followButton').hide();
+                }
+                $('#appointment_id').val(combine.appointment.id);
+                $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
+                if (combine.doctor){
+                    $("#doctor_id").val(combine.doctor.id).attr('selected', 'selected').trigger("chosen:updated");
+                    $('input[name=doctor_id]').val(combine.doctor.id);
+                } else{
+                    $("#doctor_id").val('').trigger("chosen:updated");
+                    $('input[name=doctor_id]').val('0');
+                }
+                $('input[name=patient_id]').val(combine.patient.id);
+                $('#appointmentComment').val(combine.appointment.comment);
+                $('#first-name').val(combine.patient.first_name);
+                $('#last-name').val(combine.patient.last_name);
+                $('#email').val(combine.patient.email);
+                $('#phone').val(combine.patient.patient_detail.phone);
+                $('#address1').val(combine.patient.patient_detail.address1);
+                $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
+                $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
+                $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
+                $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
+                $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+            }
+        });
+        $.magnificPopup.open({
+            items: {
+                src: '#modalForm',
+                    type: 'inline'
+            }
+        });
+    });

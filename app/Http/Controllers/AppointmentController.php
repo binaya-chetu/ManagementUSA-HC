@@ -1152,5 +1152,20 @@ class AppointmentController extends Controller {
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }
+    
+     /**
+     * Function for the showing the result for the LaB Appointment
+     *
+     * @return \resource\view\Appointment\today_visits.blade.php
+     */
+    public function appointmentAfterReport() {        
+        $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
+        //echo '<pre>'; print_r($appointments->toArray());die;
+        $patients = User::where('role', $this->patient_role)->get();
+
+        return view('appointment.appointment_after_report', [
+            'appointments' => $appointments, 'patients' => $patients
+        ]);
+    }
 
 }

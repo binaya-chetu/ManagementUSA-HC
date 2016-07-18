@@ -58,7 +58,7 @@
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-
+                        
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {
@@ -73,18 +73,16 @@
                                 }
                                 ?>
                             </div></td>
-                        <td class="table-text"><div><?php
+                        <td class="table-text"><div><?php 
                                 $reasonArr = $appointment->patient->reason->toArray();
                                 $reasonArray = array_column($reasonArr, 'reason_code');
                                 $reasonList = array_column($reasonArray, 'reason');
-                                $reason = implode(',', $reasonList);
-                                echo $reason;
-                                ?>                                
+                                $reason = implode(',', $reasonList); 
+                                echo $reason; ?>                                
                             </div></td>
                         <td class="table-text"><div>{{ $appointment->patient->patientDetail->phone }}</div></td>
                         <td class="actions">                            
-<!--                            <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>-->
-<!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
+                            <a href="javascript:void(0)" class="on-default createAppointment" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -93,4 +91,8 @@
         </div>
     </section>
 </section>
+<!-- Modal Form -->
+<div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
+    @include('apptsetting.appointment_after_report')   
+</div>
 @endsection

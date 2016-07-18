@@ -107,6 +107,11 @@
                                     Lab Ready Appointments <span class="badge readyCount"></span>                                  
                                 </a>
                             </li>
+                            <li class="{{ Request::segment(2) === 'appointmentAfterReport' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/appointmentAfterReport') }}">
+                                    Appointment After Report                                    
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     @endif
