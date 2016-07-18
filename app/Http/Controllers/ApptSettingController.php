@@ -104,13 +104,20 @@ class ApptSettingController extends Controller {
      * @return \resource\view\apptsetting\requestFollowUp
      */
     public function requestFollowUp() {
-        $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
-        $resources = AppointmentSource::lists('name', 'id');
         $current_date = date('Y-m-d');
-        $requestFollowups = AppointmentRequest::where('status', 2)->where('followup_date', $current_date)->get();
+        $requestFollowups = DB::table('users')
+            ->Join('appointment_requests', 'users.id', '=', 'appointment_requests.user_id')
+            ->Join ('patient_details', 'users.id', '=', 'patient_details.user_id')
+            ->where('appointment_requests.status',1)->where('followup_date', $current_date)
+            ->orderBy('appointment_requests.id', 'asc')
+            ->get();
+       // $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
+        $resources = AppointmentSource::lists('name', 'id');
+        //$requestFollowups = AppointmentRequest::where('status', 2)->where('followup_date', $current_date)->get();
         $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
+       // print_r($requestFollowups);die;
         return view('apptsetting.requestFollowup', [
-            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode, 'patients' => $patients, 'resources' => $resources]);
+            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode, 'resources' => $resources]);
     }
 
     /*
@@ -126,26 +133,19 @@ class ApptSettingController extends Controller {
         $patient_details = new Patient;
         $user = new User;
 
-
-        $requestFollowup = DB::table('appointment_requests')->where('id', '=', $request->request_id)->get();
-
-        foreach ($requestFollowup AS $rf) {
-            $user->first_name = $rf->first_name;
-            $user->last_name = $rf->last_name;
-            $user->email = $rf->email;
-            $user->role = 6;
-
-            if ($user->save()) {
-                $user_details = DB::table('users')->where('email', '=', $rf->email)->get();
-                foreach ($user_details AS $uDetails) {
-                    $patient_details->user_id = $uDetails->id;
-                    $patient_details->dob = $rf->dob;
-                    $patient_details->phone = $rf->phone;
-                    $patient_details->call_time = $rf->call_time;
-                    if ($patient_details->save()) {
-                        $appt_details = DB::table('patient_details')->where('user_id', '=', $patient_details->user_id)->get();
-                        foreach ($appt_details AS $apd)
-                            $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
+             DB:table('users')->where('id', $request->user_id)
+                ->update(array('first_name' => $request->first_name,'last_name' => $request->last_name,'email' => $request->email));
+             
+//              DB:table('patient_details')->where('user_id', $request->user_id)
+//                ->update(array('dob' => $request->dob,'phone' => $request->phone));
+//                    
+//              DB:table('appointment_requests')->where('user_id', $request->user_id)
+//                ->update(array('status' => 1));
+//                    
+//                DB:table('appointments')->where('user_id', $request->user_id)
+//                  ->update(array('status' => 1));     
+                      
+                         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
                         $appointment->status = 1;
                         $appointment->createdBy = $apd->user_id;
                         $appointment->patient_id = $apd->id;
@@ -161,10 +161,7 @@ class ApptSettingController extends Controller {
                             \Session::flash('flash_message', 'Sorry Error occurred.');
                             return redirect()->action('ApptSettingController@requestFollowUp');
                         }
-                    }
-                }
-            }
-        }
+        
     }
 
     public function emailPatientEditForm($user) {

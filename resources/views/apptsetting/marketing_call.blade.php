@@ -40,7 +40,6 @@
 
                     <div class="form-group">
                         {{ Form::label('callTime', 'Call Time', array('class' => 'col-sm-3 control-label')) }}
-
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-addon">
