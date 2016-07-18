@@ -1260,7 +1260,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <div class="form-group">
+                                                    <!--div class="form-group">
                                                         {{ Form::label('neurological', 'Neurological Disorders', ['class' => 'col-sm-6 control-label']) }}                                                        
                                                         <div class="col-sm-6 toggle-radio-custom">
                                                             <div class="col-sm-3 radio-custom radio-primary">
@@ -1273,7 +1273,7 @@
                                                                 {{ Form::label('neurological2', 'No') }}
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div-->
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 inputRow">                                               
