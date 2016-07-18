@@ -44,12 +44,15 @@
                         <th>email</th>
                         <th>Phone</th>
                         <th>Lead Source</th>
-                        <th>Location</th>
+                        <th>Created At </th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i=1;?>
+                    <?php $i=1;
+                      if(!empty($requestFollowups)){
+                    ?>
+                  
                     @foreach ($requestFollowups as $requestFollowup)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
@@ -57,13 +60,14 @@
                         <td class="table-text"><div>{{ $requestFollowup->email }}</div></td>
                         <td class="table-text"><div>{{ $requestFollowup->phone }}</div></td>
                         <td class="table-text"><div>{{ $resources[$requestFollowup->appt_source] }}</div></td>
-                        <td class="table-text"><div>{{ $requestFollowup->location }}</div></td>
+                        <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($requestFollowup->created_at)) }}</div></td>
                         <td class="actions" style = "text-align:center">
-                            <a href="javascript:void(0)" class="on-default request-follow-up"  rel="{{ $requestFollowup->id }}"><i class="fa fa-pencil"></i></a>
+                            <a href="javascript:void(0)" class="on-default request-follow-up"  rel="{{ $requestFollowup->user_id }}"><i class="fa fa-pencil"></i></a>
                         </td>
                         
                     </tr>
                     @endforeach
+                    
                 </tbody>
             </table>
         </div>
@@ -74,11 +78,79 @@
         <header class="panel-heading">
             <h2 class="panel-title">Request Followup</h2>
         </header>
+        
+        
+        
         {{ Form::open(array('url' => '/apptsetting/saveRequestFollowUp', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
         <div class="panel-body">
-            
+                     <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                            {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-sm-6">
+                                {{ Form::hidden('id') }}
+                                {{ Form::text('first_name', $requestFollowup->first_name , ['class' => 'form-control required', 'id' => 'first_name', 'placeholder' => 'First Name']) }}
+                                @if ($errors->has('patient_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('first_name') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                            {{ Form::label('last_name', 'Last Name', array('class' => 'col-sm-3 control-label')) }}
+                            <div class="col-sm-6">
+                                {{ Form::text('last_name', $requestFollowup->last_name , ['class' => 'form-control ', 'id' => 'last_name', 'placeholder' => 'Last Name']) }}
+                                @if ($errors->has('patient_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('last_name') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            {{ Form::label('email', 'Email', array('class' => 'col-sm-3 control-label')) }}
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+                                    {{ Form::email('email', $requestFollowup->email, ['class' => 'form-control ', 'id' => 'email', 'placeholder' => 'Email']) }}
+                                </div>
+                                @if ($errors->has('email'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                            {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label')) }}
+                            <div class="col-sm-6">
+                                {{ Form::text('phone', $requestFollowup->phone , ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                            </div>
+                            @if ($errors->has('phone'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('phone') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group"> 
+                                   {{ Form::label('dob', 'DOB', array('class' => 'col-sm-3 control-label')) }}
+                                   <div class="col-md-6"> 
+                                       <div class="input-group"> 
+                                           <span class="input-group-addon"> <i class="fa fa-calendar"></i> 
+                                           </span> 
+                                           {{ Form::text('dob', $requestFollowup->dob , ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
+                                       </div> 
+                                       @if ($errors->has('dob')) 
+                                       <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> 
+                                       </span>
+                                       @endif 
+                                   </div> 
+                               </div> 
+                       
                     <div class="form-group">
-                        {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label')) }}
+                        {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-addon">
@@ -98,7 +170,7 @@
                    
                         {{ Form::hidden('createdBy', Auth::user()->id) }}
                         {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
-                        {{ Form::hidden('request_id', null, ['id' => 'request_id']) }}  
+                        {{ Form::hidden('user_id', null, ['id' => 'user_id']) }}  
                            
                     </div>
             
@@ -115,6 +187,8 @@
     </section>
     
 </div>
+
+                      <?php } ?>
 <script>
  $(document).on("click", ".request-follow-up", function(ev) {
         $.ajaxSetup({
@@ -130,7 +204,7 @@
         });
         });
   $('.request-follow-up').on('click', function() {
-        $('#request_id').val($(this).attr('rel'));
+        $('#user_id').val($(this).attr('rel'));
     });
     
 </script>

@@ -59,7 +59,7 @@
                             <div class="col-sm-9">
                                  <div class="input-group">
                                     <span class="input-group-addon">@</span>
-                                {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email', 'placeholder' => 'example@mail.com', 'readonly']) }}
+                                {{ Form::email('email', null, ['class' => 'form-control required ignore', 'id' => 'email', 'placeholder' => 'example@mail.com', 'readonly']) }}
                                  </div>
                                 @if ($errors->has('email'))
                                 <span class="help-block">
