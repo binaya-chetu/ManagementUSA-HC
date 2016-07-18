@@ -292,7 +292,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </span>
-                                    {{ Form::text('appTime', date('h:ia'), ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}
+                                    {{ Form::text('appTime', null, ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}
                                 </div>
                             </div>
                         </div>
@@ -340,6 +340,8 @@
             $('#nosetAppointment').show();
         }
     });
+    
+   
      $('#durationExample').timepicker({
         'minTime': '09:00am',
         'maxTime': '05:00pm',
@@ -364,5 +366,6 @@
         }
     });
 
+    
 </script>
 @endsection
