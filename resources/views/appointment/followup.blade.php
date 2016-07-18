@@ -35,7 +35,7 @@
                         <th>Appt. Date</th>
                         <th>Followup Action</th>   
                         <th>Followup Date</th>   
-                        <th>Status</th>   
+                        <!--th>Status</th-->   
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -48,12 +48,12 @@
                         <td>{{ date('d F Y H:ia', strtotime($follow->appointment->apptTime)) }}</td>
                         <td>{{ $follow->followupStatus->title }}</td>  
                         <td>{{ date('d F Y H:ia', strtotime($follow->created_at)) }}</td>  
-                        <td>@if($follow->status === 1)
+                        <!--td>@if($follow->status === 1)
                             Completed
                             @else
                             Pending
                             @endif
-                        </td>  
+                        </td-->  
                         <td class="actions">
                             <a href="/appointment/viewFollowup/{{ base64_encode($follow->id) }}" class="on-default" title="View"><i class="fa fa-eye"></i></a> 
                         </td>
