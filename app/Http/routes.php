@@ -35,13 +35,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/apptsetting/index/{val?}', [
             'uses' => 'ApptSettingController@index',
             'as' => 'apptsetting.index',
-            'middleware' => ['acl:appointment_setting_read']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
 
     Route::get('/apptsetting/marketingCall', [
             'uses' => 'ApptSettingController@marketingCall',
             'as' => 'apptsetting.marketingCall',
-            'middleware' => ['acl:appointment_setting_read']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
 
     Route::get('/apptsetting/missedCall', [
@@ -88,14 +88,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/apptsetting/saveRequestFollowUp', [
             'uses' => 'ApptSettingController@saveRequestFollowUp',
             'as' => 'apptsetting.saveRequestFollowUp',
-            //'middleware' => ['acl:appointment_read']
+            'middleware' => ['acl:appointment_write']
         ]);
    
 
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
             'as' => 'ApptSettingController@directWalkins',
-            'middleware' => ['acl:appointment_setting_read']
+            'middleware' => ['acl:appointment_setting_write']
         ]);
     
     
@@ -329,7 +329,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/appointment/labReadyAppointments', [
             'uses' => 'AppointmentController@labReadyAppointments',
             'as' => 'appointment.labReadyAppointments',
-           // 'middleware' => ['acl:appointment_write']
+            'middleware' => ['acl:appointment_read']
         ]);
     // route for ACL
     Route::get('/acl/listRole', [

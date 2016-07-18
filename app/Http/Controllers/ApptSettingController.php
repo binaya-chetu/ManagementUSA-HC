@@ -133,6 +133,7 @@ class ApptSettingController extends Controller {
         $patient_details = new Patient;
         $user = new User;
 
+
              DB:table('users')->where('id', $request->user_id)
                 ->update(array('first_name' => $request->first_name,'last_name' => $request->last_name,'email' => $request->email));
              
@@ -146,9 +147,6 @@ class ApptSettingController extends Controller {
 //                  ->update(array('status' => 1));     
                       
                          $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
-                        $appointment->status = 1;
-                        $appointment->createdBy = $apd->user_id;
-                        $appointment->patient_id = $apd->id;
 
                         if ($appointment->save()) {
                             $update_status = DB::table('appointment_requests')
@@ -186,7 +184,7 @@ class ApptSettingController extends Controller {
         $formData = $request->all();
         
         if(!$formData){
-                App::abort(404, 'Empty form data.');
+            App::abort(404, 'Empty form data.');
         }
 
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
@@ -211,8 +209,8 @@ class ApptSettingController extends Controller {
 
         $patient = App\Patient::firstOrCreate(['user_id' => $id]);
         $patient->phone = $formData['phone'];
-        $patient->dob = $formData['dob'];
-        $patient->hash = $this->getPatientHash($id);
+        $patient->dob = date_create($formData['dob']);
+        $patient->hash = $this->getPatientHash($id);		
         $patient->save();
 
         //$appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
@@ -321,5 +319,4 @@ class ApptSettingController extends Controller {
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
         ]);
     }
-
 }

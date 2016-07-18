@@ -203,7 +203,14 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-    showAppointmentCount();
+    $('#durationExample').on('blur', function(){
+        checkAppointmentTime();       
+    });
+    $('#calendarDate').on('blur', function(){
+        checkAppointmentTime();       
+    });
+    
+        showAppointmentCount();
         setInterval(function() {
             showAppointmentCount();
         }, 5000);
@@ -526,7 +533,11 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.deleteVitListRow', function(){
-		$(this).closest('tr').remove();
+		if($(this).closest('tr').siblings().length > 0 ){
+			$(this).closest('tr').remove();
+		} else{
+			alert("Cannot delete the only row present");
+		}
 	});
 	/*  remove error message when next file is loaded on import products page */
 	$("#addcategories").find('#categoryFile').on('change', function(){
@@ -762,7 +773,34 @@ function showAppointmentCount(){
                 $('.labCount').text(combine.lab_appointment);
                 $('.upcomingCount').text(combine.upcoming_appointment);
                 $('.visitCount').text(combine.visit_appointment);
+                $('.readyCount').text(combine.ready_appointment);
+                $('.followupCount').text(combine.followup_appointment);
+                $('.appointmentCount').text(combine.appointments);
             }
     });
 }
 
+function checkAppointmentTime(){
+        var nowtime = new Date();
+        var select_time = $('#durationExample').val();
+        if(select_time != ''){
+            var ampm = select_time.slice(-2);
+            var time = select_time.slice(0, -2);
+            var hours = Number(time.match(/^(\d+)/)[1]);
+            var mins  = Number(time.match(/:(\d+)/)[1]);       
+            if(ampm == "pm" && hours<12) hours = hours+12;
+            if(ampm == "am" && hours==12) hours = hours-12;
+            var d    = new Date();                
+             d.setHours(hours);
+             d.setMinutes(mins);       
+            var select_date = $('#calendarDate').val();
+            var day = new Date(select_date);             
+            if(day.getDate() == nowtime.getDate()){
+                if(hours <= nowtime.getHours()){
+                    alert('Please make the appointment for the upcoming time');
+                    $('#durationExample').val('');
+                }
+            }
+        }
+              
+    }
