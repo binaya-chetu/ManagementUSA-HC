@@ -65,7 +65,7 @@
                                  <div class="input-group">
                                     <span class="input-group-addon">@</span>
                                     @if(!empty($patient->email))
-                                    {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email', 'readonly']) }}
+                                    {{ Form::email('email', null, ['class' => 'form-control required ignore', 'id' => 'email', 'readonly']) }}
                                     @else
                                     {{ Form::email('email', null, ['class' => 'form-control required', 'id' => 'email']) }}
                                     @endif

@@ -16,6 +16,7 @@ $(function() {
      
     // common validation for add/edit patients.
     $('#patient').validate({
+        ignore:  ".ignore",
         rules: {
             payment_bill: {
                 extension: "jpg|gif|png|pdf|doc|docx|csv|xls"
@@ -41,6 +42,7 @@ $(function() {
     
     // common validation for add/edit doctor.
     jQuery('#doctor').validate({  
+        ignore:  ".ignore",
         rules : {
             password : {
                 minlength : 6
@@ -73,6 +75,7 @@ $(function() {
     
     // common validation for add/edit users.
     jQuery('#addUser').validate({
+        ignore:  ".ignore",
        rules : {
             password : {
                 minlength : 6
