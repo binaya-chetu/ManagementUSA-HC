@@ -526,7 +526,11 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.deleteVitListRow', function(){
-		$(this).closest('tr').remove();
+		if($(this).closest('tr').siblings().length > 0 ){
+			$(this).closest('tr').remove();
+		} else{
+			alert("Cannot delete the only row present");
+		}
 	});
 	/*  remove error message when next file is loaded on import products page */
 	$("#addcategories").find('#categoryFile').on('change', function(){
