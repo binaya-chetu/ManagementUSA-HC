@@ -203,7 +203,14 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-    showAppointmentCount();
+    $('#durationExample').on('blur', function(){
+        checkAppointmentTime();       
+    });
+    $('#calendarDate').on('blur', function(){
+        checkAppointmentTime();       
+    });
+    
+        showAppointmentCount();
         setInterval(function() {
             showAppointmentCount();
         }, 5000);
@@ -773,3 +780,27 @@ function showAppointmentCount(){
     });
 }
 
+function checkAppointmentTime(){
+        var nowtime = new Date();
+        var select_time = $('#durationExample').val();
+        if(select_time != ''){
+            var ampm = select_time.slice(-2);
+            var time = select_time.slice(0, -2);
+            var hours = Number(time.match(/^(\d+)/)[1]);
+            var mins  = Number(time.match(/:(\d+)/)[1]);       
+            if(ampm == "pm" && hours<12) hours = hours+12;
+            if(ampm == "am" && hours==12) hours = hours-12;
+            var d    = new Date();                
+             d.setHours(hours);
+             d.setMinutes(mins);       
+            var select_date = $('#calendarDate').val();
+            var day = new Date(select_date);             
+            if(day.getDate() == nowtime.getDate()){
+                if(hours <= nowtime.getHours()){
+                    alert('Please make the appointment for the upcoming time');
+                    $('#durationExample').val('');
+                }
+            }
+        }
+              
+    }
