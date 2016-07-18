@@ -72,7 +72,7 @@
                                     </li>-->
                                     <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('appointment/listappointment') }}">
-                                            List Appointments
+                                            List Appointments<span class="badge appointmentCount"></span>
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(2) === 'viewappointment' ? 'nav-active' : null }}">
@@ -84,17 +84,17 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
-                                    Follow-up Appointment
+                                    Follow-up Appointment<span class="badge followupCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/upcomingappointments') }}">
-                                    Upcoming Appointments
+                                    Upcoming Appointments<span class="badge upcomingCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/todayVisits') }}">
-                                    Today Visits
+                                    Today Visits<span class="badge visitCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
@@ -104,7 +104,7 @@
                             </li>
                             <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/labReadyAppointments') }}">
-                                    Lab Ready Appointments                                    
+                                    Lab Ready Appointments <span class="badge readyCount"></span>                                  
                                 </a>
                             </li>
                         </ul>
@@ -115,7 +115,7 @@
                                 Request::segment(1) === 'doctor' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>POS System</span>
+                            <span>Front Office</span>
                         </a>
                         <ul class="nav nav-children">
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
