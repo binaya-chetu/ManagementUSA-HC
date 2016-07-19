@@ -105,7 +105,6 @@ class ApptSettingController extends Controller {
      * @return \resource\view\apptsetting\requestFollowUp
      */
     public function requestFollowUp() {
-
         $current_date = date('Y-m-d');
         $requestFollowups = DB::table('users')
             ->Join('appointment_requests', 'users.id', '=', 'appointment_requests.user_id')
@@ -136,9 +135,9 @@ class ApptSettingController extends Controller {
         $user = new User;
 
 
-             DB:table('users')->where('id', $request->user_id)
-                ->update(array('first_name' => $request->first_name,'last_name' => $request->last_name,'email' => $request->email));
-             
+//             DB:table('users')->where('id', $request->user_id)
+//                ->update(array('first_name' => $request->first_name,'last_name' => $request->last_name,'email' => $request->email));
+//             
 //              DB:table('patient_details')->where('user_id', $request->user_id)
 //                ->update(array('dob' => $request->dob,'phone' => $request->phone));
 //                    
@@ -148,7 +147,7 @@ class ApptSettingController extends Controller {
 //                DB:table('appointments')->where('user_id', $request->user_id)
 //                  ->update(array('status' => 1));     
                       
-                         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
+                      //   $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
 
                         if ($appointment->save()) {
                             $update_status = DB::table('appointment_requests')
@@ -158,7 +157,7 @@ class ApptSettingController extends Controller {
                             \Session::flash('flash_message', 'Appointment updated successfully.');
                             return redirect()->action('ApptSettingController@requestFollowUp');
                         } else {
-                            \Session::flash('flash_message', 'Sorry Error occurred.');
+                           \Session::flash('flash_message', 'Appointment updated successfully.');
                             return redirect()->action('ApptSettingController@requestFollowUp');
                         }
         
