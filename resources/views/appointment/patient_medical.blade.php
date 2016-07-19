@@ -85,9 +85,9 @@
                             </div>
                             <div class="col-sm-6" >
                                 <div class="form-group">
-                                    {{ Form::label('w3-email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
+                                    {{ Form::label('w3-email', 'Email', array('class' => 'col-sm-4 control-label')) }}
                                     <div class="col-sm-8">
-                                        {{ Form::text('email', null, ['class' => 'form-control input-sm required', 'id' => 'w3-email', 'placeholder' => 'example@mail.com']) }}
+                                        {{ Form::text('email', null, ['class' => 'form-control input-sm', 'id' => 'w3-email', 'placeholder' => 'example@mail.com']) }}
                                     </div>
                                 </div>
                             </div>
