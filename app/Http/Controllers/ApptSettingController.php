@@ -312,8 +312,7 @@ class ApptSettingController extends Controller {
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
         ]);
     }
-<<<<<<< HEAD
-=======
+
     
     /*
      * Common function to make the another Appointment for preveios Appointment request
@@ -408,5 +407,4 @@ class ApptSettingController extends Controller {
             return redirect()->back();
         }       
     }
->>>>>>> testing_appointment
 }
