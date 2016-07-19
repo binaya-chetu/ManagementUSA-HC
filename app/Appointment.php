@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model {
     protected $fillable = [
+        'appt_source',
+        'request_id',
+        'email_invitation',
         'comment',
         'clinic',
         'marketer', //user_id
