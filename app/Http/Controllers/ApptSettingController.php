@@ -196,11 +196,14 @@ class ApptSettingController extends Controller {
         $id = $formData['patient_id']; 
         $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;
-        $userCheck = User::where('email', '=', $formData['email'])->first();
-        if ($userCheck != null && $userCheck->id != $id) {
-            \Session::flash('error_message', 'Email id you provided is already registered.');
-            return Redirect::back();
-        }	
+
+		if(!empty($formData['email'])){
+			$userCheck = User::where('email', '=', $formData['email'])->first();
+			if ($userCheck != null && $userCheck->id != $id) {
+				\Session::flash('error_message', 'Email id you provided is already registered.');
+				return Redirect::back();
+			}				
+		}
 
         $user->first_name = $formData['first_name'];
         $user->last_name = $formData['last_name'];
