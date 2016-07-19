@@ -50,10 +50,8 @@
                         <th>App Date and Time</th>
                         <th>Patient</th>
                         <th>Reason for Visit</th>
-                        <th>Source</th>
-                        @if(isset($type) && $type == 'upcoming')
+                        <th>Source</th>                        
                         <th>Followup Status</th>
-                        @endif
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -62,7 +60,7 @@
                     @foreach ($appointments as $appointment)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
-                        <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
+                        <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
                         <td class="table-text"><div><?php 
@@ -85,8 +83,7 @@
                                         break;
                                 }
                                 ?>
-                            </div></td>
-                        @if(isset($type) && $type == 'upcoming')
+                            </div></td>                        
                             <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->status) {
@@ -105,7 +102,6 @@
                                 }
                                 ?>
                             </div></td>
-                        @endif
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
