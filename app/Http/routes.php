@@ -90,7 +90,12 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'apptsetting.saveRequestFollowUp',
             //'middleware' => ['acl:appointment_read']
         ]);
-   
+    
+   Route::post('/apptsetting/anotherAppointment', [
+            'uses' => 'ApptSettingController@anotherAppointment',
+            'as' => 'apptsetting.anotherAppointment',
+            //'middleware' => ['acl:appointment_read']
+        ]);
 
     Route::get('/apptsetting/directWalkins', [
             'uses' => 'ApptSettingController@directWalkins',
@@ -329,6 +334,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/appointment/labReadyAppointments', [
             'uses' => 'AppointmentController@labReadyAppointments',
             'as' => 'appointment.labReadyAppointments',
+           // 'middleware' => ['acl:appointment_write']
+        ]);
+    Route::get('/appointment/appointmentAfterReport', [
+            'uses' => 'AppointmentController@appointmentAfterReport',
+            'as' => 'appointment.appointmentAfterReport',
            // 'middleware' => ['acl:appointment_write']
         ]);
     // route for ACL

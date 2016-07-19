@@ -1,89 +1,94 @@
-<div id="modal-followup-status" class="modal-block modal-block-primary mfp-hide">
-    {{ Form::open(array('url' => '/appointment/saveAppointmentFolloup', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'followUp')) }}
-    {!! csrf_field() !!}
+@extends('layouts.common')
+
+@section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<section role="main" class="content-body">
+    <header class="page-header">
+
+        <h2>
+            
+            Appointments After Report
+            </h2>
+        </h2>
+
+        <div class="right-wrapper pull-right">
+            @if(Request::segment(2) === 'upcomingappointments')
+            {!! Breadcrumbs::render('appointment.upcomingappointments') !!}
+            @else
+            {!! Breadcrumbs::render('appointment.listappointment') !!}
+            @endif
+        
+        </div>
+    </header>
+
     <section class="panel panel-primary">
         <header class="panel-heading">
-            <h2 class="panel-title">Followup Appointment</h2>
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+            </div>
+            <h2 class="panel-title">
+                Appointments After Report
+            </h2>
+
         </header>
         <div class="panel-body">
-            <div class="form-group">
-                
-                {{ Form::label('status', 'Followup Status', array('class' => 'col-sm-4 control-label mandatory')) }}
-                <div class="col-md-6">
-                    {{-- */$i=0;/* --}}
-                    @foreach($followupStatus as $followup)
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', $followup->id, false, ['id' => 'optionsRadios'.++$i, 'class' => 'required']) }}
-                            {{ $followup->title }}
-                        </label>
-                    </div>
-                    @endforeach
-                    <!--<div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Cancel', false, ['id' => 'optionsRadios2', 'class' => 'required']) }}
-                            Cancel Appointment
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Confirm', false, ['id' => 'optionsRadios3', 'class' => 'required']) }}
-                            Confirmed Appointment
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Later', false, ['id' => 'optionsRadios4', 'class' => 'required']) }}
-                            Follow-up Later
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Never Treat', false, ['id' => 'optionsRadios5', 'class' => 'required']) }}
-                            Never Treat
-                        </label>
-                    </div>-->
-                </div>
-                {{ Form::hidden('appointment_id', 0, array('id' => 'followup_appointment_id')) }}
-            </div>
-            <div id="showOnSchedule">
-                <div class="form-group" id="showOnlySchedule">
-                    <label class="col-md-4 control-label">Choose Date & Time</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                            {{ Form::text('appDate', null, ['class' => 'form-control dateCalendar selectDate', 'data-plugin-datepicker']) }}
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
-                            </span>
-                            {{ Form::text('appTime', null, ['class' => 'form-control', 'data-plugin-timepicker']) }}
-                        </div>
-                    </div>
-
-                </div>  
-                <div class="form-group">
-                    {{ Form::label('comment', 'Comment', array('class' => 'col-sm-4 control-label mandatory')) }}
-                    <div class="col-sm-6">
-                        {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter the comment', 'rows' => 3]) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="panel-footer">
             <div class="row">
-                <div class="col-md-8 text-right">
-                    {{ Form::button('Submit', ['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}    
-                    <button class="btn btn-default closePop">Cancel</button>
-                </div>
+                @if(Session::has('flash_message'))
+                <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
+                @endif
             </div>
-        </footer>
+            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>App Date and Time</th>
+                        <th>Patient</th>
+                        <th>Reason for Visit</th>
+                        <th>Source</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i=1; ?>
+                    @foreach ($appointments as $appointment)
+                    <tr>
+                        <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
+                        <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
+
+                        <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
+                        <td class="table-text"><div><?php 
+                                $reasonArr = $appointment->patient->reason->toArray();
+                                $reasonArray = array_column($reasonArr, 'reason_code');
+                                $reasonList = array_column($reasonArray, 'reason');
+                                $reason = implode(',', $reasonList); 
+                                echo $reason; ?>                                
+                            </div></td>
+                        <td class="table-text"><div>
+                                <?php
+                                switch ($appointment->appt_source) {
+                                    case 1: echo "Web Lead";
+                                        break;
+                                    case 2: echo "Tele Marketing";
+                                        break;
+                                    case 3: echo "Walk-ins";
+                                        break;
+                                    default: echo "Unknown";
+                                        break;
+                                }
+                                ?>
+                            </div></td>
+                        <td class="actions">
+                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                            
+                            <a href="/categories/listCategories" class="on-default"><i class="glyphicon glyphicon-tags"><title>Add to cart</title></i></a> 
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </section>
-    {{ Form::close() }}  
-</div>
+</section>
+@endsection

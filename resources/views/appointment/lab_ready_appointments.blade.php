@@ -93,6 +93,6 @@
 </section>
 <!-- Modal Form -->
 <div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
-    @include('apptsetting.appointment_after_report')   
+    @include('appointment.appointment_after_report_popup')   
 </div>
 @endsection

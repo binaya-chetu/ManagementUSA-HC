@@ -45,15 +45,15 @@ class ApptSettingController extends Controller {
      */
 
     public function index($value = null) {
-		$patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
-		if(!$patientRole || !($patientRoleId = $patientRole->id)){
-			 App::abort(404, 'Role patient not found.');
-		}
+            $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
+            if(!$patientRole || !($patientRoleId = $patientRole->id)){
+                     App::abort(404, 'Role patient not found.');
+            }
 
-		$patients = DB::table('users')
-			->where('users.role', $patientRoleId)
-            ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
-            ->get();
+        $patients = DB::table('users')
+                        ->where('users.role', $patientRoleId)
+                        ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
+                        ->get();
 		
         //$resources = AppointmentSource::lists('name', 'id');  // $resources not required remove if no error occur
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
@@ -63,32 +63,6 @@ class ApptSettingController extends Controller {
             'value' => $value, 'patients' => $patients, 'noSetReasonCode' => $noSetReasonCode, 'setReasonCode' => $setReasonCode
         ]);
     }
-
-    /*
-     * Save the Marketign Calls 
-     * 
-     * @param Illuminate\Http\Request
-     * 
-     * @return \resource\view\apptsetting\marketingCall
-     */
-
-  /*   public function saveMarketingCall(Request $request) {
-        $call = new TelemarketingCall();
-        $call->requested_date = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
-        $call->first_name = $request->first_name;
-        $call->last_name = $request->last_name;
-        $call->email = $request->email;
-        $call->phone = $request->phone;
-        $call->comment = $request->comment;
-        if ($call->save()) {
-            \Session::flash('flash_message', 'New data has been added successfully.');
-            return redirect()->back();
-        } else {
-            \Session::flash('flash_message', 'Some error occured.');
-            return redirect()->back();
-        }
-    } */
-
     /**
      * Listing all the Call List from the Api
      *
@@ -324,5 +298,98 @@ class ApptSettingController extends Controller {
             'webLeads' => $webLeads, 'reasonCode' => $reasonCode, 'follows' => $follows
         ]);
     }
+    
+    /*
+     * Common function to make the another Appointment for preveios Appointment request
+     * 
+     * @param Illuminate\Http\Request
+     * 
+     * @return \Illuminate\View\View
+     */
 
+    public function anotherAppointment(Request $request) {
+        $formData = $request->all();
+        echo '<pre>'; print_r($formData);die;
+        if(!$formData){
+                App::abort(404, 'Empty form data.');
+        }
+
+        $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
+        if(!$patientRole || !($patientRole = $patientRole->id)){
+            App::abort(404, 'Cannot fetch role from database.');
+        }
+
+        $id = $formData['patient_id']; 
+        $user = User::where('id', $id)->first();
+        $id = $user->id;
+        $userCheck = User::where('email', '=', $formData['email'])->where('id', '!=', $id)->first();
+        if ($userCheck != null && $userCheck->id != $id) {
+            \Session::flash('error_message', 'Email id you provided is already registered.');
+            return Redirect::back();
+        }	
+
+        $user->first_name = $formData['first_name'];
+        $user->last_name = $formData['last_name'];
+        $user->email = $formData['email'];        
+        $user->save();
+
+        $patient = Patient::where('user_id', $id)->first();
+        $patient->phone = $formData['phone'];
+        $patient->dob = date('Y-m-d', strtotime($formData['dob']));
+        $patient->save();
+        
+        $relative_appointment = Appointment::where('id', $formData['appointment_id'])->first();
+       
+        $relative_appointment->patient_status = config("constants.APPOINTMENT_AFTER_REPORT_FLAG");
+        $relative_appointment->save();
+        
+        $exist_request = AppointmentRequest::where('id', $formData['appointment_request_id'])->first();
+        $appointment_requests = new App\AppointmentRequest;
+        $appointment_requests->user_id = $id; 
+        if(isset($exist_requests['marketing_phone'])){
+                $appointment_requests->marketing_phone	= $exist_request['marketing_phone']; 
+        }
+        $appointment_requests->created_by =  Auth::user()->id; 
+        $appointment_requests->appt_source = $exist_request['appt_source'];
+        $appointment_requests->status = $formData['status'];
+        $appointment_requests->comment = $formData['comment'];	      	
+        if (isset($formData['followup_status'])) {
+            $appointment_requests->followup_date = date('Y-m-d', strtotime('+7 days'));
+            $appointment_requests->followup_status = 1;
+        }else {
+            $appointment_requests->followup_date = date('Y-m-d', strtotime($formData['followup_date']));
+            $appointment_requests->followup_status = 0;
+        }		
+        $appointment_requests->save();
+
+        $reason = new App\AppointmentReasons;
+        $reason->patient_id = $id;
+        $reason->reason_id  = $formData['reason_id'];
+        $reason->save();
+
+        if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){			
+            $appointment = new App\Appointment;
+            $appointment->patient_id = $id;
+            $appointment->relative_id = $relative_appointment['id'];
+            $appointment->apptTime = date('Y-m-d H:i:s', strtotime($formData['appDate'] . " " . $formData['appTime']));
+            $appointment->createdBy = Auth::user()->id;
+            $appointment->patient_id = $user->id;
+            $appointment->appt_source = $exist_request['appt_source'];
+            $appointment->request_id = $appointment_requests->id;
+            if(isset($formData['email_invitation'])){
+                $appointment->email_invitation = 1;
+                $user->hash = $patient->hash;
+                $this->emailPatientEditForm($user);
+            }
+            $appointment->save();
+        }
+		// Case of selecting patient from drop down 
+        if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){
+            \Session::flash('flash_message', 'Appointment added successfully.');
+            return redirect()->action('AppointmentController@listappointment');        
+        }else{
+            \Session::flash('flash_message', 'Appointment put on the hold successfully.');
+            return redirect()->back();
+        }       
+    }
 }

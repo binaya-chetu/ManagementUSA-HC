@@ -269,7 +269,7 @@ $(document).ready(function() {
                 data: {"id": appointmentId },
                 success: function(response) {
                 var combine = JSON.parse(response);
-                        if (combine.appointment.status < 2){
+                if (combine.appointment.status < 2){
                 $('.followButton').show();
                 } else{
                 $('.followButton').hide();
@@ -388,6 +388,7 @@ $(document).ready(function() {
 		}
 		$(".showDocScheddulerLInk").html('<a href="#" data-link = "'+doctor_id+'">Show scheduler</a>');
 	});
+        
 	$(document).on('click', '.showDocScheddulerLInk a', function(e){
         $.ajaxSetup({
             headers: {
@@ -540,6 +541,35 @@ $(document).ready(function() {
 		$(".help-block").remove();
 		$(".has-error").removeClass('has-error');
 	});	
+    
+    $('#nosetAppointment').hide();
+    $('#setAppointment').hide();
+    /*
+     * Code for the Checking the followup
+     */
+    
+    $('#followupWeek').on('click', function(){
+        if($(this).is(':checked')){
+            var date = new Date();
+            date.setDate(date.getDate() + 7);
+            var dateMsg = ("0" + (date.getMonth() + 1)).slice(-2) +'/'+("0" + date.getDate()).slice(-2)+'/'+date.getFullYear();
+            $('#followupDate').val(dateMsg);
+            $('#followupDate').attr('disabled', true);
+        }else{
+            $('#followupDate').removeAttr('disabled');            
+        }
+    });
+     $('.callStatus').on('click', function() {
+        var call_value = $(this).val();   
+        if (call_value == 0) {
+            $('#nosetAppointment').hide();
+            $('#setAppointment').show();
+        } else {
+            $('#setAppointment').hide();
+            $('#nosetAppointment').show();
+        }
+    });
+    
 });
 
 	/**
@@ -713,6 +743,40 @@ $('#patient_id').on('change', function(){
               }
           }
     });
+    /*
+    * Validate the form for creating new form by the Appt Setting 
+    */
+//   var report_user_id = '';
+//   $('#saveAppointmentAfterReport').on('submit', function(){
+//        report_user_id = $('#saveAppointmentAfterReport #userId').val();
+//        alert(report_user_id);
+//   })
+
+ $('#saveAppointmentAfterReport').validate({
+          rules: {
+            email: {
+              email: true,
+              //remote: ajax_url+ "/apptsetting/uniqueEmail"
+            },
+             marketing_phone: {
+                minlength: 14
+            },
+             phone: {
+                minlength: 14
+            }
+          },
+          messages:{
+              email: {
+                  //remote: 'Email already registered'
+              },
+              marketing_phone: {
+                  minlength: 'Please enter at least 10 digits.'
+              },
+              phone: {
+                  minlength: 'Please enter at least 10 digits.'
+              }
+          }
+    });
  
  $(document).on("click", ".patient_status", function(ev) {
             $.magnificPopup.open({
@@ -772,6 +836,7 @@ function showAppointmentCount(){
                 $('.readyCount').text(combine.ready_appointment);
                 $('.followupCount').text(combine.followup_appointment);
                 $('.appointmentCount').text(combine.appointments);
+                $('.anotherAppointment').text(combine.anotherAppointments);
             }
     });
 }
@@ -779,6 +844,7 @@ function showAppointmentCount(){
 function checkAppointmentTime(){
         var nowtime = new Date();
         var select_time = $('#durationExample').val();
+        
         if(select_time != ''){
             var ampm = select_time.slice(-2);
             var time = select_time.slice(0, -2);
@@ -819,27 +885,16 @@ function checkAppointmentTime(){
                 } else{
                     $('.followButton').hide();
                 }
-                $('#appointment_id').val(combine.appointment.id);
-                $("#patient_id").val(combine.patient.id).attr('selected', 'selected').trigger("chosen:updated");
-                if (combine.doctor){
-                    $("#doctor_id").val(combine.doctor.id).attr('selected', 'selected').trigger("chosen:updated");
-                    $('input[name=doctor_id]').val(combine.doctor.id);
-                } else{
-                    $("#doctor_id").val('').trigger("chosen:updated");
-                    $('input[name=doctor_id]').val('0');
-                }
+                $('input[name=appointment_id]').val(combine.appointment.id);
+                $('input[name=appointment_request_id]').val(combine.appointment.request_id);
                 $('input[name=patient_id]').val(combine.patient.id);
-                $('#appointmentComment').val(combine.appointment.comment);
-                $('#first-name').val(combine.patient.first_name);
-                $('#last-name').val(combine.patient.last_name);
+                $('input[name=first_name]').val(combine.patient.first_name);
+                $('input[name=last_name]').val(combine.patient.last_name);
                 $('#email').val(combine.patient.email);
                 $('#phone').val(combine.patient.patient_detail.phone);
-                $('#address1').val(combine.patient.patient_detail.address1);
-                $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
                 $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
                 $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
                 $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
-                $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
             }
         });
         $.magnificPopup.open({
@@ -849,3 +904,4 @@ function checkAppointmentTime(){
             }
         });
     });
+     
