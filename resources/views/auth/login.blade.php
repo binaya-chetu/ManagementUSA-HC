@@ -60,7 +60,7 @@
                     <div class="col-sm-8">
                         <div class="checkbox-custom checkbox-default">
                             {{ Form::checkbox('remember', 1, null, ['class' => 'form-control input', 'id' => 'RememberMe']) }}
-                            {{ Form::label('RememberMe', 'RememberMe') }}
+                            {{ Form::label('Remember Me', 'Remember Me') }}
                         </div>
                     </div>
                     <div class="col-sm-4 text-right">
