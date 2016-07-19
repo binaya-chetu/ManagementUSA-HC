@@ -384,7 +384,7 @@ class AppointmentController extends Controller {
     {
         $followup = FollowUp::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->get(); 			
+            }])->orderBy('id', 'DESC')->get(); 			
         return view('appointment.followup', ['followup' => $followup]);
     }
 

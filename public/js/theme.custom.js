@@ -158,6 +158,9 @@ $(function() {
     $('.selectDate').datepicker({
         startDate: today
     });
+    $('#dob').datepicker({
+       endDate: new Date()
+    });
     /* ------------------------------------ Appointment Follow Up Code --------------------------- */
     // hidden the fields of the followup form
     $('#showOnSchedule').hide();
