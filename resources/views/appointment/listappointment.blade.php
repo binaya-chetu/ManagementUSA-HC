@@ -51,6 +51,9 @@
                         <th>Patient</th>
                         <th>Reason for Visit</th>
                         <th>Source</th>
+                        @if(isset($type) && $type == 'upcoming')
+                        <th>Followup Status</th>
+                        @endif
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -83,6 +86,26 @@
                                 }
                                 ?>
                             </div></td>
+                        @if(isset($type) && $type == 'upcoming')
+                            <td class="table-text"><div>
+                                <?php
+                                switch ($appointment->status) {
+                                    case 1: echo "Pending";
+                                        break;
+                                    case 2: echo "Reschedule";
+                                        break;
+                                    case 3: echo "Cancel";
+                                        break;
+                                    case 4: echo "Confirmed";
+                                        break;
+                                    case 5: echo "Never treat";
+                                        break;
+                                    default: echo "Unknown";
+                                        break;
+                                }
+                                ?>
+                            </div></td>
+                        @endif
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
