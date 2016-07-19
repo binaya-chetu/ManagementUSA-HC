@@ -55,7 +55,7 @@
                     @foreach ($appointments as $appointment)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
-                        <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
+                        <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
 
@@ -90,7 +90,7 @@
                                         break;
                                     case 3: echo "Waiting for Lab Report";
                                         break;
-                                    case 3: echo "Lab Report Ready";
+                                    case 4: echo "Lab Report Ready";
                                         break;
                                     default: echo "None";
                                         break;
