@@ -11,6 +11,7 @@ use App\User;
 use App\FollowUp;
 use App\State;
 use App\FollowupStatus;
+use App\ReasonCode;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -499,7 +500,7 @@ class AppointmentController extends Controller {
      */
 
     public function upcomingappointments() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->orderBy('id', 'DESC')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -1081,7 +1082,7 @@ class AppointmentController extends Controller {
      */
 
     public function todayVisits() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->get();        
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->orderBy('id', 'DESC')->get();        
         $patients = User::where('role', $this->patient_role)->get();       
         return view('appointment.today_visits', [
             'appointments' => $appointments, 'patients' => $patients
@@ -1094,7 +1095,6 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\today_visits.blade.php
      */
     public function savePatientStatus(Request $request) {
-
         $values = ['patient_status' => $request->patient_status];
         Appointment::where('id', $request->appointment_id)->update($values);
         //echo '<pre>';print_r($request->all());die;
@@ -1127,8 +1127,9 @@ class AppointmentController extends Controller {
         $appointments = Appointment::count();
         $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();
         $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->count();
-        $visitAppointment = $appointments = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
+        $visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
         $readyappointments = Appointment::where('patient_status', '4')->count();
+        $anotherAppointments = Appointment::where('relative_id', '!=',  '0')->count();
         $followup = FollowUp::count(); 
         $appointment['appointments'] = $appointments;   
         $appointment['lab_appointment'] = $labAppointment;
@@ -1136,6 +1137,8 @@ class AppointmentController extends Controller {
         $appointment['visit_appointment'] = $visitAppointment;   
         $appointment['ready_appointment'] = $readyappointments;   
         $appointment['followup_appointment'] = $followup;   
+        $appointment['anotherAppointments'] = $anotherAppointments;   
+        
         echo json_encode($appointment);
         die;
     }
@@ -1143,12 +1146,28 @@ class AppointmentController extends Controller {
     /**
      * Function for the showing the result for the LaB Appointment
      *
-     * @return \resource\view\Appointment\today_visits.blade.php
+     * @return \resource\view\Appointment\lab_ready_appointments.php
      */
     public function labReadyAppointments() {
         $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
-        $patients = User::where('role', $this->patient_role)->get();     
+        $patients = User::where('role', $this->patient_role)->get();    
+        $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+        $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
         return view('appointment.lab_ready_appointments', [
+            'appointments' => $appointments, 'patients' => $patients, 'noSetReasonCode' => $noSetReasonCode, 'setReasonCode' => $setReasonCode
+        ]);
+    }
+    
+     /**
+     * Function for the showing the result for the LaB Appointment
+     *
+     * @return \resource\view\Appointment\appointment_after_report.php
+     */
+    public function appointmentAfterReport() {        
+        $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('relative_id', '!=',  '0')->get();
+        $patients = User::where('role', $this->patient_role)->get();
+
+        return view('appointment.appointment_after_report', [
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }

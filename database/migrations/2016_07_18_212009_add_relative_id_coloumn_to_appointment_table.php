@@ -14,7 +14,11 @@ class AddRelativeIdColoumnToAppointmentTable extends Migration
     {
         Schema::table('appointments', function($table)
         {
+<<<<<<< HEAD
             $table->integer('relative_id')->after('id')->comment('Appointment Request Id');
+=======
+            $table->integer('relative_id')->after('id');
+>>>>>>> 82df514e5c5e8c214173ec67818d1a5e5f95eee4
 	});
     }
 

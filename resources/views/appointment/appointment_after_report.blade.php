@@ -4,22 +4,20 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Lab Ready Appointments</h2>
-        <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li>                    
-                    <span>Lab Ready Appointment</span>                   
-                </li>
-            </ol>
 
-            <a class="sidebar-right-toggle" data-open="sidebar-right">
-                <i class="fa fa-chevron-left"></i>
-            </a>
+        <h2>
+            
+            Appointments After Report
+            </h2>
+        </h2>
+
+        <div class="right-wrapper pull-right">
+            @if(Request::segment(2) === 'upcomingappointments')
+            {!! Breadcrumbs::render('appointment.upcomingappointments') !!}
+            @else
+            {!! Breadcrumbs::render('appointment.listappointment') !!}
+            @endif
+        
         </div>
     </header>
 
@@ -29,8 +27,10 @@
                 <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
+            <h2 class="panel-title">
+                Appointments After Report
+            </h2>
 
-            <h2 class="panel-title">Lab Ready Appointments</h2>
         </header>
         <div class="panel-body">
             <div class="row">
@@ -43,10 +43,9 @@
                     <tr>
                         <th>Id</th>
                         <th>App Date and Time</th>
-                        <th>Patient</th>                        
+                        <th>Patient</th>
+                        <th>Reason for Visit</th>
                         <th>Source</th>
-                        <th>Reason of visit</th>
-                        <th>Phone</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -58,7 +57,13 @@
                         <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
-                        
+                        <td class="table-text"><div><?php 
+                                $reasonArr = $appointment->patient->reason->toArray();
+                                $reasonArray = array_column($reasonArr, 'reason_code');
+                                $reasonList = array_column($reasonArray, 'reason');
+                                $reason = implode(',', $reasonList); 
+                                echo $reason; ?>                                
+                            </div></td>
                         <td class="table-text"><div>
                                 <?php
                                 switch ($appointment->appt_source) {
@@ -73,16 +78,11 @@
                                 }
                                 ?>
                             </div></td>
-                        <td class="table-text"><div><?php 
-                                $reasonArr = $appointment->patient->reason->toArray();
-                                $reasonArray = array_column($reasonArr, 'reason_code');
-                                $reasonList = array_column($reasonArray, 'reason');
-                                $reason = implode(',', $reasonList); 
-                                echo $reason; ?>                                
-                            </div></td>
-                        <td class="table-text"><div>{{ $appointment->patient->patientDetail->phone }}</div></td>
-                        <td class="actions">                            
-                            <a href="javascript:void(0)" class="on-default createAppointment" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
+                        <td class="actions">
+                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                            
+                            <a href="/categories/listCategories" class="on-default"><i class="glyphicon glyphicon-tags"><title>Add to cart</title></i></a> 
                         </td>
                     </tr>
                     @endforeach
@@ -91,8 +91,4 @@
         </div>
     </section>
 </section>
-<!-- Modal Form -->
-<div id="modalForm" class="modal-block modal-block-primary mfp-hide">  
-    @include('appointment.appointment_after_report_popup')   
-</div>
 @endsection
