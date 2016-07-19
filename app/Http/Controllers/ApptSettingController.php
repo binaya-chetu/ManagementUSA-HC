@@ -240,6 +240,7 @@ class ApptSettingController extends Controller {
         $reason = new App\AppointmentReasons;
         $reason->patient_id = $id;
         $reason->reason_id  = $formData['reason_id'];
+		$reason->request_id = $appointment_requests->id;
         $reason->save();
 
         if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){			
