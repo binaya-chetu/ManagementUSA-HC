@@ -86,7 +86,7 @@
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
                                         break;
-                                    case 2: echo "Send to Lab";
+                                    case 2: echo "Send To Lab";
                                         break;
                                     case 3: echo "Waiting for Lab Report";
                                         break;
@@ -120,7 +120,7 @@
             <div class="form-group">
                 {{ Form::label('status', 'Patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
-                    <?php $states = ['1' => 'Show', '2' => 'Send to Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
+                    <?php $states = ['1' => 'Show', '2' => 'Send To Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}

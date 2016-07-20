@@ -84,7 +84,7 @@
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
                                         break;
-                                    case 2: echo "Send to Lab";
+                                    case 2: echo "Send To Lab";
                                         break;
                                     case 3: echo "Waiting for Lab Report";
                                         break;
