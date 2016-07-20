@@ -41,7 +41,7 @@
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>App Date and Time</th>
                         <th>Patient</th>                        
                         <th>Source</th>
