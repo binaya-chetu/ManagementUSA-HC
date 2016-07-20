@@ -23,7 +23,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            {{ Form::open(array('url' => '/apptsetting/saveApptFollowup', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'addApptRequest')) }}
+            {{ Form::open(array('url' => '/apptsetting/saveAppointment', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'addApptRequest')) }}
             {!! csrf_field() !!}            
             <section class="panel panel-primary">
                 <header class="panel-heading">

@@ -56,9 +56,9 @@ Route::group(['middleware' => 'web'], function () {
             'middleware' => ['acl:appointment_setting_read']
         ]);
     
-    Route::post('/apptsetting/saveApptFollowup', [
-            'uses' => 'ApptSettingController@saveApptFollowup',
-            'as' => 'apptsetting.saveApptFollowup',
+    Route::post('/apptsetting/saveAppointment', [
+            'uses' => 'ApptSettingController@saveAppointment',
+            'as' => 'apptsetting.saveAppointment',
             'middleware' => ['acl:appointment_setting_write']
         ]);
     

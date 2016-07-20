@@ -155,7 +155,7 @@ class ApptSettingController extends Controller {
      * @return \Illuminate\View\View
      */
 
-    public function saveApptFollowup(Request $request) {
+    public function saveAppointment(Request $request) {
         $formData = $request->all();
 		if(!$formData){
             App::abort(404, 'Empty form data.');
@@ -224,6 +224,7 @@ class ApptSettingController extends Controller {
             $appointment->patient_id = $user->id;
             $appointment->appt_source = $formData['appt_source'];
             $appointment->request_id = $appointment_requests->id;
+            $appointment->comment = $formData['comment'];	
             if(isset($formData['email_invitation'])){
                 $appointment->email_invitation = 1;
                 $user->hash = $patient->hash;
@@ -392,6 +393,7 @@ class ApptSettingController extends Controller {
             $appointment->patient_id = $user->id;
             $appointment->appt_source = $exist_request['appt_source'];
             $appointment->request_id = $appointment_requests->id;
+            $appointment->comment = $formData['comment'];
             if(isset($formData['email_invitation'])){
                 $appointment->email_invitation = 1;
                 $user->hash = $patient->hash;

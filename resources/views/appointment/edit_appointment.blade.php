@@ -5,7 +5,7 @@
         <h2 class="panel-title">Edit Appointment</h2>
     </header>
     <div class="panel-body">
-		<div class="form-group">
+<!--        <div class="form-group">
             {{ Form::label('Doctor', 'Doctor', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-md-6">
                 <select  class="form-control chosen" name="doctor_id" id="doctor_id">
@@ -16,7 +16,7 @@
                 </select>    
             </div>
             <div class="showDocScheddulerLInk"></div>
-        </div>
+        </div>-->
         <div class="form-group">
             {{ Form::label('appointment_time', 'Choose Date & Time', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-4">
