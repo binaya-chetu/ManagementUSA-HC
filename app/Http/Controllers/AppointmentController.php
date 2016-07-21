@@ -533,8 +533,6 @@ class AppointmentController extends Controller {
 			$exists = DB::table('patient_details')->where('hash', $_POST['hash'])->select('user_id')->first();
 			if(!$exists || $exists->user_id != $id ){
 				$this->middleware('auth');
-			} else{
-				 App::abort(404, 'Invalid or expired url.');
 			}			
 		} 
 
