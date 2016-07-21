@@ -254,7 +254,12 @@ class CategoriesController extends Controller
 					$rejectedList[] = $categoryList[$i];
 					unset($categoryList[$i]);
 				} else{
-					$pro = ['sku' => $n['sku'], 'name' => $n['name'], 'unit_of_measurement' => $n['unit_of_measurement'], 'price' => $n['price']];
+					$pro = ['sku' => $n['sku'], 'name' => $n['name'], 'price' => $n['price']];
+					
+					if(isset($n['unit_of_measurement']) && !empty($n['unit_of_measurement'])){
+						$pro['unit_of_measurement'] = $n['unit_of_measurement'];
+					}
+					
 					$product[] = $pro;
 					$proUpdated = App\Products::firstOrNew(array('sku' => $n['sku']));
 					$proUpdated->fill($pro)->save();					
