@@ -1493,12 +1493,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+		var url = location.pathname.split('/');
+		(url['4'] == 'hash' && url['5'] != "") ? hash = url['5'] : hash = ''; 
         var radioId = $(this).attr('id');
 		if((radioId == 'vitamin_taken1' && $("#vitaminMedList").length == 0) || (radioId == 'surgeries1' && $("#surgeryList").length == 0) || (radioId == 'allergies1' && $("#allergiesList").length == 0) || (radioId == 'illness1' && $("#illnessList").length == 0) || (radioId == 'medication1' && $("#medicationList").length == 0)){
 			$.ajax({
 			type: "POST",
 					url: ajax_url + "/appointment/checkList",
-					data: {"id": radioId,"patientId": userId },
+					data: {"id": radioId,"patientId": userId, "hash": hash },
 					success: function(response) {
 						$('#listContent').html(response);
 					}

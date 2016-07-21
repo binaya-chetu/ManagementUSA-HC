@@ -29,7 +29,7 @@ class AppointmentController extends Controller {
     public $error = false;
 
     public function __construct(Request $request) {
-        if (($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash') && $request->segment(2) != 'savePatientMedicalRecord') {
+        if (($request->segment(2) != 'patientMedical' || $request->segment(4) != 'hash') && $request->segment(2) != 'savePatientMedicalRecord' && !isset($request->hash)) {
             $this->middleware('auth');
         }
     }
@@ -441,7 +441,7 @@ class AppointmentController extends Controller {
             $patHash = $patient->toArray()['patient_detail']['hash'];
             if ($patHash != $hash) {
                 App::abort(404, 'The url seeme to be expired or invalid.');
-            }
+            }			
         }
         $states = State::lists('name', 'id')->toArray();
         return view('appointment.patient_medical', [
@@ -468,8 +468,13 @@ class AppointmentController extends Controller {
      * @return \resource\view\appointment\medical\medicine_list
      */
     public function checkList(Request $request) {
-        if (!empty($request['id'])) {
 
+		$exists = DB::table('patient_details')->where('hash', $request->hash)->select('user_id')->first();
+		if(!$exists || $exists->user_id != $request['patientId'] ){
+			$this->middleware('auth');
+		}
+		
+        if (!empty($request['id'])) {
     $id = $request['id']; 
 			if($id == 'vitamin_taken1' ){
 				$patientId = $request['patientId'];
@@ -521,9 +526,17 @@ class AppointmentController extends Controller {
      * @return \resource\view\appointment\patient_medical
      */
     public function savePatientMedicalRecord($id, Request $response) {
-
 		$formData = $response->all();
 		$id = base64_decode($id);
+		
+		if(isset($_POST) && !empty($_POST['hash'])){
+			$exists = DB::table('patient_details')->where('hash', $_POST['hash'])->select('user_id')->first();
+			if(!$exists || $exists->user_id != $id ){
+				$this->middleware('auth');
+			} else{
+				 App::abort(404, 'Invalid or expired url.');
+			}			
+		} 
 
 		$user = App\User::firstOrCreate(['id' => $id]);
 		$user->first_name		= $formData['first_name'];
