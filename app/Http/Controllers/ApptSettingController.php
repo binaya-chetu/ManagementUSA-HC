@@ -115,52 +115,7 @@ class ApptSettingController extends Controller {
                //$formData = $request->all();
     //                print_r($formData);
     //                die;
-        if($request->status == 0){
-                  DB:table('users')->where('id', $request->user_id)
-                  ->update(array('first_name' => $request->first_name, 'last_name' => $request->last_name, 'email' => $request->email));
-
-                  DB:table('patient_details')->where('user_id', $request->user_id)
-                          ->update(array('dob' => $request->dob, 'phone' => $request->phone));
-
-                  DB:table('appointment_requests')->where('user_id', $request->user_id)
-                          ->update(array('status' => 1));
-                  
-                  DB:table('appointment_reasons')->where('patient_id', $request->user_id)
-                          ->update(array('reason_id' =>$request->reason_id));
-
-        }
-        else
-        {
-            
-                DB:table('users')->where('id', $request->user_id)
-                ->update(array('first_name' => $request->first_name, 'last_name' => $request->last_name, 'email' => $request->email));
-
-                DB:table('patient_details')->where('user_id', $request->user_id)
-                        ->update(array('dob' => $request->dob, 'phone' => $request->phone));
-
-                DB:table('appointment_requests')->where('user_id', $request->user_id)
-                        ->update(array('status' => 1));
-
-               if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){			
-                   $appointment = new App\Appointment;
-                   $appointment->patient_id = $id;
-                   //$appointment->relative_id = $relative_appointment['id'];
-                   $appointment->apptTime = date('Y-m-d H:i:s', strtotime($formData['appDate'] . " " . $formData['appTime']));
-                   $appointment->createdBy = Auth::user()->id;
-                   $appointment->patient_id = $user->id;
-                   $appointment->appt_source = $exist_request['appt_source'];
-                   $appointment->request_id = $appointment_requests->id;
-                   if(isset($formData['email_invitation'])){
-                       $appointment->email_invitation = 1;
-                       $user->hash = $patient->hash;
-                       $this->emailPatientEditForm($user);
-                   }
-                   $appointment->save();
-               }
-                
-                DB:table('appointment_reasons')->where('patient_id', $request->user_id)
-                          ->update(array('reason_id' => $request->reason_id));
-    }
+       
         //   $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
 
 //                        if ($appointment->save()) {
