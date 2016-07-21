@@ -113,9 +113,9 @@ $(function() {
     $('#editAppointment').validate({
           rules: {
             email: {
-              required: true,
+              //required: true,
               email: true,
-              remote: ajax_url+ "/appointment/uniquePatientEmail"
+              //remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
                 minlength: 14
@@ -123,7 +123,7 @@ $(function() {
           },
           messages:{
               email: {
-                  remote: 'Email already exist in database'
+                  //remote: 'Email already exist in database'
               },
               phone: {
                   minlength: 'Please enter at least 10 digits.'

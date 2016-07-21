@@ -5,7 +5,7 @@
         <h2 class="panel-title">Edit Appointment</h2>
     </header>
     <div class="panel-body">
-		<div class="form-group">
+<!--        <div class="form-group">
             {{ Form::label('Doctor', 'Doctor', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-md-6">
                 <select  class="form-control chosen" name="doctor_id" id="doctor_id">
@@ -16,7 +16,7 @@
                 </select>    
             </div>
             <div class="showDocScheddulerLInk"></div>
-        </div>
+        </div>-->
         <div class="form-group">
             {{ Form::label('appointment_time', 'Choose Date & Time', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-4">
@@ -40,7 +40,7 @@
             {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
         </div>   
         
-        <div class="form-group">
+<!--        <div class="form-group">
             {{ Form::label('patient', 'Patient', array('class' => 'col-sm-4 control-label')) }}
 
             <div class="col-md-6">
@@ -53,7 +53,7 @@
                 {{ Form::hidden('clinic', Auth::user()->id) }}
                 {{ Form::hidden('patient_id') }}               
             </div>
-        </div>
+        </div>-->
         
         <!-- Patient Edited Details -->
         <div class="form-group"> 
@@ -65,7 +65,7 @@
                 </span> 
             </div> 
             <div class="col-sm-4">
-                {{ Form::text('last_name', old('last_name'), ['class' => 'form-control required', 'id' => 'last-name', 'placeholder' => 'Last Name']) }}
+                {{ Form::text('last_name', old('last_name'), ['class' => 'form-control', 'id' => 'last-name', 'placeholder' => 'Last Name']) }}
                 <span class="help-block firstName">
                 </span> 
             </div> 
@@ -73,7 +73,7 @@
         <div class="form-group"> 
             {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-sm-6">
-                {{ Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) }}
+                {{ Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email', 'readonly']) }}
                 <span class="help-block email">
                 </span> 
             </div> 
@@ -81,7 +81,7 @@
         <div class="form-group">             
             {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-sm-6"> 
-                {{ Form::text('phone', old('phone'), ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                {{ Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
             </div> 
         </div> 
         <div class="form-group"> 
@@ -127,7 +127,7 @@
         <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
             {{ Form::label('comment', 'Comment', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-6">
-                {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter Comment', 'id' => 'appointmentComment', 'rows' => '2']) }}
+                {{ Form::textarea('comment', null, ['class' => 'form-control', 'placeholder' => 'Enter Comment', 'id' => 'appointmentComment', 'rows' => '2']) }}
                 @if ($errors->has('comment'))
                 <span class="help-block">
                     <strong>{{ $errors->first('comment') }}</strong>
