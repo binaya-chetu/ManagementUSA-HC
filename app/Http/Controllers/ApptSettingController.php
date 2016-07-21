@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Http\Helpers\helpers;
 use App\Patient;
 use App\Appointment;
 use App\AdamsQuestionaires;

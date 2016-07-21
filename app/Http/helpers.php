@@ -74,3 +74,12 @@ function durationInMonths()
     }
     return $duration;
 }
+/**
+ * Function to find the Patient status regarding the Sale
+ *
+ * @return array()
+ */
+function patientStatus(){
+    $status = ['0' => 'New Patient', '1' => 'Current Patient'];
+    return $status;
+}
