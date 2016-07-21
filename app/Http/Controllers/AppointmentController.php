@@ -321,9 +321,12 @@ class AppointmentController extends Controller {
      * @return \Illuminate\View\View
      */
     public function saveAppointmentFolloup(Request $request) {
-        if (!($appointment = Appointment::find($request->appointment_id))) {
+        
+        $appointment = Appointment::where('id', '=', $request->appointment_id)->get()->first();        
+        if (!($appointment)) {
             App::abort(404, 'Page not found.');
         }
+        
         $followUp = new FollowUp();
         // Update the Appointment table according  to the followup
         switch ($request->action) {
@@ -337,8 +340,8 @@ class AppointmentController extends Controller {
                 unset($appointment->id); // Unset the id of first appointment
                 unset($appointment->status); // Unset the status of first appointment
                 $newAppointment = new Appointment(); //create a new object for new entry in appointment table
-                $input = $appointment->toArray();
-                $input['apptTime'] = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
+                $input = $appointment->toArray();                
+                $input['apptTime'] = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));                
                 $newAppointment->fill($input)->save();
                 break;
             case '3' :
@@ -384,7 +387,7 @@ class AppointmentController extends Controller {
     {
         $followup = FollowUp::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->get(); 			
+            }])->orderBy('id', 'DESC')->get(); 			
         return view('appointment.followup', ['followup' => $followup]);
     }
 

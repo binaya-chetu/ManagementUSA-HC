@@ -120,7 +120,7 @@
         <header class="panel-heading">
             <h2 class="panel-title">Web Leads Followup</h2>
         </header>
-        {{ Form::open(array('url' => '/apptsetting/saveApptFollowup', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
+        {{ Form::open(array('url' => '#', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
         <div class="panel-body">
             <div class="form-group"> 
                 {{ Form::label('status', 'Status', array('class' => 'col-sm-4 control-label call_label mandatory')) }}
@@ -186,16 +186,16 @@
         $('#callStatus').validate();
     })
 
-    $('.lead_popup').on('click', function() {
-        $('#apptId').val($(this).attr('rel'));
-
-        $.magnificPopup.open({
-            items: {
-                src: '#modalCall',
-                type: 'inline'
-            }
-        });
-    });
+//    $('.lead_popup').on('click', function() {
+//        $('#apptId').val($(this).attr('rel'));
+//
+//        $.magnificPopup.open({
+//            items: {
+//                src: '#modalCall',
+//                type: 'inline'
+//            }
+//        });
+//    });
     $('.callStatus').on('click', function() {
         var call_value = $(this).val();
         if (call_value == 1) {

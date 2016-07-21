@@ -139,7 +139,7 @@
                     </div>
                 </div>
             </div>
-            {{ Form::open(array('url' => '/apptsetting/saveApptFollowup', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
+            {{ Form::open(array('url' => '#', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-6" id="email_invoice_container">

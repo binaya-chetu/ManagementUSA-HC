@@ -150,7 +150,7 @@ class ApptSettingController extends Controller {
      * @return \Illuminate\View\View
      */
 
-    public function saveApptFollowup(Request $request) {
+    public function saveAppointment(Request $request) {
         $formData = $request->all();
 		if(!$formData){
             App::abort(404, 'Empty form data.');
@@ -165,13 +165,13 @@ class ApptSettingController extends Controller {
         $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;
 
-		if(!empty($formData['email'])){
-			$userCheck = User::where('email', '=', $formData['email'])->first();
-			if ($userCheck != null && $userCheck->id != $id) {
-				\Session::flash('error_message', 'Email id you provided is already registered.');
-				return Redirect::back();
-			}				
-		}
+        if(!empty($formData['email'])){
+                $userCheck = User::where('email', '=', $formData['email'])->first();
+                if ($userCheck != null && $userCheck->id != $id) {
+                        \Session::flash('error_message', 'Email id you provided is already registered.');
+                        return Redirect::back();
+                }				
+        }
 
         $user->first_name = $formData['first_name'];
         $user->last_name = $formData['last_name'];
@@ -219,6 +219,7 @@ class ApptSettingController extends Controller {
             $appointment->patient_id = $user->id;
             $appointment->appt_source = $formData['appt_source'];
             $appointment->request_id = $appointment_requests->id;
+            $appointment->comment = $formData['comment'];	
             if(isset($formData['email_invitation'])){
                 $appointment->email_invitation = 1;
                 $user->hash = $patient->hash;
@@ -274,10 +275,10 @@ class ApptSettingController extends Controller {
      */
 
     public function findAppointmentDetail(Request $request) {
- 		$appointment = DB::table('users')
+        $appointment = DB::table('users')
             ->leftJoin('patient_details', 'users.id', '=', 'patient_details.user_id')
-			->where('users.id', $request['id'])
-            ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'patient_details.phone')
+            ->where('users.id', $request['id'])
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'patient_details.phone', 'patient_details.dob')
             ->first(); 
 			
         if ($appointment && $appointment->id) {
@@ -318,7 +319,7 @@ class ApptSettingController extends Controller {
 
     public function anotherAppointment(Request $request) {
         $formData = $request->all();
-     ///   echo '<pre>'; print_r($formData);die;
+
         if(!$formData){
                 App::abort(404, 'Empty form data.');
         }
@@ -330,13 +331,14 @@ class ApptSettingController extends Controller {
 
         $id = $formData['patient_id']; 
         $user = User::where('id', $id)->first();
-        $id = $user->id;
-        $userCheck = User::where('email', '=', $formData['email'])->where('id', '!=', $id)->first();
-        if ($userCheck != null && $userCheck->id != $id) {
-            \Session::flash('error_message', 'Email id you provided is already registered.');
-            return Redirect::back();
-        }	
-
+        $id = $user->id;	
+        if(!empty($formData['email'])){
+            $userCheck = User::where('email', '=', $formData['email'])->first();
+            if ($userCheck != null && $userCheck->id != $id) {
+                    \Session::flash('error_message', 'Email id you provided is already registered.');
+                    return Redirect::back();
+            }				
+        }
         $user->first_name = $formData['first_name'];
         $user->last_name = $formData['last_name'];
         $user->email = $formData['email'];        
@@ -370,12 +372,13 @@ class ApptSettingController extends Controller {
             $appointment_requests->followup_status = 0;
         }		
         $appointment_requests->save();
-
+        
         $reason = new App\AppointmentReasons;
         $reason->patient_id = $id;
         $reason->reason_id  = $formData['reason_id'];
+        $reason->request_id = $appointment_requests->id;
         $reason->save();
-
+        
         if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){			
             $appointment = new App\Appointment;
             $appointment->patient_id = $id;
@@ -385,6 +388,7 @@ class ApptSettingController extends Controller {
             $appointment->patient_id = $user->id;
             $appointment->appt_source = $exist_request['appt_source'];
             $appointment->request_id = $appointment_requests->id;
+            $appointment->comment = $formData['comment'];
             if(isset($formData['email_invitation'])){
                 $appointment->email_invitation = 1;
                 $user->hash = $patient->hash;

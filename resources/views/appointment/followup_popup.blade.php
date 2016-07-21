@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.css') }}" />
+<script src="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.js') }}"></script>
 <div id="modal-followup-status" class="modal-block modal-block-primary mfp-hide">
     {{ Form::open(array('url' => '/appointment/saveAppointmentFolloup', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'followUp')) }}
     {!! csrf_field() !!}
@@ -19,30 +21,7 @@
                         </label>
                     </div>
                     @endforeach
-                    <!--<div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Cancel', false, ['id' => 'optionsRadios2', 'class' => 'required']) }}
-                            Cancel Appointment
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Confirm', false, ['id' => 'optionsRadios3', 'class' => 'required']) }}
-                            Confirmed Appointment
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Later', false, ['id' => 'optionsRadios4', 'class' => 'required']) }}
-                            Follow-up Later
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            {{ Form::radio('action', 'Never Treat', false, ['id' => 'optionsRadios5', 'class' => 'required']) }}
-                            Never Treat
-                        </label>
-                    </div>-->
+                    
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'followup_appointment_id')) }}
             </div>
@@ -54,7 +33,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </span>
-                            {{ Form::text('appDate', null, ['class' => 'form-control dateCalendar selectDate', 'data-plugin-datepicker']) }}
+                            {{ Form::text('appDate', null, ['class' => 'form-control dateCalendar selectDate required', 'data-plugin-datepicker', 'id' =>'calendarDate']) }}
                         </div>
                     </div>
 
@@ -63,7 +42,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-clock-o"></i>
                             </span>
-                            {{ Form::text('appTime', null, ['class' => 'form-control', 'data-plugin-timepicker']) }}
+                            {{ Form::text('appTime', null, ['class' => 'form-control required', 'id' => 'durationExample']) }}
                         </div>
                     </div>
 
@@ -87,3 +66,10 @@
     </section>
     {{ Form::close() }}  
 </div>
+<script>
+     $('#durationExample').timepicker({
+        'minTime': '09:00am',
+        'maxTime': '05:00pm',
+        'showDuration': true
+    });        
+</script>

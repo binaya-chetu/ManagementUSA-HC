@@ -30,7 +30,7 @@
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
                 <thead>
                     <tr>
-                        <th>S. No.</th>
+                        <th>#</th>
                         <th>Patient</th>
                         <th>Appt. Date</th>
                         <th>Followup Action</th>   

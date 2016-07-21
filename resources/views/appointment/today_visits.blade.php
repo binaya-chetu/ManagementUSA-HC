@@ -41,7 +41,7 @@
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>App Date and Time</th>
                         <th>Patient</th>                        
                         <th>Source</th>
@@ -55,7 +55,7 @@
                     @foreach ($appointments as $appointment)
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
-                        <td class="table-text"><div>{{ $appointment->apptTime }}</div></td>
+                        <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
                         <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
 
@@ -86,11 +86,11 @@
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
                                         break;
-                                    case 2: echo "Send to Lab";
+                                    case 2: echo "Send To Lab ";
                                         break;
                                     case 3: echo "Waiting for Lab Report";
                                         break;
-                                    case 3: echo "Lab Report Ready";
+                                    case 4: echo "Lab Report Ready";
                                         break;
                                     default: echo "None";
                                         break;
@@ -120,7 +120,7 @@
             <div class="form-group">
                 {{ Form::label('status', 'Patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
-                    <?php $states = ['1' => 'Show', '2' => 'Send to Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
+                    <?php $states = ['1' => 'Show', '2' => 'Send To Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}
