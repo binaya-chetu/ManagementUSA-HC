@@ -59,10 +59,10 @@
                         <td class="actions">
                             <a href="/patient/edit/{{ base64_encode($patient->id) }}"  title="Edit"><i class="fa fa-pencil"></i></a> | 
                            <a data-href="/patient/delete/{{ base64_encode($patient->id) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" ><i class="fa fa-trash-o"></i></a> 
-                           @if(!($patient['patientDetail']->never_treat_status)) 
+<!--                           @if(!($patient['patientDetail']->never_treat_status)) 
                            |
                            <a href="/appointment/newAppointment/{{ base64_encode($patient->id) }}" class="on-default" title="Add Appointment"><i class="fa fa-calendar"></i></a>
-                           @endif
+                           @endif-->
                         </td>
                     </tr>
                     @endforeach 
