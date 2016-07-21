@@ -44,6 +44,7 @@
                         <th>email</th>
                         <th>Phone</th>
                         <th>Lead Source</th>
+                        <th>Reason</th>
                         <th>Created At </th>
                         <th>Actions</th>
                     </tr>
@@ -60,6 +61,7 @@
                         <td class="table-text"><div>{{ $requestFollowup->email }}</div></td>
                         <td class="table-text"><div>{{ $requestFollowup->phone }}</div></td>
                         <td class="table-text"><div>{{ $resources[$requestFollowup->appt_source] }}</div></td>
+                        <td class="table-text"><div>{{ $requestFollowup->reason }}</div></td>
                         <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($requestFollowup->created_at)) }}</div></td>
                         <td class="actions" style = "text-align:center">
                             <a href="javascript:void(0)" class="on-default request-follow-up"  rel="{{ $requestFollowup->user_id }}"><i class="fa fa-pencil"></i></a>
@@ -78,15 +80,14 @@
         <header class="panel-heading">
             <h2 class="panel-title">Request Followup</h2>
         </header>
-        
-        
-        
         {{ Form::open(array('url' => '/apptsetting/saveRequestFollowUp', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
         <div class="panel-body">
                      <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                             {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-sm-6">
-                                {{ Form::hidden('id') }}
+                                {{ Form::hidden('patient_id') }}
+                                {{ Form::hidden('appointment_request_id') }}
+                                {{ Form::hidden('appointment_id') }}
                                 {{ Form::text('first_name', $requestFollowup->first_name , ['class' => 'form-control required', 'id' => 'first_name', 'placeholder' => 'First Name']) }}
                                 @if ($errors->has('patient_id'))
                                 <span class="help-block">
@@ -147,7 +148,7 @@
                                        </span>
                                        @endif 
                                    </div> 
-                               </div> 
+                          </div> 
                        
                     <div class="form-group">
                         {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -164,7 +165,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </span>
-                                {{ Form::text('created_time', date('H:i:s'), ['class' => 'form-control required', 'data-plugin-timepicker']) }}
+                                {{ Form::text('created_time', date('H:i:s'), ['class' => 'form-control required', 'data-plugin-timepicker' ,'id' => 'durationExample']) }}
                             </div>
                         </div>
                    
@@ -173,9 +174,106 @@
                         {{ Form::hidden('user_id', null, ['id' => 'user_id']) }}  
                            
                     </div>
-            
-                    
+                 <div class="form-group">
+                        {{ Form::label('status', 'Status', array('class' => 'col-sm-3 control-label call_label mandatory')) }}
+                        <div class="col-sm-8">
+                            <div class="col-sm-4">
+                                <div class="radio-custom radio-primary">
+                                    {{ Form::radio('status', '0', false, ['id' => 'awesome', 'class' => 'callStatus required']) }}
+                                    <label for="awesome">Set
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="radio-custom radio-primary">
+                                    {{ Form::radio('status', '1', false, ['id' => 'very-awesome', 'class' => 'callStatus required']) }}
+                                    <label for="very-awesome">No Set
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                 </div> 
+              <div  id="nosetAppointment">
+                        <div class="form-group">
+                            {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
+
+                            </div>
+                        </div>
+                     
+                        <div class="form-group">
+                            {{ Form::label('followup', 'Follow-Up After One Week', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-1">
+                                <div class="input-group">
+                                   
+                                    {{ Form::checkbox('followup_status', null, false, ['class' => 'followup_check', 'id' => 'followupWeek']) }}
+                                
+                                </div>
+                            </div>
+                            {{ Form::label('followup', 'OR', ['class' => 'col-sm-1 control-label']) }}
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    {{ Form::text('followup_date', null, ['class' => 'form-control selectDate', 'data-plugin-datepicker', 'placeholder' => 'Follow-Up Date', 'id' => 'followupDate']) }}
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <div class="form-group">
+                            {{ Form::label('comment', 'Comment for No Set', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter Comment', 'rows' => '3']) }}
+
+                            </div>
+                        </div>
+                    </div>
+                   <div  id="setAppointment">
+                        <div class="form-group">
+                            {{ Form::label('reason_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                {{ Form::select('reason_id', ['' => 'Choose the Reason'] + $reasonCode, null, ['class' => 'form-control required']) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('appDate', 'Appointment Time', array('class' => 'col-sm-3 control-label mandatory')) }}
+
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker', 'placeholder' => 'Choose Date', 'id' =>'calendarDate']) }}
+                                </div>
+                                @if ($errors->has('appDate'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('appDate') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                    {{ Form::text('appTime', null, ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('comment', 'Comment for Set', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                {{ Form::textarea('comment', null, ['class' => 'form-control required', 'placeholder' => 'Enter Comment', 'rows' => '3']) }}
+
+                            </div>
+                        </div>
+                    </div>
+
         </div>
+        
         <footer class="panel-footer">
             <div class="row">
                 <div class="col-md-12 text-right">

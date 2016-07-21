@@ -83,16 +83,24 @@ class ApptSettingController extends Controller {
         $requestFollowups = DB::table('users')
             ->Join('appointment_requests', 'users.id', '=', 'appointment_requests.user_id')
             ->Join ('patient_details', 'users.id', '=', 'patient_details.user_id')
+            ->Join ('appointment_reasons' ,'appointment_requests.id','=','appointment_reasons.request_id')
+            ->Join ('reason_codes' ,'reason_codes.id','=','appointment_reasons.reason_id')
             ->where('appointment_requests.status',1)->where('followup_date', $current_date)
             ->orderBy('appointment_requests.id', 'asc')
             ->get();
-       // $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
-        $resources = AppointmentSource::lists('name', 'id');
+         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+        //        print_r($requestFollowups);
+        //        die;
+         // $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
+         $resources = AppointmentSource::lists('name', 'id');
         //$requestFollowups = AppointmentRequest::where('status', 2)->where('followup_date', $current_date)->get();
-        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
-       // print_r($requestFollowups);die;
+         $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
+        // print_r($reasonCode);
+        // die;
+        // print_r($requestFollowups);die;
+        // $reason = getReason(1);
         return view('apptsetting.requestFollowup', [
-            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode, 'resources' => $resources]);
+            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode,'noSetReasonCode'=>$noSetReasonCode, 'resources' => $resources ]);
     }
 
     /*
@@ -104,36 +112,23 @@ class ApptSettingController extends Controller {
      */
 
     public function saveRequestFollowUp(Request $request) {
-        $appointment = new Appointment;
-        $patient_details = new Patient;
-        $user = new User;
+               //$formData = $request->all();
+    //                print_r($formData);
+    //                die;
+       
+        //   $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
 
-
-//             DB:table('users')->where('id', $request->user_id)
-//                ->update(array('first_name' => $request->first_name,'last_name' => $request->last_name,'email' => $request->email));
-//             
-//              DB:table('patient_details')->where('user_id', $request->user_id)
-//                ->update(array('dob' => $request->dob,'phone' => $request->phone));
-//                    
-//              DB:table('appointment_requests')->where('user_id', $request->user_id)
-//                ->update(array('status' => 1));
-//                    
-//                DB:table('appointments')->where('user_id', $request->user_id)
-//                  ->update(array('status' => 1));     
-                      
-                      //   $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->created_date . " " . $request->created_time));
-
-                        if ($appointment->save()) {
-                            $update_status = DB::table('appointment_requests')
-                                    ->where('id', $request->request_id)
-                                    ->update(array('status' => 1));
-
-                            \Session::flash('flash_message', 'Appointment updated successfully.');
-                            return redirect()->action('ApptSettingController@requestFollowUp');
-                        } else {
-                           \Session::flash('flash_message', 'Appointment updated successfully.');
-                            return redirect()->action('ApptSettingController@requestFollowUp');
-                        }
+//                        if ($appointment->save()) {
+//                            $update_status = DB::table('appointment_requests')
+//                                    ->where('id', $request->request_id)
+//                                    ->update(array('status' => 1));
+//
+//                            \Session::flash('flash_message', 'Appointment updated successfully.');
+//                            return redirect()->action('ApptSettingController@requestFollowUp');
+//                        } else {
+//                           \Session::flash('flash_message', 'Appointment updated successfully.');
+//                            return redirect()->action('ApptSettingController@requestFollowUp');
+//                        }
         
     }
 
@@ -324,7 +319,7 @@ class ApptSettingController extends Controller {
 
     public function anotherAppointment(Request $request) {
         $formData = $request->all();
-        //echo '<pre>'; print_r($formData);die;
+
         if(!$formData){
                 App::abort(404, 'Empty form data.');
         }
