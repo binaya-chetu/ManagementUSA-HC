@@ -432,6 +432,7 @@ class AppointmentController extends Controller {
         $testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
         $vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
         $cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
+        $labReports = DB::table('lab_reports')->where('patient_id', $id)->pluck('file', 'appointments_id');
         if (!$patient) {
             App::abort(404, 'Patient with given id was not found.');
         }
@@ -458,6 +459,7 @@ class AppointmentController extends Controller {
             'cosmetics' => $cosmetics,
             'vitamins' => $vitamins,
             'states' => $states,
+			'labReports' => $labReports,
             'hash' => $hash
         ]);
     }
@@ -1097,10 +1099,32 @@ class AppointmentController extends Controller {
      *
      * @return \resource\view\Appointment\today_visits.blade.php
      */
-    public function savePatientStatus(Request $request) {
+    public function savePatientStatus(Request $request) {		
+		if(Input::hasFile('labFiles')){
+			$files = [];
+			foreach(Input::file('labFiles') as $i => $file){			
+				if(empty($file)){
+					continue;
+				}
+				$fileArray = array('labReport' => $file);
+ 				$rules = array('labReport' => 'mimes:jpeg,png,pdf',); //mimes:jpeg,bmp,png and for max size max:10000
+				$validator = Validator::make($fileArray, $rules);
+				if ($validator->fails()) {
+					\Session::flash('error_message', 'Please upload a valid report images only (jpeg,png,pdf).');
+					return redirect()->back();
+				} else {
+					$destinationPath = 'uploads/lab_reports'; // upload path
+					$extension = $file->getClientOriginalExtension();
+					$files[] =  array('patient_id' => $request->patient_id, 'appointments_id' => $request->appointment_id, 'file' => md5(uniqid(time(), true)).'.'.$extension, 'created_at'=>date('Y-m-d H:i:s'), 'updated_at'=> date('Y-m-d H:i:s'));					
+					$file->move($destinationPath, $files[$i]['file']);		
+				}
+			}
+			$labReports = App\LabReports::insert($files);
+		} 
+
+	
         $values = ['patient_status' => $request->patient_status];
         Appointment::where('id', $request->appointment_id)->update($values);
-        //echo '<pre>';print_r($request->all());die;
         \Session::flash('flash_message', 'Patient Status updated successfully');
         return redirect()->back();
     }

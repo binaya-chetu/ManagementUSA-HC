@@ -587,7 +587,18 @@ $(document).ready(function() {
             $('#nosetAppointment').show();
         }
     });
-    
+	
+	$(document).on('change', $("#changeStatus").find('select[name="patient_status"]'), function(){
+		var val = $("#changeStatus").find('select[name="patient_status"]').val();
+		if(val == ""){
+			if($("#labFilesUpload").length != 0){
+				$("#labFilesUpload").remove();
+			}
+		} else{
+			var fileInput = '<div class="form-group" id="labFilesUpload"><label for="labFiles" class="col-sm-4 control-label">Upload Lab report files</label><div class="col-md-6"><input class="form-control input valid" type="file" name="labFiles[]"></div></div>';
+			$("#changeStatus").find('.panel-body').append(fileInput);
+		}
+	});	
 });
 
 	/**
@@ -813,7 +824,9 @@ $('#patient_id').on('change', function(){
 $(document).on("click", ".patient_status", function(event) {
         event.preventDefault();        
         var appointmentId = $(this).attr('rel');       
+		var patientId = $(this).data('patientid'); 
         $('#patient_appt_id').val(appointmentId);
+        $('#patient_id').val(patientId);
         $.magnificPopup.open({
             items: {
                 src: '#modal-change-patient-status',
