@@ -29,6 +29,13 @@
                     {{ Form::text('last_name', old('last_name'), ['class' => 'form-control', 'id' => 'last_name', 'placeholder' => 'Last Name']) }}                    
                 </div>
             </div>
+            <div class="form-group">
+                {{ Form::label('patient_status', 'Patient Status', array('class' => 'col-sm-3 control-label')) }}
+                <div class="col-md-8">
+                    <?php $patientStatus = patientStatus(); ?>
+                    {{ Form::select('patient_status', ['' => 'Select the Patient Status'] + $patientStatus , null, ['class' => 'form-control', 'id' => 'patientSaleStatus', 'disabled' => 'disabled']) }}
+                </div>
+            </div>
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" id='emailParent'>
                 {{ Form::label('email', 'Email', array('class' => 'col-sm-3 control-label')) }}
