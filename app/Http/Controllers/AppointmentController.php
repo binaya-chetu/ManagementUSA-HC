@@ -266,7 +266,6 @@ class AppointmentController extends Controller {
         $appointment->marketer = $request->marketer;
         $appointment->clinic = $request->clinic;
         $appointment->comment = $request->comment;
-
         $patient = User::find($request->patient_id);
         $patientInput['first_name'] = $request->first_name;
         $patientInput['last_name'] = $request->last_name;
