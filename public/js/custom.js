@@ -62,12 +62,13 @@ var initCalendar = function(events, start = "00:00:00", end="24:00:00", defaultA
 			prev: 'fa fa-caret-left',
 			next: 'fa fa-caret-right'
 		},
-		editable: true,
+		editable: false,
 		timezone: 'local',
 		defaultView: 'agendaDay',
 		slotEventOverlap: false,
 		minTime: start,
 		maxTime: end,
+                draggable: false,
 		
 		slotLabelInterval: 30,
 		slotLabelFormat: 'h(:mm)a',
