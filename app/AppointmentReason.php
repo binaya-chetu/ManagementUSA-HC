@@ -7,7 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class AppointmentReason extends Model
 {
     protected $table = 'appointment_reasons';
-    
+     protected $fillable = [
+		'id',
+		'patient_id',
+		'request_id',
+		'reason_id',
+               'created_at',
+               'updated_at',
+               'deleted_at'
+
+    ];
      /**
      * hasOne Relationship Method for accessing the Appointment Reason
      *
