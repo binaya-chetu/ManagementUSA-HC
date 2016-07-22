@@ -90,7 +90,7 @@ class ApptSettingController extends Controller {
                 ->Join('appointment_reasons', 'appointment_requests.id', '=', 'appointment_reasons.request_id')
                 ->Join('reason_codes', 'reason_codes.id', '=', 'appointment_reasons.reason_id')
                 ->where('appointment_requests.status', 1)->where('followup_date', $current_date)->where('appointment_requests.noSetStatus',0)
-                ->orderBy('appointment_requests.id', 'asc')
+                ->orderBy('appointment_requests.id', 'desc')
                 ->get();
 
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
@@ -110,14 +110,17 @@ class ApptSettingController extends Controller {
      */
 
     public function saveRequestFollowUp(Request $request) {
-
-        $formData = $request->all();
-        print_r($formData);
-        die;
+      
+        $formData = $request->all(); 
         if (!$formData) {
             App::abort(404, 'Empty form data.');
         }
 
+        if($formData['status'] == 1){
+			$formData['reason_id'] = $formData['noset_reason_id'];
+		}
+        
+        
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
         if (!$patientRole || !($patientRole = $patientRole->id)) {
             App::abort(404, 'Cannot fetch role from database.');
@@ -145,7 +148,7 @@ class ApptSettingController extends Controller {
             $patient = Patient::where('user_id', $id)->first();
             $patient->phone = $formData['phone'];
             $patient->dob = date('Y-m-d', strtotime($formData['dob']));
-             $patient->save();
+            $patient->save();
  
             $exist_request = AppointmentRequest::where('user_id', $id)->first();
             $appointment_requests = new App\AppointmentRequest;
@@ -198,8 +201,48 @@ class ApptSettingController extends Controller {
             }
         }
         else{
-            print_r($formData);
-            die;
+            
+             $user->first_name = $request->first_name;
+             $user->last_name = $request->last_name;
+             $user->email = $request->email;
+             $user->save();
+          
+            $patient = Patient::where('user_id', $id)->first();
+            $patient->phone = $formData['phone'];
+            $patient->dob = date('Y-m-d', strtotime($formData['dob']));
+            $patient->never_treat_status = 1;
+            $patient->save();
+ 
+            $exist_request = AppointmentRequest::where('user_id', $id)->first();
+            $appointment_requests = new App\AppointmentRequest;
+            $appointment_requests->user_id = $id;
+
+            if (isset($exist_requests['marketing_phone'])) {
+                $appointment_requests->marketing_phone = $exist_request['marketing_phone'];
+            }
+
+
+            $appointment_requests->created_by = Auth::user()->id;
+            $appointment_requests->appt_source = $exist_request['appt_source'];
+            $appointment_requests->status = $formData['status'];
+            $appointment_requests->comment = $formData['comment'];
+            $appointment_requests->followup_status = 0;
+            $appointment_requests->noSetStatus = 1;
+            $appointment_requests->save();
+            
+            $reason = new App\AppointmentReasons; 
+            $reason->patient_id = $id;
+            $reason->reason_id = $formData['reason_id'];
+            $reason->request_id = $appointment_requests->id;
+            $reason->save();
+        }
+        
+         if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {
+            \Session::flash('flash_message', 'Appointment added successfully.');
+            return redirect()->action('ApptSettingController@requestFollowUp');
+        } else {
+            \Session::flash('flash_message', 'Appointment ended successfully.');
+            return  redirect()->action('ApptSettingController@requestFollowUp');
         }
     }
 
@@ -285,8 +328,6 @@ class ApptSettingController extends Controller {
         $reason = new App\AppointmentReasons;
         $reason->patient_id = $id;
         $reason->reason_id = $formData['reason_id'];
-        echo $formData['reason_id']."hello nivi";
-        exit;
         $reason->request_id = $appointment_requests->id;
         $reason->save();
 

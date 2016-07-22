@@ -82,7 +82,7 @@
         <header class="panel-heading">
             <h2 class="panel-title">Request Followup</h2>
         </header>
-        {{ Form::open(array('url' => '/apptsetting/saveRequestFollowUp', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
+        {{ Form::open(array('url' => '/apptsetting/saveRequestFollowUp', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'requestfollowup')) }}
         <div class="panel-body">
                      <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                             {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -129,7 +129,7 @@
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label')) }}
                             <div class="col-sm-6">
-                                {{ Form::text('phone', $requestFollowup->phone , ['class' => 'form-control required', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                                {{ Form::text('phone', $requestFollowup->phone , ['class' => 'form-control ', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
                             </div>
                             @if ($errors->has('phone'))
                             <span class="help-block">
@@ -174,9 +174,9 @@
                  </div> 
                 <div  id="nosetAppointment">
                         <div class="form-group">
-                            {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            {{ Form::label('noset_reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
-                                {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
+                                {{ Form::select('noset_reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
 
                             </div>
                         </div>
