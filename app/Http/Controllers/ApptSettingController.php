@@ -152,6 +152,10 @@ class ApptSettingController extends Controller {
 
     public function saveAppointment(Request $request) {
         $formData = $request->all();
+		if($formData['status'] == 1){
+			$formData['reason_id'] = $formData['noset_reason_id'];
+		}
+
 		if(!$formData){
             App::abort(404, 'Empty form data.');
         }

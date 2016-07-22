@@ -228,9 +228,9 @@
                     </div>
                     <div  id="nosetAppointment">
                         <div class="form-group">
-                            {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            {{ Form::label('noset_reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
-                                {{ Form::select('reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
+                                {{ Form::select('noset_reason_id', ['' => 'Choose the Reason Code'] + $noSetReasonCode, null, ['class' => 'form-control required']) }}
 
                             </div>
                         </div>
