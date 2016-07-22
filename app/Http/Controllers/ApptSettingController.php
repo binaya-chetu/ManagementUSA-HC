@@ -153,7 +153,7 @@ class ApptSettingController extends Controller {
 
     public function saveAppointment(Request $request) {
         $formData = $request->all();
-		if(!$formData){
+        if(!$formData){
             App::abort(404, 'Empty form data.');
         }
 
@@ -161,7 +161,7 @@ class ApptSettingController extends Controller {
         if(!$patientRole || !($patientRole = $patientRole->id)){
             App::abort(404, 'Cannot fetch role from database.');
         }
-
+     
         $id = $formData['patient_id']; 
         $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;

@@ -2,8 +2,6 @@
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<link rel="stylesheet" href="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.css') }}" />
-<script src="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.js') }}"></script>
 <section role="main" class="content-body">
     <header class="page-header">
         <?php if($value == 'marketingCall'){                                    
@@ -325,11 +323,4 @@
         </div>
     </div>
 </section>
-<script>
-     $('#durationExample').timepicker({
-        'minTime': '09:00am',
-        'maxTime': '05:00pm',
-        'showDuration': true
-    });        
-</script>
 @endsection

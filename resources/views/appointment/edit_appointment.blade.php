@@ -24,7 +24,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </span>
-                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required', 'data-plugin-datepicker', 'id' => 'apptdate']) }}
+                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker']) }}
                 </div>
             </div>
             <div class="col-md-4">
@@ -32,11 +32,10 @@
                     <span class="input-group-addon">
                         <i class="fa fa-clock-o"></i>
                     </span>
-                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required', 'data-plugin-timepicker']) }}
+                    {{ Form::text('appTime', old('appTime'), ['class' => 'form-control required','id' => 'durationExample']) }}
                 </div>
             </div>
-            {{ Form::hidden('appointment_id', 1,['id' => 'appointment_id']) }}
-            {{ Form::hidden('marketer', 1) }}         
+            {{ Form::hidden('appointment_id', 1,['id' => 'appointment_id']) }}   
             {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
         </div>   
         
@@ -71,15 +70,15 @@
             </div> 
         </div> 
         <div class="form-group"> 
-            {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
+            {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6">
-                {{ Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email', 'readonly']) }}
+                {{ Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) }}
                 <span class="help-block email">
                 </span> 
             </div> 
         </div> 
         <div class="form-group">             
-            {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label mandatory')) }}
+            {{ Form::label('phone', 'Phone', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
                 {{ Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
             </div> 
@@ -160,5 +159,5 @@
                 window.location = ajax_url + link;
             }
         });
-    });
+    });   
 </script>
