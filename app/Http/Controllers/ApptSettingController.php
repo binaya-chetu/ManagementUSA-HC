@@ -269,10 +269,7 @@ class ApptSettingController extends Controller {
 		if($formData['status'] == 1){
 			$formData['reason_id'] = $formData['noset_reason_id'];
 		}
-
-
         if (!$formData) {
-
             App::abort(404, 'Empty form data.');
         }
 
@@ -280,7 +277,6 @@ class ApptSettingController extends Controller {
         if (!$patientRole || !($patientRole = $patientRole->id)) {
             App::abort(404, 'Cannot fetch role from database.');
         }
-
         $id = $formData['patient_id'];
         $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;

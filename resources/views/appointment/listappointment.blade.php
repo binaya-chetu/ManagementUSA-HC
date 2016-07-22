@@ -42,12 +42,15 @@
                 @if(Session::has('flash_message'))
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
+                @if(Session::has('error_message'))
+                    <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
+                @endif
             </div>
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>App Date and Time</th>
+                        <th>Appointment Time</th>
                         <th>Patient</th>
                         <th>Reason for Visit</th>
                         <th>Source</th>                        
@@ -105,7 +108,13 @@
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                            <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
+                            <?php $date = date('Y-m-d H:i');
+                                  $appointmentTime = date('Y-m-d H:i', strtotime($appointment->apptTime));
+                                  
+                                  ?>                            
+                            @if($appointmentTime >= $date)
+                                <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
+                            @endif
                             <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>

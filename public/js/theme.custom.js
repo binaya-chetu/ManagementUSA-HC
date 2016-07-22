@@ -115,7 +115,7 @@ $(function() {
             email: {
               //required: true,
               email: true,
-              //remote: ajax_url+ "/appointment/uniquePatientEmail"
+              remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
                 minlength: 14
@@ -123,7 +123,7 @@ $(function() {
           },
           messages:{
               email: {
-                  //remote: 'Email already exist in database'
+                  remote: 'Email already exist in database'
               },
               phone: {
                   minlength: 'Please enter at least 10 digits.'
@@ -427,3 +427,8 @@ $(function() {
 		}
 	});
 $('.phone').usphone();   
+$('#durationExample').timepicker({
+        'minTime': '09:00am',
+        'maxTime': '05:00pm',
+        'showDuration': true
+    });   
