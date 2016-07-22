@@ -770,11 +770,6 @@ $('#patient_id').on('change', function(){
     /*
     * Validate the form for creating new form by the Appt Setting 
     */
-//   var report_user_id = '';
-//   $('#saveAppointmentAfterReport').on('submit', function(){
-//        report_user_id = $('#saveAppointmentAfterReport #userId').val();
-//        alert(report_user_id);
-//   })
 
  $('#saveAppointmentAfterReport').validate({
           rules: {
@@ -908,6 +903,11 @@ function checkAppointmentTime(){
                     $('.followButton').show();
                 } else{
                     $('.followButton').hide();
+                }
+                if(combine.patient.patient_detail.patient_status == 0){
+                    $('#patientSaleStatus').val('0');
+                }else{
+                    $('#patientSaleStatus').val('1');
                 }
                 $('input[name=appointment_id]').val(combine.appointment.id);
                 $('input[name=appointment_request_id]').val(combine.appointment.request_id);
