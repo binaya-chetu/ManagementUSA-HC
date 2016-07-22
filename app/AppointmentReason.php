@@ -17,5 +17,9 @@ class AppointmentReason extends Model
     {
         return $this->belongsTo('App\ReasonCode', 'reason_id')->select(array('id', 'reason'));
     }
+    public function appointmentRequest(){
+         return $this->belongsTo('App\AppointmentRequest', 'request_id')->select(array('id', 'reason'));
+    }    
+      
     
 }
