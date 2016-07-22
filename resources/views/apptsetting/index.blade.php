@@ -295,6 +295,7 @@
                                     {{ Form::text('appTime', null, ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="form-group">
                             {{ Form::label('comment', 'Comment for Set', array('class' => 'col-sm-3 control-label mandatory')) }}

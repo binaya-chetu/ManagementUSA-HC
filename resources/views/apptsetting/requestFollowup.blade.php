@@ -3,6 +3,8 @@
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
+<link rel="stylesheet" href="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.css') }}" />
+<script src="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.js') }}"></script>
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Request Follow-Ups</h2>
@@ -39,7 +41,7 @@
             <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
-                        <th>Sr.</th>
+                        <th>#</th>
                         <th>Name</th>
                         <th>email</th>
                         <th>Phone</th>
@@ -141,7 +143,7 @@
                                        <div class="input-group"> 
                                            <span class="input-group-addon"> <i class="fa fa-calendar"></i> 
                                            </span> 
-                                           {{ Form::text('dob', $requestFollowup->dob , ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
+                                           {{ Form::text('dob', old('dob') , ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
                                        </div> 
                                        @if ($errors->has('dob')) 
                                        <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> 
@@ -150,30 +152,7 @@
                                    </div> 
                           </div> 
                        
-                    <div class="form-group">
-                        {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label mandatory')) }}
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                                {{ Form::text('created_date', date('m-d-Y'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker']) }}
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
-                                </span>
-                                {{ Form::text('created_time', date('H:i:s'), ['class' => 'form-control required', 'data-plugin-timepicker' ,'id' => 'durationExample']) }}
-                            </div>
-                        </div>
-                   
-                        {{ Form::hidden('createdBy', Auth::user()->id) }}
-                        {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
-                        {{ Form::hidden('user_id', null, ['id' => 'user_id']) }}  
-                           
-                    </div>
+                 
                  <div class="form-group">
                         {{ Form::label('status', 'Status', array('class' => 'col-sm-3 control-label call_label mandatory')) }}
                         <div class="col-sm-8">
@@ -193,7 +172,7 @@
                             </div>
                         </div>
                  </div> 
-              <div  id="nosetAppointment">
+                <div  id="nosetAppointment">
                         <div class="form-group">
                             {{ Form::label('reason_id', 'Reason Code', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
@@ -201,27 +180,6 @@
 
                             </div>
                         </div>
-                     
-                        <div class="form-group">
-                            {{ Form::label('followup', 'Follow-Up After One Week', ['class' => 'col-sm-3 control-label']) }}
-                            <div class="col-md-1">
-                                <div class="input-group">
-                                   
-                                    {{ Form::checkbox('followup_status', null, false, ['class' => 'followup_check', 'id' => 'followupWeek']) }}
-                                
-                                </div>
-                            </div>
-                            {{ Form::label('followup', 'OR', ['class' => 'col-sm-1 control-label']) }}
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    {{ Form::text('followup_date', null, ['class' => 'form-control selectDate', 'data-plugin-datepicker', 'placeholder' => 'Follow-Up Date', 'id' => 'followupDate']) }}
-                                </div>
-                            </div>
-                        </div>
-                  
                         <div class="form-group">
                             {{ Form::label('comment', 'Comment for No Set', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
@@ -231,38 +189,39 @@
                         </div>
                     </div>
                    <div  id="setAppointment">
+                          <div class="form-group">
+                        {{ Form::label('setDate', 'Set Date', array('class' => 'col-sm-3 control-label mandatory')) }}
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                               
+                                {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker','id' =>'calendarDate']) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                               {{ Form::text('appTime', null, ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}  
+                             
+                            </div>
+                        </div>
+                   
+                        {{ Form::hidden('createdBy', Auth::user()->id) }}
+                        {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
+                        {{ Form::hidden('user_id', null, ['id' => 'user_id']) }}  
+                           
+                    </div>
                         <div class="form-group">
                             {{ Form::label('reason_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
                                 {{ Form::select('reason_id', ['' => 'Choose the Reason'] + $reasonCode, null, ['class' => 'form-control required']) }}
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('appDate', 'Appointment Time', array('class' => 'col-sm-3 control-label mandatory')) }}
-
-                            <div class="col-md-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                    {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker', 'placeholder' => 'Choose Date', 'id' =>'calendarDate']) }}
-                                </div>
-                                @if ($errors->has('appDate'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('appDate') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </span>
-                                    {{ Form::text('appTime', null, ['class' => 'form-control required', 'placeholder' => 'Choose Time', 'id' => 'durationExample']) }}
-                                </div>
-                            </div>
-                        </div>
+                     
                         <div class="form-group">
                             {{ Form::label('comment', 'Comment for Set', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-md-6">
@@ -305,6 +264,13 @@
         $('#user_id').val($(this).attr('rel'));
     });
     
+
+     $('#durationExample').timepicker({
+        'minTime': '09:00am',
+        'maxTime': '05:00pm',
+        'showDuration': true
+    });        
+
 </script>
 
 @endsection
