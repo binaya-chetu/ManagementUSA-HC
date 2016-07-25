@@ -84,9 +84,13 @@ class ApptSettingController extends Controller {
     public function requestFollowUp() {
 
         $current_date = date('Y-m-d');
-        $requestFollowups = AppointmentRequest::with('patient', 'patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')->where('appointment_requests.status', 1)->where('appointment_requests.followup_date', $current_date)->get();
+        $requestFollowups = AppointmentRequest::with('patient', 'patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')
+                ->where('appointment_requests.status', 1)
+                ->where('appointment_requests.followup_date', $current_date)
+                ->where('appointment_requests.noSetStatus',0)
+                ->get();
         
-        ///  echo '<pre>'; print_r($requestFollowups->toArray());die;
+          ///echo '<pre>'; print_r($requestFollowups->toArray());die;
         
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
         $resources = AppointmentSource::lists('name', 'id');

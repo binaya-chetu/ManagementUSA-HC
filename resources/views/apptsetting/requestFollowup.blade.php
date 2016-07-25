@@ -238,7 +238,7 @@
             <footer class="panel-footer">
                 <div class="row">
                     <div class="col-md-12 text-right">
-                        {{ Form::button( 'Set Appointment', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type' => 'submit','id'=>'saveRequest')) }}
+                        {{ Form::button( 'Save', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type' => 'submit','id'=>'saveRequest')) }}
                     </div>
                 </div>
             </footer>
