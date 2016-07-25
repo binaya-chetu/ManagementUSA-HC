@@ -22,6 +22,7 @@ class CreateOrderDetailsTable extends Migration
             $table->decimal('save_amount',10,2);
             $table->decimal('total_amount', 10,2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

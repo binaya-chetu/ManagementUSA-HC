@@ -14,15 +14,16 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('user_id');  
-			$table->integer('agent_id');
-			$table->integer('package_id');
-			$table->integer('package_type');	
-			$table->decimal('subtotal_amount',10,2);
-			$table->decimal('discount_amount',10,2);
-			$table->decimal('total_amount', 10,2);
+            $table->integer('user_id');  
+            $table->integer('agent_id');
+            $table->integer('package_id');
+            $table->integer('package_type');	
+            $table->decimal('subtotal_amount',10,2);
+            $table->decimal('discount_amount',10,2);
+            $table->decimal('total_amount', 10,2);
             $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

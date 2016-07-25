@@ -227,33 +227,33 @@
                     </li>
                     @endif
                     @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent">
+                    <li class="nav-parent {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Accounting</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="nav-parent">
+                            <li class="nav-parent {{ Request::segment(2) === 'dailySalesReport' || Request::segment(2) === 'weeklySalesReport' || Request::segment(2) === 'monthlySalesReport' || Request::segment(2) === 'yearlySalesReport' ? 'nav-expanded' : null }}">
                                 <a href="#">
                                     Sales Reports
                                 </a>
                                 <ul class="nav nav-children">
-                                    <li>
+                                    <li class="{{ Request::segment(2) === 'dailySalesReport' ? 'nav-active nav-expanded' : null }}">
                                         <a href="{{ url('accounting/dailySalesReport')}}">
                                             Daily Reports
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="{{ Request::segment(2) === 'weeklySalesReport' ? 'nav-active nav-expanded' : null }}">
                                         <a href="{{ url('accounting/weeklySalesReport')}}">
                                             Weekly Reports
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="{{ Request::segment(2) === 'monthlySalesReport' ? 'nav-active nav-expanded' : null }}">
                                         <a href="{{ url('accounting/monthlySalesReport')}}">
                                             Monthly Reports
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="{{ Request::segment(2) === 'yearlySalesReport' ? 'nav-active nav-expanded' : null }}">
                                         <a href="{{ url('accounting/yearlySalesReport')}}">
                                             Yearly Reports
                                         </a>
