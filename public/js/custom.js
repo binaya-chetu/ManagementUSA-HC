@@ -595,7 +595,7 @@ $(document).ready(function() {
         }
     });
     
-   $("#requestfollowup").validate();
+  
 });
 
 	/**
@@ -844,7 +844,7 @@ $(document).on("click", ".patient_status", function(event) {
         });
                 $('#changeStatus').validate();
 
-    
+               $("#requestFollowup").validate();
     
 function showAppointmentCount(){
     $.ajaxSetup({
@@ -936,4 +936,3 @@ function checkAppointmentTime(){
             }
         });
     });
-     
