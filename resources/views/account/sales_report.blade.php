@@ -34,12 +34,13 @@
             </h2>
         </header>
         <div class="panel-body">
-          
+          <div class="row">
             @if(Session::has('flash_message'))
             <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em>{!! session('flash_message') !!}</em></div>
-            @endif	
+            @endif
+           </div>
             
-            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
                         <th>Sr. No.</th>
