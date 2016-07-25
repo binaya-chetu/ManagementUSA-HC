@@ -1,6 +1,9 @@
 @extends('layouts.common')
 
 @section('content')
+<style>
+    .form-horizontal .control-label { text-align: left; }
+</style>
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Add New Doctor</h2>

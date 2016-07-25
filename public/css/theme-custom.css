@@ -43,3 +43,5 @@ table.solidTdTags, table.solidTdTags td{ border: 1px solid #dddddd; }
 li a .badge { background: #D2312D; color: #FFF;	font-size: 10px; font-weight: normal; height: 16px; padding: 3px 5px 3px 5px; margin-left: 5px; right: -8px; top: -3px; }
 td span.badge { background: #47a447; color: #FFF;	font-size: 10px; font-weight: normal; height: 16px; padding: 3px 5px 3px 5px; margin-left: 5px; right: -8px; top: -3px; }
 th.countColoumn { border-left: none;}
+.form-horizontal .form-group { margin-left:0px; margin-right: 0px; }
+.form-bordered .form-group { padding-bottom: 0px;}
