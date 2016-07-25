@@ -507,17 +507,17 @@ Route::group(['middleware' => 'web'], function () {
     
     
     // Route for CartController in Shop Module.
-   Route::post('/cart/addProduct', [
+    Route::post('/cart/addProduct', [
             'uses' => 'CartController@addItem',
             'as' => 'cart.ddItem',
             //'middlaware' => ['acl:user_write']
        ]);
-   Route::get('/cart/removeItem/{productId}', [
+    Route::get('/cart/removeItem/{productId}', [
             'uses' => 'CartController@removeItem',
             'as' => 'cart.removeItem',
             //'middleware' => ['acl:user_write']
        ]);
-   Route::get('/cart/cart', [
+    Route::get('/cart/cart', [
             'uses' => 'CartController@showCart',
             'as' => 'cart.showCart',
             //'middleware' => ['acl:user_write']
@@ -536,72 +536,81 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'products.saveproducts',
             'middleware' => ['acl:product_imports_write']
 	]);
-
-
 	
-     
-	
-	Route::get('/categories/addcategories', [
+    Route::get('/categories/addcategories', [
             'uses' => 'CategoriesController@addcategories',
             'as' => 'categories.addcategories',
-			//'middleware' => ['acl:add_categories']	
-	]);	
-	
-	Route::post('/categories/saveCategories', [
+            //'middleware' => ['acl:add_categories']	
+        ]);	
+
+    Route::post('/categories/saveCategories', [
             'uses' => 'CategoriesController@saveCategories',
             'as' => 'categories.savecategories',
-			//'middleware' => ['acl:save_categories']	
+            //'middleware' => ['acl:save_categories']   
+        ]);
 
-	]);
-        
-        /*
-         * for invoice section
-         */
-        Route::get('/products/generateInvoice', [
-        'uses' => 'ProductsController@generateInvoice',
-        'as' => 'products.generateInvoice',
+    /*
+     * for invoice section
+     */
+    Route::get('/products/generateInvoice', [
+            'uses' => 'ProductsController@generateInvoice',
+            'as' => 'products.generateInvoice',
             //'middleware' => ['acl:save_categories']	
-         ]);
-        
-        /*
-         * for sending email with invoice
-         */
+        ]);
 
-        Route::get('/products/emailInvoice/{invoice_id}', [
-           'uses' => 'ProductsController@emailInvoice',
-           'as' => 'products.emailInvoice',
-               //'middleware' => ['acl:save_categories']	
-            ]);
-        /*
-         * for payment after checkout
-         */
-
-        Route::get('/products/paymentForm/', [
-           'uses' => 'ProductsController@paymentForm',
-           'as' => 'products.paymentForm',
-               //'middleware' => ['acl:save_categories']	
-            ]);
-        
-        
-//            Route::get('/products/emailInvoice/{invoiceid}', function($invoice_id) {
-////            $item = [
-////                 //'middleware' => ['acl:save_products']
-////                //'items' => App\Products::all(),
-////               // 'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
-////            ];
-//             // $pdf = PDF::loadView('pdf.invoice', $data);
-//              //return $pdf->download('invoice.pdf');
-//        //    return PDF::loadView('invoice.pdf', $factory)->stream();
-//        });
-
+    /*
+     * for sending email with invoice
+     */ 
+    Route::get('/products/emailInvoice/{invoice_id}', [
+            'uses' => 'ProductsController@emailInvoice',
+            'as' => 'products.emailInvoice',
+            //'middleware' => ['acl:save_categories']	
+        ]);
     
-            Route::get('pdf/{invoice_id}', function($invoice_id) {
-            $item = [
+    /*
+     * for payment after checkout
+     */ 
+    Route::get('/products/paymentForm/', [
+            'uses' => 'ProductsController@paymentForm',
+            'as' => 'products.paymentForm',
+            //'middleware' => ['acl:save_categories']	
+        ]);
+
+
+    Route::get('pdf/{invoice_id}', function($invoice_id) {
+    $item = [
             //'middleware' => ['acl:save_products']
-                'items' => App\Products::all(),
-                'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
-            ];
-            return PDF::loadView('invoice.pdf', $factory)->stream();
-        });
+            'items' => App\Products::all(),
+            'bag' => App\CartItem::where('invoice_id', $invoice_id)->first()
+        ];
+    return PDF::loadView('invoice.pdf', $factory)->stream();
+    });
+    
+    /*
+     * Route for AccountingController in Accounting Module
+     */ 
+    Route::get('/accounting/dailySalesReport', [
+            'uses' => 'AccountingController@dailySalesReport',
+            'as' => 'AccountingController.dailySalesReport',
+            //'middleware' => ['acl:save_categories']	
+        ]);
+    
+    Route::get('/accounting/weeklySalesReport', [
+            'uses' => 'AccountingController@weeklySalesReport',
+            'as' => 'AccountingController.weeklySalesReport',
+            //'middleware' => ['acl:save_categories']	
+        ]);
+    
+    Route::get('/accounting/monthlySalesReport', [
+            'uses' => 'AccountingController@monthlySalesReport',
+            'as' => 'AccountingController.monthlySalesReport',
+            //'middleware' => ['acl:save_categories']	
+        ]);
+    
+    Route::get('/accounting/yearlySalesReport', [
+            'uses' => 'AccountingController@yearlySalesReport',
+            'as' => 'AccountingController.yearlySalesReport',
+            //'middleware' => ['acl:save_categories']	
+        ]);
 
 });
