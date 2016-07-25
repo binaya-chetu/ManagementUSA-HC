@@ -26,7 +26,8 @@
         <link rel="stylesheet" href="{{ URL::asset('/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/select2/select2.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/jquery-datatables-bs3/assets/css/datatables.css') }}" />
-        <link rel="stylesheet" href="{{ URL::asset('/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css') }}" />
+<!--        <link rel="stylesheet" href="{{ URL::asset('/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css') }}" />-->
+        <link rel="stylesheet" href="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/fullcalendar/fullcalendar.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/fullcalendar/fullcalendar.print.css') }}" media="print" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/select2/select2.css') }}" />
@@ -82,7 +83,8 @@
         <script src="{{ URL::asset('vendor/jquery-datatables-bs3/assets/js/datatables.js') }}"></script>
 
         <script src="{{ URL::asset('vendor/bootstrap-confirmation/bootstrap-confirmation.js') }}"></script>
-        <script src="{{ URL::asset('vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>	
+<!--        <script src="{{ URL::asset('vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>	-->
+        <script src="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.js') }}"></script>
         <script src="{{ URL::asset('vendor/fullcalendar/lib/moment.min.js') }}"></script>
         <script src="{{ URL::asset('vendor/fullcalendar/fullcalendar.js') }}"></script>   
         <script src="{{ URL::asset('vendor/bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>

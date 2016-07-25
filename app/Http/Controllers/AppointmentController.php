@@ -257,26 +257,34 @@ class AppointmentController extends Controller {
      */
 
     public function saveappointment(Request $request) {
-
+        
         $appointment = Appointment::find($request->appointment_id);
         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
         $appointment->lastUpdatedBy = $request->lastUpdatedBy;
-        $appointment->patient_id = $request->patient_id;
-        $appointment->doctor_id = $request->doctor_id;
-        $appointment->marketer = $request->marketer;
-        $appointment->clinic = $request->clinic;
+        $appointment->patient_id = $appointment->patient_id;
+        //$appointment->doctor_id = $request->doctor_id;
         $appointment->comment = $request->comment;
-        $patient = User::find($request->patient_id);
+        $patient = User::find($appointment->patient_id);
+        if(!empty($request['email'])){
+                $userCheck = User::where('email', '=', $request['email'])->where('id', '!=', $request->patient_id)->first();
+                if ($userCheck != null) {
+                        \Session::flash('error_message', 'Email id you provided is already registered.');
+                        return Redirect::back();
+                }				
+        }
         $patientInput['first_name'] = $request->first_name;
         $patientInput['last_name'] = $request->last_name;
-        $patientDetailData = Patient::where('user_id', $request->patient_id)->get();
+        
+        $patientInput['email'] = $request->email;
+        $patientDetailData = Patient::where('user_id', $appointment->patient_id)->get()->first();
+        //echo '<pre>';        print_r($patientDetailData->toArray());die;
         if ($request->dob) {
             $patientDetailInput['dob'] = date('Y-m-d', strtotime($request->dob));
         }
-        $patientDetailInput['gender'] = $request->gender;
+        //$patientDetailInput['gender'] = $request->gender;
         $patientDetailInput['phone'] = $request->phone;
         $patientDetailInput['address1'] = $request->address1;
-        if ($patient->fill($patientInput)->save() && $patientDetailData[0]->fill($patientDetailInput)->save()) {
+        if ($patient->fill($patientInput)->save() && $patientDetailData->fill($patientDetailInput)->save()) {
             $appointment->save();
             \Session::flash('flash_message', 'Appointment updated successfully.');
             return redirect()->back();
