@@ -14,13 +14,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-			 $table->integer('order_id');  
-			$table->integer('user_id');
-			$table->string('payment_type');
-			$table->decimal('total_amount',10,2);
-			$table->decimal('paid_amount',10,2);
-			$table->decimal('amount', 10,2);
+            $table->integer('order_id');  
+            $table->integer('user_id');
+            $table->string('payment_type');
+            $table->decimal('total_amount',10,2);
+            $table->decimal('paid_amount',10,2);
+            $table->decimal('amount', 10,2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
