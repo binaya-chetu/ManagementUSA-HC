@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
+use App\AppointmentRequest;
 use App\AdamsQuestionaires;
 use App\Doctor;
 use App\User;
@@ -182,12 +183,12 @@ class AppointmentController extends Controller {
 
     public function listappointment() {
 
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
+        $appointments = Appointment::with('patient', 'appointmentRequest.appointmentReasons', 'appointmentRequest.appointmentReasons.reasonCode')->orderBy('id', 'desc')->get();
+
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
-
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
-
+		
         return view('appointment.listappointment', [
             'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
@@ -293,9 +294,31 @@ class AppointmentController extends Controller {
      */
 
     public function deleteappointment($id = null) {
-        $id = base64_decode($id);
-        if (Appointment::find($id)->delete()) {
+        if (!($apptRequest = AppointmentRequest::where('id','=', base64_decode($id))->first())) {
+            App::abort(404, 'Page not found.');
+        }
+
+		if (AppointmentRequest::destroy(base64_decode($id))) {
             \Session::flash('flash_message', 'Appointment deleted successfully.');
+            return redirect()->back();
+        }
+    }
+	
+    /*
+     * Delete the Followup
+     * 
+     * @param $id as followup id
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function deletefollowup($id = null) {
+        if (!($followup = FollowUp::where('id','=', base64_decode($id))->first())) {
+            App::abort(404, 'Page not found.');
+        }
+
+		if (FollowUp::destroy(base64_decode($id))) {
+            \Session::flash('flash_message', 'Followup deleted successfully.');
             return redirect()->back();
         }
     }

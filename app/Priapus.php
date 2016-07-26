@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Priapus extends Model
 {
+	use SoftDeletes;
+	
     protected $table = 'priapus';
     protected $fillable = [
 		'id',
@@ -24,4 +27,9 @@ class Priapus extends Model
 		'created_at',
 		'updated_at'	
 	];
+	
+	public function user()
+	{
+		return $this->belongsTo('App\User', 'patient_id');
+	}	
 }

@@ -55,7 +55,8 @@
                             @endif
                         </td-->  
                         <td class="actions">
-                            <a href="/appointment/viewFollowup/{{ base64_encode($follow->id) }}" class="on-default" title="View"><i class="fa fa-eye"></i></a> 
+                            <a href="/appointment/viewFollowup/{{ base64_encode($follow->id) }}" class="on-default" title="View"><i class="fa fa-eye"></i></a>
+                            <a href="javascript:void(0)" data-href="/appointment/followup/delete/{{ base64_encode($follow->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 							
                         </td>
                     </tr>
                     @endforeach

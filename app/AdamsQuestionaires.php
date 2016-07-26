@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdamsQuestionaires extends Model
 {
+	use SoftDeletes;
+	
 	protected $table = 'adams_questionaires';
 	
 	protected $fillable = [
@@ -23,4 +26,9 @@ class AdamsQuestionaires extends Model
 		'created_at',
 		'updated_at'
     ];
+	
+	public function user()
+	{
+		return $this->belongsTo('App\User', 'patient_id');
+	}	
 }

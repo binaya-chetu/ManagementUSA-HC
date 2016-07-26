@@ -240,6 +240,12 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'appointment.delete',
             'middleware' => ['acl:appointment_setting_write']
         ]);
+		
+    Route::get('/appointment/followup/delete/{id}', [
+            'uses' => 'AppointmentController@deletefollowup',
+            'as' => 'appointment.followup.delete',
+            'middleware' => ['acl:appointment_setting_write']
+        ]);
     
     Route::post('/appointment/editpatientappointment', [
             'uses' => 'AppointmentController@editpatientappointment',

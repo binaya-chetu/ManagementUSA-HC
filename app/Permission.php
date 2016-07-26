@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\PermissionRole;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Permission extends Model
 {
+	use SoftDeletes;
     /**
      * The database table used by the model.
      *
