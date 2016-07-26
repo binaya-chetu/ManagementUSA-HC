@@ -89,7 +89,7 @@
                 <div class="input-group"> 
                     <span class="input-group-addon"> <i class="fa fa-calendar"></i> 
                     </span> 
-                    {{ Form::text('dob', old('dob'), ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
+                    {{ Form::text('dob', old('dob'), ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'patientdob']) }}
                 </div> 
                 @if ($errors->has('dob')) 
                 <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> 

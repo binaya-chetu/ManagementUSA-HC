@@ -158,7 +158,7 @@ $(function() {
     $('.selectDate').datepicker({
         startDate: today
     });
-    $('#dob').datepicker({
+    $('#patientdob').datepicker({
        endDate: new Date()
     });
     /* ------------------------------------ Appointment Follow Up Code --------------------------- */
