@@ -6,17 +6,12 @@
     <header class="page-header">
 
         <h2>
-            
             Appointments After Report
-            </h2>
+        </h2>
         </h2>
 
         <div class="right-wrapper pull-right">
-            @if(Request::segment(2) === 'upcomingappointments')
-            {!! Breadcrumbs::render('appointment.upcomingappointments') !!}
-            @else
-            {!! Breadcrumbs::render('appointment.listappointment') !!}
-            @endif
+            {!! Breadcrumbs::render('appointment.appointmentAfterReport') !!}
         
         </div>
     </header>
