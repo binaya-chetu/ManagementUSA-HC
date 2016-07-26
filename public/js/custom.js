@@ -204,7 +204,7 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-    $('#dob').val('');
+    //$('#dob').val('');
     $('#durationExample').on('blur', function(){
         checkAppointmentTime();       
     });
