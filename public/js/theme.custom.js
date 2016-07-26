@@ -158,6 +158,9 @@ $(function() {
     $('.selectDate').datepicker({
         startDate: today
     });
+    $('#patientdob').datepicker({
+       endDate: new Date()
+    });
     $('#dob').datepicker({
        endDate: new Date()
     });

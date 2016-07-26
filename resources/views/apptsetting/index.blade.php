@@ -187,7 +187,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    {{ Form::text('dob', old('dob'), ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth']) }}
+                                    {{ Form::text('dob', old('dob'), ['class' => 'form-control', 'data-plugin-datepicker', 'placeholder' => 'Date of Birth', 'id' =>'patientdob']) }}
                                 </div>
                             </div>
                         </div>
