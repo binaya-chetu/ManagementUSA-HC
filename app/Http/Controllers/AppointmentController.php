@@ -573,7 +573,6 @@ class AppointmentController extends Controller {
 		$user->middle_name		= $formData['middle_name'];
 		$user->last_name		= $formData['last_name'];
 		$user->email			= $formData['email'];
-		$user->role				= $formData['gender'];		
 		$user->save();
 
 		$patient = App\Patient::firstOrCreate(['user_id' => $id]);
