@@ -204,7 +204,8 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-    //$('#dob').val('');
+
+    $('#patientdob').val('');
     $('#durationExample').on('blur', function(){
         checkAppointmentTime();       
     });
@@ -305,9 +306,9 @@ $(document).ready(function() {
                     var date = Date.parse(combine.patient.patient_detail.dob) || 0;
 
                     if(date > 0){
-                        $('#dob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                        $('#patientdob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
                     } else{
-                        $('#dob').val('');
+                        $('#patientdob').val('');
                     }                       
                     $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
                 }
@@ -387,9 +388,9 @@ $(document).ready(function() {
                     var date = Date.parse(combine.patient.patient_detail.dob) || 0;
                         
                         if(date > 0){
-                            $('#dob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                            $('#patientdob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
                         } else{
-                            $('#dob').val('');
+                            $('#patientdob').val('');
                         }                     
                     $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
                 }
@@ -743,9 +744,9 @@ $('#patient_id').on('change', function(){
                 $('#phone').val(combine.phone);
                 var date = Date.parse(combine.dob) || 0;                        
                 if(date > 0){
-                    $('#dob').datepicker('setDate', moment(combine.dob).format('MM/DD/YYYY'));
+                    $('#patientdob').datepicker('setDate', moment(combine.dob).format('MM/DD/YYYY'));
                 } else{
-                    $('#dob').val('');
+                    $('#patientdob').val('');
                 }
                 $('#email').rules('remove', 'remote');
                 $('#patient_come').show();
@@ -938,7 +939,7 @@ function checkAppointmentTime(){
                 $('#phone').val(combine.patient.patient_detail.phone);
                 $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
                 $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
-                $('#dob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
+                $('#patientdob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
             }
         });
         $.magnificPopup.open({
