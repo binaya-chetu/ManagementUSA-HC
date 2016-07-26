@@ -12,7 +12,7 @@ class AddDeletedAtColumnToLabReportsTable extends Migration
      */
     public function up()
     {
-        Schema::table('adams_questionaires', function (Blueprint $table) {
+        Schema::table('lab_reports', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
