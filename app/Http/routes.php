@@ -611,5 +611,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'AccountingController.yearlySalesReport',
             //'middleware' => ['acl:save_categories']	
         ]);
+    
+    Route::get('/accounting/destroy/{id}', [
+            'uses' => 'AccountingController@destroy',
+            'as' => 'AccountingController.destroy',
+            //'middleware' => ['acl:save_categories']	
+        ]);
+    
+    Route::get('/accounting/show/{id}', [
+            'uses' => 'AccountingController@show',
+            'as' => 'AccountingController.show',
+            //'middleware' => ['acl:save_categories']	
+        ]);
 
 });

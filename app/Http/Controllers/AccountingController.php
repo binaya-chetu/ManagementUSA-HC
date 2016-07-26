@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use View;
+use App;
 use App\Order;
 use App\OrderDetail;
 
@@ -49,7 +54,15 @@ class AccountingController extends Controller
      */
     public function show($id)
     {
-        //
+        // find the user details by user id
+        if (!($order = Order::with('orderDetail', 'categories', 'categoryType', 'orderDetail.product')->find(base64_decode($id)))) 
+        {
+            App::abort(404, 'Page not found.');
+        }
+        //echo '<pre>';print_r($order);die;
+        return view('account.order_details', [
+            'order' => $order
+        ]);
     }
 
     /**

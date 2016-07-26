@@ -173,6 +173,7 @@ class PatientController extends Controller {
         $userInput['first_name'] = $request->first_name;
         $userInput['middle_name'] = $request->middle_name;
         $userInput['last_name'] = $request->last_name;
+        $userInput['email'] = $request->email;
         
         $patientData = Patient::where('user_id',$id)->get();
         
