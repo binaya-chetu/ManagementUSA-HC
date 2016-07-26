@@ -152,7 +152,7 @@ class PatientController extends Controller {
         }
         User::destroy(base64_decode($id));
         \Session::flash('flash_message', 'Data deleted successfully.');
-        return Redirect::back();
+        return Redirect::back(); 
     }
 
     public function updatePatient($id = null, Request $request) {

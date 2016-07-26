@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
+	use SoftDeletes;
+	
     /**
      * The database table used by the model.
      *
@@ -31,11 +34,6 @@ class Role extends Model
      * @return QueryBuilder
      */
     public function users()
-    {
-        return $this->belongsToMany('App\User');
-    }
-    
-    public function roleId()
     {
         return $this->hasMany('App\User', 'role');
     }

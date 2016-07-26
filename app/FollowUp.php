@@ -5,15 +5,24 @@ namespace App;
 use App\Appointment;
 use App\FollowupStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FollowUp extends Model {
 
+	use SoftDeletes;
+	
     protected $table = 'followups';
     protected $fillable = [
-        'action',
-        'status',
-        'comment',
-        'followup_later_date'
+		'id',
+		'appt_id',
+		'created_by',
+		'action',
+		'status',
+		'comment',
+		'followup_later_date',
+		'created_at',
+		'updated_at',
+		'deleted_at'
     ];
 
     public function appointment() {

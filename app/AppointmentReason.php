@@ -12,10 +12,9 @@ class AppointmentReason extends Model
 		'patient_id',
 		'request_id',
 		'reason_id',
-               'created_at',
-               'updated_at',
-               'deleted_at'
-
+		'created_at',
+		'updated_at',
+		'deleted_at'
     ];
      /**
      * hasOne Relationship Method for accessing the Appointment Reason
@@ -26,9 +25,8 @@ class AppointmentReason extends Model
     {
         return $this->belongsTo('App\ReasonCode', 'reason_id')->select(array('id', 'reason'));
     }
+	
     public function appointmentRequest(){
          return $this->belongsTo('App\AppointmentRequest', 'request_id')->select(array('id', 'reason'));
-    }    
-      
-    
+    }
 }

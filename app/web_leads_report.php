@@ -2,9 +2,12 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CreateItemsTable extends Migration
 {
+	use SoftDeletes;
+	
    public function up()
    {
        Schema::create('web_leads', function (Blueprint $table) {

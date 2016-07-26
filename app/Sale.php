@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
+	use SoftDeletes;
     //
     protected $fillable = 
     [
@@ -17,6 +19,11 @@ class Sale extends Model
         'credit_cd3',
         'check',
     ];
+	
+	public function user()
+	{
+		return $this->belongsTo('App\User', 'patient_id');
+	}	
     
     /**
      * Get the user that conducts the sale.
