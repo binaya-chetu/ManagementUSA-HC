@@ -596,38 +596,38 @@ Route::group(['middleware' => 'web'], function () {
      */ 
     Route::get('/accounting/dailySalesReport', [
             'uses' => 'AccountingController@dailySalesReport',
-            'as' => 'AccountingController.dailySalesReport',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.dailySalesReport',
+            'middleware' => ['acl:accounting_read']	
         ]);
     
     Route::get('/accounting/weeklySalesReport', [
             'uses' => 'AccountingController@weeklySalesReport',
-            'as' => 'AccountingController.weeklySalesReport',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.weeklySalesReport',
+            'middleware' => ['acl:accounting_read']	
         ]);
     
     Route::get('/accounting/monthlySalesReport', [
             'uses' => 'AccountingController@monthlySalesReport',
-            'as' => 'AccountingController.monthlySalesReport',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.monthlySalesReport',
+            'middleware' => ['acl:accounting_read']	
         ]);
     
     Route::get('/accounting/yearlySalesReport', [
             'uses' => 'AccountingController@yearlySalesReport',
-            'as' => 'AccountingController.yearlySalesReport',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.yearlySalesReport',
+            'middleware' => ['acl:accounting_read']	
         ]);
     
     Route::get('/accounting/destroy/{id}', [
             'uses' => 'AccountingController@destroy',
-            'as' => 'AccountingController.destroy',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.destroy',
+            'middleware' => ['acl:accounting_write']	
         ]);
     
     Route::get('/accounting/show/{id}', [
             'uses' => 'AccountingController@show',
-            'as' => 'AccountingController.show',
-            //'middleware' => ['acl:save_categories']	
+            'as' => 'accounting.show',
+            'middleware' => ['acl:accounting_read']	
         ]);
 
 });

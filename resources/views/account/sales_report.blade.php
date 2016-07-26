@@ -6,8 +6,15 @@
         <h2>Sale Report</h2>
 
         <div class="right-wrapper pull-right">
-           {!! Breadcrumbs::render('user.listUsers') !!}
-
+            @if(Request::segment(2) === 'dailySalesReport')
+                {!! Breadcrumbs::render('accounting.dailySalesReport') !!}
+            @elseif(Request::segment(2) === 'weeklySalesReport')
+                {!! Breadcrumbs::render('accounting.weeklySalesReport') !!}
+            @elseif(Request::segment(2) === 'monthlySalesReport')
+                {!! Breadcrumbs::render('accounting.monthlySalesReport') !!}
+            @elseif(Request::segment(2) === 'yearlySalesReport')
+                {!! Breadcrumbs::render('accounting.yearlySalesReport') !!}
+            @endif
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>

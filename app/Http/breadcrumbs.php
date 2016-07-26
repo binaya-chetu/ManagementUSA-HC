@@ -20,6 +20,11 @@ Breadcrumbs::register('apptsetting.webLead', function ($breadcrumbs) {
     $breadcrumbs->push('Appt. Settings / Web Leads', route('apptsetting.webLead'));
 });
 
+// Home / Appt. Settings / Request Follow-up
+Breadcrumbs::register('apptsetting.requestFollowUp', function ($breadcrumbs) {
+    $breadcrumbs->push('Appt. Settings / Request Follow-up', route('apptsetting.requestFollowUp'));
+});
+
 // Home / Appt. Settings / Appointments / Add New Appointment
 Breadcrumbs::register('appointment.newAppointment', function ($breadcrumbs) {
     $breadcrumbs->push('Appt. Settings / Appointments / Add New Appointment', route('appointment.newAppointment'));
@@ -46,9 +51,9 @@ Breadcrumbs::register('appointment.viewappointment', function ($breadcrumbs) {
     );
 });
 
-// Home / Appt. Settings / Appointments Followup List
+// Home / Appt. Settings / Followup Appointments
 Breadcrumbs::register('appointment.followup', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Appointments Followup List', route('appointment.followup'));
+    $breadcrumbs->push('Appt. Settings / Followup Appointments', route('appointment.followup'));
 });
 
 // Home / Appt. Settings / Appointments Followup List / View Followup
@@ -62,6 +67,26 @@ Breadcrumbs::register('appointment.viewFollowup', function ($breadcrumbs, $follo
 // Home / Appt. Settings / Upcoming Appointments
 Breadcrumbs::register('appointment.upcomingappointments', function ($breadcrumbs) {
     $breadcrumbs->push('Appt. Settings / Upcoming Appointments', route('appointment.upcomingappointments'));
+});
+
+// Home / Appt. Settings / Today Visit
+Breadcrumbs::register('appointment.todayVisits', function ($breadcrumbs) {
+    $breadcrumbs->push('Appt. Settings / Today Visit', route('appointment.todayVisits'));
+});
+
+// Home / Appt. Settings / Lab Appointments
+Breadcrumbs::register('appointment.labAppointments', function ($breadcrumbs) {
+    $breadcrumbs->push('Appt. Settings / Lab Appointments', route('appointment.labAppointments'));
+});
+
+// Home / Appt. Settings / Lab Ready Reports
+Breadcrumbs::register('appointment.labReadyAppointments', function ($breadcrumbs) {
+    $breadcrumbs->push('Appt. Settings / Lab Ready Reports', route('appointment.labReadyAppointments'));
+});
+
+// Home / Appt. Settings / Appointment After Report
+Breadcrumbs::register('appointment.appointmentAfterReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Appt. Settings / Appointment After Report', route('appointment.appointmentAfterReport'));
 });
 
 // Home / POS / Patients / Add New Patient
@@ -162,4 +187,24 @@ Breadcrumbs::register('categories.categoryDetails', function ($breadcrumbs, $id)
 // Home / Imports Product
 Breadcrumbs::register('categories.addcategories', function ($breadcrumbs) {
     $breadcrumbs->push('Imports Product', route('categories.addcategories'));
+});
+
+// Home / Accounting / Sales Reports / Daily Sales
+Breadcrumbs::register('accounting.dailySalesReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Sales Reports / Daily Sales', route('accounting.dailySalesReport'));
+});
+
+// Home / Accounting / Sales Reports / Weekly Sales
+Breadcrumbs::register('accounting.weeklySalesReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Sales Reports / Weekly Sales', route('accounting.weeklySalesReport'));
+});
+
+// Home / Accounting / Sales Reports / Monthly Sales
+Breadcrumbs::register('accounting.monthlySalesReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Sales Reports / Monthly Sales', route('accounting.monthlySalesReport'));
+});
+
+// Home / Accounting / Sales Reports / Yearly Sales
+Breadcrumbs::register('accounting.yearlySalesReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Sales Reports / Yearly Sales', route('accounting.yearlySalesReport'));
 });
