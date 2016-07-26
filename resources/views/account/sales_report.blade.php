@@ -57,7 +57,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(count($sales))
                     {{--*/ $i = 0 /*--}}
+                    {{--*/ $subAmount = 0 /*--}}
+                    {{--*/ $discountAmount = 0 /*--}}
+                    {{--*/ $totalAmount = 0 /*--}}
                     @foreach ($sales as $sale)
                     <tr class="gradeX">
                         <td>{{ ++$i }}</td>
@@ -66,16 +70,31 @@
                         <td>{{ $sale->categories->cat_name }}</td>
                         <td>{{ $sale->categoryType->name }}</td>
                         <td>{{ $sale->categories->duration_months }}</td>
-                        <td>{{ $sale->subtotal_amount }}</td>
-                        <td>{{ $sale->discount_amount }}</td>
-                        <td>{{ $sale->total_amount }}</td>
+                        <td>{{--*/ $subAmount += $sale->subtotal_amount /*--}}{{ $sale->subtotal_amount }}</td>
+                        <td>{{--*/ $discountAmount += $sale->discount_amount /*--}}{{ $sale->discount_amount }}</td>
+                        <td>{{--*/ $totalAmount += $sale->total_amount /*--}}{{ $sale->total_amount }}</td>
                         <td>{{ $sale->agent->first_name }} {{ $sale->agent->last_name }}</td>
                         <td class="actions">
                             <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a> |
                             <a href="javascript:void(0)" data-href="/accounting/destroy/{{ base64_encode($sale->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>
-                    @endforeach 
+                    @endforeach
+                    <tr>
+                        <td colspan="6">
+                            <strong>Total<strong>
+                        </td>
+                        <td class="center">
+                        <strong>{{ $subAmount }}<strong>
+                        </td>
+                        <td class="center">
+                        <strong>{{ $discountAmount }}<strong>
+                        </td>
+                        <td class="center">
+                            <strong>{{ $totalAmount }}</strong>
+                        </td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

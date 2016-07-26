@@ -25,7 +25,14 @@ class CategoriesController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-  
+    
+    /**
+    * This function is used to list all the package.
+    *
+    * @param void
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function listCategories() {
        
         $categories = DB :: table('categories')->get();
@@ -34,12 +41,25 @@ class CategoriesController extends Controller
         ]);
     }
 
-    
+    /**
+    * This function is used to fetch the layout for add new package.
+    *
+    * @param void
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function addNewCategory() {
         
         return view('categories.add_new_category');
     }
     
+    /**
+    * This function is used to save the new package in database.
+    *
+    * @param Request
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function saveCategory(Request $request) {
 
         $this->validate($request, [
@@ -59,6 +79,13 @@ class CategoriesController extends Controller
         }
     }
     
+    /**
+    * This function is used to fetch the details of particular package.
+    *
+    * @param Reuest, Id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function categoryDetails( $id = null, Request $request){
 
         try{
@@ -119,6 +146,8 @@ class CategoriesController extends Controller
             App::abort(404, $e->getMessage());
         }
     }
+    
+    
     public function updateUserStatus(Request $request)
     {
         $data = $request->all();

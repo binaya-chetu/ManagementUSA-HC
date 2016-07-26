@@ -51,16 +51,33 @@ class PatientController extends Controller {
         return view('patient.addPatient', ['states' => $stateArray]);
     }
     
+    /**
+    * This function is used to fetch all patient.
+    *
+    * @param void
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index($id = null) {
         if ($id == null) {
-            $patients = User::with('patientDetail', 'PatientDetail.patientStateName')->where('role', $this->role)->get();
+            $patients = User::with('patientDetail', 'PatientDetail.patientStateName')
+                    ->where('role', $this->role)
+                    ->orderBy('id', 'DESC')
+                    ->get();
             return view('patient.patients', ['patients' => $patients]);
         } else {
             $patient = Patient::find($id);
             return view('patient.patient', ['patient' => $patient]);
         }
     }
-
+    
+    /**
+    * This function is used to save the patient information in users table and patient details table.
+    *
+    * @param form data
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function save(Request $request) {
        
         $this->validate($request, [
@@ -95,7 +112,14 @@ class PatientController extends Controller {
         }
     }
     
-     public function saveAppointmentPatient(Request $request) {
+    /**
+    * This function is used to save the patient when an appointment is created or edited.
+    *
+    * @param form data
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function saveAppointmentPatient(Request $request) {
         $this->validate($request, [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -124,7 +148,14 @@ class PatientController extends Controller {
              return 0;
         }
     }
-
+    
+    /**
+    * This function is used to fetch the layout of edit form.
+    *
+    * @param Patient Id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function edit($id = null) {
         if (!($patient = User::with('patientDetail')->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
@@ -145,7 +176,14 @@ class PatientController extends Controller {
         ]);
        
     }
-
+    
+    /**
+    * This function is used to delete the patient data from user table and patient details table.
+    *
+    * @param void
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function delete($id = null) {
 		$user = User::find(base64_decode($id));
         if (!$user || $user->role != config("constants.PATIENT_ROLE_ID")) {
@@ -155,7 +193,14 @@ class PatientController extends Controller {
         \Session::flash('flash_message', 'Data deleted successfully.');
         return Redirect::back(); 
     }
-
+    
+    /**
+    * This function is used to update the patient details.
+    *
+    * @param Request data
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function updatePatient($id = null, Request $request) {
         
         if (!($userData = User::find($id))) {
@@ -249,7 +294,13 @@ class PatientController extends Controller {
         }
     }
 
-    // Fucntion for the common save for the patient Detail
+    /**
+    * This function is used to save the patient details in patient details table.
+    *
+    * @param request and user_id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function savePatientDetail($request, $userId) {
         $patient = new Patient;
         $patient->user_id = $userId;
@@ -299,7 +350,14 @@ class PatientController extends Controller {
             return 0;
         }
     }
-
+    
+    /**
+    * This function is used to view the patient details.
+    *
+    * @param patient_id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function view($id = null) {
        if (!($patient = User::with('patientDetail', 'PatientDetail.patientStateName', 'roleName')->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
