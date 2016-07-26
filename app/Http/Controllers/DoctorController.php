@@ -50,7 +50,10 @@ class DoctorController extends Controller {
     public function index() 
     {
         // get the doctors list to show on index page
-        $doctors = User::with('doctorDetail', 'DoctorDetail.doctorStateName')->where('role', $this->role)->get();
+        $doctors = User::with('doctorDetail', 'DoctorDetail.doctorStateName')
+                ->where('role', $this->role)
+                ->orderBy('id', 'DESC')
+                ->get();
         
         return view('doctor.index', ['doctors' => $doctors]);
     }
@@ -200,7 +203,14 @@ class DoctorController extends Controller {
             return redirect('/doctor/editdoctor');
         }
     }
-
+    
+    /**
+    * This function is used to delete the doctor from user table and doctor details table.
+    *
+    * @param user_id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function delete($id = null) {
 		$doctor = User::find(base64_decode($id));
         if (!$doctor || $doctor->role != config("constants.DOCTOR_ROLE_ID")) {
@@ -212,6 +222,13 @@ class DoctorController extends Controller {
         return Redirect::back();
     } 
     
+    /**
+    * This function is used to view the doctor details.
+    *
+    * @param user_id
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function view($id = null) {
         if (!($doctor = User::with('doctorDetail', 'UserDetail.userStateName', 'roleName')->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');

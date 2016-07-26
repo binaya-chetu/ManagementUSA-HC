@@ -148,6 +148,7 @@ class UserController extends Controller
     {
         // get all users except doctor and patient to show on listing page
         $users = User::with('roleName')->whereNotIn('role', [$this->doctor_role, $this->patient_role])
+                ->orderBy('id', 'DESC')
                 ->get();
         
         return view('user.index', [
