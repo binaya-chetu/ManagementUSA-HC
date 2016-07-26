@@ -155,7 +155,7 @@
     $(function() {
         $('.confirmation-callback').confirmation({
             onConfirm: function() {
-                var link = $('.confirmation-callback').data('href');
+                var link = $(this).attr('href');
                 window.location = ajax_url + link;
             }
         });
