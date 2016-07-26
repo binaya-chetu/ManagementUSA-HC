@@ -115,7 +115,7 @@
                             @if($appointmentTime >= $date)
                                 <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                             @endif
-                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
+                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->request_id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>
                     @endforeach
