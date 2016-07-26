@@ -112,7 +112,10 @@ class AccountingController extends Controller
      */
     public function dailySalesReport()
     {
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')->whereDate('created_at', '=', date('Y-m-d'))->orderBy('id', 'DESC')->get();
+        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+                ->whereDate('created_at', '=', date('Y-m-d'))
+                ->orderBy('id', 'DESC')
+                ->get();
         
         return view('account.sales_report', [
             'sales' => $sales
@@ -131,7 +134,8 @@ class AccountingController extends Controller
         $tillDate = \Carbon\Carbon::now()->toDateString();
         $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
                 ->whereBetween( \DB::raw('date(created_at)'), [$fromDate, $tillDate] )
-                ->orderBy('id', 'DESC')->get();
+                ->orderBy('id', 'DESC')
+                ->get();
         
         return view('account.sales_report', [
             'sales' => $sales
@@ -164,7 +168,10 @@ class AccountingController extends Controller
      */
     public function yearlySalesReport()
     {
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')->whereYear('created_at', '=', date('Y'))->orderBy('id', 'DESC')->get();
+        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+                ->whereYear('created_at', '=', date('Y'))
+                ->orderBy('id', 'DESC')
+                ->get();
         
         return view('account.sales_report', [
             'sales' => $sales
