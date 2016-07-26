@@ -147,7 +147,8 @@ class PatientController extends Controller {
     }
 
     public function delete($id = null) {
-        if (!($user = User::find(base64_decode($id)))) {
+		$user = User::find(base64_decode($id));
+        if (!$user || $user->role != config("constants.PATIENT_ROLE_ID")) {
             App::abort(404, 'Page not found.');
         }
         User::destroy(base64_decode($id));

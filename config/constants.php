@@ -15,9 +15,11 @@ return [
 	'PATIENT_ROLE_SLUG'				=> 'patient',
 	'PATIENT_ROLE_ID'				=> 6,
 	'DOCTOR_ROLE_SLUG'				=> 'doctor',
+	'DOCTOR_ROLE_ID'				=> 5,
 	'ADMIN_ROLE_SLUG'				=> 'admin',
 	'AUTHORS_ROLE_SLUG'				=> 'authors',
 	'USER_ROLE_SLUG'				=> 'user',
+	
 	'APPOINTMENT_SET_FLAG'			=> 0,
 	'APPOINTMENT_NO_SET_FLAG'		=> 1,
     'APPOINTMENT_AFTER_REPORT_FLAG'	=> 5

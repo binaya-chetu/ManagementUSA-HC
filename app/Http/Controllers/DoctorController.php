@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Config\Repository;
 use App\Doctor;
 use App\User;
 use App\Role;
@@ -201,9 +202,11 @@ class DoctorController extends Controller {
     }
 
     public function delete($id = null) {
-        if (!($doctor = User::find(base64_decode($id)))) {
+		$doctor = User::find(base64_decode($id));
+        if (!$doctor || $doctor->role != config("constants.DOCTOR_ROLE_ID")) {
             App::abort(404, 'Page not found.');
         }
+
         User::destroy(base64_decode($id));
         \Session::flash('flash_message', 'Doctor has been deleted successfully.');
         return Redirect::back();

@@ -55,6 +55,4 @@ class Patient extends Model {
     public function patientStateName() {
         return $this->belongsTo('App\State', 'state');
     }
-
-
 }

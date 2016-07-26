@@ -206,7 +206,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 				$user->patientDetail()->delete();
 				$user->adamsQuestionaires()->delete();
 				$user->appointmentRequest()->delete();
-				//$user->appointments()->delete();
 				$user->allergiesList()->delete();
 				$user->reason()->delete();
 				$user->cart()->delete();
@@ -222,6 +221,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 				$user->surgeryList()->delete();
 				$user->vitamins()->delete();
 				$user->weightLoss()->delete();				
+			} elseif($user->role == config("constants.DOCTOR_ROLE_ID")){
+				$user->doctorDetail()->delete();				
+			} else{
+				$user->userDetail()->delete();				
 			}
 		});
 	}	
