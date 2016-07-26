@@ -161,6 +161,9 @@ $(function() {
     $('#patientdob').datepicker({
        endDate: new Date()
     });
+    $('#dob').datepicker({
+       endDate: new Date()
+    });
     /* ------------------------------------ Appointment Follow Up Code --------------------------- */
     // hidden the fields of the followup form
     $('#showOnSchedule').hide();
