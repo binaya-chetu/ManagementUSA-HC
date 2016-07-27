@@ -59,7 +59,7 @@ class ProductsController extends Controller {
     }
 
     public function generateInvoice(Request $request) {
-            $user_id = 35;
+            $user_id = $request['id'];
             return view('products.invoice',['id' => $user_id]);
     }
     public function paymentForm(Request $request){
@@ -68,22 +68,22 @@ class ProductsController extends Controller {
     }
     public function emailInvoice($id){
            echo $id;
-          die;
-//        $input = Input::all();
-//        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
-//        {
-//            $message->to('mail@domain.net');
-//            $message->subject('Welcome to Laravel');
-//            $message->from('sender@domain.net');
-//            $message->attach('path_to_pdf_file', array(
-//                'as' => 'pdf-report.zip', 
-//                'mime' => 'application/pdf')
-//            );
-//        });
-        
-        // $this->user = $user;
-        /**************start from here*********************/
-//        $first_name = App::make('url')->to($url);
+              die;
+        //        $input = Input::all();
+        //        Mail::send('niweditaj@chetu.com', $data, function($message) use ($input)
+        //        {
+        //            $message->to('mail@domain.net');
+        //            $message->subject('Welcome to Laravel');
+        //            $message->from('sender@domain.net');
+        //            $message->attach('path_to_pdf_file', array(
+        //                'as' => 'pdf-report.zip', 
+        //                'mime' => 'application/pdf')
+        //            );
+        //        });
+
+                // $this->user = $user;
+                /**************start from here*********************/
+        //        $first_name = App::make('url')->to($url);
         \Mail::send('emails.patientInvoice', ['first_name' => $first_name],['last_name' => $last_name], function($message) {
             $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!')->attachment();
         });

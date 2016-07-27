@@ -69,9 +69,6 @@ class AddDeletedAtColumnToAllTables extends Migration
         Schema::table('invoice', function (Blueprint $table) {
             $table->softDeletes();
         });
-        Schema::table('lab_reports', function (Blueprint $table) {
-            $table->softDeletes();
-        });
         Schema::table('marketing_details', function (Blueprint $table) {
             $table->softDeletes();
         });

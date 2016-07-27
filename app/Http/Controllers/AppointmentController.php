@@ -1152,18 +1152,20 @@ class AppointmentController extends Controller {
         $readyappointments = Appointment::where('patient_status', '4')->count();
         $anotherAppointments = Appointment::where('relative_id', '!=',  '0')->count();
         $followup = FollowUp::count(); 
+         $current_date = date('Y-m-d');
+        $noSetRequest = App\AppointmentRequest::where('status',1)->where('noSetStatus',0)->where('followup_date', $current_date)->count();
         $appointment['appointments'] = $appointments;   
         $appointment['lab_appointment'] = $labAppointment;
         $appointment['upcoming_appointment'] = $upcomingAppointment;
         $appointment['visit_appointment'] = $visitAppointment;   
         $appointment['ready_appointment'] = $readyappointments;   
         $appointment['followup_appointment'] = $followup;   
-        $appointment['anotherAppointments'] = $anotherAppointments;   
-        
+        $appointment['anotherAppointments'] = $anotherAppointments; 
+        $appointment['requestFollowups'] = $noSetRequest; 
         echo json_encode($appointment);
         die;
     }
-
+        
     /**
      * Function for the showing the result for the LaB Appointment
      *
@@ -1192,5 +1194,5 @@ class AppointmentController extends Controller {
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }
-
+   
 }

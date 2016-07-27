@@ -319,6 +319,8 @@ $(document).ready(function() {
         }
         });
         });
+        
+        
         $('.list-edit').on('change', function() {
 
         $.ajaxSetup({
@@ -347,7 +349,7 @@ $(document).ready(function() {
         }
         });
         $.ajax({
-			type: "POST",
+                type: "POST",
                 url: "/appointment/editappointment",
                 data: {"id": text},
                 success: function(response) {
@@ -864,6 +866,7 @@ function showAppointmentCount(){
                 $('.followupCount').text(combine.followup_appointment);
                 $('.appointmentCount').text(combine.appointments);
                 $('.anotherAppointment').text(combine.anotherAppointments);
+                $('.requestCount').text(combine.requestFollowups);
             }
     });
 }
@@ -936,3 +939,47 @@ function checkAppointmentTime(){
             }
         });
     });
+       
+                $(document).on("click", ".request-follow-up", function(ev) {
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+        var user_id = $(this).attr('rel');
+        $.ajax({
+        type: "POST",
+                url: ajax_url + "/apptsetting/editRequestfollowup",
+                data: {"id": user_id },
+                success: function(response) {
+                    var combine = JSON.parse(response);
+                   // $('#requestComment').val(combine.requestFollowup.comment);
+                    $('#first-name').val(combine.patient.first_name);
+                    $('#last-name').val(combine.patient.last_name);                    
+                    
+                    if(combine.patient.email == ''){
+                        $('#email').val(combine.patient.email).prop('disabled', false);
+                    }
+                    else
+                    {
+                        $('#email').val(combine.patient.email).prop('disabled', true);
+                    }
+                    $('#phone').val(combine.patient.patient_detail.phone);
+                    $('#address1').val(combine.patient.patient_detail.address1);
+                    $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
+                    $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
+                    $('#durationExample').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
+
+                    var date = Date.parse(combine.patient.patient_detail.dob) || 0;
+
+                    if(date > 0){
+                        $('#dob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                    } else{
+                        $('#dob').val('');
+                    }                       
+                    $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+                }
+        });
+       
+        });
+        
