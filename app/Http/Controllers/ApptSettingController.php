@@ -82,23 +82,41 @@ class ApptSettingController extends Controller {
      * @return \resource\view\apptsetting\requestFollowUp
      */
     public function requestFollowUp() {
-
         $current_date = date('Y-m-d');
         $requestFollowups = AppointmentRequest::with('patient', 'patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')
                 ->where('appointment_requests.status', 1)
                 ->where('appointment_requests.followup_date', $current_date)
                 ->where('appointment_requests.noSetStatus',0)
-                ->get();
-        
-          ///echo '<pre>'; print_r($requestFollowups->toArray());die;
-        
-        $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
-        $resources = AppointmentSource::lists('name', 'id');
-        $reasonCode = ReasonCode::lists('reason', 'id')->toArray();
-        return view('apptsetting.requestFollowup', [
-            'requestFollowups' => $requestFollowups, 'reasonCode' => $reasonCode, 'noSetReasonCode' => $noSetReasonCode, 'resources' => $resources]);
+                ->get();   
+           $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+           $resources = AppointmentSource::lists('name', 'id');
+           $reasonCode = ReasonCode::where('type','1')->lists('reason', 'id')->toArray();
+          return view('apptsetting.requestFollowup', [
+            'requestFollowups' => $requestFollowups, 'noSetReasonCode' => $noSetReasonCode, 'reasonCode'=>$reasonCode,'resources' => $resources]);
     }
-
+    
+    
+    /*
+     * 
+     * Edit Request-Followups 
+     * 
+     * 
+     */
+     
+     public function editRequestfollowup(Request $request) {
+        $current_date = date('Y-m-d');
+        $requestFollowup = AppointmentRequest::with('patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')->find($request['id']);
+        echo "hello nivi";
+        $noSetReason = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+        $resource = AppointmentSource::lists('name', 'id');
+        $reason = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
+        $combine = array();
+        $combine['requestFollowup'] = $requestFollowup;
+        $combine['noSetReason'] = $noSetReason;
+        $combine['reason'] = $reason;
+        echo json_encode($combine);
+        die;
+    }
     /*
      * Save the Marketign Calls 
      * 
@@ -116,16 +134,15 @@ class ApptSettingController extends Controller {
 
         if($formData['status'] == 1){
 			$formData['reason_id'] = $formData['noset_reason_id'];
-		}
-        
-        
+                        
+        }
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
         if (!$patientRole || !($patientRole = $patientRole->id)) {
             App::abort(404, 'Cannot fetch role from database.');
         }
-
-        $id = $formData['user_id'];
-       $user = App\User::firstOrCreate(['id' => $id]);
+        
+          $id = $formData['user_id'];
+          $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;
 
         if (!empty($formData['email'])) {
@@ -198,7 +215,7 @@ class ApptSettingController extends Controller {
             }
         }
         else{
-            
+           
              $user->first_name = $request->first_name;
              $user->last_name = $request->last_name;
              $user->email = $request->email;
@@ -517,5 +534,5 @@ class ApptSettingController extends Controller {
             return redirect()->back();
         }
     }
-
+    
 }

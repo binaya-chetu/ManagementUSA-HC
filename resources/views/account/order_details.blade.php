@@ -5,13 +5,7 @@
     <header class="page-header">
         <h2>Order Details</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="{{url('/')}}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+            {!! Breadcrumbs::render('accounting.show', $order->id) !!}
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -38,10 +32,10 @@
                             <tr>
                                 <td>{{ $item->product_sku }}</td>
                                 <td>{{ $item->product->name }}</td>
-                                <td class="center">{{ $item->unit_price }}</td>
+                                <td class="center">${{ $item->unit_price }}</td>
                                 <td class="center">{{ $item->quantity }}</td>
-                                <td class="center">{{--*/ $price = ($item->unit_price)*($item->quantity) /*--}} {{ $price }}</td>
-                                <td class="center">{{ $item->total_amount }}</td>
+                                <td class="center">{{--*/ $price = ($item->unit_price)*($item->quantity) /*--}} ${{ $price }}</td>
+                                <td class="center">${{ $item->total_amount }}</td>
                             </tr>
                             @endforeach	
                             <tr>
@@ -49,7 +43,7 @@
                                     <strong>Sub Total Amount<strong>
                                 </td>
                                 <td colspan="2" class="center">
-                                <strong>{{ $order->subtotal_amount }}<strong>
+                                <strong>${{ $order->subtotal_amount }}<strong>
                                 </td>
                             </tr>
                             <tr>
@@ -58,7 +52,7 @@
                                 </td>
                                 
                                 <td colspan="2" class="center">
-                                <strong>{{ $order->discount_amount }}<strong>
+                                <strong>${{ $order->discount_amount }}<strong>
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +61,7 @@
                                 </td>
                                 
                                 <td colspan="2" class="center">
-                                    <strong>{{ $order->total_amount }}</strong>
+                                    <strong>${{ $order->total_amount }}</strong>
                                 </td>
                             </tr>
                         </tbody>

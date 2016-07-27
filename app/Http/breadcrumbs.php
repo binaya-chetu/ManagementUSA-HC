@@ -208,3 +208,8 @@ Breadcrumbs::register('accounting.monthlySalesReport', function ($breadcrumbs) {
 Breadcrumbs::register('accounting.yearlySalesReport', function ($breadcrumbs) {
     $breadcrumbs->push('Accounting / Sales Reports / Yearly Sales', route('accounting.yearlySalesReport'));
 });
+
+// Home / Accounting / Sales Reports / Order Details
+Breadcrumbs::register('accounting.show', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('Accounting / Sales Reports / Order Details', route('accounting.show', $id));
+});

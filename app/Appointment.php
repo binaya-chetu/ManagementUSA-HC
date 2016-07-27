@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-
 use App\Patient;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
