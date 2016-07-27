@@ -233,7 +233,11 @@
                             <span>Accounting</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="nav-parent {{ Request::segment(2) === 'dailySalesReport' || Request::segment(2) === 'weeklySalesReport' || Request::segment(2) === 'monthlySalesReport' || Request::segment(2) === 'yearlySalesReport' ? 'nav-expanded' : null }}">
+                            <li class="nav-parent {{ Request::segment(2) === 'dailySalesReport' 
+                                        || Request::segment(2) === 'weeklySalesReport' 
+                                        || Request::segment(2) === 'monthlySalesReport' 
+                                        || Request::segment(2) === 'yearlySalesReport' 
+                                        || Request::segment(2) === 'show' ? 'nav-expanded' : null }}">
                                 <a href="#">
                                     Sales Reports
                                 </a>
