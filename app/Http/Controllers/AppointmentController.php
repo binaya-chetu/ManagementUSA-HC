@@ -183,8 +183,8 @@ class AppointmentController extends Controller {
 
     public function listappointment() {
 
-        $appointments = Appointment::with('patient', 'appointmentRequest.appointmentReasons', 'appointmentRequest.appointmentReasons.reasonCode')->orderBy('id', 'desc')->get();
-
+        $appointments = Appointment::with('patient',  'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
+        //echo '<pre>';print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -688,7 +688,7 @@ class AppointmentController extends Controller {
 		
 		if(isset($formData['disease_id']) && !empty($formData['disease_id'])){
 			$data = json_decode($formData['disease_id']);
-			$deletedCount = App\AppointmentReasons::where('patient_id', $id)->delete();
+			$deletedCount = App\AppointmentReasons::where('patient_id', $id)->forceDelete();
 			foreach($data as $row){
 				$reason = new App\AppointmentReasons;
 				$reason->patient_id = $id;
