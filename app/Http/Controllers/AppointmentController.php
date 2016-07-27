@@ -462,7 +462,8 @@ class AppointmentController extends Controller {
         $testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
         $vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
         $cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
-        $labReports = DB::table('lab_reports')->where('patient_id', $id)->pluck('file', 'appointments_id');
+        $labReports = DB::table('lab_reports')->where('patient_id', $id)->get();
+
         if (!$patient) {
             App::abort(404, 'Patient with given id was not found.');
         }
@@ -1155,7 +1156,9 @@ class AppointmentController extends Controller {
 				} else {
 					$destinationPath = 'uploads/lab_reports'; // upload path
 					$extension = $file->getClientOriginalExtension();
-					$files[] =  array('patient_id' => $request->patient_id, 'appointments_id' => $request->appointment_id, 'file' => md5(uniqid(time(), true)).'.'.$extension, 'created_at'=>date('Y-m-d H:i:s'), 'updated_at'=> date('Y-m-d H:i:s'));					
+					$fileFullName = $file->getClientOriginalName();
+					$fileOriName = explode('.'.$extension, $fileFullName)[0];	
+					$files[] =  array('patient_id' => $request->patient_id, 'appointments_id' => $request->appointment_id, 'file' => md5(uniqid(time(), true)).'.'.$extension, 'created_at'=>date('Y-m-d H:i:s'), 'file_name' => $fileOriName, 'updated_at'=> date('Y-m-d H:i:s'));					
 					$file->move($destinationPath, $files[$i]['file']);		
 				}
 			}

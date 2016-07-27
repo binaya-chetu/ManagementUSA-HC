@@ -1,7 +1,7 @@
 @extends('layouts.common')
 
 @section('content')
- <link rel="stylesheet" href="{{ URL::asset('vendor/dropzone/css/dropzone.css') }}" />
+ <!--link rel="stylesheet" href="{{ URL::asset('vendor/dropzone/css/dropzone.css') }}" /-->
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
@@ -118,15 +118,17 @@
             </div>
 			<div class="form-group">
 			
-<div id="dropzonePreview" class="form-group dz-default dz-message dropzone-previews">
+<!--div id="dropzonePreview" class="form-group dz-default dz-message dropzone-previews">
   <span>Drop files</span>
-</div>			
+</div-->
+
+			
 			</div>
 			
 			<!--div class="form-group" id="labFilesUpload">
 				{{ Form::label('labFiles', 'Upload Lab report files', array('class' => 'col-sm-4 control-label')) }}
 				<div class="col-md-6">                                   
-					{{ Form::file('labFiles', null, ['class' => 'form-control input']) }}
+					{{ Form::file('labFiles', null, ['class' => 'form-control input', 'multiple' => 'multiple']) }}
 				</div>	
 			</div-->      
         </div>
@@ -140,7 +142,9 @@
         </footer>
     </section>
     {{ Form::close() }}  
- <script src="{{ URL::asset('vendor/dropzone/dropzone.min.js') }}"></script>
+	
+	
+ <!--script src="{{ URL::asset('vendor/dropzone/dropzone.min.js') }}"></script>
  <script>
  Dropzone.options.changeStatus = { // The camelized version of the ID of the form element
 
@@ -182,6 +186,24 @@
   }
 
 }
- </script>
+ </script-->
 </div>
+
+
+<!--script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.ui.widget.js') }}"></script>
+<script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.iframe-transport.js') }}"></script>
+<script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.fileupload.js') }}"></script>
+<script>
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
+});
+</script-->	
+
 @endsection

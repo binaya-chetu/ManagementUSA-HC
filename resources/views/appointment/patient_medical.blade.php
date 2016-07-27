@@ -13,6 +13,16 @@
     </header>
 @endif
     <div class="row">
+		<section>
+		<div class="panel-body">
+			<h3>Lab reports</h3>
+			<ul>
+				<?php foreach($labReports as $i => $row){ ?>
+					<li><a href="{{ URL::asset('uploads/lab_reports/'.$row->file)  }}" target="_blank">{{ $row->file_name }}</a></li>
+				<?php } ?>
+			</ul>
+		</div>
+		</section>	
         <section class="panel form-wizard" id="w3">
             <header class="panel-heading">
                 <div class="panel-actions">
@@ -1466,8 +1476,7 @@
             } else {
                 $('.selectSex').hide();
             }
-        });
-
+        });	
     });
 
     /** 
@@ -1551,7 +1560,6 @@
 //            }
 //        });
 //    });
-
 </script>
 @endsection
 

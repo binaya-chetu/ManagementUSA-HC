@@ -17,6 +17,7 @@ class CreateLabReportsTable extends Migration
             $table->integer('patient_id');
             $table->integer('appointments_id');
             $table->string('file', 255);
+			$table->string('file_name', 255)->comment('Original name of file uploaded');
             $table->timestamps();
         });
     }

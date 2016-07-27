@@ -598,12 +598,13 @@ $(document).ready(function() {
 	
 	$(document).on('change', $("#changeStatus").find('select[name="patient_status"]'), function(){
 		var val = $("#changeStatus").find('select[name="patient_status"]').val();
-		if(val == ""){
+		//4 is for ready lab report
+		if(val != 4){ 
 			if($("#labFilesUpload").length != 0){
 				$("#labFilesUpload").remove();
 			}
 		} else{
-			var fileInput = '<div class="form-group" id="labFilesUpload"><label for="labFiles" class="col-sm-4 control-label">Upload Lab report files</label><div class="col-md-6"><input class="form-control input valid" type="file" name="labFiles[]"></div></div>';
+			var fileInput = '<div class="form-group" id="labFilesUpload"><label for="labFiles" class="col-sm-4 control-label">Upload Lab report files</label><div class="col-md-6"><input id="fileupload" type="file" name="labFiles[]" data-url="#" class="form-control input valid"  multiple></div></div>';
 			$("#changeStatus").find('.panel-body').append(fileInput);
 		}
 	});	
