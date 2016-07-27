@@ -52,20 +52,13 @@
                             <div class="bill-data text-right">
                                 <p class="mb-none">
                                     <span class="text-dark">Invoice Number</span>
-                                    <span class="value">Auto Generate	</span>
+                                    <span class="value">Inv0001	</span>
                                 </p>
                                 <p class="mb-none">
                                     <span class="text-dark">Patient Counsler</span>
-                                    <span class="value">Auto Generate</span>
+                                    <span class="value">Suresh </span>
                                 </p>
-                                <p class="mb-none">
-                                    <span class="text-dark">Invoice Number</span>
-                                    <span class="value">Auto Generate	</span>
-                                </p>
-                                <p class="mb-none">
-                                    <span class="text-dark">Patient Counsler</span>
-                                    <span class="value">Auto Generate</span>
-                                </p>
+                               
                             </div>
                         </div>
 

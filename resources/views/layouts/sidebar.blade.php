@@ -54,7 +54,7 @@
 
                             <li class="{{ Request::segment(2) === 'requestFollowUp' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/requestFollowUp') }}">
-                                   Request Follow-up
+                                   Request Follow-up<span class="badge requestCount"></span>
                                 </a>
                             </li>
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
