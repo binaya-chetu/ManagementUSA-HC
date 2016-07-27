@@ -77,9 +77,9 @@
                         <td>{{ $sale->categories->cat_name }}</td>
                         <td>{{ $sale->categoryType->name }}</td>
                         <td>{{ $sale->categories->duration_months }}</td>
-                        <td>{{--*/ $subAmount += $sale->subtotal_amount /*--}}{{ $sale->subtotal_amount }}</td>
-                        <td>{{--*/ $discountAmount += $sale->discount_amount /*--}}{{ $sale->discount_amount }}</td>
-                        <td>{{--*/ $totalAmount += $sale->total_amount /*--}}{{ $sale->total_amount }}</td>
+                        <td>{{--*/ $subAmount += $sale->subtotal_amount /*--}} ${{ $sale->subtotal_amount }}</td>
+                        <td>{{--*/ $discountAmount += $sale->discount_amount /*--}} ${{ $sale->discount_amount }}</td>
+                        <td>{{--*/ $totalAmount += $sale->total_amount /*--}} ${{ $sale->total_amount }}</td>
                         <td>{{ $sale->agent->first_name }} {{ $sale->agent->last_name }}</td>
                         <td class="actions">
                             <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a> |
@@ -92,13 +92,13 @@
                             <strong>Total<strong>
                         </td>
                         <td class="center">
-                        <strong>{{ $subAmount }}<strong>
+                        <strong>${{ $subAmount }}<strong>
                         </td>
                         <td class="center">
-                        <strong>{{ $discountAmount }}<strong>
+                        <strong>${{ $discountAmount }}<strong>
                         </td>
                         <td class="center">
-                            <strong>{{ $totalAmount }}</strong>
+                            <strong>${{ $totalAmount }}</strong>
                         </td>
                     </tr>
                     @endif
