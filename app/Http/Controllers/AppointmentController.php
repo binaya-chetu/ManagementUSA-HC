@@ -1128,7 +1128,10 @@ class AppointmentController extends Controller {
      */
 
     public function todayVisits() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->orderBy('id', 'DESC')->get();        
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')
+                ->whereIn('status', [4,5])
+                ->whereDate('apptTime', '=', date('Y-m-d'))
+                ->orderBy('id', 'DESC')->get();        
         $patients = User::where('role', $this->patient_role)->get();       
         return view('appointment.today_visits', [
             'appointments' => $appointments, 'patients' => $patients
