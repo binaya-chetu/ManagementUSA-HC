@@ -100,6 +100,8 @@
                                         break;
                                     case 5: echo "Never treat";
                                         break;
+                                    case 6: echo "Followup later";
+                                        break;
                                     default: echo "Unknown";
                                         break;
                                 }

@@ -42,7 +42,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-clock-o"></i>
                             </span>
-                            {{ Form::text('appTime', null, ['class' => 'form-control required', 'id' => 'durationExample']) }}
+                            {{ Form::text('appTime', null, ['class' => 'form-control required', 'id' => 'followupDuration']) }}
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
     {{ Form::close() }}  
 </div>
 <script>
-     $('#durationExample').timepicker({
+     $('#followupDuration').timepicker({
         'minTime': '09:00am',
         'maxTime': '05:00pm',
         'showDuration': true

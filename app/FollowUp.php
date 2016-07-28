@@ -28,6 +28,9 @@ class FollowUp extends Model {
     public function appointment() {
         return $this->belongsTo('App\Appointment', 'appt_id')->select('id', 'apptTime', 'patient_id', 'doctor_id', 'comment');
     }
+    public function schedule() {
+        return $this->hasOne('App\FollowupReschedule', 'followup_id');
+    }
     
     public function followupStatus() {
         return $this->belongsTo('App\FollowupStatus', 'action')->select('id', 'title');

@@ -46,7 +46,10 @@
                         <td>{{ ++$i }}</td>
                         <td><a class="defaultColor" href="/patient/view/{{ base64_encode($follow->appointment->patient->id) }}">{{ $follow->appointment->patient->first_name }} {{ $follow->appointment->patient->last_name }}</a></td>
                         <td>{{ date('d F Y H:ia', strtotime($follow->appointment->apptTime)) }}</td>
-                        <td>{{ $follow->followupStatus->title }}</td>  
+                        <td>{{ $follow->followupStatus->title }}
+                        @if($follow->action == 2 || $follow->action == 6)
+                            <?php echo ' on '.date('d F Y', strtotime($follow->schedule->appointment->apptTime)); ?> 
+                        @endif</td>  
                         <td>{{ date('d F Y H:ia', strtotime($follow->created_at)) }}</td>  
                         <!--td>@if($follow->status === 1)
                             Completed
