@@ -82,8 +82,8 @@
                         <td>{{--*/ $totalAmount += $sale->total_amount /*--}} ${{ $sale->total_amount }}</td>
                         <td>{{ $sale->agent->first_name }} {{ $sale->agent->last_name }}</td>
                         <td class="actions">
-                            <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a> |
-                            <a href="javascript:void(0)" data-href="/accounting/destroy/{{ base64_encode($sale->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
+                            <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a>
+                            <!--<a href="javascript:void(0)" data-href="/accounting/destroy/{{ base64_encode($sale->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a>-->
                         </td>
                     </tr>
                     @endforeach
