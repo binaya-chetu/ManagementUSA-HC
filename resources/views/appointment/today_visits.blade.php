@@ -83,6 +83,8 @@
                                         break;
                                     case 4: echo "Lab Report Ready";
                                         break;
+                                    case 5: echo "No Show";
+                                        break;
                                     default: echo "None";
                                         break;
                                 }
