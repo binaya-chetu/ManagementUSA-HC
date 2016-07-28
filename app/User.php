@@ -29,7 +29,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'middle_name', 'last_name', 'email', 'password', 'role', 'remember_token', 'status'];
+    protected $fillable = [
+		'id',
+		'first_name',
+		'middle_name',
+		'last_name',
+		'email',
+		'password',
+		'role',
+		'remember_token',
+		'status',
+		'created_at',
+		'updated_at',
+		'deleted_at'	
+	];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -205,7 +218,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 			if($user->role == config("constants.PATIENT_ROLE_ID")){		
 				$user->patientDetail()->delete();
 				$user->adamsQuestionaires()->delete();
-				$user->appointmentRequest()->delete();
 				$user->allergiesList()->delete();
 				$user->reason()->delete();
 				$user->cart()->delete();
@@ -220,7 +232,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 				//$user->sale()->delete(); 
 				$user->surgeryList()->delete();
 				$user->vitamins()->delete();
-				$user->weightLoss()->delete();				
+				$user->weightLoss()->delete();
+
+				$apptReq = AppointmentRequest::where('user_id', '=', $user->id)->get()->pluck('id');
+				if(sizeof($apptReq->toArray()) > 0){
+					AppointmentRequest::destroy($apptReq->toArray());		
+				}
+
+				
+				//$user->appointmentRequest()->delete();
 			} elseif($user->role == config("constants.DOCTOR_ROLE_ID")){
 				$user->doctorDetail()->delete();				
 			} else{
