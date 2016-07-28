@@ -8,10 +8,8 @@
                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                     {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
                     <div class="col-sm-8">
-                        {{ Form::hidden('patient_id') }}
-                        {{ Form::hidden('appointment_request_id') }}
-                        {{ Form::hidden('appointment_id') }}
-                        {{ Form::text('first_name', $requestFollowup['patient']->first_name, ['class' => 'form-control required', 'id' => 'first_name', 'placeholder' => 'First Name']) }}
+                       
+                        {{ Form::text('first_name',null, ['class' => 'form-control required', 'id' => 'first_name', 'placeholder' => 'First Name']) }}
                         @if ($errors->has('patient_id'))
                         <span class="help-block">
                             <strong>{{ $errors->first('first_name') }}</strong>
@@ -23,7 +21,7 @@
                 <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                     {{ Form::label('last_name', 'Last Name', array('class' => 'col-sm-3 control-label')) }}
                     <div class="col-sm-8">
-                        {{ Form::text('last_name', $requestFollowup['patient']->last_name , ['class' => 'form-control ', 'id' => 'last_name', 'placeholder' => 'Last Name']) }}
+                        {{ Form::text('last_name',null, ['class' => 'form-control ', 'id' => 'last_name', 'placeholder' => 'Last Name']) }}
                         @if ($errors->has('patient_id'))
                         <span class="help-block">
                             <strong>{{ $errors->first('last_name') }}</strong>
@@ -37,7 +35,7 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <span class="input-group-addon">@</span>
-                            {{ Form::email('email',$requestFollowup['patient']->email, ['class' => 'form-control ', 'id' => 'email', 'placeholder' => 'Email']) }}
+                            {{ Form::email('email',null, ['class' => 'form-control ', 'id' => 'email', 'placeholder' => 'Email']) }}
                         </div>
                         @if ($errors->has('email'))
                         <span class="help-block">
@@ -45,12 +43,22 @@
                         </span>
                         @endif
                     </div>
+                   
                 </div>
+               <div class="form-group">
+                            {{ Form::label('email_invitation', 'Allow to send invitation', ['class' => 'col-sm-3 control-label']) }}
+                            <div class="col-md-6">
+                                <div class="input-group">                                   
 
+                                    {{ Form::checkbox('email_invitation', null, false, ['class' => '']) }}                                
+
+                                </div>
+                            </div>                            
+                        </div>
                 <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                     {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label')) }}
                     <div class="col-sm-8">
-                        {{ Form::text('phone',  $phone , ['class' => 'form-control ', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
+                        {{ Form::text('phone', null , ['class' => 'form-control ', 'placeholder' => 'Phone', 'id' => 'phone', 'maxlength' => '14']) }}
                     </div>
                     @if ($errors->has('phone'))
                     <span class="help-block">
@@ -65,13 +73,14 @@
                         <div class="input-group"> 
                             <span class="input-group-addon"> <i class="fa fa-calendar"></i> 
                             </span>                           
-                            {{ Form::text('dob',null , ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
+                            {{ Form::text('dob', null , ['class' => 'form-control', 'data-plugin-datepicker', 'id' => 'dob']) }}
                         </div> 
                         @if ($errors->has('dob')) 
                         <span class="help-block"> <strong>{{ $errors->first('dob') }}</strong> 
                         </span>
                         @endif 
                     </div> 
+                     {{ Form::hidden('user_id', null, ['id' => 'user_id']) }} 
                 </div> 
 
 
@@ -118,8 +127,9 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
-
-                                {{ Form::text('appDate', old('appDate'), ['class' => 'form-control required selectDate', 'data-plugin-datepicker','id' =>'calendarDate']) }}
+                                
+                                {{ Form::text('appDate', null , ['class' => 'form-control required selectDate', 'data-plugin-datepicker','id' =>'calendarDate']) }}
+                                
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -134,7 +144,7 @@
 
                         {{ Form::hidden('createdBy', Auth::user()->id) }}
                         {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
-                        {{ Form::hidden('user_id', null, ['id' => 'user_id']) }} 
+                       
 
                     </div>
                     <div class="form-group">

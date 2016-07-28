@@ -271,6 +271,7 @@ $(document).ready(function() {
                 data: {"id": appointmentId },
                 success: function(response) {
                     var combine = JSON.parse(response);
+                   
                     if (combine.appointment.status < 2){
                     $('.followButton').show();
                     } else{
@@ -586,13 +587,18 @@ $(document).ready(function() {
             $('#followupDate').removeAttr('disabled');            
         }
     });
+    
      $('.callStatus').on('click', function() {
         var call_value = $(this).val();   
         if (call_value == 0) {
             $('#nosetAppointment').hide();
+            $("input, select, textarea", $("#nosetAppointment")).attr("disabled", "disabled");
+            $("input, select, textarea", $("#setAppointment")).removeAttr("disabled");
             $('#setAppointment').show();
         } else {
             $('#setAppointment').hide();
+            $("input, select, textarea", $("#setAppointment")).attr("disabled", "disabled");
+            $("input, select, textarea", $("#nosetAppointment")).removeAttr("disabled");
             $('#nosetAppointment').show();
         }
     });
@@ -953,31 +959,31 @@ function checkAppointmentTime(){
                 data: {"id": user_id },
                 success: function(response) {
                     var combine = JSON.parse(response);
-                   // $('#requestComment').val(combine.requestFollowup.comment);
-                    $('#first-name').val(combine.patient.first_name);
-                    $('#last-name').val(combine.patient.last_name);                    
-                    
-                    if(combine.patient.email == ''){
-                        $('#email').val(combine.patient.email).prop('disabled', false);
-                    }
-                    else
-                    {
-                        $('#email').val(combine.patient.email).prop('disabled', true);
-                    }
-                    $('#phone').val(combine.patient.patient_detail.phone);
-                    $('#address1').val(combine.patient.patient_detail.address1);
-                    $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
-                    $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
-                    $('#durationExample').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
-
-                    var date = Date.parse(combine.patient.patient_detail.dob) || 0;
+                    console.log(combine);
+                   // console.log(combine.requestFollowup.patient.first_name);
+                    $('#first_name').val(combine.requestFollowup.patient.first_name);
+                      $('#last_name').val(combine.requestFollowup.patient.last_name); 
+                     $('#requestComment').val(combine.comment);
+                   $('#email').val(combine.requestFollowup.patient.email);
+                                 
+//                    if(combine.requestFollowup.patient.email == ''){
+//                        $('#email').val(combine.requestFollowup.patient.email).prop('disabled', false);
+//                    }
+//                    else
+//                    {
+//                        $('#email').val(combine.requestFollowup.patient.email).prop('disabled', true);
+//                    }
+                    $('#phone').val(combine.requestFollowup.patient.patient_detail.phone);
+                    $('#address1').val(combine.requestFollowup.patient.patient_detail.address1);
+                   
+                    var date = Date.parse(combine.requestFollowup.patient.patient_detail.dob) || 0;
 
                     if(date > 0){
-                        $('#dob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                        $('#dob').datepicker('setDate', moment(combine.requestFollowup.patient.patient_detail.dob).format('MM/DD/YYYY'));
                     } else{
                         $('#dob').val('');
                     }                       
-                    $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+                   
                 }
         });
        

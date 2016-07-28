@@ -86,37 +86,31 @@ class ApptSettingController extends Controller {
         $requestFollowups = AppointmentRequest::with('patient', 'patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')
                 ->where('appointment_requests.status', 1)
                 ->where('appointment_requests.followup_date', $current_date)
-                ->where('appointment_requests.noSetStatus',0)
-                ->get();   
-           $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
-           $resources = AppointmentSource::lists('name', 'id');
-           $reasonCode = ReasonCode::where('type','1')->lists('reason', 'id')->toArray();
-          return view('apptsetting.requestFollowup', [
-            'requestFollowups' => $requestFollowups, 'noSetReasonCode' => $noSetReasonCode, 'reasonCode'=>$reasonCode,'resources' => $resources]);
+                ->where('appointment_requests.noSetStatus', 0)
+                ->get();
+
+        $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
+        $resources = AppointmentSource::lists('name', 'id');
+        $reasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
+        return view('apptsetting.requestFollowup', [
+            'requestFollowups' => $requestFollowups, 'noSetReasonCode' => $noSetReasonCode, 'reasonCode' => $reasonCode, 'resources' => $resources]);
     }
-    
-    
+
     /*
      * 
      * Edit Request-Followups 
      * 
      * 
      */
-     
-     public function editRequestfollowup(Request $request) {
-        $current_date = date('Y-m-d');
-        $requestFollowup = AppointmentRequest::with('patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')->find($request['id']);
-        echo "hello nivi";
-        $noSetReason = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
-        $resource = AppointmentSource::lists('name', 'id');
-        $reason = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
-        $combine = array();
+
+    public function editRequestfollowup(Request $request) {
+        $requestFollowup = AppointmentRequest::with('patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')->where('user_id', $request['id'])->get()->first();
+
         $combine['requestFollowup'] = $requestFollowup;
-        $combine['noSetReason'] = $noSetReason;
-        $combine['reason'] = $reason;
         echo json_encode($combine);
         die;
     }
+
     /*
      * Save the Marketign Calls 
      * 
@@ -126,23 +120,24 @@ class ApptSettingController extends Controller {
      */
 
     public function saveRequestFollowUp(Request $request) {
-      
-        $formData = $request->all(); 
+
+        $formData = $request->all();
+
         if (!$formData) {
             App::abort(404, 'Empty form data.');
         }
 
-        if($formData['status'] == 1){
-			$formData['reason_id'] = $formData['noset_reason_id'];
-                        
+        if ($formData['status'] == 1) {
+            $formData['reason_id'] = $formData['noset_reason_id'];
         }
+
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
         if (!$patientRole || !($patientRole = $patientRole->id)) {
             App::abort(404, 'Cannot fetch role from database.');
         }
-        
-          $id = $formData['user_id'];
-          $user = App\User::firstOrCreate(['id' => $id]);
+
+        $id = $formData['user_id'];
+        $user = App\User::firstOrCreate(['id' => $id]);
         $id = $user->id;
 
         if (!empty($formData['email'])) {
@@ -154,46 +149,46 @@ class ApptSettingController extends Controller {
         }
 
         if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {
-           
-             $user->first_name = $request->first_name;
-             $user->last_name = $request->last_name;
-             $user->email = $request->email;
-             $user->save();
-          
+
+            $user = User::where('id', $id)->first();
+            $user->first_name = $formData['first_name'];
+            $user->last_name = $formData['last_name'];
+            $user->email = $formData['email'];
+            $user->save();
+
             $patient = Patient::where('user_id', $id)->first();
             $patient->phone = $formData['phone'];
             $patient->dob = date('Y-m-d', strtotime($formData['dob']));
             $patient->save();
-           
+
             $appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
             $exist_request = App\AppointmentRequest::where('user_id', $id)->first();
             $appointment_requests->user_id = $id;
-            
+
             if (isset($exist_requests['marketing_phone'])) {
                 $appointment_requests->marketing_phone = $exist_request['marketing_phone'];
             }
-          
+
             $appointment_requests->created_by = Auth::user()->id;
             $appointment_requests->appt_source = $exist_request['appt_source'];
             $appointment_requests->status = $formData['status'];
             $appointment_requests->comment = $formData['comment'];
             $appointment_requests->followup_status = 0;
             $appointment_requests->save();
-         
-            $reason = new App\AppointmentReasons; 
+
+            $reason = new App\AppointmentReasons;
             $reason->patient_id = $id;
             $reason->reason_id = $formData['reason_id'];
             $reason->request_id = $appointment_requests->id;
             $reason->save();
-            
+
             $appointment = new App\Appointment;
-            //$appointment->relative_id = $relative_appointment['id'];
             $appointment->apptTime = date('Y-m-d H:i:s', strtotime($formData['appDate'] . " " . $formData['appTime']));
             $appointment->createdBy = Auth::user()->id;
             $appointment->patient_id = $user->id;
             $appointment->appt_source = $exist_request['appt_source'];
             $appointment->request_id = $appointment_requests->id;
-            
+
             if (isset($formData['email_invitation'])) {
                 $appointment->email_invitation = 1;
                 $user->hash = $patient->hash;
@@ -213,20 +208,20 @@ class ApptSettingController extends Controller {
             } else {
                 $appointment->save();
             }
-        }
-        else{
-           
-             $user->first_name = $request->first_name;
-             $user->last_name = $request->last_name;
-             $user->email = $request->email;
-             $user->save();
-          
+        } else {
+
+            $user = User::where('id', $id)->first();
+            $user->first_name = $formData['first_name'];
+            $user->last_name = $formData['last_name'];
+            $user->email = $formData['email'];
+            $user->save();
+
             $patient = Patient::where('user_id', $id)->first();
             $patient->phone = $formData['phone'];
             $patient->dob = date('Y-m-d', strtotime($formData['dob']));
             $patient->never_treat_status = 1;
             $patient->save();
- 
+
             $exist_request = AppointmentRequest::where('user_id', $id)->first();
             $appointment_requests = new App\AppointmentRequest;
             $appointment_requests->user_id = $id;
@@ -234,8 +229,8 @@ class ApptSettingController extends Controller {
             if (isset($exist_requests['marketing_phone'])) {
                 $appointment_requests->marketing_phone = $exist_request['marketing_phone'];
             }
-            $appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
 
+            $appointment_requests = AppointmentRequest::where(['user_id' => $id])->first();
             $appointment_requests->created_by = Auth::user()->id;
             $appointment_requests->appt_source = $exist_request['appt_source'];
             $appointment_requests->status = $formData['status'];
@@ -243,20 +238,20 @@ class ApptSettingController extends Controller {
             $appointment_requests->followup_status = 0;
             $appointment_requests->noSetStatus = 1;
             $appointment_requests->save();
-            
-            $reason = new App\AppointmentReasons; 
+
+            $reason = new App\AppointmentReasons;
             $reason->patient_id = $id;
             $reason->reason_id = $formData['reason_id'];
             $reason->request_id = $appointment_requests->id;
             $reason->save();
         }
-        
-         if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {
+
+        if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {
             \Session::flash('flash_message', 'Appointment added successfully.');
             return redirect()->action('ApptSettingController@requestFollowUp');
         } else {
             \Session::flash('flash_message', 'Appointment ended successfully.');
-            return  redirect()->action('ApptSettingController@requestFollowUp');
+            return redirect()->action('ApptSettingController@requestFollowUp');
         }
     }
 
@@ -280,9 +275,9 @@ class ApptSettingController extends Controller {
 
     public function saveAppointment(Request $request) {
         $formData = $request->all();
-		if($formData['status'] == 1){
-			$formData['reason_id'] = $formData['noset_reason_id'];
-		}
+        if ($formData['status'] == 1) {
+            $formData['reason_id'] = $formData['noset_reason_id'];
+        }
         if (!$formData) {
             App::abort(404, 'Empty form data.');
         }
@@ -470,7 +465,7 @@ class ApptSettingController extends Controller {
         $user->first_name = $formData['first_name'];
         $user->last_name = $formData['last_name'];
         $user->email = $formData['email'];
-        
+
         $user->save();
 
         $patient = Patient::where('user_id', $id)->first();
@@ -534,5 +529,5 @@ class ApptSettingController extends Controller {
             return redirect()->back();
         }
     }
-    
+
 }
