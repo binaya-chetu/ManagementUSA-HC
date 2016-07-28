@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
+use App\FollowupReschedule;
 use App\AppointmentRequest;
 use App\AdamsQuestionaires;
 use App\Doctor;
@@ -352,6 +353,7 @@ class AppointmentController extends Controller {
      */
     public function saveAppointmentFolloup(Request $request) {
         
+        //echo '<pre>'; print_r($request->all());die;
         $appointment = Appointment::where('id', '=', $request->appointment_id)->get()->first();        
         if (!($appointment)) {
             App::abort(404, 'Page not found.');
@@ -367,6 +369,7 @@ class AppointmentController extends Controller {
             case '2' :
                 $appointment->status = $request->action;
                 $appointment->save(); // save the updated status in pre appointment 
+                $old_appointment_id = $appointment->id;
                 unset($appointment->id); // Unset the id of first appointment
                 unset($appointment->status); // Unset the status of first appointment
                 $newAppointment = new Appointment(); //create a new object for new entry in appointment table
@@ -377,11 +380,20 @@ class AppointmentController extends Controller {
             case '3' :
                 $appointment->status = $request->action;
                 $appointment->save();
+                
                 break;
-            case '1' :
-                $followUp->followup_later_date = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
-                $appointment->status = $request->action;
+            case '6' :
+                $followUp->followup_later_date = date('Y-m-d H:i:s', strtotime($request->appDate));
+                $appointment->status = $request->action;               
                 $appointment->save();
+                $old_appointment_id = $appointment->id;
+                unset($appointment->id); // Unset the id of first appointment
+                unset($appointment->status); // Unset the status of first appointment
+                $newAppointment = new Appointment(); //create a new object for new entry in appointment table
+                $input = $appointment->toArray();     
+                $date = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));                
+                $input['apptTime'] = date('Y-m-d H:i:s',strtotime($date . "+1 days"));
+                $newAppointment->fill($input)->save();
                 break;
             case '5' :
                 if (!($patient = Patient::where('user_id', $appointment->patient_id)->get()->first())) {
@@ -403,6 +415,13 @@ class AppointmentController extends Controller {
         $followUp->created_by = Auth::user()->id;
         $followUp->comment = $request->comment;
         $followUp->save();
+        if($request->action == 2 || $request->action == 6){
+            $followupReschedule = new FollowupReschedule();
+            $followupReschedule->old_appointment_id = $old_appointment_id;
+            $followupReschedule->new_appointment_id = $newAppointment->id;
+            $followupReschedule->followup_id = $followUp->id;
+            $followupReschedule->save();
+        }
         \Session::flash('flash_message', 'Follow Up of this appointment has been updated');
         return redirect()->back();
     }
@@ -415,9 +434,9 @@ class AppointmentController extends Controller {
 
     public function followup()
     {
-        $followup = FollowUp::with(['appointment', 'followupStatus', 'appointment.patient' => function($query) {
+        $followup = FollowUp::with(['appointment', 'followupStatus', 'schedule', 'schedule.appointment', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
-            }])->orderBy('id', 'DESC')->get(); 			
+            }])->orderBy('id', 'DESC')->get(); 		        
         return view('appointment.followup', ['followup' => $followup]);
     }
 
@@ -541,7 +560,7 @@ class AppointmentController extends Controller {
      */
 
     public function upcomingappointments() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->orderBy('id', 'DESC')->get();
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->whereNotIn('status', [ 2, 6])->orderBy('id', 'DESC')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
@@ -1196,7 +1215,7 @@ class AppointmentController extends Controller {
         $appointment = array();
         $appointments = Appointment::count();
         $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();
-        $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->count();
+        $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->whereNotIn('status', [ 2, 6])->count();
         $visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
         $readyappointments = Appointment::where('patient_status', '4')->count();
         $anotherAppointments = Appointment::where('relative_id', '!=',  '0')->count();

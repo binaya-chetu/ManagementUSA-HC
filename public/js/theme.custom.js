@@ -194,18 +194,18 @@ $(function() {
     
     // Code for the click event on the scheduling the code
     $('input:radio[name="action"]').on('change', function(){
-        if ($('#optionsRadios2').is(':checked')) {
+        if ($('#optionsRadios1').is(':checked')) {
             $('#showOnlySchedule').show();
-             $('#showOnSchedule').show();
-             
-        }else if ($('#optionsRadios3').is(':checked')){
+             $('#showOnSchedule').show();             
+        }else if ($('#optionsRadios2').is(':checked')){
             $('#showOnlySchedule').hide();
              $('#showOnSchedule').show();
-        }else if ($('#optionsRadios1').is(':checked')){
+        }else if ($('#optionsRadios5').is(':checked')){
+         
             $('#timeOnSchedule').hide();
             $('#showOnlySchedule').show();
              $('#showOnSchedule').show();
-        }else if ($('#optionsRadios5').is(':checked')){
+        }else if ($('#optionsRadios4').is(':checked')){
             $('#showOnlySchedule').hide();
              $('#showOnSchedule').show();
         }else{
