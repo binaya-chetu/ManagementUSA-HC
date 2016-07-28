@@ -60,13 +60,13 @@ class CartController extends Controller
      * @return \resource\view\cart\cart
      */
     public function showCart(){
-		$cart = Cart::where('user_id', Auth::user()->id)->first();
+		
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
 		$category_id = $cart['category_id'];
 		$category_type_id = $cart['category_type_id'];
-		
 		$category = DB::table('categories')->find($category_id);
 		$category_type = DB::table('category_types')->find($category_type_id);
-		
+                
 		$category_details = DB::table('packages')
 			->leftJoin('products', 'packages.product_id', '=', 'products.id') 
 			->select('packages.product_count as p_count', 'packages.product_price as spl_price','products.*')
