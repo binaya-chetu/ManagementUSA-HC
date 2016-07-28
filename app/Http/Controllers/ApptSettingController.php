@@ -325,7 +325,6 @@ class ApptSettingController extends Controller {
             $appointment_requests->followup_date = date('Y-m-d', strtotime('+7 days'));
             $appointment_requests->followup_status = 1;
         } else {
-            $appointment_requests->followup_date = date('Y-m-d', strtotime($formData['followup_date']));
             $appointment_requests->followup_status = 0;
         }
         $appointment_requests->save();
