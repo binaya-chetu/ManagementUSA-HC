@@ -233,14 +233,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 				$user->surgeryList()->delete();
 				$user->vitamins()->delete();
 				$user->weightLoss()->delete();
-
 				$apptReq = AppointmentRequest::where('user_id', '=', $user->id)->get()->pluck('id');
 				if(sizeof($apptReq->toArray()) > 0){
 					AppointmentRequest::destroy($apptReq->toArray());		
 				}
-
-				
-				//$user->appointmentRequest()->delete();
 			} elseif($user->role == config("constants.DOCTOR_ROLE_ID")){
 				$user->doctorDetail()->delete();				
 			} else{
