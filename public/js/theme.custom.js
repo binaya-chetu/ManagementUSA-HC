@@ -435,3 +435,65 @@ $('#durationExample').timepicker({
         'maxTime': '05:00pm',
         'showDuration': true
     });   
+    
+ /*
+  * Jquery to sum the column price and display in footer. 
+  */   
+    $(document).ready(function() {
+    $('#sales_report').dataTable( {
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+//            total = api
+//                .column( 6 )
+//                .data()
+//                .reduce( function (a, b) {
+//                    return intVal(a) + intVal(b);
+//                } );
+ 
+            // Total price over this page
+            priceTotal = api
+                .column( 6, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+                
+            // Total price over this page
+            discountTotal = api
+                .column( 7, { page: 'current'} )
+                .data()
+                .reduce( function (c, d) {
+                    return intVal(c) + intVal(d);
+                }, 0 );
+                
+            // Total Amount over this page
+            totalAmount = api
+                .column( 8, { page: 'current'} )
+                .data()
+                .reduce( function (e, f) {
+                    return intVal(e) + intVal(f);
+                }, 0 );
+ 
+            // Update footer
+            $( api.column( 6 ).footer() ).html(
+                '$'+priceTotal
+            );
+            $( api.column( 7 ).footer() ).html(
+                '$'+discountTotal
+            );
+            $( api.column( 8 ).footer() ).html(
+                '$'+totalAmount
+            );
+        }
+    } );
+} );
