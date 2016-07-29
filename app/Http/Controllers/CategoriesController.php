@@ -316,4 +316,71 @@ class CategoriesController extends Controller
         return view('categories.add_categories');
 	}	
 
+    /**
+    * This function is used to fetch the details of particular package through the Ajax.
+    *
+    * @param Reuest, Id
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function selectCategoryDetail( Request $request){
+
+        try{
+            echo 'pre'; print_r($request->all());die;
+            $category = DB::table('categories')->where('id', $request->id)->get();
+            
+            if(empty($category)){
+                \Session::flash('error_message', 'Category Not found.');
+                return Redirect::back();
+            }
+       
+            $category_details = DB::table('packages')
+                ->leftJoin('products', 'packages.product_id', '=', 'products.id')            
+                ->leftJoin('category_types', 'packages.category_type', '=', 'category_types.id')
+                ->select('packages.product_count as p_count', 'packages.product_price as spl_price',
+                        'products.*',
+                        'category_types.name as package_type'
+                )
+                ->where('packages.category_id', $id)->orderBy('package_type', 'DESC')->get();
+
+            //echo "<pre>";print_r($category_details);die;
+
+            $category_info = [];
+            $pck_type = '';
+            $total_price = 0;
+			$products = [];
+			if(empty($category_details)){
+                            \Session::flash('error_message', 'This package is empty.');
+                            return Redirect::back();
+			}
+            foreach($category_details as $cat){			
+                if($pck_type != $cat->package_type){
+                    $pck_type = $cat->package_type;
+                    $category_info[$pck_type] = [];
+                    $category_info[$pck_type]['total_price'] = 0;
+					$category_info[$pck_type]['ori_price'] = 0;
+                }
+               //$category_info[$pck_type][] = $cat;
+                $category_info[$pck_type]['total_price'] += $cat->spl_price;
+                $category_info[$pck_type]['ori_price'] += $cat->price * $cat->p_count;
+				
+				if(!isset($products[$cat->name])){
+					$products[$cat->name] = [];
+					
+					$products[$cat->name]['Bronze'] = [];
+					$products[$cat->name]['Silver'] = [];
+					$products[$cat->name]['Gold'] = [];					
+				}
+				
+ 				$products[$cat->name]['price'] = $cat->price;
+				$products[$cat->name]['unit_of_measurement'] = $cat->unit_of_measurement;
+				$products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
+				$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price; 
+			}
+                        
+            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products]);            
+        } catch(\Exception $e){
+            App::abort(404, $e->getMessage());
+        }
+    }    
 }
