@@ -299,7 +299,12 @@ $(function() {
 
     var datatableInit = function() {
 
-        $('#datatable-default').dataTable();
+        $('#datatable-default').dataTable({
+            aoColumnDefs : [{
+                orderable : false, aTargets : [0] //disable sorting for the 1st column
+                }], 
+            order : []
+        });
 
     };
 

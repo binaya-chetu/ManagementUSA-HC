@@ -693,9 +693,13 @@ $(document).ready(function() {
                                                 sInfo: 'Please press CTR+P to print or ESC to quit'
                                         }
                                         ]
-                                }
-                        });
-                };
+                                },
+                                        aoColumnDefs : [{
+                                        orderable : false, aTargets : [0] //disable sorting for the 1st column
+                                        }], 
+                                    order : []
+                                });
+                        };
                 $(function() {
                 datatableInit();
                 });
