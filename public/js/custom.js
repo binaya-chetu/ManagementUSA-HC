@@ -1003,3 +1003,26 @@ function checkAppointmentTime(){
        
         });
         
+    $(document).on("change", "#selectCategory", function(ev) {
+        $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        var cat_id = $(this).val();
+        if(cat_id != ''){
+            $.ajax({
+                type: "POST",
+                url: ajax_url + "/categories/selectCategoryDetail",
+                data: {"id": cat_id },
+                success: function(response) {
+                    var combine = JSON.parse(response);
+           
+                }
+            });
+        }
+        //alert(cat_id);
+        
+       
+        });
+        

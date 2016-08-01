@@ -260,8 +260,7 @@ class CategoriesController extends Controller
         ];
 
         $validator = Validator::make($data, [
-			'categoryFile' => 'required|mimes:xls,xlsx',
-			'categoryFile' => 'between:0,1024' // file size must be from 0 kb to 1 mb
+			'categoryFile' => 'required|mimes:xls,xlsx|between:0,1024' // file size must be from 0 kb to 1 mb
 		], $messages);
 
         if ($validator->fails()) {
@@ -315,5 +314,5 @@ class CategoriesController extends Controller
     public function addcategories(){
         return view('categories.add_categories');
 	}	
-
+   
 }

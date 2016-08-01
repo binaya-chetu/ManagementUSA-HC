@@ -160,6 +160,22 @@
                         </ul>
                     </li>
                     @endif
+                    @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
+                    <li class="nav-parent {{ Request::segment(1) === 'sale' ? 'nav-active nav-expanded' : null }}">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Front Office Sale</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li class="{{ Request::segment(2) === 'index'  ? 'nav-active' : null }}">
+                                <a href="{{ url('/sale/index') }}">
+                                    Front Office Sale
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    @endif
                     @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
