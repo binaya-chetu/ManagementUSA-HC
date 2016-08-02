@@ -184,9 +184,9 @@ class AppointmentController extends Controller {
 
     public function listappointment() {
 
-        $appointments = Appointment::with('patient',  'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();        
-        print_r($appointments);die;
-        
+        $appointments = Appointment::with(['patient',  'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
         //echo '<pre>';print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
