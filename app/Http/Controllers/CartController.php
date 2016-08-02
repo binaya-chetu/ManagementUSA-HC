@@ -32,25 +32,40 @@ class CartController extends Controller
         
         $categoryId = $request->category_id;
         $categoryType = $request->category_type;
-		
+
         $category = DB::table('categories')->where('id', $categoryId)->get();
+
         if(empty($category)){
-            App::abort(404, 'Selected category not found.');
+			if(isset($request->request_type) && $request->request_type == 'json'){
+				return json_encode(['response' => false, 'msg' => 'Category not found']);
+			} else{
+				\App::abort(404, 'Selected category not found.');				
+			}
         }
 		
-		$cart = Cart::where('user_id',Auth::user()->id)->first();
+		$where = ['user_id' => Auth::user()->id, 'category_id' => $categoryId,'category_type_id' => $categoryType];
+		$cart = Cart::where($where)->first();
+
         if(!$cart){		
             $cart = new Cart();
             $cart->user_id = Auth::user()->id;
             $cart->category_id = $categoryId;
             $cart->category_type_id = $categoryType;
-            $cart->save();			
-            return redirect('/cart/cart');
+            $cart->save();	
+			if(isset($request->request_type) && $request->request_type == 'json'){
+				return json_encode(['response' => true, 'msg' => 'Package added to cart successfully.']);
+			} else{
+				return redirect('/cart/cart');
+			}		
   		} 
 		else			
         {
-            \Session::flash('flash_message', 'There is already one package in your cart with name. <a href="/cart/cart">Click</a> here to access your cart');
-            return Redirect::back();
+			if(isset($request->request_type) && $request->request_type == 'json'){
+				return json_encode(['response' => false, 'msg' => 'This package is already added to your cart. <a href="/cart/cart">Click</a> here to access your cart']);
+			} else{
+				\Session::flash('flash_message', 'This package is already added to your cart. <a href="/cart/cart">Click</a> here to access your cart');
+				return Redirect::back();				
+			}
         }
     }
     

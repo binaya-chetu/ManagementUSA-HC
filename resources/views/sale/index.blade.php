@@ -43,15 +43,86 @@
                             </div>
                        
                     </div>
-                    <div class="form-group">
-                      
-                        {{ Form::label('Select category', null, array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-md-6">
-                                {{ Form::select('category_id', ['' => 'Choose the Category'] + $categories, null, ['class' => 'form-control required', 'id' => 'selectCategory']) }}
-                            </div>
-                       
-                    </div>
-             
+					
+				<div class="row">
+
+<style>
+.categoryCartList .toggle-content h4, .categoryCartList .toggle-content a{
+    text-align: center;
+    color: #fff;
+	text-transform: capitalize	
+}
+
+.addPackageToCart{
+	cursor: pointer;
+}
+</style>							
+			
+<div class="col-md-6 categoryCartList">
+	<div class="toggle" data-plugin-toggle>
+	@foreach ($lCat as $i => $cat)
+		<section class="toggle" data-cat-value="{{ $cat['id'] }}">
+			<label>{{ $cat['cat_name'] }}</label>
+			<div class="toggle-content">
+				<div class="col-md-4 col-sm-4 col-xs-4 bronze">
+					<h4>bronze</h4>
+					<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.BRONZE_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+					<a href="#">View Details</a>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 silver">
+					<h4>Silver</h4>
+					<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.SILVER_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+					<a href="#">View Details</a>	
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 gold">
+					<h4>gold</h4>
+					<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.GOLD_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+					<a href="#">View Details</a>	
+				</div>
+			</div>
+		</section>
+	@endforeach
+	</div>
+</div>	
+						
+<div class="col-md-6 categoryCartList">
+	<div class="toggle" data-plugin-toggle>
+		@foreach ($rCat as $i => $cat)
+			<section class="toggle" data-cat-value="{{ $cat['id'] }}">
+				<label>{{ $cat['cat_name'] }}</label>
+				<div class="toggle-content">
+					<div class="col-md-4 col-sm-4 col-xs-4 bronze">
+						<h4>bronze</h4>
+						<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.BRONZE_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+						<a href="#">View Details</a>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-4 silver">
+						<h4>Silver</h4>
+						<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.SILVER_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+						<a href="#">View Details</a>	
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-4 gold">
+						<h4>gold</h4>
+						<h4><i data-cat-value="{{ $cat['id'] }}" data-pkg-val="{{ config("constants.GOLD_PKG_ID") }}" class="fa fa-cart-plus addPackageToCart" aria-hidden="true" title="Add to cart"></i></h4>
+						<a href="#">View Details</a>	
+					</div>
+				</div>
+			</section>
+		@endforeach
+	</div>
+</div>				
+				
+				
+				
+				
+				
+
+
+
+
+
+
+				</div>             
                 </div>
                 <footer class="panel-footer">
                     <div class="row">

@@ -31,7 +31,6 @@
         <link rel="stylesheet" href="{{ URL::asset('/vendor/fullcalendar/fullcalendar.css') }}" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/fullcalendar/fullcalendar.print.css') }}" media="print" />
         <link rel="stylesheet" href="{{ URL::asset('/vendor/select2/select2.css') }}" />
-        
 
         <!-- Theme CSS -->
         <link rel="stylesheet" href="{{ URL::asset('css/theme.css') }}" />
@@ -42,11 +41,12 @@
         <!-- Theme Custom CSS -->
         <link rel="stylesheet" href="{{ URL::asset('css/theme-custom.css') }}">
         
-          <!-- Theme Custom for print CSS -->
-          <link rel="stylesheet" href="{{ URL::asset('css/theme-print.css') }}" media="print" rel = "stylesheet">
+        <!-- Theme Custom for print CSS -->
+        <link rel="stylesheet" href="{{ URL::asset('css/theme-print.css') }}" media="print" rel = "stylesheet">
 
         <!-- Head Libs -->
-
+        <link rel="stylesheet" href="{{ URL::asset('/vendor/pnotify/pnotify.custom.css') }}" />
+		
         <script src="{{ URL::asset('vendor/modernizr/modernizr.js') }}"></script>
         <script src="{{ URL::asset('vendor/jquery/jquery.js') }}"></script>
 
@@ -107,7 +107,8 @@
         <!-- Theme Initialization Files -->
         <script src="{{ URL::asset('js/theme.init.js') }}"></script>
         
-         <script src="{{ URL::asset('vendor/bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>
+        <script src="{{ URL::asset('vendor/bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>
+        <script src="{{ URL::asset('vendor/pnotify/pnotify.custom.js') }}"></script>
         <script src="{{ URL::asset('js/forms/examples.wizard.js') }}"></script>
         <script src="{{ URL::asset('js/forms/examples.validation.js') }}"></script>
         <script src="{{ URL::asset('js/forms/examples.advanced.form.js') }}"></script>

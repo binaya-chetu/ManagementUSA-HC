@@ -616,6 +616,32 @@ $(document).ready(function() {
 			$("#changeStatus").find('.panel-body').append(fileInput);
 		}
 	});	
+	
+	$(".addPackageToCart").on('click', function(){
+		$catId = $(this).data('cat-value');
+		$pkgId = $(this).data('pkg-val');
+		$.ajax({
+			method: 'post',
+			dataType: 'json',
+			url: location.protocol+'//'+location.host+'/cart/addProduct',
+			data: {'category_id' : $catId,'category_type' : $pkgId, 'request_type': 'json'},
+			success: function(data){
+				if(data.response){
+					new PNotify({
+						text: data.msg,
+						type: 'success'
+					});
+				} else{
+					new PNotify({
+						text: data.msg,
+						type: 'error',
+					});					
+				}
+				console.log(data);
+			}
+		});
+		
+	});
 });
 
 	/**
@@ -1002,27 +1028,4 @@ function checkAppointmentTime(){
         });
        
         });
-        
-    $(document).on("change", "#selectCategory", function(ev) {
-        $.ajaxSetup({
-                headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-        });
-        var cat_id = $(this).val();
-        if(cat_id != ''){
-            $.ajax({
-                type: "POST",
-                url: ajax_url + "/categories/selectCategoryDetail",
-                data: {"id": cat_id },
-                success: function(response) {
-                    var combine = JSON.parse(response);
-           
-                }
-            });
-        }
-        //alert(cat_id);
-        
-       
-        });
-        
+   

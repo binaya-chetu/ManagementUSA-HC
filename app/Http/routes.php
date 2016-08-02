@@ -122,11 +122,7 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'SaleController@index',
             //'middleware' => ['acl:appointment_setting_write']
         ]);
-    Route::post('/categories/selectCategoryDetail', [
-            'uses' => 'CategoriesController@selectCategoryDetail',
-            'as' => 'CategoriesController@selectCategoryDetail',
-            //'middleware' => ['acl:appointment_setting_write']
-        ]);
+
     
     
     // Route for PatientController in POS Module
