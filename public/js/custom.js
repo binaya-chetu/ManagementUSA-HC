@@ -618,32 +618,41 @@ $(document).ready(function() {
 	});	
 	
 	$(".addPackageToCart").on('click', function(){
-		$catId = $(this).data('cat-value');
-		$pkgId = $(this).data('pkg-val');
+		var patientId = $('select[name="patient_id"]').val();
+		if(patientId == ''){
+			notifyUser('Please select patient from Select Patient drop down.', 'error');
+			return false;
+		}
+		var catId = $(this).data('cat-value');
+		var pkgId = $(this).data('pkg-val');
 		$.ajax({
 			method: 'post',
 			dataType: 'json',
 			url: location.protocol+'//'+location.host+'/cart/addProduct',
-			data: {'category_id' : $catId,'category_type' : $pkgId, 'request_type': 'json'},
+			data: {'category_id' : catId,'category_type' : pkgId, 'patient_id' : patientId, 'request_type': 'json'},
 			success: function(data){
 				if(data.response){
-					new PNotify({
-						text: data.msg,
-						type: 'success'
-					});
+					notifyUser(data.msg, 'success');
 				} else{
-					new PNotify({
-						text: data.msg,
-						type: 'error',
-					});					
+					notifyUser(data.msg, 'error');
 				}
-				console.log(data);
 			}
 		});
 		
 	});
 });
 
+	/**
+	* notifyUser(text, type) renders PNotify messages
+	* @text: refers to  message to be rendered
+	* @type: refers to type of message like success, error
+	*/
+	function notifyUser(text, type){
+		new PNotify({
+			text: text,
+			type: type
+		});		
+	}
 	/**
 	* saveEmrPopupList: saves lsit data from emr form popup to database
 	*/

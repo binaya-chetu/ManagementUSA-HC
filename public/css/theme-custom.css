@@ -63,3 +63,12 @@ th.countColoumn { border-left: none;}
 .pricing-table h3.gold {
    background-color: #DAA520;
 }
+.categoryCartList .toggle-content h4, .categoryCartList .toggle-content a{
+	text-align: center;
+	color: #fff;
+	text-transform: capitalize	
+}
+
+.addPackageToCart{
+	cursor: pointer;
+}

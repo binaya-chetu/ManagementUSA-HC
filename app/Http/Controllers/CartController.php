@@ -17,7 +17,7 @@ class CartController extends Controller
      * Constructor function to check the auth permission
      *
      * @return void
-     */
+    */
     public function __construct()
     {
         $this->middleware('auth');
@@ -28,11 +28,15 @@ class CartController extends Controller
      *
      * @return \resource\view\cart\cart
      */
-    public function addItem (Request $request){
-        
+    public function addItem (Request $request){        
         $categoryId = $request->category_id;
         $categoryType = $request->category_type;
-
+		$patientId = $request->patient_id;
+		
+		if(!isset($patientId) || empty($patientId)){
+			return json_encode(['response' => false, 'msg' => 'Please select patient from Select Patient dropdown']);
+		}
+		
         $category = DB::table('categories')->where('id', $categoryId)->get();
 
         if(empty($category)){
@@ -43,7 +47,7 @@ class CartController extends Controller
 			}
         }
 		
-		$where = ['user_id' => Auth::user()->id, 'category_id' => $categoryId,'category_type_id' => $categoryType];
+		$where = ['category_id' => $categoryId,'category_type_id' => $categoryType, 'patient_id' => $patientId];
 		$cart = Cart::where($where)->first();
 
         if(!$cart){		
@@ -51,6 +55,7 @@ class CartController extends Controller
             $cart->user_id = Auth::user()->id;
             $cart->category_id = $categoryId;
             $cart->category_type_id = $categoryType;
+            $cart->patient_id = $patientId;
             $cart->save();	
 			if(isset($request->request_type) && $request->request_type == 'json'){
 				return json_encode(['response' => true, 'msg' => 'Package added to cart successfully.']);
