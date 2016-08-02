@@ -70,7 +70,7 @@
                                 $reasonArr = $appointment->patient->reason->toArray();
                                 $reasonArray = array_column($reasonArr, 'reason_code');
                                 $reasonList = array_column($reasonArray, 'reason');
-                                $reason = implode(',', $reasonList); 
+                                $reason = implode(',', array_unique($reasonList)); 
                                 echo $reason; ?>                                
                             </div></td>
                         <td class="table-text"><div>
