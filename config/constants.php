@@ -22,6 +22,9 @@ return [
 	
 	'APPOINTMENT_SET_FLAG'			=> 0,
 	'APPOINTMENT_NO_SET_FLAG'		=> 1,
-    'APPOINTMENT_AFTER_REPORT_FLAG'	=> 5
+    'APPOINTMENT_AFTER_REPORT_FLAG'	=> 5,
 	
+	'BRONZE_PKG_ID'					=> 1,
+	'SILVER_PKG_ID'					=> 2,
+	'GOLD_PKG_ID'					=> 3
 ];

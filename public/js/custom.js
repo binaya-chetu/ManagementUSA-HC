@@ -616,8 +616,43 @@ $(document).ready(function() {
 			$("#changeStatus").find('.panel-body').append(fileInput);
 		}
 	});	
+	
+	$(".addPackageToCart").on('click', function(){
+		var patientId = $('select[name="patient_id"]').val();
+		if(patientId == ''){
+			notifyUser('Please select patient from Select Patient drop down.', 'error');
+			return false;
+		}
+		var catId = $(this).data('cat-value');
+		var pkgId = $(this).data('pkg-val');
+		$.ajax({
+			method: 'post',
+			dataType: 'json',
+			url: location.protocol+'//'+location.host+'/cart/addProduct',
+			data: {'category_id' : catId,'category_type' : pkgId, 'patient_id' : patientId, 'request_type': 'json'},
+			success: function(data){
+				if(data.response){
+					notifyUser(data.msg, 'success');
+				} else{
+					notifyUser(data.msg, 'error');
+				}
+			}
+		});
+		
+	});
 });
 
+	/**
+	* notifyUser(text, type) renders PNotify messages
+	* @text: refers to  message to be rendered
+	* @type: refers to type of message like success, error
+	*/
+	function notifyUser(text, type){
+		new PNotify({
+			text: text,
+			type: type
+		});		
+	}
 	/**
 	* saveEmrPopupList: saves lsit data from emr form popup to database
 	*/
@@ -1006,27 +1041,4 @@ function checkAppointmentTime(){
         });
        
         });
-        
-    $(document).on("change", "#selectCategory", function(ev) {
-        $.ajaxSetup({
-                headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-        });
-        var cat_id = $(this).val();
-        if(cat_id != ''){
-            $.ajax({
-                type: "POST",
-                url: ajax_url + "/categories/selectCategoryDetail",
-                data: {"id": cat_id },
-                success: function(response) {
-                    var combine = JSON.parse(response);
-           
-                }
-            });
-        }
-        //alert(cat_id);
-        
-       
-        });
-        
+   

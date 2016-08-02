@@ -21,26 +21,6 @@
         </section>    
 @endsection -->
 
-<style>
-	.bronze{ background:#cd7f32; }
-	.silver{ background:#C0C0C0;}
-	.gold{ background:#DAA520; }
-	.packages-table .table{ color:#333;}
-	.packages-table .table-bordered > thead > tr > th, .packages-table .table-bordered > tbody > tr > td{text-align:center; vertical-align:middle !important;}
-
-	.packages-table th:first-child{ text-align:center;}
-	.packages-table .table-bordered > tbody > tr > td:first-child{ text-align:left; }
-	.pricing-table h3.bronze {
-	   background-color: #cd7f32;
-	}
-	.pricing-table h3.silver {
-	   background-color: #C0C0C0;
-	}
-	.pricing-table h3.gold {
-	   background-color: #DAA520;
-	}
-</style>
-
 <section class="body">
 	<div class="inner-wrapper">
 	<section role="main" class="content-body">
