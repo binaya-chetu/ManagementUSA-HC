@@ -1,14 +1,14 @@
 <?php
  
 namespace App\Http\Controllers;
+
 use App\Cart;
 use App\CartItem;
-use Illuminate\Support\Facades\Auth;
- 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use DB;
  
 class CartController extends Controller
