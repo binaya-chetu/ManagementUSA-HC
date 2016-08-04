@@ -10,11 +10,24 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use View;
 use App;
+use Auth;
+use App\Cashlogs;
 use App\Order;
 use App\OrderDetail;
 
 class AccountingController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() 
+    {
+        // uses auth middleware
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +45,7 @@ class AccountingController extends Controller
      */
     public function create()
     {
-        //
+        return view('account.cash_voucher');
     }
 
     /**
@@ -43,7 +56,51 @@ class AccountingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validation rules 
+        $this->validate($request, [
+            'date' => 'required',
+            'operation' => 'required',
+            'amount' => 'required',
+            'details' => 'required|max:255'
+        ]);
+
+        // create new object for User
+        $voucherData = new Cashlogs;
+        $voucherData->user_id = Auth::user()->id;
+        $voucherData->date = date('Y-m-d', strtotime($request->date));
+        if($request->operation == '1')
+        {
+            $voucherData->cash_out = $request->amount;
+        } else if($request->operation == '2') {
+            $voucherData->cash_in = $request->amount;
+        }
+        
+        $voucherData->details = $request->details;
+        
+       
+        // save data in user table
+        if ($voucherData->save()) {
+            // set flash message when user created successfully.
+            \Session::flash('flash_message', 'Cash Voucher Saved Successfully.');
+            return redirect('/accounting/listCashLogs');
+        } else {
+            return redirect('/accounting/create');
+        }
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function listCashLogs()
+    {
+        $cashLogs = Cashlogs::with('agent')->get();
+        
+        return view('account.cash_logs', [
+            'cashLogs' => $cashLogs
+        ]);
     }
 
     /**

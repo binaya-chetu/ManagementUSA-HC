@@ -652,5 +652,23 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'accounting.show',
             'middleware' => ['acl:accounting_read']	
         ]);
+    
+    Route::get('/accounting/create', [
+            'uses' => 'AccountingController@create',
+            'as' => 'accounting.create',
+            'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::post('/accounting/store', [
+            'uses' => 'AccountingController@store',
+            'as' => 'accounting.store',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::get('/accounting/listCashLogs', [
+            'uses' => 'AccountingController@listCashLogs',
+            'as' => 'accounting.listCashLogs',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
 
 });

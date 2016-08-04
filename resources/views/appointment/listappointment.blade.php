@@ -13,7 +13,7 @@
             @endif</h2>
         </h2>
 
-        <div class="right-wrapper pull-right">
+        <div class="right-wrapper pull-right appt_list">
             @if(Request::segment(2) === 'upcomingappointments')
             {!! Breadcrumbs::render('appointment.upcomingappointments') !!}
             @else

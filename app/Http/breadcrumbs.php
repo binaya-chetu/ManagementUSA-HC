@@ -213,3 +213,13 @@ Breadcrumbs::register('accounting.yearlySalesReport', function ($breadcrumbs) {
 Breadcrumbs::register('accounting.show', function ($breadcrumbs, $id) {
     $breadcrumbs->push('Accounting / Sales Reports / Order Details', route('accounting.show', $id));
 });
+
+// Home / Accounting / Petty Cash Log / Cash Voucher Form
+Breadcrumbs::register('accounting.create', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Petty Cash Log / Cash Voucher Form', route('accounting.create'));
+});
+
+// Home / Accounting / Petty Cash Log / Cash Log Lists
+Breadcrumbs::register('accounting.listCashLogs', function ($breadcrumbs) {
+    $breadcrumbs->push('Accounting / Petty Cash Log / Cash Log Lists', route('accounting.listCashLogs'));
+});
