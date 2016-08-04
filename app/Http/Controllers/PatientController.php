@@ -25,8 +25,6 @@ class PatientController extends Controller {
      *
      * @return void
      */
-     
- 
     public function __construct() {
         $this->middleware('auth');
     }
@@ -36,10 +34,9 @@ class PatientController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function addPatient()
     {
-         $states = State::get();
+        $states = State::get();
         
         $stateArray = array();
        
@@ -60,10 +57,13 @@ class PatientController extends Controller {
     */
     public function index($id = null) {
         if ($id == null) {
-            $patients = User::with('patientDetail', 'PatientDetail.patientStateName')
-                    ->where('role', $this->role)
-                    ->orderBy('id', 'DESC')
-                    ->get();
+            $patients = User::with(
+                'patientDetail',
+                'PatientDetail.patientStateName'
+            )
+            ->where('role', $this->role)
+            ->orderBy('id', 'DESC')
+            ->get();
             return view('patient.patients', ['patients' => $patients]);
         } else {
             $patient = Patient::find($id);
@@ -185,7 +185,7 @@ class PatientController extends Controller {
     * @return \Illuminate\Http\Response
     */
     public function delete($id = null) {
-		$user = User::find(base64_decode($id));
+        $user = User::find(base64_decode($id));
         if (!$user || $user->role != config("constants.PATIENT_ROLE_ID")) {
             App::abort(404, 'Page not found.');
         }
@@ -359,7 +359,12 @@ class PatientController extends Controller {
     * @return \Illuminate\Http\Response
     */
     public function view($id = null) {
-       if (!($patient = User::with('patientDetail', 'PatientDetail.patientStateName', 'roleName')->find(base64_decode($id)))) {
+       if (!($patient = User::with(
+               'patientDetail',
+               'PatientDetail.patientStateName',
+               'roleName'
+            )
+            ->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
        

@@ -45,3 +45,5 @@ td span.badge { background: #47a447; color: #FFF;	font-size: 10px; font-weight: 
 th.countColoumn { border-left: none;}
 .form-horizontal .form-group { margin-left:0px; margin-right: 0px; }
 .form-bordered .form-group { padding-bottom: 0px;}
+
+.appt_list { margin-right: 20px; }

@@ -281,6 +281,26 @@
                                 </ul>
                             </li>
                         </ul>
+                        <ul class="nav nav-children">
+                            <li class="nav-parent {{ Request::segment(2) === 'create' 
+                                        || Request::segment(2) === 'listCashLogs' ? 'nav-expanded' : null }}">
+                                <a href="#">
+                                    Petty Cash Log
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li class="{{ Request::segment(2) === 'create' ? 'nav-active nav-expanded' : null }}">
+                                        <a href="{{ url('accounting/create') }}">
+                                            Cash Voucher Form
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'listCashLogs' ? 'nav-active nav-expanded' : null }}">
+                                        <a href="{{ url('accounting/listCashLogs') }}">
+                                            Cash Log Lists
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>    
                     </li>
                     @endif
                     @if(in_array('finance', $permissions) || (Auth::user()->role == '1'))
