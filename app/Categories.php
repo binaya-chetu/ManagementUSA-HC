@@ -20,11 +20,19 @@ class Categories extends Model
        // return $this->belongsToMany('App\CategoryAddOns', 'category_id');
           return $this->hasMany('App\CategoryAddOns', 'category_id'); 
     }
-   public function productCategories() {
-        
-          return $this->hasMany('App\productCategories', 'category_id');
-          
+	
+    public function productCategories() {
+        return $this->hasMany('App\productCategories', 'category_id');
     }
+	
+	public function cart() {
+        return $this->hasMany('App\Cart', 'category_id');
+    }
+	
+	public function packages() {
+        return $this->hasMany('App\Packages', 'category_id');
+    }
+	
     public function CategoryAddOns() {  
         return $this->belongsTo('App\CategoryAddOns', 'category_id');
     }

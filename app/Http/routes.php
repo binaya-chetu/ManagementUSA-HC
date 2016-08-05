@@ -547,12 +547,17 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'cart.ddItem',
             //'middlaware' => ['acl:user_write']
        ]);
-    Route::get('/cart/removeItem/{productId}', [
+    Route::get('/cart/removeItem/{cartId}', [
             'uses' => 'CartController@removeItem',
             'as' => 'cart.removeItem',
             //'middleware' => ['acl:user_write']
        ]);
-    Route::get('/cart/cart', [
+    Route::get('/cart/emptyCart/{patientId}', [
+            'uses' => 'CartController@emptyCart',
+            'as' => 'cart.removeItem',
+            //'middleware' => ['acl:user_write']
+       ]);
+    Route::get('/cart/cart/{patientId}', [
             'uses' => 'CartController@showCart',
             'as' => 'cart.showCart',
             //'middleware' => ['acl:user_write']
