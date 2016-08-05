@@ -18,4 +18,12 @@ class Packages extends Model
 		'category_type'
 
     ];
+	
+    public function categories() {  
+        return $this->belongsTo('App\Categories', 'category_id');
+    }
+
+	public function Product() {
+        return $this->belongsTo('App\Product', 'product_id');
+    }	
 }

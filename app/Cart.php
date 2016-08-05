@@ -13,14 +13,24 @@ class Cart extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function patient()
+    {
+        return $this->belongsTo('App\User', 'patient_id');
+    }
+
     public function cartItems()
     {
         return $this->hasMany('App\CartItem', 'cart_id');
     }
     
-    public function category()
+    public function categories()
     {
         return $this->belongsTo('App\Categories', 'category_id');
+    }
+	
+    public function categoryTypes()
+    {
+        return $this->belongsTo('App\CategoryTypes', 'category_type_id');
     }
 
 }

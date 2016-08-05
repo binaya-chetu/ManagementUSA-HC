@@ -27,9 +27,12 @@ use Auth;
 class SaleController extends Controller
 {
     protected $patient_role = 6;
-    protected $doctor_role = 5;
     public $success = true;
     public $error = false;
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
     
     /**
      * Make the front Office Sale

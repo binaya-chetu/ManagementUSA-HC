@@ -616,12 +616,16 @@ $(document).ready(function() {
 			$("#changeStatus").find('.panel-body').append(fileInput);
 		}
 	});	
-	
+        /*
+         * Click on add cart icon on the fornt office sale
+         */
+        $('.showSellMessage').hide();
 	$(".addPackageToCart").on('click', function(){
 		var patientId = $('select[name="patient_id"]').val();
 		if(patientId == ''){
-			notifyUser('Please select patient from Select Patient drop down.', 'error');
-			return false;
+                    showMessage('Please select patient from Select Patient drop down.', 'error');
+			//notifyUser('Please select patient from Select Patient drop down.', 'error');
+                    return false;
 		}
 		var catId = $(this).data('cat-value');
 		var pkgId = $(this).data('pkg-val');
@@ -632,16 +636,70 @@ $(document).ready(function() {
 			data: {'category_id' : catId,'category_type' : pkgId, 'patient_id' : patientId, 'request_type': 'json'},
 			success: function(data){
 				if(data.response){
-					notifyUser(data.msg, 'success');
+                                    $('.cartLink .badge').text(data.totalItem);
+                                    if(data.totalItem > 0){
+                                        $('.saleAnchor').attr('href', ajax_url+'/cart/cart/'+btoa(patientId));
+                                    }else{
+                                        $('.saleAnchor').removeAttr('href'); 
+                                    }
+                                    showMessage(data.msg, 'success');
+                                    //notifyUser(data.msg, 'success');
 				} else{
-					notifyUser(data.msg, 'error');
+                                    showMessage(data.msg, 'error');
+                                    //notifyUser(data.msg, 'error');
 				}
 			}
-		});
-		
+		});		
 	});
+        /*
+         * count the cart if the patient will change by drop down in the front office sale
+         */
+        $('#front_sale_patient').on('change', function(){           
+            var patient_id = $(this).val();
+            if(patient_id != ''){
+                $.ajax({
+			method: 'post',
+			dataType: 'json',
+			url: ajax_url +'/cart/countCartItem/' + patient_id,			
+			success: function(data){
+                            $('.cartLink .badge').text(data);	
+                            // make the cart icon as anchor tag if item > 0
+                            if(parseInt(data) > 0){
+                                $('.saleAnchor').attr('href', ajax_url+'/cart/cart/'+btoa(patient_id)); 
+                            }else{
+                                $('.saleAnchor').removeAttr('href'); 
+                            }
+			}
+		});
+            }else{
+                $('.cartLink .badge').text(0);
+                 $('.saleAnchor').removeAttr('href'); 
+            }
+        });
 });
-
+        /**
+	* notifyUser(text, type) renders PNotify messages
+	* @text: refers to  message to be rendered
+	* @type: refers to type of message like success, error
+	*/
+	function showMessage(msg, type){
+    
+            if(type == 'error'){
+                $('.showSellMessage').removeClass('alert-success');
+                $('.showSellMessage').addClass('alert-danger');
+            }else if(type == 'success'){
+                $('.showSellMessage').removeClass('alert-danger');
+                $('.showSellMessage').addClass('alert-success');
+            }
+                
+            $('.showSellMessage em').html(msg);
+            $('.showSellMessage').show();
+             setTimeout(function() {
+                $('.showSellMessage').css('display', 'none');
+            }, 6000);
+            
+				
+	}
 	/**
 	* notifyUser(text, type) renders PNotify messages
 	* @text: refers to  message to be rendered

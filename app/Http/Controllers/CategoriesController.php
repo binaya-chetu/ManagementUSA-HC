@@ -19,15 +19,11 @@ use DB;
 use App\Categories;
 use Exception;
 
-class CategoriesController extends Controller {
+class CategoriesController extends Controller
+{
+	protected $success = false;
+	protected $patient_role = 6;
 
-    protected $success = false;
-    
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct() {
         $this->middleware('auth');
     }
@@ -93,11 +89,16 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function categoryDetails($id = null, Request $request) {
-        try {
-            $id = base64_decode($id);
-            $category = DB::table('categories')->where('id', $id)->get();
-
-            if (empty($category)) {
+        try{
+            $patients = User::where('role', $this->patient_role)
+                        ->join('patient_details', function ($join) {
+                                $join->on('users.id', '=', 'patient_details.user_id')
+                                     ->where('patient_details.never_treat_status', '=', 0);
+                            })->get(['users.id', 'first_name', 'last_name']);            
+            
+            $id = base64_decode($id);                       
+            $category = Categories::where('id', $id)->get()->first();
+            if(empty($category)){
                 \Session::flash('error_message', 'Category Not found.');
                 return Redirect::back();
             }
@@ -129,7 +130,6 @@ class CategoriesController extends Controller {
                 
                 $category_info[$pck_type]['total_price'] += $cat->spl_price;
                 $category_info[$pck_type]['ori_price'] += $cat->price * $cat->p_count;
-
                 if (!isset($products[$cat->name])) {
                     $products[$cat->name] = [];
 

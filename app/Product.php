@@ -15,4 +15,8 @@ class Product extends Model
         'unit_of_measurement',
         'price',
     ];
+	
+    public function packages() {  
+        return $this->hasMany('App\Packages', 'product_id');
+    }	
 }

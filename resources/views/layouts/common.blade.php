@@ -81,8 +81,8 @@
         <script src="{{ URL::asset('vendor/jquery-datatables/media/js/jquery.dataTables.js') }}"></script>
         <script src="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js') }}"></script>
         <script src="{{ URL::asset('vendor/jquery-datatables-bs3/assets/js/datatables.js') }}"></script>
-
         <script src="{{ URL::asset('vendor/bootstrap-confirmation/bootstrap-confirmation.js') }}"></script>
+		<script src="{{ URL::asset('js/tables/examples.datatables.row.with.details.js') }}"></script>		
 <!--        <script src="{{ URL::asset('vendor/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>	-->
         <script src="{{ URL::asset('vendor/jquery-timepicker/jquery.timepicker.js') }}"></script>
         <script src="{{ URL::asset('vendor/fullcalendar/lib/moment.min.js') }}"></script>
