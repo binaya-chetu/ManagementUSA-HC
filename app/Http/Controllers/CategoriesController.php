@@ -21,7 +21,7 @@ use Exception;
 class CategoriesController extends Controller
 {
 	protected $success = false;
-	
+	protected $patient_role = 6;
     public function __construct() {
         $this->middleware('auth');
     }
@@ -89,9 +89,14 @@ class CategoriesController extends Controller
     public function categoryDetails( $id = null, Request $request){
 
         try{
-            $id = base64_decode($id);
-            $category = DB::table('categories')->where('id', $id)->get();
+            $patients = User::where('role', $this->patient_role)
+                        ->join('patient_details', function ($join) {
+                                $join->on('users.id', '=', 'patient_details.user_id')
+                                     ->where('patient_details.never_treat_status', '=', 0);
+                            })->get(['users.id', 'first_name', 'last_name']);            
             
+            $id = base64_decode($id);                       
+            $category = Categories::where('id', $id)->get()->first();
             if(empty($category)){
                 \Session::flash('error_message', 'Category Not found.');
                 return Redirect::back();
@@ -141,7 +146,7 @@ class CategoriesController extends Controller
 				$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price; 
 			}
                         
-            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products]);            
+            return view('categories.categoryDetails',['category' => $category, 'details' => $category_info, 'products' => $products, 'patients' => $patients]);            
         } catch(\Exception $e){
             App::abort(404, $e->getMessage());
         }

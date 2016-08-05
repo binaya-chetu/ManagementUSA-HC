@@ -63,12 +63,9 @@ th.countColoumn { border-left: none;}
 .pricing-table h3.gold {
    background-color: #DAA520;
 }
-.categoryCartList .toggle-content h4, .categoryCartList .toggle-content a{
-	text-align: center;
-	color: #fff;
-	text-transform: capitalize	
-}
+.categoryCartList .toggle-content h4, .categoryCartList .toggle-content a{text-align: center; color: #fff; text-transform: capitalize}
 
-.addPackageToCart{
-	cursor: pointer;
-}
+.addPackageToCart{cursor: pointer;}
+.cartLink { float:right; font-size:50px; margin-top:-12px}
+.panel-primary > .panel-heading i .badge {background-color: #F00; color: #fff; vertical-align: top; margin-left: -10px;}
+a.saleAnchor:hover{ color:inherit; }

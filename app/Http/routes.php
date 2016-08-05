@@ -557,6 +557,12 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'cart.showCart',
             //'middleware' => ['acl:user_write']
        ]);
+    
+    Route::post('/cart/countCartItem/{id}', [
+            'uses' => 'CartController@countCartItem',
+            'as' => 'cart.countCartItem',
+            //'middlaware' => ['acl:user_write']
+       ]);
    
     
     // Route for ProductsController in Products Imports
