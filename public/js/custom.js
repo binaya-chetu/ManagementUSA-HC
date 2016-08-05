@@ -1112,10 +1112,5 @@ function checkAppointmentTime(){
         
        
         });
-        
 
-        });
-       
-        });
-   
 
