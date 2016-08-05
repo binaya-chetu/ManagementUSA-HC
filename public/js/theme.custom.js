@@ -152,7 +152,7 @@ $(function() {
           }
     });
    
-    
+    $('#cashVoucher').validate();
    
     // Set the calendar start date as today Date
     $('.selectDate').datepicker({
@@ -163,6 +163,9 @@ $(function() {
     });
     $('#dob').datepicker({
        endDate: new Date()
+    });
+    $('#voucherDate').datepicker({
+        endDate: new Date()
     });
     /* ------------------------------------ Appointment Follow Up Code --------------------------- */
     // hidden the fields of the followup form
@@ -442,63 +445,152 @@ $('#durationExample').timepicker({
     });   
     
  /*
-  * Jquery to sum the column price and display in footer. 
+  * Jquery to sum the column price and display in footer for sales report module. 
   */   
     $(document).ready(function() {
-    $('#sales_report').dataTable( {
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
- 
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
- 
-            // Total over all pages
-//            total = api
-//                .column( 6 )
-//                .data()
-//                .reduce( function (a, b) {
-//                    return intVal(a) + intVal(b);
-//                } );
- 
-            // Total price over this page
-            priceTotal = api
-                .column( 6, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-                
-            // Total price over this page
-            discountTotal = api
-                .column( 7, { page: 'current'} )
-                .data()
-                .reduce( function (c, d) {
-                    return intVal(c) + intVal(d);
-                }, 0 );
-                
-            // Total Amount over this page
-            totalAmount = api
-                .column( 8, { page: 'current'} )
-                .data()
-                .reduce( function (e, f) {
-                    return intVal(e) + intVal(f);
-                }, 0 );
- 
-            // Update footer
-            $( api.column( 6 ).footer() ).html(
-                '$'+priceTotal
-            );
-            $( api.column( 7 ).footer() ).html(
-                '$'+discountTotal
-            );
-            $( api.column( 8 ).footer() ).html(
-                '$'+totalAmount
-            );
-        }
+        var $table = $('#sales_report');
+        $table.dataTable( {
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+    //            total = api
+    //                .column( 6 )
+    //                .data()
+    //                .reduce( function (a, b) {
+    //                    return intVal(a) + intVal(b);
+    //                } );
+
+                // Total price over this page
+                priceTotal = api
+                    .column( 6, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                // Total price over this page
+                discountTotal = api
+                    .column( 7, { page: 'current'} )
+                    .data()
+                    .reduce( function (c, d) {
+                        return intVal(c) + intVal(d);
+                    }, 0 );
+
+                // Total Amount over this page
+                totalAmount = api
+                    .column( 8, { page: 'current'} )
+                    .data()
+                    .reduce( function (e, f) {
+                        return intVal(e) + intVal(f);
+                    }, 0 );
+
+                // Update footer
+                $( api.column( 6 ).footer() ).html(
+                    '$'+priceTotal
+                );
+                $( api.column( 7 ).footer() ).html(
+                    '$'+discountTotal
+                );
+                $( api.column( 8 ).footer() ).html(
+                    '$'+totalAmount
+                );
+            },
+            sDom: "<'text-right mb-md'T>" + $.fn.dataTable.defaults.sDom,
+            oTableTools: {
+            sSwfPath: $table.data('swf-path'),
+                aButtons: [
+                {
+                sExtends: 'pdf',
+                        sButtonText: 'PDF'
+                },
+                {
+                sExtends: 'csv',
+                        sButtonText: 'CSV'
+                },
+//                                        {
+//                                        sExtends: 'xls',
+//                                                sButtonText: 'Excel'
+//                                        },
+                {
+                sExtends: 'print',
+                        sButtonText: 'Print',
+                        sInfo: 'Please press CTR+P to print or ESC to quit'
+                }
+                ]
+            }
+        } );
     } );
-} );
+
+
+/*
+  * Jquery to sum the column price and display in footer for Petty Cash Logs. 
+  */   
+    $(document).ready(function() {
+        var $table = $('#pettyCashLogs');
+        $table.dataTable( {
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // Total over all pages
+    //            total = api
+    //                .column( 6 )
+    //                .data()
+    //                .reduce( function (a, b) {
+    //                    return intVal(a) + intVal(b);
+    //                } );
+
+                // Total price over this page
+                priceTotal = api
+                    .column( 6, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(b);
+                    }, 0 );
+
+                // Update footer
+                $( api.column( 6 ).footer() ).html(
+                    '$'+priceTotal
+                );
+            },
+            sDom: "<'text-right mb-md'T>" + $.fn.dataTable.defaults.sDom,
+            oTableTools: {
+            sSwfPath: $table.data('swf-path'),
+                aButtons: [
+                {
+                sExtends: 'pdf',
+                        sButtonText: 'PDF'
+                },
+                {
+                sExtends: 'csv',
+                        sButtonText: 'CSV'
+                },
+//                                        {
+//                                        sExtends: 'xls',
+//                                                sButtonText: 'Excel'
+//                                        },
+                {
+                sExtends: 'print',
+                        sButtonText: 'Print',
+                        sInfo: 'Please press CTR+P to print or ESC to quit'
+                }
+                ]
+            }
+        } );
+    } );

@@ -63,6 +63,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+                @if(count($sales))
                 <tfoot>
                     <tr>
                         <th colspan="6" style="text-align:right">Total:</th>
@@ -71,6 +72,7 @@
                         <th></th>
                     </tr>
                 </tfoot>
+                @endif
                 <tbody>
                     {{--*/ $i = 0 /*--}}
                     @foreach ($sales as $sale)

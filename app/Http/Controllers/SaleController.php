@@ -27,9 +27,12 @@ use Auth;
 class SaleController extends Controller
 {
     protected $patient_role = 6;
-    protected $doctor_role = 5;
     public $success = true;
     public $error = false;
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
     
     /**
      * Make the front Office Sale
@@ -42,10 +45,12 @@ class SaleController extends Controller
                                 $join->on('users.id', '=', 'patient_details.user_id')
                                      ->where('patient_details.never_treat_status', '=', 0);
                             })->get(['users.id', 'first_name', 'last_name']);
-        $categories = Categories::lists('cat_name', 'id')->toArray();
-        
+        $categories = Categories::select('cat_name', 'id')->get()->toArray();
+		$lCategories = array_slice($categories, 0, sizeof($categories)/2);
+		$rCategories = array_slice($categories, sizeof($categories)/2);
+    
         return view('sale.index', [
-            'patients' => $patients, 'categories' =>$categories
+            'patients' => $patients, 'categories' =>$categories, 'lCat' =>$lCategories, 'rCat' =>$rCategories
         ]);
     }
 }

@@ -45,3 +45,28 @@ td span.badge { background: #47a447; color: #FFF;	font-size: 10px; font-weight: 
 th.countColoumn { border-left: none;}
 .form-horizontal .form-group { margin-left:0px; margin-right: 0px; }
 .form-bordered .form-group { padding-bottom: 0px;}
+
+.bronze{ background:#cd7f32; }
+.silver{ background:#C0C0C0;}
+.gold{ background:#DAA520; }
+.packages-table .table{ color:#333;}
+.packages-table .table-bordered > thead > tr > th, .packages-table .table-bordered > tbody > tr > td{text-align:center; vertical-align:middle !important;}
+
+.packages-table th:first-child{ text-align:center;}
+.packages-table .table-bordered > tbody > tr > td:first-child{ text-align:left; }
+.pricing-table h3.bronze {
+   background-color: #cd7f32;
+}
+.pricing-table h3.silver {
+   background-color: #C0C0C0;
+}
+.pricing-table h3.gold {
+   background-color: #DAA520;
+}
+.categoryCartList .toggle-content h4, .categoryCartList .toggle-content a{text-align: center; color: #fff; text-transform: capitalize}
+.addPackageToCart{cursor: pointer;}
+.appt_list { margin-right: 20px; }
+.addPackageToCart{cursor: pointer;}
+.cartLink { float:right; font-size:50px; margin-top:-12px}
+.panel-primary > .panel-heading i .badge {background-color: #F00; color: #fff; vertical-align: top; margin-left: -10px;}
+a.saleAnchor:hover{ color:inherit; }

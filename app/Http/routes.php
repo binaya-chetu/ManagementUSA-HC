@@ -122,11 +122,7 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'SaleController@index',
             //'middleware' => ['acl:appointment_setting_write']
         ]);
-    Route::post('/categories/selectCategoryDetail', [
-            'uses' => 'CategoriesController@selectCategoryDetail',
-            'as' => 'CategoriesController@selectCategoryDetail',
-            //'middleware' => ['acl:appointment_setting_write']
-        ]);
+
     
     
     // Route for PatientController in POS Module
@@ -551,15 +547,26 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'cart.ddItem',
             //'middlaware' => ['acl:user_write']
        ]);
-    Route::get('/cart/removeItem/{productId}', [
+    Route::get('/cart/removeItem/{cartId}', [
             'uses' => 'CartController@removeItem',
             'as' => 'cart.removeItem',
             //'middleware' => ['acl:user_write']
        ]);
-    Route::get('/cart/cart', [
+    Route::get('/cart/emptyCart/{patientId}', [
+            'uses' => 'CartController@emptyCart',
+            'as' => 'cart.removeItem',
+            //'middleware' => ['acl:user_write']
+       ]);
+    Route::get('/cart/cart/{patientId}', [
             'uses' => 'CartController@showCart',
             'as' => 'cart.showCart',
             //'middleware' => ['acl:user_write']
+       ]);
+    
+    Route::post('/cart/countCartItem/{id}', [
+            'uses' => 'CartController@countCartItem',
+            'as' => 'cart.countCartItem',
+            //'middlaware' => ['acl:user_write']
        ]);
    
     
@@ -662,6 +669,24 @@ Route::group(['middleware' => 'web'], function () {
             'uses' => 'AccountingController@show',
             'as' => 'accounting.show',
             'middleware' => ['acl:accounting_read']	
+        ]);
+    
+    Route::get('/accounting/create', [
+            'uses' => 'AccountingController@create',
+            'as' => 'accounting.create',
+            'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::post('/accounting/store', [
+            'uses' => 'AccountingController@store',
+            'as' => 'accounting.store',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::get('/accounting/listCashLogs', [
+            'uses' => 'AccountingController@listCashLogs',
+            'as' => 'accounting.listCashLogs',
+            //'middleware' => ['acl:accounting_write']	
         ]);
 
 });

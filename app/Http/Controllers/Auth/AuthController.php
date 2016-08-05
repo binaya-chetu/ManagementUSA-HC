@@ -80,7 +80,7 @@ class AuthController extends Controller
         {
             UserDetail::create([
                 'user_id' => $user->id 
-                    ]);
+            ]);
         }
         
         return $user;
