@@ -144,7 +144,7 @@ class CategoriesController extends Controller
                 $products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price;
             }
 
-            return view('categories.categoryDetails', ['category' => $category, 'details' => $category_info, 'products' => $products]);
+            return view('categories.categoryDetails', ['category' => $category, 'details' => $category_info, 'products' => $products, 'patients' => $patients]);
         } catch (\Exception $e) {
             App::abort(404, $e->getMessage());
         }
