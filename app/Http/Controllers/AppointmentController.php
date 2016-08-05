@@ -184,7 +184,9 @@ class AppointmentController extends Controller {
 
     public function listappointment() {
 
-        $appointments = Appointment::with('patient',  'patient.reason', 'patient.reason.reasonCode')->orderBy('id', 'desc')->get();
+        $appointments = Appointment::with(['patient',  'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
         //echo '<pre>';print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
@@ -1147,7 +1149,9 @@ class AppointmentController extends Controller {
      */
 
     public function todayVisits() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')
+        $appointments = Appointment::with(['patient', 'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])
                 ->whereIn('status', [4,5])
                 ->whereDate('apptTime', '=', date('Y-m-d'))
                 ->orderBy('id', 'DESC')->get();        
@@ -1200,7 +1204,9 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\today_visits.blade.php
      */
     public function labAppointments() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereIn('patient_status', [2, 3])->get();
+        $appointments = Appointment::with(['patient', 'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])->whereIn('patient_status', [2, 3])->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_appointments', [
@@ -1243,7 +1249,9 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\lab_ready_appointments.php
      */
     public function labReadyAppointments() {
-        $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('patient_status', '4')->get();
+        $appointments = Appointment::with(['patient', 'patient.patientDetail', 'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])->where('patient_status', '4')->get();
         $patients = User::where('role', $this->patient_role)->get();    
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
         $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
@@ -1258,7 +1266,9 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\appointment_after_report.php
      */
     public function appointmentAfterReport() {        
-        $appointments = Appointment::with('patient', 'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->where('relative_id', '!=',  '0')->get();
+        $appointments = Appointment::with(['patient', 'patient.patientDetail', 'patient.reason'=> function($query){
+                            $query->where('reason_id','>', 8);
+                        }, 'patient.reason.reasonCode'])->where('relative_id', '!=',  '0')->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.appointment_after_report', [

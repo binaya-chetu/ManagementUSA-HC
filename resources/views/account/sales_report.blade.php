@@ -47,7 +47,7 @@
             @endif
            </div>
             
-            <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
+            <table class="table table-bordered table-striped mb-none" id="sales_report" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
                 <thead>
                     <tr>
                         <th>Sr. No.</th>
@@ -63,12 +63,16 @@
                         <th>Action</th>
                     </tr>
                 </thead>
+                <tfoot>
+                    <tr>
+                        <th colspan="6" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
                 <tbody>
-                    @if(count($sales))
                     {{--*/ $i = 0 /*--}}
-                    {{--*/ $subAmount = 0 /*--}}
-                    {{--*/ $discountAmount = 0 /*--}}
-                    {{--*/ $totalAmount = 0 /*--}}
                     @foreach ($sales as $sale)
                     <tr class="gradeX">
                         <td>{{ ++$i }}</td>
@@ -77,9 +81,9 @@
                         <td>{{ $sale->categories->cat_name }}</td>
                         <td>{{ $sale->categoryType->name }}</td>
                         <td>{{ $sale->categories->duration_months }}</td>
-                        <td>{{--*/ $subAmount += $sale->subtotal_amount /*--}} ${{ $sale->subtotal_amount }}</td>
-                        <td>{{--*/ $discountAmount += $sale->discount_amount /*--}} ${{ $sale->discount_amount }}</td>
-                        <td>{{--*/ $totalAmount += $sale->total_amount /*--}} ${{ $sale->total_amount }}</td>
+                        <td>${{ $sale->subtotal_amount }}</td>
+                        <td>${{ $sale->discount_amount }}</td>
+                        <td>${{ $sale->total_amount }}</td>
                         <td>{{ $sale->agent->first_name }} {{ $sale->agent->last_name }}</td>
                         <td class="actions">
                             <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a>
@@ -87,21 +91,6 @@
                         </td>
                     </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="6">
-                            <strong>Total<strong>
-                        </td>
-                        <td class="center">
-                        <strong>${{ $subAmount }}<strong>
-                        </td>
-                        <td class="center">
-                        <strong>${{ $discountAmount }}<strong>
-                        </td>
-                        <td class="center">
-                            <strong>${{ $totalAmount }}</strong>
-                        </td>
-                    </tr>
-                    @endif
                 </tbody>
             </table>
         </div>

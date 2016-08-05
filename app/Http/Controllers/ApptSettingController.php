@@ -93,7 +93,7 @@ class ApptSettingController extends Controller {
         $resources = AppointmentSource::lists('name', 'id');
         $reasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
         return view('apptsetting.requestFollowup', [
-            'requestFollowups' => $requestFollowups, 'noSetReasonCode' => $noSetReasonCode, 'reasonCode' => $reasonCode, 'resources' => $resources]);
+        'requestFollowups' => $requestFollowups, 'noSetReasonCode' => $noSetReasonCode, 'reasonCode' => $reasonCode, 'resources' => $resources]);
     }
 
     /*
@@ -331,7 +331,6 @@ class ApptSettingController extends Controller {
             $appointment_requests->followup_status = 0;
         }
         $appointment_requests->save();
-
         $reason = new App\AppointmentReasons;
         $reason->patient_id = $id;
         $reason->reason_id = $formData['reason_id'];
