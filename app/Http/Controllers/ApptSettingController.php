@@ -77,7 +77,7 @@ class ApptSettingController extends Controller {
     }
 
     /**
-     * Listing all the Call List from the Api
+     * Listing all followups which are Requested and No set
      *
      * @return \resource\view\apptsetting\requestFollowUp
      */

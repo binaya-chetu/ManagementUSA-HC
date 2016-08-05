@@ -71,7 +71,8 @@
                                 $reasonArray = array_column($reasonArr, 'reason_code');
                                 $reasonList = array_column($reasonArray, 'reason');
                                 $reason = implode(',', array_unique($reasonList)); 
-                                echo $reason; ?>                                
+                                echo $reason;
+                                ?>                                
                             </div></td>
                         <td class="table-text"><div>
                                 <?php

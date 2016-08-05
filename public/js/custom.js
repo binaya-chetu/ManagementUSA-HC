@@ -964,48 +964,37 @@ function checkAppointmentTime(){
         });
     });
        
-                $(document).on("click", ".request-follow-up", function(ev) {
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-        var user_id = $(this).attr('rel');
-        $.ajax({
-        type: "POST",
-                url: ajax_url + "/apptsetting/editRequestfollowup",
-                data: {"id": user_id },
-                success: function(response) {
-                    var combine = JSON.parse(response);
-                    console.log(combine);
-                   // console.log(combine.requestFollowup.patient.first_name);
-                    $('#first_name').val(combine.requestFollowup.patient.first_name);
-                      $('#last_name').val(combine.requestFollowup.patient.last_name); 
-                     $('#requestComment').val(combine.comment);
-                   $('#email').val(combine.requestFollowup.patient.email);
-                                 
-//                    if(combine.requestFollowup.patient.email == ''){
-//                        $('#email').val(combine.requestFollowup.patient.email).prop('disabled', false);
-//                    }
-//                    else
-//                    {
-//                        $('#email').val(combine.requestFollowup.patient.email).prop('disabled', true);
-//                    }
-                    $('#phone').val(combine.requestFollowup.patient.patient_detail.phone);
-                    $('#address1').val(combine.requestFollowup.patient.patient_detail.address1);
-                   
-                    var date = Date.parse(combine.requestFollowup.patient.patient_detail.dob) || 0;
-
-                    if(date > 0){
-                        $('#dob').datepicker('setDate', moment(combine.requestFollowup.patient.patient_detail.dob).format('MM/DD/YYYY'));
-                    } else{
-                        $('#dob').val('');
-                    }                       
-                   
+                        $(document).on("click", ".request-follow-up", function(ev) {
+                $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-        });
-       
-        });
+                });
+                        var user_id = $(this).attr('rel');
+                        $.ajax({
+                        type: "POST",
+                                url: ajax_url + "/apptsetting/editRequestfollowup",
+                                data: {"id": user_id },
+                                success: function(response) {
+                                var combine = JSON.parse(response);
+                                        console.log(combine);
+                                        // console.log(combine.requestFollowup.patient.first_name);
+                                        $('#first_name').val(combine.requestFollowup.patient.first_name);
+                                        $('#last_name').val(combine.requestFollowup.patient.last_name);
+                                        $('#requestComment').val(combine.comment);
+                                        $('#email').val(combine.requestFollowup.patient.email);
+                                        $('#phone').val(combine.requestFollowup.patient.patient_detail.phone);
+                                        $('#address1').val(combine.requestFollowup.patient.patient_detail.address1);
+                                        var date = Date.parse(combine.requestFollowup.patient.patient_detail.dob) || 0;
+                                        if (date > 0){
+                                $('#dob').datepicker('setDate', moment(combine.requestFollowup.patient.patient_detail.dob).format('MM/DD/YYYY'));
+                                } else{
+                                $('#dob').val('');
+                                }
+
+                                }
+                        });
+                });
         
     $(document).on("change", "#selectCategory", function(ev) {
         $.ajaxSetup({

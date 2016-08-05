@@ -77,6 +77,16 @@ return [
             'prefix' => '',
             'schema' => 'public',
         ],
+		 
+		 'odbc' => [
+            'driver' => 'odbc',
+            'dsn' => 'C:\Users\niweditaj\Documents\managementUSA-HC.accdb;',
+            'grammar' => 'DB2',
+            'username' => '',
+            'password' => '',
+            'database' => 'managementUSA-HC',
+        ],
+		
 
     ],
 

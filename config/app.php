@@ -158,6 +158,7 @@ return [
         App\Providers\Validation\ValidationServiceProvider::class,
 	'Maatwebsite\Excel\ExcelServiceProvider',
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+		'TCK\Odbc\OdbcServiceProvider',
 
     ],
 
