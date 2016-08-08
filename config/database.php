@@ -77,7 +77,7 @@ return [
             'prefix' => '',
             'schema' => 'public',
         ],
-
+	
     ],
 
     /*
