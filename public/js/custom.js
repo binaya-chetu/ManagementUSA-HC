@@ -1108,14 +1108,12 @@ function checkAppointmentTime(){
                 }
             });
         }
-        //alert(cat_id);
         
-       
         });
         
 
-        });
+        
        
-        });
+      
    
 
