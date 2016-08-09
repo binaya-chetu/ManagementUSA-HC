@@ -26,4 +26,8 @@ class Packages extends Model
 	public function Product() {
         return $this->belongsTo('App\Product', 'product_id');
     }	
+    
+    public function order() {
+        return $this->belongsTo('App\Order', 'package_id');
+    }	
 }

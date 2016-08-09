@@ -1110,12 +1110,3 @@ function checkAppointmentTime(){
         }
         
         });
-
-<<<<<<< HEAD
-=======
-        
-       
-      
-   
->>>>>>> inventory-systom
-

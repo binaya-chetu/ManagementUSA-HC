@@ -116,7 +116,7 @@
 					</table>
 				@endforeach				
 				</div>
-			@else
+                                @else
 				<table class="table table-bordered">
 					<tr><td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
 					<td class="col-sm-8 col-md-6" colspan=2><h5><a href="/sale/index"> <button type="button" class="btn btn-default">
