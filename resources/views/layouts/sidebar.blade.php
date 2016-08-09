@@ -312,11 +312,23 @@
                     </li>
                     @endif
                     @if(in_array('inventory_management', $permissions) || (Auth::user()->role == '1'))
-                    <li>
+                    <li class="nav-parent">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Inventory Management</span>
                         </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="{{ url('inventory/create')}}">
+                                    Inventory Imports
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('inventory/index') }}">
+                                    Inventory Details
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     @endif
                 </ul>
