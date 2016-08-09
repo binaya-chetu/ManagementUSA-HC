@@ -61,4 +61,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\User', 'agent_id');
     }
+    
+    public function packages()
+    {
+        return $this->hasOne('App\Packages', 'package_id');
+    }
 }

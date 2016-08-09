@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -363,13 +362,21 @@ class PatientController extends Controller {
                'patientDetail',
                'PatientDetail.patientStateName',
                'roleName'
+              
+             
             )
             ->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
-       
+         $packageData = showCart($id);
+         $catList = $packageData['category_list'];
+         $cartDetailList = $packageData['category_detail_list'];
+         $originalPrice =  $packageData['original_package_price'];
+         $discountPrice =  $packageData['discouonted_package_price'];
+         $packageDiscount = $packageData['package_discount'];
+         
         return view('patient.view_patient', [
-            'patient' => $patient
+            'patient' => $patient,'catList' => $catList,'cartDetailList' => $cartDetailList, 'originalPrice' => $originalPrice ,'discountPrice'=> $discountPrice,'packageDiscount'=>$packageDiscount
         ]);
     }
 
