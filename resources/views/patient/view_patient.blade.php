@@ -24,9 +24,12 @@
                     <li>
                         <a href="#attachment" data-toggle="tab">Attachments</a>
                     </li>
+                    @if(!empty($catList))
                      <li>
                         <a href="#package_details" data-toggle="tab">Package Details</a>
                     </li>
+                    @endif
+                    
                 </ul>
                
                 <div class="tab-content">
@@ -192,12 +195,12 @@
                         </div>
                     </div>
                     <div id="package_details" class="tab-pane">
-                        <p>Package </p>
+                    
                         <div class="row">
                            <section class="panel panel-primary">
                              
                             @if(isset($catList) && !empty($catList))
-				<header class="panel-heading">
+<!--				<header class="panel-heading">
 					<div class="panel-actions">
 					@if(isset($catList))
 						<a href="#"> 
@@ -213,7 +216,7 @@
 					@endif	
 					</div>
 					<h2 class="panel-title">Cart Item </h2>
-				</header>
+				</header>-->
 				<div class="panel-body">
 					<div class="row">
 						@if(Session::has('flash_message'))
