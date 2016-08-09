@@ -513,6 +513,18 @@ Route::group(['middleware' => 'web'], function () {
             'middleware' => ['acl:product_categories_write']
         ]);
 
+    Route::get('/product/inventory', [
+            'uses' => 'ProductsController@showInventory',
+            'as' => 'products.showInventory',
+            'middleware' => ['acl:product_categories_read']
+        ]);
+		
+    Route::post('/product/updateProduct', [
+            'uses' => 'ProductsController@updateProduct',
+            'as' => 'products.updateProduct',
+            'middleware' => ['acl:product_categories_write']
+        ]);
+
 
     Route::get('/web_lead', function(){
             $table = WebLead::webLeads();

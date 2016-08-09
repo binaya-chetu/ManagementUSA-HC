@@ -12,8 +12,10 @@ class Product extends Model
      //
     protected $fillable = [
         'name',
-        'unit_of_measurement',
-        'price',
+		'price',
+		'sku',
+		'count',
+        'unit_of_measurement'
     ];
 	
     public function packages() {  

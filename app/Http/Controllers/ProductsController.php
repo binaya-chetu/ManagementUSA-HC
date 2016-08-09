@@ -54,10 +54,24 @@ class ProductsController extends Controller {
         return redirect()->back();
     }
 
+	public function updateProduct(){
+		$data = Input::all();
+		
+		$product = App\Product::where(['sku' => $data['sku']])->first();
+		if(!isset($product) || empty($product)){
+			return ['response' => false, 'msg' => 'Product with given sku value not found'];
+		}
+		$product->name = $data['pName'];
+		$product->price = $data['price'];
+		$product->count = $data['count'];
+		$product->save();
+		
+		return ['response' => true, 'msg' => 'Product updated successfully'];
+	}
+	
     public function addproducts() {
         return view('products.add_products');
     }
-
     public function generateInvoice(Request $request) {
             $user_id = $request['id'];
             return view('products.invoice',['id' => $user_id]);
@@ -89,5 +103,17 @@ class ProductsController extends Controller {
         });
         return ['response' => true, 'msg' => $url];
     }
-
+	
+	/**
+	* showInventory: shows product inventory details
+	* Parameters accepted: none
+	* Return : Prodduct inventory details page
+	*/
+	public function showInventory(){
+        $products = DB::table('products')->orderBy('name', 'asc')->get();
+		
+        return view('products.products', [
+            'products' => $products
+        ]);
+	}
 }
