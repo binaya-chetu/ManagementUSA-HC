@@ -109,6 +109,9 @@ $(function() {
     //validation for followup pop-up form.
     $('#newCategory').validate();
     
+    // Validation for Inventory Imports form
+    $('#inventory_imports').validate();
+    
     //validation for followup pop-up form.
     $('#editAppointment').validate({
           rules: {

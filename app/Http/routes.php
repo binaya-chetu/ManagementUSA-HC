@@ -681,5 +681,38 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'accounting.listCashLogs',
             //'middleware' => ['acl:accounting_write']	
         ]);
+    
+    /*
+     * Route for InventoryController in Inventory Management Module
+     */
+    Route::get('/inventory/create', [
+            'uses' => 'InventoryController@create',
+            'as' => 'inventory.create',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::post('/inventory/store', [
+            'uses' => 'InventoryController@store',
+            'as' => 'inventory.store',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::get('/inventory/index', [
+        'uses' => 'InventoryController@index',
+        'as' => 'inventory.index',
+        //'middleware' => ['acl:accounting_write']
+    ]);
+    
+    Route::get('/inventory/edit/{id}', [
+        'uses' => 'InventoryController@edit',
+        'as' => 'inventory.edit',
+        //'middleware' => ['acl:accounting_write']
+    ]);
+    
+    Route::post('/inventory/update/{id}', [
+        'uses' => 'InventoryController@update',
+        'as' => 'inventory.update',
+        //'middleware' => ['acl:accounting_write'] 
+    ]);
 
 });

@@ -5,22 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Products extends Model
+class Inventory extends Model
 {
-    use SoftDeletes;
     /*
      * The database table used by the model.
      * 
      * @var string
      */
-    protected $table = 'products'; 
-
-    protected $fillable =
-    [
-        'name',
+    use SoftDeletes;
+    protected $table = 'stocks';
+    protected $fillable = [
+        'sku',
         'unit_of_measurement',
-        'price',
-	'sku'
-    ]; 
-
+        'quantity'
+    ];
+    
 }
