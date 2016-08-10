@@ -5,7 +5,7 @@
     <header class="page-header">
         <h2>Edit Inventory </h2>
         <div class="right-wrapper pull-right">
-            
+        {!! Breadcrumbs::render('inventory.edit', $inventory->id) !!}
             
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>

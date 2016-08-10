@@ -296,7 +296,7 @@
                                     Petty Cash Log
                                 </a>
                                 <ul class="nav nav-children">
-                                    <li class="{{ Request::segment(2) === 'create' ? 'nav-active nav-expanded' : null }}">
+                                    <li class="{{ (Request::segment(1) === 'accounting') && (Request::segment(2) === 'create') ? 'nav-active nav-expanded' : null }}">
                                         <a href="{{ url('accounting/create') }}">
                                             Cash Voucher Form
                                         </a>
@@ -320,18 +320,18 @@
                     </li>
                     @endif
                     @if(in_array('inventory_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent">
+                    <li class="nav-parent {{ Request::segment(1) === 'inventory' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Inventory Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li>
+                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'create') ? 'nav-active' : null }}">
                                 <a href="{{ url('inventory/create')}}">
                                     Inventory Imports
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'index' || Request::segment(2) === 'edit') ? 'nav-active' : null }}">
                                 <a href="{{ url('inventory/index') }}">
                                     Inventory Details
                                 </a>

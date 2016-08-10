@@ -228,3 +228,18 @@ Breadcrumbs::register('accounting.create', function ($breadcrumbs) {
 Breadcrumbs::register('accounting.listCashLogs', function ($breadcrumbs) {
     $breadcrumbs->push('Accounting / Petty Cash Log / Cash Log Lists', route('accounting.listCashLogs'));
 });
+
+// Home / Inventory Management / Inventory Imports
+Breadcrumbs::register('inventory.create', function ($breadcrumbs) {
+    $breadcrumbs->push('Inventory Management / Inventory Imports', route('inventory.create'));
+});
+
+// Home / Inventory Management / Inventory Details
+Breadcrumbs::register('inventory.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Inventory Management / Inventory Details', route('inventory.index'));
+});
+
+// Home / Inventory Management / Edit Inventory Data
+Breadcrumbs::register('inventory.edit', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('Inventory Management / Edit Inventory Data', route('inventory.edit', $id));
+});
