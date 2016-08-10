@@ -52,7 +52,7 @@
                         <td>{{ $inventory->unit_of_measurement }}</td>
                         <td>{{ $inventory->quantity }}</td>
                         <td class="actions">
-                            <a href="/inventory/edit/{{ base64_encode($inventory->id) }}" class="on-default" title="Edit"><i class="fa fa-edit"></i></a>
+                            <a href="/inventory/edit/{{ base64_encode($inventory->id) }}" class="on-default" title="Edit"><i class="fa fa-pencil"></i></a>
                         </td>
                     </tr>
                     @endforeach
