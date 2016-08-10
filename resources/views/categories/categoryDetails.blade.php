@@ -56,17 +56,18 @@
                             <h3 class="bronze">Bronze<span>${{ $details['Bronze']['total_price'] }}</span></h3>
                                 <input type="hidden" name="category_id" value="{{ $category->id }}" />
                                 <input type="hidden" name="category_type" value="1" />
-                                <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config("constants.BRONZE_PKG_ID") }}">Buy Now</a>
+                                <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config('constants.BRONZE_PKG_ID') }}">Buy Now</a>
 <!--                                    {{ Form::button('Buy Now', ['class' => 'btn btn-lg btn-primary']) }}-->
                                 </p>
                             </th>
                             <th class="silver plan" colspan="2">
                             <h3 class="silver">Silver<span>${{ $details['Silver']['total_price'] }}</span></h3>
-                                <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config("constants.SILVER_PKG_ID") }}">Buy Now</a>
+                                <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config('constants.SILVER_PKG_ID') }}">Buy Now</a>
+								</p>
                             </th>
                             <th class="gold plan" colspan="2">
                             <h3 class="gold">Gold<span>${{ $details['Gold']['total_price'] }}</span></h3>
-                            <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config("constants.GOLD_PKG_ID") }}">Buy Now</a>
+                            <p align="center"><a class='btn btn-lg btn-primary addPackageToCart' data-cat-value="{{ $category->id }}" data-pkg-val="{{ config('constants.GOLD_PKG_ID') }}">Buy Now</a>
                             </th>								
                             </tr>
                             <tr>

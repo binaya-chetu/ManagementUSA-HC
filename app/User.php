@@ -101,8 +101,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
        }
        return $permissionSlugArr;
     }
-    
 
+    /**
+     * Get id, first name and last name of all the patients
+     * @parameters: patient role_id
+     * @return object of id, first name and last name of all the patients
+     */	
+	public static function getAllPatientsIdAndName($patient_role_id){
+		$patients = User::where('role', $patient_role_id)
+			->join('patient_details', function($join)
+			{
+				$join->on('users.id', '=', 'patient_details.user_id')
+					->where('patient_details.never_treat_status', '=', 0);
+			})->get(['users.id', 'first_name', 'last_name']);
+			
+			return $patients;
+	}
+	
     /*
     |--------------------------------------------------------------------------
     | Relationship Methods

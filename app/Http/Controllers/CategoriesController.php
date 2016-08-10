@@ -90,62 +90,25 @@ class CategoriesController extends Controller
      */
     public function categoryDetails($id = null, Request $request) {
         try{
-            $patients = User::where('role', $this->patient_role)
-                        ->join('patient_details', function ($join) {
-                                $join->on('users.id', '=', 'patient_details.user_id')
-                                     ->where('patient_details.never_treat_status', '=', 0);
-                            })->get(['users.id', 'first_name', 'last_name']);            
+			$id = base64_decode($id);
+            			
+			$patients = User::getAllPatientsIdAndName(config("constants.PATIENT_ROLE_ID"));	
             
-            $id = base64_decode($id);                       
-            $category = Categories::where('id', $id)->get()->first();
+			$category = Categories::where('id', $id)->get()->first();
             if(empty($category)){
                 \Session::flash('error_message', 'Category Not found.');
                 return Redirect::back();
             }
-
-            $category_details = DB::table('packages')
-                ->leftJoin('products', 'packages.product_id', '=', 'products.id')
-                ->leftJoin('category_types', 'packages.category_type', '=', 'category_types.id')
-                ->select('packages.product_count as p_count', 'packages.product_price as spl_price', 'products.*', 'category_types.name as package_type'
-                )
-                ->where('packages.category_id', $id)
-                ->orderBy('package_type', 'DESC')
-                ->get();
-
-            $category_info = [];
-            $pck_type = '';
-            $total_price = 0;
-            $products = [];
-            if (empty($category_details)) {
+			
+			$category_details = App\Packages::getCategoryDetailsById($id);	
+			if (empty($category_details)) {
                 \Session::flash('error_message', 'This package is empty.');
                 return Redirect::back();
             }
-            foreach ($category_details as $cat) {
-                if ($pck_type != $cat->package_type) {
-                    $pck_type = $cat->package_type;
-                    $category_info[$pck_type] = [];
-                    $category_info[$pck_type]['total_price'] = 0;
-                    $category_info[$pck_type]['ori_price'] = 0;
-                }
-                
-                $category_info[$pck_type]['total_price'] += $cat->spl_price;
-                $category_info[$pck_type]['ori_price'] += $cat->price * $cat->p_count;
-                if (!isset($products[$cat->name])) {
-                    $products[$cat->name] = [];
 
-                    $products[$cat->name]['Bronze'] = [];
-                    $products[$cat->name]['Silver'] = [];
-                    $products[$cat->name]['Gold'] = [];
-                }
-
-                $products[$cat->name]['price'] = $cat->price;
-                $products[$cat->name]['unit_of_measurement'] = $cat->unit_of_measurement;
-                $products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
-                $products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price;
-            }
-
-            return view('categories.categoryDetails', ['category' => $category, 'details' => $category_info, 'products' => $products, 'patients' => $patients]);
-        } catch (\Exception $e) {
+            return view('categories.categoryDetails', ['category' => $category, 'details' => $category_details['category_info'], 'products' => $category_details['products'], 'patients' => $patients]);
+			
+        } catch (\Exception $e) {		
             App::abort(404, $e->getMessage());
         }
     }
@@ -159,10 +122,10 @@ class CategoriesController extends Controller
      */
     public function saveCategories(Request $request) {
         $data = Input::all();
-        $messages = [
+        
+		$messages = [
             'mimes' => 'Please upload a valid excel file'
         ];
-
         $validator = Validator::make($data, [
 			'categoryFile' => 'required|mimes:xls,xlsx|between:0,1024' // file size must be from 0 kb to 1 mb
 		], $messages);
@@ -207,11 +170,13 @@ class CategoriesController extends Controller
                 $this->success = true;
             }
         });
+		
         if ($this->success) {
             \Session::flash('success_message', 'Category saved successfully.');
         } else {
             \Session::flash('error_message', 'Category SAVE FAILED. Please try again witha valid excel file.');
         }
+		
         return redirect()->back();
     }
 
