@@ -5,7 +5,7 @@
     <header class="page-header">
         <h2>Inventory Imports</h2>
         <div class="right-wrapper pull-right">
-           {!! Breadcrumbs::render('categories.addcategories') !!}
+           {!! Breadcrumbs::render('inventory.create') !!}
            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
