@@ -676,6 +676,28 @@ $(document).ready(function() {
                  $('.saleAnchor').removeAttr('href'); 
             }
         });
+		
+		$("#editProductInventoryForm").on('submit', function(e){
+			var data = $(this).serializeArray();
+			$.ajax({
+				url: location.protocol+'//'+location.host+'/product/updateProduct',
+				method: 'post',
+				data: data,
+				dataType:'json',
+				success: function(data){
+					$('#modalEditProduct').find('.alert').remove();					
+					if(data.response){
+						$('#modalEditProduct').find('.panel-body').prepend('<div class="alert alert-success">'+data.msg+'</div>');
+						setTimeout(function(){
+							location.reload();
+						}, 3000);
+					} else{
+						$('#modalEditProduct').find('.panel-body').prepend('<div class="alert alert-danger">'+data.msg+'</div>');
+					}
+				}
+			});
+			e.preventDefault();
+		});
 });
         /**
 	* notifyUser(text, type) renders PNotify messages

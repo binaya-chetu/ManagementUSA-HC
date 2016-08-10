@@ -242,6 +242,14 @@
                         </a>
                     </li>
                     @endif
+                    @if(in_array('product_categories', $permissions) || (Auth::user()->role == '1'))
+                    <li class="{{ Request::segment(1) === 'product' && Request::segment(2) === 'inventory' ? 'nav-active nav-expanded' : null }}">
+                        <a href="{{ url('product/inventory') }}">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Product Inventory</span>
+                        </a>
+                    </li>
+                    @endif
                     @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">

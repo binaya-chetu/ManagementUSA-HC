@@ -179,9 +179,14 @@ Breadcrumbs::register('categories.listCategories', function ($breadcrumbs) {
     $breadcrumbs->push('Product Categories / Categories List', route('categories.listCategories'));
 });
 
+// Home / Products / Product List
+Breadcrumbs::register('products.showInventory', function ($breadcrumbs) {
+    $breadcrumbs->push('Products / Categories List', route('products.showInventory'));
+});
+
 // Home / Product Categories / Package Details
 Breadcrumbs::register('categories.categoryDetails', function ($breadcrumbs, $id) {
-    $breadcrumbs->push('Product Categories / Package Details', route('categories.categoryDetails', $id));
+    $breadcrumbs->push('Products / Product List', route('categories.categoryDetails', $id));
 });
 
 // Home / Imports Product
