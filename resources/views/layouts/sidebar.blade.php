@@ -123,6 +123,51 @@
                             <span>Front Office</span>
                         </a>
                         <ul class="nav nav-children">
+                             <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsetting/index/walkin') }}">
+                                    Direct Walkins
+                                </a>
+                            </li>
+                     
+                         <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
+                                        Request::segment(2) === 'listappointment' ||
+                                        Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
+                                <a>
+                                    Appointment
+                                </a>
+                           <ul class="nav nav-children">
+
+                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/followup') }}">
+                                    Follow-up Appointment<span class="badge followupCount"></span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/upcomingappointments') }}">
+                                    Upcoming Appointments<span class="badge upcomingCount"></span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/todayVisits') }}">
+                                    Today Visits<span class="badge visitCount"></span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/labAppointments') }}">
+                                    Lab Appointments<span class="badge labCount"></span>                                    
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/labReadyAppointments') }}">
+                                    Lab Ready Reports <span class="badge readyCount"></span>                                  
+                                </a>
+                            </li>
+                            <li class="{{ Request::segment(2) === 'appointmentAfterReport' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/appointmentAfterReport') }}">
+                                    Appointment After Report<span class="badge anotherAppointment"></span>                                    
+                                </a>
+                            </li>
+                          </ul>
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
                                 <a>
                                     Patients
@@ -140,22 +185,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
-                                <a>
-                                    Doctors
+                         <li class="{{ Request::segment(2) === 'forms' ? 'nav-active' : null }}">
+                                <a href="#">
+                                    Forms                                   
                                 </a>
-                                <ul class="nav nav-children">
-                                    <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/doctor/addDoctor') }}">
-                                            Add New Doctor
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
-                                        <a href="/doctor">
-                                            Doctors List
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -210,6 +243,23 @@
                                 <a href="{{ url('/user/listUsers') }}">
                                     Users List
                                 </a>
+                            </li>
+                                <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
+                                <a>
+                                    Doctors
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/doctor/addDoctor') }}">
+                                            Add New Doctor
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
+                                        <a href="/doctor">
+                                            Doctors List
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>       
