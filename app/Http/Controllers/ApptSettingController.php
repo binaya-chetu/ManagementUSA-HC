@@ -301,9 +301,15 @@ class ApptSettingController extends Controller {
         $user->first_name = $formData['first_name'];
         $user->last_name = $formData['last_name'];
         $user->email = $formData['email'];
-        $user->role = $patientRole;
+        $user->role = $patientRole;        
         $user->save();
-
+        /* code for add the data in MSAccess database */
+//        $dbName = realpath( "../../managementUSA.mdb"); 
+//        $connection = odbc_connect("Driver={Microsoft Access Driver (*.mdb)};Dbq=$dbName",'root', '');
+//        $str = "'".$formData['first_name']."','".$formData['last_name']."','".$formData['email']."','".$formData['phone']."'";
+//        $stmt="INSERT INTO user(first_name, last_name, email, phone) VALUES($str)"; 
+//        $resultset1=odbc_exec($connection,$stmt);        
+        
         $patient = App\Patient::firstOrCreate(['user_id' => $id]);
         $patient->phone = $formData['phone'];
         $patient->dob = date_create($formData['dob']);
@@ -529,6 +535,19 @@ class ApptSettingController extends Controller {
             \Session::flash('flash_message', 'Appointment put on the hold successfully.');
             return redirect()->back();
         }
+    }
+
+    /**
+     * Function for the showing the MSAccess Database data
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAccessData() {
+        $dbName = realpath( "managementUSA.mdb"); 
+        $connection = odbc_connect("Driver={Microsoft Access Driver (*.mdb)};Dbq=$dbName",'root', '');
+        $resultset=odbc_exec($connection, "SELECT * FROM user");
+        odbc_result_all($resultset,"border=1");
+        die;
     }
 
 }
