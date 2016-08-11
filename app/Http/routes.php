@@ -116,6 +116,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'ApptSettingController@directWalkins',
             'middleware' => ['acl:appointment_setting_write']
         ]);
+    Route::get('/apptsetting/showAccessData', [
+            'uses' => 'ApptSettingController@showAccessData',
+            'as' => 'ApptSettingController@showAccessData',
+            //'middleware' => ['acl:appointment_setting_write']
+        ]);
     
     Route::get('/sale/index', [
             'uses' => 'SaleController@index',
