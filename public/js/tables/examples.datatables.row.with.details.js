@@ -15,7 +15,7 @@ Theme Version: 	1.4.1
 		var fnFormatDetails = function( datatable, tr ) {
 			var tableId = $(tr).data('details-table');
 			var table = $('table[data-details-src='+tableId+']').get(0);
-			return table;
+			return $(table).clone(); // as dataTable delete the html provided so supply clone element to keep the original element
 		};
 
 		// insert the expand/collapse column
