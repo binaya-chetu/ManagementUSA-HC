@@ -45,11 +45,11 @@
                                     Web Leads<span class="badge">5</span>
                                 </a>
                             </li> 
-                            <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
+<!--                            <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/index/walkin') }}">
                                     Direct Walkins
                                 </a>
-                            </li>
+                            </li>-->
 
 
                             <li class="{{ Request::segment(2) === 'requestFollowUp' ? 'nav-active' : null }}">
@@ -82,7 +82,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+            <!--          
+            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment<span class="badge followupCount"></span>
                                 </a>
@@ -111,7 +112,8 @@
                                 <a href="{{ url('/appointment/appointmentAfterReport') }}">
                                     Appointment After Report<span class="badge anotherAppointment"></span>                                    
                                 </a>
-                            </li>
+                            </li>-->
+            
                         </ul>
                     </li>
                     @endif
