@@ -179,11 +179,6 @@ Breadcrumbs::register('categories.listCategories', function ($breadcrumbs) {
     $breadcrumbs->push('Product Categories / Categories List', route('categories.listCategories'));
 });
 
-// Home / Products / Product List
-Breadcrumbs::register('products.showInventory', function ($breadcrumbs) {
-    $breadcrumbs->push('Products / Categories List', route('products.showInventory'));
-});
-
 // Home / Product Categories / Package Details
 Breadcrumbs::register('categories.categoryDetails', function ($breadcrumbs, $id) {
     $breadcrumbs->push('Products / Product List', route('categories.categoryDetails', $id));
@@ -230,16 +225,11 @@ Breadcrumbs::register('accounting.listCashLogs', function ($breadcrumbs) {
 });
 
 // Home / Inventory Management / Inventory Imports
-Breadcrumbs::register('inventory.create', function ($breadcrumbs) {
-    $breadcrumbs->push('Inventory Management / Inventory Imports', route('inventory.create'));
+Breadcrumbs::register('products.create', function ($breadcrumbs) {
+    $breadcrumbs->push('Inventory Management / Inventory Imports', route('products.create'));
 });
 
-// Home / Inventory Management / Inventory Details
-Breadcrumbs::register('inventory.index', function ($breadcrumbs) {
-    $breadcrumbs->push('Inventory Management / Inventory Details', route('inventory.index'));
-});
-
-// Home / Inventory Management / Edit Inventory Data
-Breadcrumbs::register('inventory.edit', function ($breadcrumbs, $id) {
-    $breadcrumbs->push('Inventory Management / Edit Inventory Data', route('inventory.edit', $id));
+// Home / Inventory Management / Product Inventory
+Breadcrumbs::register('products.showInventory', function ($breadcrumbs) {
+    $breadcrumbs->push('Inventory Management / Product Inventory', route('products.showInventory'));
 });

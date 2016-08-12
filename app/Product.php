@@ -12,9 +12,9 @@ class Product extends Model
      //
     protected $fillable = [
         'name',
-		'price',
-		'sku',
-		'count',
+        'price',
+        'sku',
+        'count',
         'unit_of_measurement'
     ];
 	
