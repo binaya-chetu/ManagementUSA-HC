@@ -53,4 +53,14 @@ class SaleController extends Controller
             'patients' => $patients, 'categories' =>$categories, 'lCat' =>$lCategories, 'rCat' =>$rCategories
         ]);
     }
+    
+    /**
+     * Make the Checkout Page functionality
+     *
+     * @return \resource\view\sale\checkout.blade.php
+     *  */
+    public function checkout($id) {
+     
+        return view('sale.checkout');
+    }
 }
