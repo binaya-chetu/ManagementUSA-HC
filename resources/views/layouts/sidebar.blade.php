@@ -242,14 +242,6 @@
                         </a>
                     </li>
                     @endif
-                    @if(in_array('product_categories', $permissions) || (Auth::user()->role == '1'))
-                    <li class="{{ Request::segment(1) === 'product' && Request::segment(2) === 'inventory' ? 'nav-active nav-expanded' : null }}">
-                        <a href="{{ url('product/inventory') }}">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Product Inventory</span>
-                        </a>
-                    </li>
-                    @endif
                     @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
@@ -320,20 +312,20 @@
                     </li>
                     @endif
                     @if(in_array('inventory_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'inventory' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'product' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Inventory Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'create') ? 'nav-active' : null }}">
-                                <a href="{{ url('inventory/create')}}">
+                            <li class="{{ (Request::segment(1) === 'product') && (Request::segment(2) === 'create') ? 'nav-active' : null }}">
+                                <a href="{{ url('product/create')}}">
                                     Inventory Imports
                                 </a>
                             </li>
-                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'index' || Request::segment(2) === 'edit') ? 'nav-active' : null }}">
-                                <a href="{{ url('inventory/index') }}">
-                                    Inventory Details
+                            <li class="{{ (Request::segment(1) === 'product') && (Request::segment(2) === 'inventory') ? 'nav-active' : null }}">
+                                <a href="{{ url('product/inventory') }}">
+                                    Product Inventory
                                 </a>
                             </li>
                         </ul>

@@ -518,19 +518,6 @@ Route::group(['middleware' => 'web'], function () {
             'middleware' => ['acl:product_categories_write']
         ]);
 
-    Route::get('/product/inventory', [
-            'uses' => 'ProductsController@showInventory',
-            'as' => 'products.showInventory',
-            'middleware' => ['acl:product_categories_read']
-        ]);
-		
-    Route::post('/product/updateProduct', [
-            'uses' => 'ProductsController@updateProduct',
-            'as' => 'products.updateProduct',
-            'middleware' => ['acl:product_categories_write']
-        ]);
-
-
     Route::get('/web_lead', function(){
             $table = WebLead::webLeads();
             $filename = "web-leads.csv";
@@ -548,15 +535,6 @@ Route::group(['middleware' => 'web'], function () {
             );
             return Response::download($filename, 'web-leads.csv', $headers);
         });
-    
-        
-    // Route for ClientApiController
-    Route::get('/clientapi', [
-            'uses' => 'ClientapiController@getApiResponse',
-            'as' => 'clientapi.getApiResponse',
-            //'middleware' => ['acl:user_write']
-        ]);
-    
     
     // Route for CartController in Shop Module.
     Route::post('/cart/addProduct', [
@@ -599,20 +577,32 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'products.saveproducts',
             'middleware' => ['acl:product_imports_write']
 	]);
-	
-    Route::get('/categories/addcategories', [
-            'uses' => 'CategoriesController@addcategories',
-            'as' => 'categories.addcategories',
-            //'middleware' => ['acl:add_categories']	
-        ]);	
-
-    Route::post('/categories/saveCategories', [
-            'uses' => 'CategoriesController@saveCategories',
-            'as' => 'categories.savecategories',
-            //'middleware' => ['acl:save_categories']   
+    
+     Route::get('/product/inventory', [
+            'uses' => 'ProductsController@showInventory',
+            'as' => 'products.showInventory',
+            'middleware' => ['acl:product_categories_read']
         ]);
-
-    /*
+		
+    Route::post('/product/updateProduct', [
+            'uses' => 'ProductsController@updateProduct',
+            'as' => 'products.updateProduct',
+            'middleware' => ['acl:product_categories_write']
+        ]);
+    
+    Route::get('/product/create', [
+            'uses' => 'ProductsController@create',
+            'as' => 'products.create',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+    Route::post('/product/store', [
+            'uses' => 'ProductsController@store',
+            'as' => 'products.store',
+            //'middleware' => ['acl:accounting_write']	
+        ]);
+    
+     /*
      * for invoice section
      */
     Route::get('/products/generateInvoice', [
@@ -638,7 +628,18 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'products.paymentForm',
             //'middleware' => ['acl:save_categories']	
         ]);
+	
+    Route::get('/categories/addcategories', [
+            'uses' => 'CategoriesController@addcategories',
+            'as' => 'categories.addcategories',
+            //'middleware' => ['acl:add_categories']	
+        ]);	
 
+    Route::post('/categories/saveCategories', [
+            'uses' => 'CategoriesController@saveCategories',
+            'as' => 'categories.savecategories',
+            //'middleware' => ['acl:save_categories']   
+        ]);
 
     Route::get('pdf/{invoice_id}', function($invoice_id) {
     $item = [
@@ -705,38 +706,4 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'accounting.listCashLogs',
             //'middleware' => ['acl:accounting_write']	
         ]);
-    
-    /*
-     * Route for InventoryController in Inventory Management Module
-     */
-    Route::get('/inventory/create', [
-            'uses' => 'InventoryController@create',
-            'as' => 'inventory.create',
-            //'middleware' => ['acl:accounting_write']	
-        ]);
-    
-    Route::post('/inventory/store', [
-            'uses' => 'InventoryController@store',
-            'as' => 'inventory.store',
-            //'middleware' => ['acl:accounting_write']	
-        ]);
-    
-    Route::get('/inventory/index', [
-        'uses' => 'InventoryController@index',
-        'as' => 'inventory.index',
-        //'middleware' => ['acl:accounting_write']
-    ]);
-    
-    Route::get('/inventory/edit/{id}', [
-        'uses' => 'InventoryController@edit',
-        'as' => 'inventory.edit',
-        //'middleware' => ['acl:accounting_write']
-    ]);
-    
-    Route::post('/inventory/update/{id}', [
-        'uses' => 'InventoryController@update',
-        'as' => 'inventory.update',
-        //'middleware' => ['acl:accounting_write'] 
-    ]);
-
 });
