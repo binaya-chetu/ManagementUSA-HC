@@ -128,7 +128,11 @@ Route::group(['middleware' => 'web'], function () {
             //'middleware' => ['acl:appointment_setting_write']
         ]);
 
-    
+    Route::get('/sale/checkout/{id}', [
+            'uses' => 'SaleController@checkout',
+            'as' => 'SaleController@checkout',
+            //'middleware' => ['acl:appointment_setting_write']
+        ]);
     
     // Route for PatientController in POS Module
     Route::get('/patient', [
