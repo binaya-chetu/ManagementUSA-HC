@@ -176,4 +176,15 @@ class InventoryController extends Controller
     {
         //
     }
+    
+     /**
+     * Displays the details of patient inventory.
+     *
+     * @param  int  $id
+     * @return\Illuminate\Http\Response
+     */
+    public function patientInventory()
+    {
+       return view('inventory.patientInventory');
+    }
 }

@@ -31,8 +31,16 @@ Route::group(['middleware' => 'web'], function () {
 		echo '<div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> Client Profile updated successfully.</em></div>';
 	});
         
-    // Route for AppointmentSettingController
+    /*
+     * Route for AppointmentSettingController
+     */
+   
     Route::get('/apptsetting/index/{val?}', [
+            'uses' => 'ApptSettingController@index',
+            'as' => 'apptsetting.index',
+            'middleware' => ['acl:appointment_setting_write']
+        ]);
+    Route::get('/apptsettingFront/index/{val?}', [
             'uses' => 'ApptSettingController@index',
             'as' => 'apptsetting.index',
             'middleware' => ['acl:appointment_setting_write']
@@ -594,6 +602,7 @@ Route::group(['middleware' => 'web'], function () {
             'middleware' => ['acl:product_categories_write']
         ]);
     
+    
     Route::get('/product/create', [
             'uses' => 'ProductsController@create',
             'as' => 'products.create',
@@ -710,4 +719,50 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'accounting.listCashLogs',
             //'middleware' => ['acl:accounting_write']	
         ]);
+    
+    /*
+     * Adding duplicate Menu Items into ApptSetting
+     */
+         Route::get('/appointmentApptSetting/followup', [
+            'uses' => 'AppointmentController@followup',
+            'as' => 'appointment.followup',
+            'middleware' => ['acl:appointment_setting_read']
+        ]);
+           Route::get('/appointmentApptSetting/upcomingappointments', [
+            'uses' => 'AppointmentController@upcomingappointments',
+            'as' => 'appointment.upcomingappointments',
+            'middleware' => ['acl:appointment_setting_read']
+        ]);
+             Route::get('/appointmentApptSetting/todayVisits', [
+            'uses' => 'AppointmentController@todayVisits',
+            'as' => 'appointment.todayVisits',
+            'middleware' => ['acl:appointment_setting_read']
+        ]);
+              Route::get('/appointmentApptSetting/labAppointments', [
+            'uses' => 'AppointmentController@labAppointments',
+            'as' => 'appointment.labAppointments',
+            'middleware' => ['acl:appointment_setting_read']
+        ]);
+               
+             Route::get('/appointmentApptSetting/appointmentAfterReport', [
+            'uses' => 'AppointmentController@appointmentAfterReport',
+            'as' => 'appointment.appointmentAfterReport',
+            'middleware' => ['acl:appointment_write']
+        ]);
+             
+             Route::get('/appointmentApptSetting/labReadyAppointments', [
+            'uses' => 'AppointmentController@labReadyAppointments',
+            'as' => 'appointment.labReadyAppointments',
+            'middleware' => ['acl:appointment_read']
+        ]);
+             
+         /*
+          * To show the patient Inventory details
+          */
+           Route::get('/inventory/patientInventory', [
+            'uses' => 'InventoryController@patientInventory',
+            'as' => 'inventory.patientInventory',
+            'middleware' => ['acl:patient_inventory_read']
+        ]);
+           
 });
