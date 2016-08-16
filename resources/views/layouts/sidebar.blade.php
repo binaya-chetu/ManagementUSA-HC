@@ -7,12 +7,11 @@
 
     <div class="nano">
         <div class="nano-content">
-            <?php 
+            <?php
             $permissions = [];
-                if(Auth::user())
-                {
-                    $permissions =  \App\Permission::getPermissionForLoggedUser(Auth::user()->role);
-                }
+            if (Auth::user()) {
+                $permissions = \App\Permission::getPermissionForLoggedUser(Auth::user()->role);
+            }
             ?>
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
@@ -29,7 +28,7 @@
                             <span>Appt. Settings</span>
                         </a>
                         <ul class="nav nav-children">                       
-                              
+
                             <li class="{{ Request::segment(2) === 'missedCall' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/missedCall') }}">
                                     Missed Call<span class="badge">4</span>
@@ -45,31 +44,31 @@
                                     Web Leads<span class="badge">5</span>
                                 </a>
                             </li> 
-<!--                            <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
-                                <a href="{{ url('/apptsetting/index/walkin') }}">
-                                    Direct Walkins
-                                </a>
-                            </li>-->
+                            <!--                            <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
+                                                            <a href="{{ url('/apptsetting/index/walkin') }}">
+                                                                Direct Walkins
+                                                            </a>
+                                                        </li>-->
 
 
                             <li class="{{ Request::segment(2) === 'requestFollowUp' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsetting/requestFollowUp') }}">
-                                   Request Follow-up<span class="badge requestCount"></span>
+                                    Request Follow-up<span class="badge requestCount"></span>
                                 </a>
                             </li>
                             <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
-                                        Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
+                                        Request::segment(2) === 'viewappointment' || Request::segment(1) !== 'appointment' ? 'nav-expanded' : null }}">
                                 <a>
                                     Appointments
                                 </a>
                                 <ul class="nav nav-children">
 
-<!--                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointment/newAppointment') }}">
-                                            New Appointment
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li class="{{ Request::segment(2) === 'appointment' ? 'nav-active' : null }}">
+                                                                            <a href="{{ url('/appointment/newAppointment') }}">
+                                                                                New Appointment
+                                                                            </a>
+                                                                        </li>-->
                                     <li class="{{ Request::segment(2) === 'listappointment' ? 'nav-active' : null }}">
                                         <a href="{{ url('appointment/listappointment') }}">
                                             List Appointments<span class="badge appointmentCount"></span>
@@ -82,12 +81,13 @@
                                     </li>
                                 </ul>
                             </li>
-            <!--          
-            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+
+                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/followup') }}">
                                     Follow-up Appointment<span class="badge followupCount"></span>
                                 </a>
                             </li>
+
                             <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/upcomingappointments') }}">
                                     Upcoming Appointments<span class="badge upcomingCount"></span>
@@ -112,74 +112,73 @@
                                 <a href="{{ url('/appointment/appointmentAfterReport') }}">
                                     Appointment After Report<span class="badge anotherAppointment"></span>                                    
                                 </a>
-                            </li>-->
-            
+                            </li>
                         </ul>
                     </li>
                     @endif
                     @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'patient' || 
-                                Request::segment(1) === 'doctor' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'patient' ||  Request::segment(1) === 'walkin' ||
+                                Request::segment(1) === 'doctor'  ||  Request::segment(1) === 'appointmentApptSetting' ||  Request::segment(1) === 'apptsettingFront'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Front Office</span>
                         </a>
                         <ul class="nav nav-children">
-                             <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
-                                <a href="{{ url('/apptsetting/index/walkin') }}">
+                            <li class="{{ Request::segment(3) === 'walkin' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsettingFront/index/walkin') }}">
                                     Direct Walkins
                                 </a>
                             </li>
-                     
-                         <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
+
+                            <li class="nav-parent {{ Request::segment(2) === 'newAppointment' ||
                                         Request::segment(2) === 'listappointment' ||
-                                        Request::segment(2) === 'viewappointment' ? 'nav-expanded' : null }}">
+                                        Request::segment(2) === 'viewappointment'  ||  Request::segment(1) === 'appointmentApptSetting' ? 'nav-expanded' : null }}">
                                 <a>
                                     Appointment
                                 </a>
-                           <ul class="nav nav-children">
+                                <ul class="nav nav-children">
 
-                             <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/followup') }}">
-                                    Follow-up Appointment<span class="badge followupCount"></span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/upcomingappointments') }}">
-                                    Upcoming Appointments<span class="badge upcomingCount"></span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/todayVisits') }}">
-                                    Today Visits<span class="badge visitCount"></span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/labAppointments') }}">
-                                    Lab Appointments<span class="badge labCount"></span>                                    
-                                </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/labReadyAppointments') }}">
-                                    Lab Ready Reports <span class="badge readyCount"></span>                                  
-                                </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'appointmentAfterReport' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/appointmentAfterReport') }}">
-                                    Appointment After Report<span class="badge anotherAppointment"></span>                                    
-                                </a>
-                            </li>
-                          </ul>
+                                    <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/followup') }}">
+                                            Follow-up Appointment<span class="badge followupCount"></span>
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/upcomingappointments') }}">
+                                            Upcoming Appointments<span class="badge upcomingCount"></span>
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/todayVisits') }}">
+                                            Today Visits<span class="badge visitCount"></span>
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'labAppointments' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/labAppointments') }}">
+                                            Lab Appointments<span class="badge labCount"></span>                                    
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'labReadyAppointments' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/labReadyAppointments') }}">
+                                            Lab Ready Reports <span class="badge readyCount"></span>                                  
+                                        </a>
+                                    </li>
+                                    <li class="{{ Request::segment(2) === 'appointmentAfterReport' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/appointmentAfterReport') }}">
+                                            Appointment After Report<span class="badge anotherAppointment"></span>                                    
+                                        </a>
+                                    </li>
+                                </ul>
                             <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
                                 <a>
                                     Patients
                                 </a>
                                 <ul class="nav nav-children">
-<!--                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
-                                        <a href="/patient/addpatient">
-                                            Add New Patient
-                                        </a>
-                                    </li>-->
+                                    <!--                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
+                                                                            <a href="/patient/addpatient">
+                                                                                Add New Patient
+                                                                            </a>
+                                                                        </li>-->
                                     <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                         <a href="/patient">
                                             Patients List
@@ -187,7 +186,7 @@
                                     </li>
                                 </ul>
                             </li>
-                         <li class="{{ Request::segment(2) === 'forms' ? 'nav-active' : null }}">
+                            <li class="{{ Request::segment(2) === 'forms' ? 'nav-active' : null }}">
                                 <a href="#">
                                     Forms                                   
                                 </a>
@@ -207,7 +206,7 @@
                                     Front Office Sale
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </li>
                     @endif
@@ -246,7 +245,7 @@
                                     Users List
                                 </a>
                             </li>
-                                <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
+                            <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
                                 <a>
                                     Doctors
                                 </a>
@@ -272,7 +271,7 @@
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
-                         <ul class="nav nav-children">
+                        <ul class="nav nav-children">
                             <li class="{{ Request::segment(2) === 'newCategory'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/newCategory') }}">
                                     Add New Category
@@ -380,6 +379,12 @@
                                     Product Inventory
                                 </a>
                             </li>
+                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'patientInventory') ? 'nav-active' : null }}">
+                                <a href="{{ url('inventory/patientInventory') }}">
+                                    Patient Inventory
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     @endif
