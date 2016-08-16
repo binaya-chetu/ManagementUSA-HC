@@ -117,8 +117,7 @@
                     </li>
                     @endif
                     @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'patient' ||  Request::segment(1) === 'walkin' ||
-                                Request::segment(1) === 'doctor'  ||  Request::segment(1) === 'appointmentApptSetting' ||  Request::segment(1) === 'apptsettingFront'  ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'patient' ||  Request::segment(1) === 'walkin'  ||  Request::segment(1) === 'appointmentApptSetting' ||  Request::segment(1) === 'apptsettingFront'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Front Office</span>
@@ -229,7 +228,8 @@
                     </li>
                     @endif
                     @if(in_array('user_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'user' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'user' ||
+                                Request::segment(1) === 'doctor'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>User Management</span>
