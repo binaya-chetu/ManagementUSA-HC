@@ -14,10 +14,11 @@ class Cart extends Model
 		
 		$original_package_price = [];
 		$discouonted_package_price = [];
+		$total_cart_price = 0;
 		$package_discount = [];
 		
 		$cart = Cart::with('patient', 'user', 'categoryTypes', 'categories', 'categories.packages', 'categories.packages.Product')->where('patient_id', $patientId)->get();	
-		
+
 		foreach($cart as $i => $v){
 			$original_package_price[$v->id] = 0;
 			$discouonted_package_price[$v->id] = 0;
@@ -46,11 +47,12 @@ class Cart extends Model
 				
 				$original_package_price[$v->id] +=  $val->product_count * $val->product->price;
 				$discouonted_package_price[$v->id] +=  $val->product_price;
+				$total_cart_price +=  $val->product_price;
 			}
 			$package_discount[$v->id] =  $original_package_price[$v->id] - $discouonted_package_price[$v->id];
 		}			
 		
-		return ['category_list' => $category_list, 'category_detail_list' => $category_detail_list, 'original_package_price' => $original_package_price, 'discouonted_package_price' => $discouonted_package_price,	'package_discount' => $package_discount];
+		return ['category_list' => $category_list, 'category_detail_list' => $category_detail_list, 'original_package_price' => $original_package_price, 'discouonted_package_price' => $discouonted_package_price,	'package_discount' => $package_discount, 'total_cart_price' => $total_cart_price];
 	}
 	
     public function user()
