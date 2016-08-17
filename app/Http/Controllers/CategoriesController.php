@@ -90,18 +90,18 @@ class CategoriesController extends Controller
      */
     public function categoryDetails($id = null, Request $request) {
         try{
-			$id = base64_decode($id);
-            			
-			$patients = User::getAllPatientsIdAndName(config("constants.PATIENT_ROLE_ID"));	
-            
-			$category = Categories::where('id', $id)->get()->first();
+            $id = base64_decode($id);
+
+            $patients = User::getAllPatientsIdAndName(config("constants.PATIENT_ROLE_ID"));	
+
+            $category = Categories::where('id', $id)->get()->first();
             if(empty($category)){
                 \Session::flash('error_message', 'Category Not found.');
                 return Redirect::back();
             }
 			
-			$category_details = App\Packages::getCategoryDetailsById($id);	
-			if (empty($category_details)) {
+            $category_details = App\Packages::getCategoryDetailsById($id);	
+            if (empty($category_details['category_info'])) {
                 \Session::flash('error_message', 'This package is empty.');
                 return Redirect::back();
             }
