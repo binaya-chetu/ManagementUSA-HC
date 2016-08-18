@@ -17582,4 +17582,10 @@ html.dark .thumbnail {
 	border-color: #282d36;
 }
 
+.panel-row{ text-align:center;color:black}
 
+.row-title{ text-align:center; font-size:15px; color:black;}
+#treatment table tr Dose Dtd
+{
+    width:auto !important;
+}
