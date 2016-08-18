@@ -213,15 +213,35 @@ $(document).ready(function() {
         checkAppointmentTime();       
     });
     
+    showAppointmentCount();
+    setInterval(function() {
         showAppointmentCount();
-        setInterval(function() {
-            showAppointmentCount();
-        }, 5000);
+    }, 5000);
+    
+    /* Checkout page code start */
+    $('.creditCard').hide();
+    $('.cashInHand').hide();
+    $('#checkoutForm').validate();
+    $('#paymentMethod').on('change', function(){
+        var pay_type = $(this).val();
+        if(parseInt(pay_type) == 0){
+            $('.creditCard').hide();
+            $('.cashInHand').show();
+        }else if(parseInt(pay_type) == 1){
+            $('.cashInHand').hide();
+            $('.creditCard').show();            
+        }else{
+            $('.cashInHand').hide();
+            $('.creditCard').hide();  
+        }
+       
+    });
+    /* Checkout Page End */
     
     $('#external-events').hide();
-	$('select.chosen').chosen();
-	$('.add-appointment-submit').submit(function(event) {
-		event.preventDefault();
+    $('select.chosen').chosen();
+    $('.add-appointment-submit').submit(function(event) {
+            event.preventDefault();
 	});
     $.validator.setDefaults({ignore: ":hidden:not(select)"});
     $.validator.addMethod("aFunction", function(value, element) {
