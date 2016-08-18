@@ -141,6 +141,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'SaleController@checkout',
             //'middleware' => ['acl:appointment_setting_write']
         ]);
+    Route::post('/sale/confirmation/{id}', [
+            'uses' => 'SaleController@confirmation',
+            'as' => 'SaleController@confirmation',
+            //'middleware' => ['acl:appointment_setting_write']
+        ]);
     
     // Route for PatientController in POS Module
     Route::get('/patient', [

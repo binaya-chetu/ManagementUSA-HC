@@ -22,7 +22,7 @@
 				<header class="panel-heading">
 					<div class="panel-actions">				
 					@if(isset($category_list))
-						<a href="#"> 
+						<a href="/sale/checkout/{{ base64_encode(array_values($category_list)[0]['patient_id']) }}"> 
 							<button type="button" class="btn btn-success">
 								<span class="fa fa-check"></span> Checkout
 							</button>

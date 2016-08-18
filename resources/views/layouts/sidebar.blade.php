@@ -200,7 +200,7 @@
                             <span>Front Office Sale</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ Request::segment(2) === 'index'  ? 'nav-active' : null }}">
+                            <li class="{{ Request::segment(2) === 'index' || Request::segment(2) === 'checkout' ? 'nav-active' : null }}">
                                 <a href="{{ url('/sale/index') }}">
                                     Front Office Sale
                                 </a>

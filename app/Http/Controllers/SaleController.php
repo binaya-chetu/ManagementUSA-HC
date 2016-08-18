@@ -5,16 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
-use App\FollowupReschedule;
 use App\AppointmentRequest;
-use App\AdamsQuestionaires;
 use App\Doctor;
 use App\User;
-use App\FollowUp;
 use App\State;
-use App\FollowupStatus;
-use App\ReasonCode;
 use App\Categories;
+use App\Cart;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
@@ -59,8 +55,28 @@ class SaleController extends Controller
      *
      * @return \resource\view\sale\checkout.blade.php
      *  */
-    public function checkout($id) {
-     
-        return view('sale.checkout');
+    public function checkout($id) {        
+        $patientId = base64_decode($id);
+        $states = State::lists('name', 'id')->toArray();
+        $cart = Cart::getCartDetails($patientId);
+        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
+        //echo '<pre>';print_r($cart);die;
+        return view('sale.checkout', [
+            'patientCart' => $patientCart, 'states' => $states, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount']
+        ]);
+    }
+    /**
+     * Make the Confirmation Page functionality
+     *
+     * @return \resource\view\sale\confirmation.blade.php
+     *  */
+    public function confirmation($id) {        
+        $patientId = base64_decode($id);
+        $cart = Cart::getCartDetails($patientId);
+        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
+        //echo '<pre>';print_r($cart);die;
+        return view('sale.confirmation', [
+            'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount']
+        ]);
     }
 }
