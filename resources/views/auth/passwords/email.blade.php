@@ -13,38 +13,43 @@
                 <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Reset Password</h2>
             </div>
             <div class="panel-body">
-			 @if (session('status'))
-				<div class="alert alert-success">
-					{{ session('status') }}
-				</div>
-			@endif
-                <form role="form" method="POST" action="{{ url('/password/email') }}">
-                      {!! csrf_field() !!}
-                    
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-lg">
-                        <label>Email</label>
-                        <div class="input-group input-group-icon">
-                            <input name="email" type="text" class="form-control input-lg" value="{{ old('email') }}" />
-                            <span class="input-group-addon">
-                                <span class="icon icon-lg">
-                                    <i class="fa fa-user"></i>
-                                </span>
+                @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+                @endif
+
+                {{ Form::open(array('url' => '/password/email', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'login')) }}
+                {!! csrf_field() !!}
+
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-lg">
+                    {{ Form::label('email', 'Email', array('class' => 'control-label mandatory')) }}
+                    <div class="input-group input-group-icon">
+                        {{ Form::email('email', null, ['class' => 'form-control input required', 'id' => 'email']) }}
+                        <span class="input-group-addon">
+                            <span class="icon icon-lg">
+                                <i class="fa fa-user"></i>
                             </span>
-                        </div>
-                         @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-8 text-right">
-							<button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
-                                </button>
-                        </div>
+                    @if ($errors->has('email'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 text-right">
+
+                        {{ Form::button(
+                                    'Send Password Reset Link',
+                                    array(
+                                        'class'=>'btn btn-primary',
+                                        'type'=>'submit')) 
+                        }}
                     </div>
-                </form>
+                </div>
+                {{ Form::close() }}
             </div>
         </div>
 

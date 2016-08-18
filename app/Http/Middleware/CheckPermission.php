@@ -16,11 +16,16 @@ class CheckPermission
     public function handle($request, Closure $next, $permission = null)
     {
         if (!app('Illuminate\Contracts\Auth\Guard')->guest()) {
-            if ($request->user()->can($permission)) {
+            if ($request->user()->can($permission) || $request->user()->role == '1') {
                 return $next($request);
             }
+            else
+            {
+                    return response()->view('errors.403', [], 500);
+            }
         }
-        return $request->ajax ? response('Unauthorized.', 401) : redirect('/login');
+	return redirect()->guest('login');
+        
     }
 
 }

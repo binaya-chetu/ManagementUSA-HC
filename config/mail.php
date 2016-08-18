@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'sureshc@chetu.com', 'name' => 'suresh'],
+    'from' => ['address' => 'sureshc@chetu.com', 'name' => 'azmensclinic1'],
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'username' => env('sureshc@chetu.com'),
+    'username' => env('MAIL_USERNAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     |
     */
 
-    'password' => env('apr@2016'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,5 +108,17 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Mail "Pretend"
+	|--------------------------------------------------------------------------
+	|
+	| When this option is enabled, e-mail will not actually be sent over the
+	| web and will instead be written to your application's logs files so
+	| you may inspect the message. This is great for local development.
+	|
+	*/
 
+	'pretend' => false,
 ];

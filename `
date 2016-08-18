@@ -1,0 +1,260 @@
+[33mcommit d4931ffe86c4a08063e778789d3ea9f7ab25ba80[m
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Mon Jun 27 15:53:06 2016 +0530
+
+    Update all code for the Suresh
+
+[33mcommit 95af21cfe1c1cb86e2672deddacd64ddc6bcbe57[m
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Fri Jun 24 12:34:31 2016 +0530
+
+    add breadcrumbs in all files
+
+[33mcommit 0077d6765d56fa7a3b427f953bf185770828310e[m
+Merge: 4cf4522 5993802
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Tue Jun 21 15:51:12 2016 +0530
+
+    fix the confliction and merge the branch appointment-remainder with dev
+
+[33mcommit 59938024f98c4621dc24be40a83833f2dc5f73e4[m
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Tue Jun 21 15:43:15 2016 +0530
+
+    work on upcoming appointment
+
+[33mcommit 4cf45220cfde3442bf1378799aaef60bff8da8d3[m
+Merge: 46fd4ec a1c9909
+Author: Binaya-chetu <binayal@chetu.com>
+Date:   Tue Jun 21 15:25:13 2016 +0530
+
+    Merge pull request #21 from binaya-chetu/client-form
+    
+    Client form
+
+[33mcommit a1c9909e7db4c1fc5f8a371e83dcb9c5cb59349b[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 21 15:20:44 2016 +0530
+
+    Working generating email for client to provide client one time use link to edit their profile. Currently using gmail smtp to send mail
+
+[33mcommit 046cef809ae4a4737e56af82885d6d744d8d65c6[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Sat Jun 18 15:18:14 2016 +0530
+
+    temporary commit
+
+[33mcommit 46fd4ec384ffbf470ef6bc560bb028af0841dd5a[m
+Merge: c552eaa 173b476
+Author: Binaya-chetu <binayal@chetu.com>
+Date:   Fri Jun 17 20:50:28 2016 +0530
+
+    Merge pull request #20 from binaya-chetu/patient_emr
+    
+    Patient emr
+
+[33mcommit 173b47667adcf73fa70af35015d34b3cf720ccf9[m
+Merge: 270ba68 c552eaa
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Fri Jun 17 20:45:55 2016 +0530
+
+    Merge branch 'patient_emr' of https://github.com/binaya-chetu/ManagementUSA-HC into patient_emr
+    pull from new patient_emr
+
+[33mcommit 270ba686a1ae5885f5a2b388265b2cd8bb5a98e8[m
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Fri Jun 17 20:23:51 2016 +0530
+
+    Change After Meetings Discussion
+
+[33mcommit 8b02a1de241f4b6a3532b57c53e541e5dec4ccad[m
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Fri Jun 17 16:20:44 2016 +0530
+
+    Ignoring the Extra Files
+
+[33mcommit c552eaa1a8f52fe62112f48762ab18529923bda7[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Fri Jun 17 15:55:20 2016 +0530
+
+    add content of storage view, sessions and cache to gitignore file
+
+[33mcommit 80d43982562e96ebe921224d365784dd53066fdd[m
+Merge: 9439180 450eaed
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Fri Jun 17 15:09:23 2016 +0530
+
+    Merge of dev and patient-medical
+
+[33mcommit 94391805d276b80dc0dc5c9acbe7c9bed9357ffd[m
+Merge: 9735253 9b3f4c7
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Thu Jun 16 23:20:41 2016 +0530
+
+    merge of dev and patient-medical 16_JUNE_2016
+
+[33mcommit 450eaed543f0a0b2241b73ad2c893521cb28d2f6[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Thu Jun 16 22:13:25 2016 +0530
+
+    finalize upload excell
+
+[33mcommit 9735253cfba333dc4f977d173fde96e7ff2f756e[m
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Thu Jun 16 22:01:02 2016 +0530
+
+    Appointment with Set or No Set
+
+[33mcommit 8c1d07ebd0a1411305b0e0f0df318e6fa37515ed[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 14 17:01:34 2016 +0530
+
+    add category update section where user uploads excel file containing details of one or more categories in .xls or .xlxs format and update the extracted data to database
+
+[33mcommit cd4e3c9a2683d8c8a0773cce5f38723d2a7d2e5c[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 14 16:59:32 2016 +0530
+
+    add upload_products folder to gitignore
+
+[33mcommit 9b3f4c78039d50abc4f21f9a19b533bc2252851a[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Fri Jun 10 22:22:34 2016 +0530
+
+    complete add product functionality.
+
+[33mcommit 18324744c9fe559126c4bd82e61221e277005403[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Thu Jun 9 23:47:46 2016 +0530
+
+    add product module and appent it functionality where products are added by uploading excel file of a particular format
+
+[33mcommit 963c4dc6737a4f9877b915b18a8168c1bfc0148a[m
+Merge: 0b91134 4b38e7c
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Thu Jun 9 22:46:02 2016 +0530
+
+    Merge branch 'dev' of https://github.com/binaya-chetu/ManagementUSA-HC into dev
+    create appointment form
+
+[33mcommit 4b38e7ce7677c2a117141582f3527352e7957d66[m
+Author: Niwedita Jaysawal <niweditaj@chetu.com>
+Date:   Thu Jun 9 20:45:16 2016 +0530
+
+    Changes into direct walkins model
+
+[33mcommit 0b911342da7cd3f8009f6efa541d163470261ed6[m
+Merge: f2ac751 3087775
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Thu Jun 9 17:39:40 2016 +0530
+
+    Changes after cofliction with telemarketing
+
+[33mcommit f2ac751923f78d9e9ecd126b73b8cf71f1550302[m
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Thu Jun 9 17:05:17 2016 +0530
+
+    telemarketing call changes
+
+[33mcommit 6c18596b4e92e872eed80c8fa420cf616c7daa75[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Thu Jun 9 16:03:24 2016 +0530
+
+    add validation to prevent adding new validation during non office hours of a day
+
+[33mcommit 3087775d62aa25a98f2ffb007f2e0d712eb8c0c3[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Wed Jun 8 22:45:24 2016 +0530
+
+    resolve the issue in addappiontment form where if doctor is not selected validation of time slot availability should return true
+
+[33mcommit ac5728ebe4c418bcf855950d1caadd365225b45e[m
+Author: Vipul Kumar <vipulk@chetu.com>
+Date:   Wed Jun 8 20:19:32 2016 +0530
+
+    Telemarketing with Set/No Set
+
+[33mcommit 924cb897a244a6e7ae6a9d458e3dc48a9ceeac7e[m
+Merge: 3f19250 0e49330
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Wed Jun 8 15:40:40 2016 +0530
+
+    Merge branch 'dev' of https://github.com/binaya-chetu/ManagementUSA-HC into dev
+    eckout from server 08-june-2016
+
+[33mcommit 3f19250c4abed0cd69d8fd75f6edd225b1371e8c[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Wed Jun 8 15:40:23 2016 +0530
+
+    remove unnecessary folder 1_RESOURCES
+
+[33mcommit a445af127821532e638d0ec85acdb4db1ad86581[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Wed Jun 8 15:38:17 2016 +0530
+
+    Update view of product category page
+
+[33mcommit 660983683b57953ffa3625cdc6543cacc7c57f7a[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 7 23:47:32 2016 +0530
+
+    Replace hard coded data on packages page with that from database
+
+[33mcommit 0e493307d2c054482150c3c69cb275e663e6de38[m
+Merge: af572c3 34f0641
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Tue Jun 7 18:33:02 2016 +0530
+
+    fix the cofliction
+
+[33mcommit 34f064101e8774b56923d77c600a8787afbae2a6[m
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Tue Jun 7 18:24:56 2016 +0530
+
+    add docblocks
+
+[33mcommit c79ec0fb84a5e212afed4a8f8e21e852ccafc1b6[m
+Author: Suresh Chaurasia <sureshc@chetu.com>
+Date:   Tue Jun 7 18:22:43 2016 +0530
+
+    add docblocks in code
+
+[33mcommit 62e58d59e9ae66287cedaaa06b0303e53164b381[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 7 16:52:00 2016 +0530
+
+    Commited out files .css and .js files that are included more than once
+
+[33mcommit 0c8031ee698824db2004b183669b312d7446f301[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 7 16:15:29 2016 +0530
+
+    add 1_RESOURCES to git ignore
+
+[33mcommit cdbf3d1817857203fc5554e2813ead6565734760[m
+Author: Amir Hanga <amirh@chetu.com>
+Date:   Tue Jun 7 15:58:46 2016 +0530
+
+    commited unknown changes in CategoriesController.php
+
+[33mcommit af572c3504f080172ad687c001903f969ed9a3bd[m
+Author: Niwedita Jaysawal <niweditaj@chetu.com>
+Date:   Tue Jun 7 15:37:38 2016 +0530
+
+    resolved issues in category details page
+
+[33mcommit 8a8e3819af5fdb428f8d432974edd01875555bf3[m
+Merge: 40ad47f c1406b2
+Author: Niwedita Jaysawal <niweditaj@chetu.com>
+Date:   Fri Jun 3 17:32:53 2016 +0530
+
+    merge patient-medical with dev 02 june 2016
+
+[33mcommit c1406b2a17419893c9e4767d6c5d66a38d6a742d[m
+Author: Niwedita Jaysawal <niweditaj@chetu.com>
+Date:   Fri Jun 3 17:16:48 2016 +0530
+
+    checges for csv downloading
+
+[33mcommit 57c7edff9c401499854869df662efbd72f63a491[m
+Author: Niwedita 
