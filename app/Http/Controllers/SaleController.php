@@ -62,7 +62,7 @@ class SaleController extends Controller
         $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
         //echo '<pre>';print_r($cart);die;
         return view('sale.checkout', [
-            'patientCart' => $patientCart, 'states' => $states, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount']
+            'patientCart' => $patientCart, 'states' => $states, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount'], 'total_cart_price' => $cart['total_cart_price']
         ]);
     }
     /**
@@ -76,7 +76,7 @@ class SaleController extends Controller
         $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
         //echo '<pre>';print_r($cart);die;
         return view('sale.confirmation', [
-            'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount']
+            'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 'package_discount' => $cart['package_discount'], 'total_cart_price' => $cart['total_cart_price']
         ]);
     }
 }

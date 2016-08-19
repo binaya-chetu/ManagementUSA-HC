@@ -133,13 +133,13 @@
                         <tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" >
                             <td>{{ $count++ }}</td>
                             <td>{{ $cat['category'] }}</td>
-                            <td class="center packagePrice">${{ $discouonted_package_price[$i] }}</td>
+                            <td class="center">${{ $discouonted_package_price[$i] }}</td>
                         </tr>									
                         @endforeach
                          <tr>
                             <td></td>
                             <td>Total</td>
-                            <td class="center totalPrice"></td>
+                            <td class="center">${{ $total_cart_price }}</td>
                         </tr>
                     </tbody>
                 </table>
