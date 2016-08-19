@@ -33,7 +33,7 @@ class Packages extends Model
 		$category_details = Packages::where('packages.category_id', $id)
 			->leftJoin('products', 'packages.product_id', '=', 'products.id')
 			->leftJoin('category_types', 'packages.category_type', '=', 'category_types.id')
-			->select('packages.product_count as p_count', 'packages.product_price as spl_price', 'products.*', 'category_types.name as package_type'
+			->select('packages.product_count as p_count', 'packages.product_price as spl_price', 'products.*', 'category_types.name as package_type', 'products.count as inventory_count'
 			)
 			->orderBy('package_type', 'DESC')
 			->get();
@@ -58,6 +58,7 @@ class Packages extends Model
 
 			$products[$cat->name]['price'] = $cat->price;
 			$products[$cat->name]['unit_of_measurement'] = $cat->unit_of_measurement;
+			$products[$cat->name]['inventory_count'] = $cat->inventory_count;
 			$products[$cat->name][$cat->package_type]['count'] = $cat->p_count;
 			$products[$cat->name][$cat->package_type]['spl_price'] = $cat->spl_price;
 			if($cat->count <= $cat->p_count){

@@ -72,7 +72,7 @@
                             </tr>
                             <tr>
                                 <th>Nomenclature</th>
-                                <th >Unit of Measure</th>
+                                <th >Inventory Count</th>								
                                 <th >Unit Price</th>
                                 <th class="bronze">Quantity Bronze</th>
                                 <th class="bronze">Package</th>
@@ -86,8 +86,8 @@
                                 @foreach($products as $i => $v)
 
                                 <tr>
-                                    <td> {{ $i }}</td>
-                                    <td>{{ $v['unit_of_measurement'] }}</td>
+                                    <td> {{ $i }}({{ $v['unit_of_measurement'] }})</td>
+                                    <td>{{ $v['inventory_count'] }}</td>										
                                     <td>{{ $v['price'] }}</td>
                                     <td class="bronze">
                                         @if(isset($v['Bronze']['count'])) {{ $v['Bronze']['count'] }} @endif
