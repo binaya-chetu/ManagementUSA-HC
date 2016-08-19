@@ -1607,14 +1607,28 @@
                                                             <option value="Vardenafil">Vardenafil</option>
                                                             </select>
                                                         </td>
-                                                        <td>Erection</td><td><select class="form-control">
+                                                        <td>Erection</td>
+                                                    <td><select class="form-control">
+                                                        <option value="DD4"> DD4(%)</option>
+                                                        <option value="0">0</option>
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                        <option value="20">20</option>
+                                                        <option value="25">25</option>
+                                                        <option value="30">30</option>
+                                                        <option value="35">35</option>
+                                                    </select></td>
+                                                     <td>Notes</td>
+                                                     <td><select class="form-control">
                                                         <option value="DD9">DD9</option>
                                                         <option value="Wesley Pope">Wesley Pope</option>
                                                         <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
                                                         <option value=" ANP - Justin Henson">ANP - Justin Henson</option>
                                                         <option value="ANP - Steven Scholen">ANP - Steven Scholen</option>
                                                         <option value="MD">MD</option>
-                                                    </select> </td></tr>
+                                                    </select> </td>
+                                            </tr>
                                            
                                         </table>
 
