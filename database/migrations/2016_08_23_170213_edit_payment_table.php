@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditOrderDetailTable extends Migration
+class EditPaymentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,12 @@ class EditOrderDetailTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('payments', function($table)
+        {
+            $table->dropColumn(['user_id', 'order_id', 'amount']);     
+            $table->integer('patient_id')->after('id');
+            $table->integer('agent_id')->after('patient_id');            
+	});        
     }
 
     /**
