@@ -16,13 +16,11 @@ class Order extends Model
     protected $dates = ['deleted_at'];
     protected $table = 'orders';
     protected $fillable = [
-        'user_id',
-        'agent_id',
-        'package_id',
+        'payment_id',
+        'category',
         'package_type',
-        'subtotal_amount',
-        'discount_amount',
-        'total_amount',
+        'price',
+        'discount_price',
         'status'
     ];
     

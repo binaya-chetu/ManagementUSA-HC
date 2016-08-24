@@ -197,7 +197,7 @@
                     <div class="form-group">
                         {{ Form::label('amount', 'Enter Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
-                            {{ Form::text('pay_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                            {{ Form::text('paid_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
         <footer class="panel-footer">
             <div class="row">
                 <div class="col-md-12 col-md-offset-4">
-                    {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
+                    {{ Form::button('<i class="fa fa-btn fa-user"></i> Place Order',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
                     <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
                 </div>
             </div>
@@ -215,15 +215,4 @@
         {{ Form::close() }}
     </section>
 </section>
-<script>
-    $(document).ready(function(){
-       var total_price=0;
-        $('.packagePrice').each(function(){
-           var string = $(this).text();
-           var price = parseInt(string.slice(1));
-           total_price += price; 
-       });
-       $('.totalPrice').text('$'+total_price);
-    });
-</script>
 @endsection

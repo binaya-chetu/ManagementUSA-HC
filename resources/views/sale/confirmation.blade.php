@@ -29,9 +29,13 @@
                         <div class="col-sm-6 mt-md">
                             <p><span class="text-dark">Patient Detail:</span></p>
                             <p><span class="value">{{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name }}</span></p>
-                            <address>{{ $patientCart->patient->patientDetail->address1 }}<br> {{ $patientCart->patient->patientDetail->address2 }} {{ $patientCart->patient->patientDetail->city }} {{ $patientCart->patient->patientDetail->patientStateName->name }} <br/> 
+                            <address>{{ $patientCart->patient->patientDetail->address1 }}<br> {{ $patientCart->patient->patientDetail->address2 }} {{ $patientCart->patient->patientDetail->city }} 
+                                @if(isset($patientCart->patient->patientDetail->patientStateName->name))
+                                    {{ $patientCart->patient->patientDetail->patientStateName->name }}
+                                @endif<br/> 
                                 {{ isset($patientCart->patient->patientDetail->phone) ? 'Contact :'.$patientCart->patient->patientDetail->phone : ''  }} <br/> 
                                 {{ $patientCart->patient->email }}</address>
+                           
                         </div>
                         <div class="col-sm-6 mt-md text-right">
                             <p><span class="text-dark">Agent Detail:</span></p>
@@ -136,7 +140,11 @@
                             <label>Method :</label>
                         </div>
                         <div class="col-sm-8">
-                            Cash In Hand
+                            @if($payment['payment_type'] == 0)
+                                Cash in Hand
+                            @else if($payment['payment_type'] == 1)
+                                Credit Card
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -144,19 +152,29 @@
                             <label>Amount Received:</label>
                         </div>
                         <div class="col-sm-8">
-                            $xxxxx.xx
+                            @if(isset($payment['paid_amount']))
+                                ${{ $payment['paid_amount'] or '' }}
+                            @endif
                         </div>
                     </div>
                 </div> 
                         
                 </div>
+                
                 <footer class="panel-footer">
+                    {{ Form::open(['url' => '/sale/makePayment', 'method' => "post", 'class'=>'form-horizontal', 'id' =>'checkoutForm' ]) }}
+                    {{ Form::hidden('patient_id',$patientCart['patient']->id) }}   
+                    {{ Form::hidden('agent_id',$patientCart['user']->id) }}   
+                    {{ Form::hidden('total_amount', $total_cart_price) }}      
+                    {{ Form::hidden('payment_type', $payment['payment_type']) }}  
+                    {{ Form::hidden('paid_amount', $payment['paid_amount']) }}
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
                              {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
                                 <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
                         </div
                     </div>
+                    {{ Form::close() }}
                 </footer>
             </section>
             
