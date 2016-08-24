@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditPaymentTable extends Migration
+class EditOrderDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class EditPaymentTable extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function($table)
+        Schema::table('order_details', function($table)
         {
-            $table->dropColumn(['user_id', 'order_id', 'amount']);     
-            $table->integer('patient_id')->after('id');
-            $table->integer('agent_id')->after('patient_id');            
-	});        
+            $table->dropColumn(['product_id', 'save_amount', 'total_amount']);     
+            $table->string('product')->after('product_sku');   
+            $table->decimal('discount_price',10,2)->after('unit_price');      
+	});
     }
 
     /**

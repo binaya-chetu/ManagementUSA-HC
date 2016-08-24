@@ -146,7 +146,11 @@ Route::group(['middleware' => 'web'], function () {
             'as' => 'SaleController@confirmation',
             //'middleware' => ['acl:appointment_setting_write']
         ]);
-    
+    Route::post('/sale/makePayment', [
+            'uses' => 'SaleController@makePayment',
+            'as' => 'SaleController@makePayment',
+            //'middleware' => ['acl:appointment_setting_write']
+        ]);
     // Route for PatientController in POS Module
     Route::get('/patient', [
             'uses' => 'PatientController@index',
