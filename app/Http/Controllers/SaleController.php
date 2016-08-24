@@ -147,8 +147,7 @@ class SaleController extends Controller
             }
             unset($order);
             /* -------------- END ------------- */
-        }
-        
+        }        
     }
     
 }
