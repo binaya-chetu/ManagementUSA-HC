@@ -72,7 +72,6 @@ class InventoryController extends Controller
         if ($validator->fails()) {
             return Redirect::to('/inventory/create')->withInput()->withErrors($validator->errors());
         }
-
         $rejectedList = [];
         \Excel::load($data['inventory_file']->getPathname(), function($reader) {
             // Getting all results
@@ -183,8 +182,21 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return\Illuminate\Http\Response
      */
-    public function patientInventory()
-    {
-       return view('inventory.patientInventory');
+     public function patientInventory() {
+        $dropDowns = DB::table('dose_dropdown')
+                        ->join('dropdown_details', function ($join) {
+                            $join->on('dose_dropdown.id', '=', 'dropdown_details.dropdown_id');
+                        })->groupBy('dropdown_details.dropdown_id')->where('dose_dropdown.category_id', '=', 2)->get();
+//        $dds = array();
+//        $ddValue =  array();
+//        foreach ($dropDowns AS $dd => $value) {
+//            $dds[] = $value->dropdown_name;
+//          
+//            $ddValue[] = $value->dropdown_value;
+//        }
+//         print_r($dds);
+//         exit;
+        return view('inventory.patientInventory');
     }
+
 }
