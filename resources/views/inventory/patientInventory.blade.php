@@ -88,111 +88,114 @@
                         <header class="panel-heading">
                             <div class="row-title"> Trimix /Sublingual ED Therapy </div>
                         </header>
-                        <div class="panel-body">
-                            <span class="row-title">Intitial Test Dosing + Expand - Colapse   Deduct from Inventory Only</span>
-                            <table class="table table-bordered table-striped mb-none">
-                                <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Test Dose 1   (Auto Quantity 1)</div></td><td class="table-text" colspan="2"> DD9</td></tr>
-                                <tr> <td class="table-text"><select class="form-control">
-                                            <option value="DD1">DD1</option>
-                                            <option value="0.2125">0.2125</option>
-                                            <option value="0.1875">0.1875</option>
-                                            <option value="0.1625">0.1625</option>
-                                            <option value="0.1375">0.1375</option>
-                                            <option value="0.1125">0.1125</option>
-                                            <option value="0.0875">0.0875</option>
-                                            <option value="0.0625">0.0625</option>
-                                            <option value="0.0375">0.0375</option>
-                                            <option value="0.0125">0.0125</option>
-                                        </select></td>
-                                    <td class="table-text"><select class="form-control">
-                                            <option value="DD2">DD2</option>
-                                            <option value="T101">T101</option>
-                                            <option value="T105">T105</option>
-                                            <option value="T106">T106</option>
-                                            <option value="ST1">ST1</option>
-                                            <option value="ST9A">ST9A</option>
-                                            <option value="ST9E">ST9E</option>
-                                            <option value="BM1">BM1</option>
-                                            <option value="BM3">BM3</option>
-                                            <option value="BM6">BM6</option>
-                                            <option value="QUAD4">QUAD4</option>
-                                        </select> </td>
-                                    <td class="table-text"> + </td>
-                                    <td class="table-text"><select class="form-control">
-                                            <option value="DD1">DD1</option>
-                                            <option value="0.2125">0.2125</option>
-                                            <option value="0.1875">0.1875</option>
-                                            <option value="0.1625">0.1625</option>
-                                            <option value="0.1375">0.1375</option>
-                                            <option value="0.1125">0.1125</option>
-                                            <option value="0.0875">0.0875</option>
-                                            <option value="0.0625">0.0625</option>
-                                            <option value="0.0375">0.0375</option>
-                                            <option value="0.0125">0.0125</option>
-                                        </select> </td>
-                                    <td class="table-text"><select class="form-control">
-                                            <option value="DD2">DD2</option>
-                                            <option value="T101">T101</option>
-                                            <option value="T105">T105</option>
-                                            <option value="T106">T106</option>
-                                            <option value="ST1">ST1</option>
-                                            <option value="ST9A">ST9A</option>
-                                            <option value="ST9E">ST9E</option>
-                                            <option value="BM1">BM1</option>
-                                            <option value="BM3">BM3</option>
-                                            <option value="BM6">BM6</option>
-                                            <option value="QUAD4">QUAD4</option>
-                                        </select> </td><td class="table-text"> + </td><td class="table-text"><select class="form-control">
-                                            <option value="DD1">DD1</option>
-                                            <option value="0.2125">0.2125</option>
-                                            <option value="0.1875">0.1875</option>
-                                            <option value="0.1625">0.1625</option>
-                                            <option value="0.1375">0.1375</option>
-                                            <option value="0.1125">0.1125</option>
-                                            <option value="0.0875">0.0875</option>
-                                            <option value="0.0625">0.0625</option>
-                                            <option value="0.0375">0.0375</option>
-                                            <option value="0.0125">0.0125</option>
-                                        </select> </td><td class="table-text">  <select class="form-control">
+                        <div class="toggle" data-plugin-toggle>
+                            <h4 style="text-align:center">Intitial Test Dosing Deduct from Inventory Only</h4>
+                            <section class="toggle">
+                                <label>Treatment Log</label>
+                                <div class="toggle-content">
 
-                                            <option value="DD3">DD3</option>
-                                            <option value="PG40">PG40</option>
-                                            <option value="PG80">PG80</option>
-                                            <option value="PG150">PG150</option>
-                                            <option value="PG250">PG250</option>
-                                            <option value="PG350">PG350</option>
-                                            <option value="Papaverine">Papaverine</option>
-                                            <option value="2% LIDO">2% LIDO</option>
+                                    <table class="table table-bordered table-striped mb-none">
+                                        <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Test Dose 1   (Auto Quantity 1)</div></td><td class="table-text" colspan="2"> DD9</td></tr>
+                                        <tr> <td class="table-text"><select class="form-control">
+                                                    <option value="DD1">DD1</option>
+                                                    <option value="0.2125">0.2125</option>
+                                                    <option value="0.1875">0.1875</option>
+                                                    <option value="0.1625">0.1625</option>
+                                                    <option value="0.1375">0.1375</option>
+                                                    <option value="0.1125">0.1125</option>
+                                                    <option value="0.0875">0.0875</option>
+                                                    <option value="0.0625">0.0625</option>
+                                                    <option value="0.0375">0.0375</option>
+                                                    <option value="0.0125">0.0125</option>
+                                                </select></td>
+                                            <td class="table-text"><select class="form-control">
+                                                    <option value="DD2">DD2</option>
+                                                    <option value="T101">T101</option>
+                                                    <option value="T105">T105</option>
+                                                    <option value="T106">T106</option>
+                                                    <option value="ST1">ST1</option>
+                                                    <option value="ST9A">ST9A</option>
+                                                    <option value="ST9E">ST9E</option>
+                                                    <option value="BM1">BM1</option>
+                                                    <option value="BM3">BM3</option>
+                                                    <option value="BM6">BM6</option>
+                                                    <option value="QUAD4">QUAD4</option>
+                                                </select> </td>
+                                            <td class="table-text"> + </td>
+                                            <td class="table-text"><select class="form-control">
+                                                    <option value="DD1">DD1</option>
+                                                    <option value="0.2125">0.2125</option>
+                                                    <option value="0.1875">0.1875</option>
+                                                    <option value="0.1625">0.1625</option>
+                                                    <option value="0.1375">0.1375</option>
+                                                    <option value="0.1125">0.1125</option>
+                                                    <option value="0.0875">0.0875</option>
+                                                    <option value="0.0625">0.0625</option>
+                                                    <option value="0.0375">0.0375</option>
+                                                    <option value="0.0125">0.0125</option>
+                                                </select> </td>
+                                            <td class="table-text"><select class="form-control">
+                                                    <option value="DD2">DD2</option>
+                                                    <option value="T101">T101</option>
+                                                    <option value="T105">T105</option>
+                                                    <option value="T106">T106</option>
+                                                    <option value="ST1">ST1</option>
+                                                    <option value="ST9A">ST9A</option>
+                                                    <option value="ST9E">ST9E</option>
+                                                    <option value="BM1">BM1</option>
+                                                    <option value="BM3">BM3</option>
+                                                    <option value="BM6">BM6</option>
+                                                    <option value="QUAD4">QUAD4</option>
+                                                </select> </td><td class="table-text"> + </td><td class="table-text"><select class="form-control">
+                                                    <option value="DD1">DD1</option>
+                                                    <option value="0.2125">0.2125</option>
+                                                    <option value="0.1875">0.1875</option>
+                                                    <option value="0.1625">0.1625</option>
+                                                    <option value="0.1375">0.1375</option>
+                                                    <option value="0.1125">0.1125</option>
+                                                    <option value="0.0875">0.0875</option>
+                                                    <option value="0.0625">0.0625</option>
+                                                    <option value="0.0375">0.0375</option>
+                                                    <option value="0.0125">0.0125</option>
+                                                </select> </td><td class="table-text">  <select class="form-control">
 
-                                        </select>
-                                    </td>
-                                    <td class="table-text"> + </td>
-                                    <td class="table-text"><select class="form-control">
-                                            <option value="DD1">DD1</option>
-                                            <option value="0.2125">0.2125</option>
-                                            <option value="0.1875">0.1875</option>
-                                            <option value="0.1625">0.1625</option>
-                                            <option value="0.1375">0.1375</option>
-                                            <option value="0.1125">0.1125</option>
-                                            <option value="0.0875">0.0875</option>
-                                            <option value="0.0625">0.0625</option>
-                                            <option value="0.0375">0.0375</option>
-                                            <option value="0.0125">0.0125</option>
-                                        </select> </td>
-                                    <td class="table-text">
-                                        <select class="form-control">
-                                            <option value="DD3">DD3</option>
-                                            <option value="PG40">PG40</option>
-                                            <option value="PG80">PG80</option>
-                                            <option value="PG150">PG150</option>
-                                            <option value="PG250">PG250</option>
-                                            <option value="PG350">PG350</option>
-                                            <option value="Papaverine">Papaverine</option>
-                                            <option value="2% LIDO">2% LIDO</option>
+                                                    <option value="DD3">DD3</option>
+                                                    <option value="PG40">PG40</option>
+                                                    <option value="PG80">PG80</option>
+                                                    <option value="PG150">PG150</option>
+                                                    <option value="PG250">PG250</option>
+                                                    <option value="PG350">PG350</option>
+                                                    <option value="Papaverine">Papaverine</option>
+                                                    <option value="2% LIDO">2% LIDO</option>
 
-                                        </select></td> </tr>
+                                                </select>
+                                            </td>
+                                            <td class="table-text"> + </td>
+                                            <td class="table-text"><select class="form-control">
+                                                    <option value="DD1">DD1</option>
+                                                    <option value="0.2125">0.2125</option>
+                                                    <option value="0.1875">0.1875</option>
+                                                    <option value="0.1625">0.1625</option>
+                                                    <option value="0.1375">0.1375</option>
+                                                    <option value="0.1125">0.1125</option>
+                                                    <option value="0.0875">0.0875</option>
+                                                    <option value="0.0625">0.0625</option>
+                                                    <option value="0.0375">0.0375</option>
+                                                    <option value="0.0125">0.0125</option>
+                                                </select> </td>
+                                            <td class="table-text">
+                                                <select class="form-control">
+                                                    <option value="DD3">DD3</option>
+                                                    <option value="PG40">PG40</option>
+                                                    <option value="PG80">PG80</option>
+                                                    <option value="PG150">PG150</option>
+                                                    <option value="PG250">PG250</option>
+                                                    <option value="PG350">PG350</option>
+                                                    <option value="Papaverine">Papaverine</option>
+                                                    <option value="2% LIDO">2% LIDO</option>
 
-                                <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Test Dose 2  (Auto Quantity 1)</div></td><td colspan="2"> DD9</td></tr>
+                                                </select></td> </tr>
+                                                <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Test Dose 2  (Auto Quantity 1)</div></td><td colspan="2"> DD9</td></tr>
                                 <tr> <td><select class="form-control">
                                             <option value="DD1">DD1</option>
                                             <option value="0.2125">0.2125</option>
@@ -403,14 +406,26 @@
                                             <option value="Testes Pain">Testes Pain</option>
                                             <option value=" Sensitive to Touch"> Sensitive to Touch</option>
                                         </select></td></tr>
-                                <tr><td></td> </tr>
-                            </table>
+                                    <tr><td></td> </tr>
+                                    </table>  
 
-                            <table class="table table-bordered table-striped mb-none">
 
-                                <tr style="text-align:center"><td class="table-text" colspan="2">
-                                        <span class="row-title">Intitial Take Home Dosing   + Expand - Collapse   Deduct From Inventory Only </span></td><td class="table-text" colspan="2"><span class="row-title">Antidotes</span><span class="row-title">DD10</span></td><td><span class="row-title">DD10</span></td></tr>
-                                <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Take Home Test Dose A  </div></td><td class="table-text" colspan="2">
+
+                                </div>
+                            </section>
+
+                        </div>
+
+                         <div class="toggle" data-plugin-toggle>
+                             <h4 style="text-align:center">Intitial Take Home Dosing   Deduct From Inventory Only <span class="row-title">Antidotes | </span><span class="row-title">DD10</span></h4>
+                                <section class="toggle">
+                                    <label>Take Home Test Dose A </label>
+                                    <div class="toggle-content">
+
+                                         <table class="table table-bordered table-striped mb-none">
+
+                               
+                                     <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row">  </div></td><td class="table-text" colspan="2">
                                         <select class="form-control">
 
                                             <option value="DD9">DD9</option>
@@ -431,7 +446,8 @@
                                             <option value="0.0375">0.0375</option>
                                             <option value="0.0125">0.0125</option>
                                         </select>
-                                    </td></tr>
+                                    </td>
+                                     </tr>
                                 <tr> <td class="table-text"><select class="form-control">
                                             <option value="DD1">DD1</option>
                                             <option value="0.2125">0.2125</option>
@@ -617,7 +633,6 @@
                                 </tr>
                                 <tr style="text-align:center"><td class="table-text" colspan="2"> <div class = "panel-row"> Take Home Test Dose B  </div></td><td class="table-text" colspan="2">
                                         <select class="form-control">
-
                                             <option value="DD9">DD9</option>
                                             <option value="Wesley Pope">Wesley Pope</option>
                                             <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
@@ -1026,7 +1041,9 @@
                                             <option value="0.0125">0.0125</option>
                                         </select></td>
                                 </tr>
-                                <tr><td></td></tr>
+                              
+                               </table>
+                                <table>
                                 <tr style="text-align:center"><td colspan="11">Redosing + Expand  - Colapse   Auto deduct from totals</td></tr>
                                 <tr  style="text-align:center"><td  colspan="11">Dose D (Auto Populate Next In Alphabet)</td><td  colspan="11">
                                         <select class="form-control">
@@ -1444,6 +1461,25 @@
                                 </tr>
 
                             </table>
+
+
+                                    </div>
+                                </section>
+
+                            </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="panel-body">
+
+                        
                             <table class="table table-bordered table-striped mb-none">
                                 <tr style="text-align:center">
                                     <td class="table-text" colspan="2"> Office Visits </td>
@@ -1525,29 +1561,29 @@
                                     <div class="toggle-content">
 
                                         <table class="table table-bordered table-striped mb-none">
-                                               <?php
-                                                   for($i = 1; $i <=12; $i++){
-                                               ?>
-                                            <tr style="text-align:center"><td>Treatment <?php echo $i;?></td><td>Auto Populate Date and Time</td><td><input type="checkbox" name="treatment" /></td> <td>Patient Digital Sign For Treatment And Auto Deduct From Treatment Totals</td><td>Starting Erection %</td><td><select class="form-control">
-                                                        <option value="DD4"> DD4(%)</option>
-                                                        <option value="0">0</option>
-                                                        <option value="5">5</option>
-                                                        <option value="10">10</option>
-                                                        <option value="15">15</option>
-                                                        <option value="20">20</option>
-                                                        <option value="25">25</option>
-                                                        <option value="30">30</option>
-                                                        <option value="35">35</option>
-                                                    </select></td><td><select class="form-control">
-                                                        <option value="DD9">DD9</option>
-                                                        <option value="Wesley Pope">Wesley Pope</option>
-                                                        <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
-                                                        <option value=" ANP - Justin Henson">ANP - Justin Henson</option>
-                                                        <option value="ANP - Steven Scholen">ANP - Steven Scholen</option>
-                                                        <option value="MD">MD</option>
-                                                    </select> </td></tr>
                                             <?php
-                                                   }
+                                            for ($i = 1; $i <= 12; $i++) {
+                                                ?>
+                                                <tr style="text-align:center"><td>Treatment <?php echo $i; ?></td><td>Auto Populate Date and Time</td><td><input type="checkbox" name="treatment" /></td> <td>Patient Digital Sign For Treatment And Auto Deduct From Treatment Totals</td><td>Starting Erection %</td><td><select class="form-control">
+                                                            <option value="DD4"> DD4(%)</option>
+                                                            <option value="0">0</option>
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="15">15</option>
+                                                            <option value="20">20</option>
+                                                            <option value="25">25</option>
+                                                            <option value="30">30</option>
+                                                            <option value="35">35</option>
+                                                        </select></td><td><select class="form-control">
+                                                            <option value="DD9">DD9</option>
+                                                            <option value="Wesley Pope">Wesley Pope</option>
+                                                            <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
+                                                            <option value=" ANP - Justin Henson">ANP - Justin Henson</option>
+                                                            <option value="ANP - Steven Scholen">ANP - Steven Scholen</option>
+                                                            <option value="MD">MD</option>
+                                                        </select> </td></tr>
+                                                <?php
+                                            }
                                             ?>
                                         </table>
 
@@ -1558,15 +1594,15 @@
 
                             </div>
 
-                  <div class="toggle" data-plugin-toggle>
-                            
+                            <div class="toggle" data-plugin-toggle>
+
                                 <section class="toggle">
                                     <label>Sublingual Therapy</label>
-                                        <div class="toggle-content">
+                                    <div class="toggle-content">
 
-                                            
-                                          <table class="table table-bordered table-striped mb-none">
-                                             
+
+                                        <table class="table table-bordered table-striped mb-none">
+
                                             <tr style="text-align:center"><td>Auto Populate Date</td><td><select class="form-control">
                                                         <option value="DD14"> DD14</option>
                                                         <option value="T1">T1</option>
@@ -1600,15 +1636,15 @@
                                                         <option value="140">140</option>
                                                         <option value="150">150</option>
                                                     </select></td>
-                                                        <td><select class="form-control">
-                                                            <option value="DD13"> DD13</option>
-                                                            <option value="Sildenafil">Sildenafil</option>
-                                                            <option value="Tadalafil">Tadalafil</option>
-                                                            <option value="Vardenafil">Vardenafil</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>Erection</td>
-                                                    <td><select class="form-control">
+                                                <td><select class="form-control">
+                                                        <option value="DD13"> DD13</option>
+                                                        <option value="Sildenafil">Sildenafil</option>
+                                                        <option value="Tadalafil">Tadalafil</option>
+                                                        <option value="Vardenafil">Vardenafil</option>
+                                                    </select>
+                                                </td>
+                                                <td>Erection</td>
+                                                <td><select class="form-control">
                                                         <option value="DD4"> DD4(%)</option>
                                                         <option value="0">0</option>
                                                         <option value="5">5</option>
@@ -1619,8 +1655,8 @@
                                                         <option value="30">30</option>
                                                         <option value="35">35</option>
                                                     </select></td>
-                                                     <td>Notes</td>
-                                                     <td><select class="form-control">
+                                                <td>Notes</td>
+                                                <td><select class="form-control">
                                                         <option value="DD9">DD9</option>
                                                         <option value="Wesley Pope">Wesley Pope</option>
                                                         <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
@@ -1629,12 +1665,12 @@
                                                         <option value="MD">MD</option>
                                                     </select> </td>
                                             </tr>
-                                           
+
                                         </table>
 
 
 
-                                        </div>
+                                    </div>
                                 </section>
 
                             </div>
