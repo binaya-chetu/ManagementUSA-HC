@@ -149,5 +149,17 @@ class SaleController extends Controller
             /* -------------- END ------------- */
         }        
     }
+	
+	/**
+	* paymentDetails: returns payment details of the patient with given id
+	* returns payment details page view
+	*/
+	
+	public function paymentDetails($id){
+		$patientId = base64_decode($id);
+		$paymentDetails = Payment::getPaymentHistory($patientId);
+
+		return view('sale.paymentDetails',['payment' => $paymentDetails['payment'], 'orders' => $paymentDetails['orders'], 'order_detail' => $paymentDetails['order_detail']]);	
+	}
     
 }

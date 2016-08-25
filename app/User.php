@@ -234,6 +234,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->hasOne('App\WeightLoss', 'patient_id');
 	}
 	
+	public function payment() 
+	{
+		return $this->hasMany('App\Payment', 'agent_id');
+	}
+	
 	protected static function boot() {
 		parent::boot();
 		static::deleting(function($user) {
