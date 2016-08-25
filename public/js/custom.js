@@ -1152,3 +1152,4 @@ function checkAppointmentTime(){
         }
         
         });
+        
