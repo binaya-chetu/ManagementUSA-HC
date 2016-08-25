@@ -8,8 +8,10 @@ Theme Version: 	1.4.1
 
 	'use strict';
 
-	var datatableInit = function() {
-		var $table = $('#cartItemList');
+	var datatableInit = function($table = null) {
+		if($table == null){
+			$table = $('#cartItemList');
+		}
 
 		// format function for row details
 		var fnFormatDetails = function( datatable, tr ) {
@@ -61,7 +63,7 @@ Theme Version: 	1.4.1
 	};
 
 	$(function() {
-		datatableInit();
+		datatableInit($("#cartItemList"));
 	});
 
 }).apply( this, [ jQuery ]);

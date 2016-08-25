@@ -64,4 +64,9 @@ class Order extends Model
     {
         return $this->hasOne('App\Packages', 'package_id');
     }
+	
+    public function payment()
+    {
+        return $this->belongsTo('App\Packages', 'payment_id');
+    }
 }
