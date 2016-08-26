@@ -32,7 +32,7 @@ Theme Version: 	1.4.1
 			});
 
 		$table
-			.find( 'tbody tr' ).each(function() {
+			.find( 'tbody tr' ).not('.noDetail').each(function() {
 				this.insertBefore(  td.cloneNode( true ), this.childNodes[0] );
 			});
 

@@ -214,6 +214,10 @@ $(document).ready(function() {
     });
     
     showAppointmentCount();
+	
+	// remove search box from table with class .removeSearchBox	
+	$(".removeSearchBox").closest('.dataTables_wrapper').find('.datatables-header').remove();
+	
     setInterval(function() {
         showAppointmentCount();
     }, 5000);

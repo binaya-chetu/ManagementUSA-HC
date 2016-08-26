@@ -43,7 +43,7 @@
 						@elseif(Session::has('error_message'))
 							<div class="col-sm-12"><div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><em> {!! session('error_message') !!}</em></div></div>					
 						@endif				
-					</div>				
+					</div>
 					<table class="table table-bordered mb-none" id="cartItemList">
 						<thead>
 							<tr>
@@ -70,6 +70,9 @@
 								</td>
 							</tr>									
 						@endforeach
+							<tr class="noDetail">
+								<td></td><td colspan="4">Total </td><td class="center">{{ $total_cart_price }}</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
