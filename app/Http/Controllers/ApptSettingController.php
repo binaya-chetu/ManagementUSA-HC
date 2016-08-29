@@ -54,7 +54,7 @@ class ApptSettingController extends Controller {
         }
 
         $patients = DB::table('users')
-                ->where('users.role', $patientRoleId)
+                ->where(['users.role' => $patientRoleId, 'users.deleted_at' => null])
                 ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                 ->get();
 
