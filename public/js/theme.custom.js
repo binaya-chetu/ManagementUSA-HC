@@ -329,8 +329,17 @@ $(function() {
               
                         window.location = ajax_url+link;
 		}
-	});     
-        
+	}); 
+    
+	$(document).on('click', '.confirmation-callback', function(){
+		$(this).confirmation({
+			onConfirm: function() {        
+				var link = $(this).attr('href');
+				window.location = ajax_url+link;
+			}
+		});
+	});
+	
     $("#addAppointment").on("submit", function(event) {
         var count = 0;
         $('.commentdiv .error').remove();
