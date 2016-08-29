@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Traits\CommonTrait;
 
 use Illuminate\Http\Request;
 use App\Patient;
@@ -23,8 +24,10 @@ use Session;
 use App;
 use Auth;
 
+
 class SaleController extends Controller
 {
+    use CommonTrait;
     protected $patient_role = 6;
     public $success = true;
     public $error = false;
@@ -62,7 +65,8 @@ class SaleController extends Controller
         $patientId = base64_decode($id);
         $states = State::lists('name', 'id')->toArray();
         $cart = Cart::getCartDetails($patientId);
-        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
+        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')
+                            ->where('patient_id', $patientId)->get()->first();
         //echo '<pre>';print_r($cart);die;
         return view('sale.checkout', [
             'patientCart' => $patientCart, 'states' => $states, 
@@ -80,7 +84,8 @@ class SaleController extends Controller
         //echo '<pre>'; print_r($request->all());die;
         $patientId = base64_decode($id);
         $cart = Cart::getCartDetails($patientId);
-        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')->where('patient_id', $patientId)->get()->first();
+        $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')
+                            ->where('patient_id', $patientId)->get()->first();
         //echo '<pre>';print_r($patientCart->toArray());die;
                
         $payment['payment_type'] = $request['payment_type'];
@@ -119,37 +124,6 @@ class SaleController extends Controller
         }
         
     }
-    /**
-     * Save the order from the makePayment function
-     *
-     *  */
-    public function saveOrder($cart, $payment_id) {   
-        
-        foreach($cart['category_list'] as $key => $category){
-            $order = new Order;
-            $order->payment_id = $payment_id;
-            $order->category = $category['category'];
-            $order->package_type = $category['category_type'];
-            $order->price = $cart['original_package_price'][$key];
-            $order->discount_price = $cart['package_discount'][$key];
-            $order->save();
-            /* ---------------START Save the data into the orderdetail table regarding the package order ------- */
-            foreach($cart['category_detail_list'][$key] as $product){
-                $orderDetail = new OrderDetail;
-                $orderDetail->order_id = $order->id;
-                $orderDetail->product_sku = $product['sku'];
-                $orderDetail->product = $product['product'];
-                $orderDetail->quantity = $product['count'];
-                $orderDetail->unit_price = $product['original_price'];
-                $orderDetail->discount_price = $product['discount_price'];
-                $orderDetail->save();   
-                unset($orderDetail);
-            }
-            unset($order);
-            /* -------------- END ------------- */
-        }        
-    }
-	
 	/**
 	* paymentDetails: returns payment details of the patient with given id
 	* returns payment details page view
