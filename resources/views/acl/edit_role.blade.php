@@ -5,13 +5,8 @@
     <header class="page-header">
         <h2>Edit Role</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="{{url('/')}}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+            {!! Breadcrumbs::render('acl.editRole', $role) !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -28,7 +23,7 @@
                 </header>	
                 <div class="panel-body">
                     <!-- Display Validation Errors -->
-                    {!! Form::model($role, ['method' => 'post','url' => ['updateRole', $role->id], 'id' => 'addRole']) !!}
+                    {!! Form::model($role, ['method' => 'post','url' => ['/acl/updateRole', $role->id], 'id' => 'addRole']) !!}
                     {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('role_title') ? ' has-error' : '' }}">
                             {{ Form::label('role_title', 'Role Title', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -42,8 +37,10 @@
                                 @endif
                             </div>
                         </div>
-                    <!-- Add Patient Button -->
-                    <div class="form-group">
+                    </div>
+                    
+                   <footer class="panel-footer">
+                    <div class="row">
                         <div class="col-sm-offset-3 col-sm-6">
                             {{ Form::button(
                                     '<i class="fa fa-plus"></i> Edit Role',
@@ -51,11 +48,11 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                             }}                               
-                            <a href="{{ url('/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
-                        </div>
+                            <a href="{{ url('/acl/listRole') }}" class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                         </div>
                     </div>
-                    {{ Form::close() }}
-                </div>
+                </footer>
+                {{ Form::close() }}
             </section>
         </div>
     </div>

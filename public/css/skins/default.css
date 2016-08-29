@@ -603,9 +603,9 @@ html .panel-primary .panel-heading {
 	background: #0088cc;
 }
 /* Modal */
-.modal-block-primary .fa {
+/*.modal-block-primary .fa {
 	color: #0088cc;
-}
+}*/
 
 .modal-block-primary.modal-header-color .panel-heading {
 	background-color: #0088cc;

@@ -89,7 +89,7 @@ window.theme = {};
 			sidebars: {
 				menu: '#content-menu',
 				left: '#sidebar-left',
-				right: '#sidebar-right'
+				//right: '#sidebar-right'
 			}
 		},
 
@@ -109,10 +109,10 @@ window.theme = {};
 				$el: $( this.options.sidebars.left )
 			};
 
-			this.sidebars.right = {
-				$el: $( this.options.sidebars.right ),
-				isOpened: $html.hasClass( 'sidebar-right-opened' )
-			};
+//			this.sidebars.right = {
+//				$el: $( this.options.sidebars.right ),
+//				isOpened: $html.hasClass( 'sidebar-right-opened' )
+//			};
 
 			this.sidebars.menu = {
 				$el: $( this.options.sidebars.menu ),
@@ -136,7 +136,7 @@ window.theme = {};
 				this.buildContentMenu();
 			}
 
-			this.buildSidebarRight();
+			//this.buildSidebarRight();
 
 			return this;
 		},
@@ -146,7 +146,7 @@ window.theme = {};
 				this.eventsSidebarLeft();
 			}
 
-			this.eventsSidebarRight();
+			//this.eventsSidebarRight();
 			this.eventsContentMenu();
 
 			if ( typeof $.browser !== 'undefined' && !this.customScroll && isAndroid ) {
@@ -274,83 +274,83 @@ window.theme = {};
 			return this;
 		},
 
-		buildSidebarRight: function() {
-			this.sidebars.right.isOpened = $html.hasClass( 'sidebar-right-opened' );
-
-			if ( this.customScroll ) {
-				this.sidebars.right.$nano = this.sidebars.right.$el.find( '.nano' );
-
-				this.sidebars.right.$nano.nanoScroller({
-					alwaysVisible: true,
-					preventPageScrolling: true
-				});
-			}
-
-			return this;
-		},
-
-		eventsSidebarRight: function() {
-			var _self = this;
-
-			var open = function() {
-				if ( _self.sidebars.right.isOpened ) {
-					return close();
-				}
-
-				_self.sidebars.right.isOpened = true;
-
-				$html.addClass( 'sidebar-right-opened' );
-
-				$window.trigger( 'sidebar-right-toggle', {
-					added: true,
-					removed: false
-				});
-
-				$html.on( 'click.close-right-sidebar', function(e) {
-					e.stopPropagation();
-					close(e);
-				});
-			};
-
-			var close = function(e) {
-				if ( !!e && !!e.target && ($(e.target).closest( '.sidebar-right' ).get(0) || !$(e.target).closest( 'html' ).get(0)) ) {
-					e.preventDefault();
-					return false;
-				}
-
-				$html.removeClass( 'sidebar-right-opened' );
-				$html.off( 'click.close-right-sidebar' );
-
-				$window.trigger( 'sidebar-right-toggle', {
-					added: false,
-					removed: true
-				});
-
-				_self.sidebars.right.isOpened = false;
-			};
-
-			var bind = function() {
-				$('[data-open="sidebar-right"]').on('click', function(e) {
-					var $el = $(this);
-					e.stopPropagation();
-
-					if ( $el.is('a') )
-						e.preventDefault();
-
-					open();
-				});
-			};
-
-			this.sidebars.right.$el.find( '.mobile-close' )
-				.on( 'click', function( e ) {
-					e.preventDefault();
-					$html.trigger( 'click.close-right-sidebar' );
-				});
-
-			bind();
-
-			return this;
-		},
+//		buildSidebarRight: function() {
+//			this.sidebars.right.isOpened = $html.hasClass( 'sidebar-right-opened' );
+//
+//			if ( this.customScroll ) {
+//				this.sidebars.right.$nano = this.sidebars.right.$el.find( '.nano' );
+//
+//				this.sidebars.right.$nano.nanoScroller({
+//					alwaysVisible: true,
+//					preventPageScrolling: true
+//				});
+//			}
+//
+//			return this;
+//		},
+//
+//		eventsSidebarRight: function() {
+//			var _self = this;
+//
+//			var open = function() {
+//				if ( _self.sidebars.right.isOpened ) {
+//					return close();
+//				}
+//
+//				_self.sidebars.right.isOpened = true;
+//
+//				$html.addClass( 'sidebar-right-opened' );
+//
+//				$window.trigger( 'sidebar-right-toggle', {
+//					added: true,
+//					removed: false
+//				});
+//
+//				$html.on( 'click.close-right-sidebar', function(e) {
+//					e.stopPropagation();
+//					close(e);
+//				});
+//			};
+//
+//			var close = function(e) {
+//				if ( !!e && !!e.target && ($(e.target).closest( '.sidebar-right' ).get(0) || !$(e.target).closest( 'html' ).get(0)) ) {
+//					e.preventDefault();
+//					return false;
+//				}
+//
+//				$html.removeClass( 'sidebar-right-opened' );
+//				$html.off( 'click.close-right-sidebar' );
+//
+//				$window.trigger( 'sidebar-right-toggle', {
+//					added: false,
+//					removed: true
+//				});
+//
+//				_self.sidebars.right.isOpened = false;
+//			};
+//
+//			var bind = function() {
+//				$('[data-open="sidebar-right"]').on('click', function(e) {
+//					var $el = $(this);
+//					e.stopPropagation();
+//
+//					if ( $el.is('a') )
+//						e.preventDefault();
+//
+//					open();
+//				});
+//			};
+//
+//			this.sidebars.right.$el.find( '.mobile-close' )
+//				.on( 'click', function( e ) {
+//					e.preventDefault();
+//					$html.trigger( 'click.close-right-sidebar' );
+//				});
+//
+//			bind();
+//
+//			return this;
+//		},
 
 		buildContentMenu: function() {
 			if ( !$html.hasClass( 'fixed' ) ) {

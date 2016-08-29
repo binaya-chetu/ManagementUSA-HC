@@ -3,15 +3,10 @@
 @section('content')
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>View patient :  {{ $patient->firstName }} {{ $patient->lastName }}</h2>
+        <h2>View patient :  {{ $patient->first_name }} {{ $patient->last_name }}</h2>
         <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="{{ url('/') }}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-            </ol>
+           {!! Breadcrumbs::render('patient.view', $patient) !!}
+            
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -29,8 +24,14 @@
                     <li>
                         <a href="#attachment" data-toggle="tab">Attachments</a>
                     </li>
+                    @if(!empty($catList))
+                     <li>
+                        <a href="#package_details" data-toggle="tab">Package Details</a>
+                    </li>
+                    @endif
+                    
                 </ul>
-                <!--                {{ Form::open(array('url' => 'savePatient', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'addPatient')) }}-->
+               
                 <div class="tab-content">
                     <div id="personal" class="tab-pane active">
                         <p>Personal Information</p>
@@ -39,7 +40,7 @@
                                 <label>First Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $patient->firstName }}
+                                {{ $patient->first_name }}
                             </div>
                         </div>
 
@@ -48,7 +49,7 @@
                                 <label>Last Name :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ $patient->lastName }}
+                                {{ $patient->last_name }}
                             </div>
                         </div>
                         <div class="row">
@@ -59,13 +60,20 @@
                                 {{ $patient->email }}
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-2 col-sm-offset-1">
+                                <label>Role :</label>
+                            </div>
+                            <div class="col-sm-9">
+                                {{ $patient['roleName']->role_title }}
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
                                 <label>Gender :</label>
                             </div>
                             <div class="col-md-9">         
-                                {{ $patient->gender }}
+                                {{ $patient['patientDetail']->gender }}
                             </div>
                         </div>
                         <div class="row">
@@ -73,7 +81,11 @@
                                 <label>Dob :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{ date('d F Y', strtotime($patient->dob)) }}
+                                @if($patient['patientDetail']->dob)
+                                {{ date('d F Y', strtotime($patient['patientDetail']->dob)) }}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -81,7 +93,11 @@
                                 <label>Employer :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->employer or 'N/A' }}}
+                                @if($patient['patientDetail']->employer)
+                                {{ $patient['patientDetail']->employer }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>					
                         <div class="row">
@@ -89,7 +105,11 @@
                                 <label>Occupation :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->occupation or 'N/A' }}}
+                                @if($patient['patientDetail']->occupation)
+                                {{ $patient['patientDetail']->occupation }}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         
@@ -102,23 +122,31 @@
                                 <label>Phone :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->phone or 'N/A' }}}
+                                {{{ $patient['patientDetail']->phone or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Primary Address :</label>
+                                <label>Address Line 1 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->address1 or 'N/A' }}}
+                                 @if($patient['patientDetail']->address1)
+                                {{ $patient['patientDetail']->address1 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
-                                <label>Secondary Address :</label>
+                                <label>Address Line 2 :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->address2 or 'N/A' }}}
+                                @if($patient['patientDetail']->address2)
+                                {{ $patient['patientDetail']->address2 }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -126,7 +154,11 @@
                                 <label>City :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->city or 'N/A' }}}
+                                @if($patient['patientDetail']->city)
+                                {{ $patient['patientDetail']->city }}
+                                 @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -134,7 +166,7 @@
                                 <label>State :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->state or 'N/A' }}}
+                                {{{ $patient['patientDetail']['patientStateName']->name or 'N/A' }}}
                             </div>
                         </div>
                         <div class="row">
@@ -142,7 +174,7 @@
                                 <label>Zip Code :</label>
                             </div>
                             <div class="col-sm-9">
-                                {{{ $patient->zipCode or 'N/A' }}}
+                                {{{ $patient['patientDetail']->zipCode or 'N/A' }}}
                             </div>
                         </div>	
                     </div>
@@ -154,12 +186,126 @@
                                 <label>Payment Bill :</label>
                             </div>
                             <div class="col-sm-9">
-                                @if(isset($patient->payment_bill) && !empty($patient->payment_bill)) 
-                                    <a href="{{ URL::asset('uploads/patient_documents/'.$patient->payment_bill) }}" download="myimage" class="document_link" ><img src="{{ URL::asset('images/pdf_icon.png') }}" ></a>
+                                @if(isset($patient['patientDetail']->payment_bill) && !empty($patient['patientDetail']->payment_bill)) 
+                                    <a href="{{ URL::asset('uploads/patient_documents/'.$patient['patientDetail']->payment_bill) }}" download="myimage" class="document_link" ><img src="{{ URL::asset('images/pdf_icon.png') }}" ></a>
                                 @else
                                     {{ 'N/A' }}
                                 @endif
                             </div>
+                        </div>
+                    </div>
+                    <div id="package_details" class="tab-pane">
+                    
+                        <div class="row">
+                           <section class="panel panel-primary">
+                             
+                            @if(isset($catList) && !empty($catList))
+<!--				<header class="panel-heading">
+					<div class="panel-actions">
+					@if(isset($catList))
+						<a href="#"> 
+							<button type="button" class="btn btn-success">
+								<span class="fa fa-check"></span> Checkout
+							</button>
+						</a>
+						<a href="/cart/emptyCart/{{ base64_encode(array_values($catList)[0]['patient_id']) }}"> 
+							<button type="button" class="btn btn-danger">
+								<span class="fa fa-remove"></span> Empty cart
+							</button>
+						</a>
+					@endif	
+					</div>
+					<h2 class="panel-title">Cart Item </h2>
+				</header>-->
+				<div class="panel-body">
+					<div class="row">
+						@if(Session::has('flash_message'))
+							<div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
+						@elseif(Session::has('error_message'))
+							<div class="col-sm-12"><div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><em> {!! session('error_message') !!}</em></div></div>					
+						@endif				
+					</div>				
+					<table class="table table-bordered mb-none" id="cartItemList">
+						<thead>
+							<tr>
+								<th>Category</th>
+								<th>Agent</th>
+								<th>Patient</th>
+								<th class="text-center">Duration</th>
+								<th class="text-center">Price</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>					
+						@foreach($catList as $i => $cat)
+							<tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" data-details-table = '{{ $i }}'>
+								<td>{{ $cat['category'] }}</td>
+								<td>{{ $cat['user'] }}</td>
+								<td>{{ $cat['patient'] }}</td>
+								<td class="center">{{ $cat['duration'] }}</td>
+								<td class="center">{{ $discountPrice[$i] }}</td>
+								<td class="center">
+									<a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
+										<i class="fa fa-trash-o"></i>
+									</a>
+								</td>
+							</tr>									
+						@endforeach
+						</tbody>
+					</table>
+				</div>
+				<div id="rowDetails" style="display:none">
+				@foreach($cartDetailList as $ind => $val)	
+					<table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
+						<thead>
+							<tr>
+								<th>sku</th>
+								<th>Product Name</th>
+								<th>Unit</th>
+								<th>Count</th>
+								<th>Individual Price</th>
+								<th>Package Price</th>
+							</tr>
+						</thead>
+						<tbody>								
+						@foreach($val as $item)
+							<tr>
+								<td>{{ $item['sku'] }}</td>
+								<td>{{ $item['product'] }}</td>
+								<td class="center">{{ $item['unit_of_measurement'] }}</td>
+								<td class="center">{{ $item['count'] }}</td>
+								<td class="center">{{ $item['original_price'] }}</td>
+								<td class="center">{{ $item['discount_price'] }}</td>
+							</tr>
+						@endforeach
+							<tr>
+								<td></td>
+								<td colspan="4"><strong>Total price</strong></td>
+								<td>{{ $originalPrice[$ind] }}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="4"><strong>Total discouont</strong></td>
+								<td>{{ $packageDiscount[$ind] }}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="4"><strong>Discounted package price</strong></td>
+								<td>{{ $discountPrice[$ind] }}</td>
+							</tr>
+						</tbody>
+					</table>
+				@endforeach				
+				</div>
+			@else
+				<table class="table table-bordered">
+					<tr>
+                                            <td class="col-sm-8 col-md-5"><h5> There is no package.</h5></td>
+					</tr>
+				</table>
+                        
+			@endif
+			</section>
                         </div>
                     </div>
 
@@ -167,7 +313,7 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-sm-9">
-                           <a href="/patient" class="btn btn-default">Back</a>
+                           <a href="javascript::void(0);" class="btn btn-default" onclick="window.history.go(-1); return false;">Back</a>
                         </div>
                     </div>
                 </footer>

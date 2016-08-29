@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\PermissionRole;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Permission extends Model
 {
+	use SoftDeletes;
     /**
      * The database table used by the model.
      *
@@ -22,6 +24,28 @@ class Permission extends Model
         'parent_id',
         'status',
     ];
+    
+    
+    public static function getPermissionForLoggedUser($role = null)
+    {
+        $permissions = PermissionRole::with('permissionId')->where('role_id', $role)->get();
+        
+        $permissions = $permissions->toArray();
+        
+        $permissionsArr = array();
+        foreach($permissions as $permission)
+        {
+            $permissionsArr[] = $permission['permission_id'];
+        }
+        
+        $permissionSlugArr = array();
+       foreach($permissionsArr as $permission)
+       {
+           $permissionSlugArr[] = $permission['permission_slug'];
+       }
+      
+       return $permissionSlugArr;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -57,10 +81,5 @@ class Permission extends Model
     public function permission_roleId()
     {
         return $this->hasOne('App\PermissionRole', 'role_id');
-    }
-    
-    public function permission_role1($roleid)
-    {
-        return $this->hasMany('App\PermissionRole', 'permission_id');
     }
 }

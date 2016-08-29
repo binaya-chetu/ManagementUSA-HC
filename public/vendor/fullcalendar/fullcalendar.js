@@ -4927,6 +4927,15 @@ function AgendaEventRenderer() {
 			"<div class='fc-event-title'>" +
 			htmlEscape(event.title || '') +
 			"</div>" +
+                        "<div class='fc-event-title'>" +
+			htmlEscape(event.patientName || '') +
+			"</div>" +
+                        "<div class='fc-event-title'>" +
+			htmlEscape(event.mobile || '') +
+			"</div>" +
+                        "<div class='fc-event-title'>" +
+			htmlEscape(event.doctorName || '') +
+			"</div>" +
 			"</div>" +
 			"<div class='fc-event-bg'></div>";
 
@@ -6304,8 +6313,14 @@ function DayEventRenderer() {
 		}
 		html +=
 			"<span class='fc-event-title'>" +
-			htmlEscape(event.title || '') +
-			"</span>" +
+			htmlEscape(event.title || '') + 
+			"</span><br/>" + "<span class='fc-event-title'>" +
+			htmlEscape(event.patientName || '') +                      
+			"</span><br/>" + "<span class='fc-event-title'>" +
+			htmlEscape(event.mobile || '') +                        
+			"</span><br/>" + "<span class='fc-event-title'>" +
+			htmlEscape(event.doctorName || '') + 
+			"</span><br/>" +
 			"</div>";
 		if (event.allDay && segment.isEnd && isEventResizable(event)) {
 			html +=

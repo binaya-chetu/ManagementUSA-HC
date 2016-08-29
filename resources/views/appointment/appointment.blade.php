@@ -3,12 +3,7 @@
 @section('content')
 
 @include('appointment.viewHeader')
-
-<script>
-$(document).ready(function() {
-
-    });
-</script>    
+   
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Create Appointment</h2>
