@@ -1008,8 +1008,10 @@ $(document).on("click", ".patient_status", function(event) {
                     });
         });
                 $('#changeStatus').validate();
-
+            
                $("#requestFollowup").validate();
+                $("#patientInventory").validate();
+               
     
 function showAppointmentCount(){
     $.ajaxSetup({
@@ -1156,4 +1158,60 @@ function checkAppointmentTime(){
         }
         
         });
-        
+      
+//              $("#amount1").change(function(){
+//                var amount1 = $(this).val();
+//                        var x = document.getElementById("amount2");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == amount1)
+//                        x.remove(i);
+//                }
+//                });
+//                
+//               $("#amount2").change(function(){
+//                var amount2 = $(this).val();
+//                        var x = document.getElementById("amount3");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == amount2)
+//                        x.remove(i);
+//                }
+//                });
+//
+//            $("#amount3").change(function(){
+//                var amount3 = $(this).val();
+//                        var x = document.getElementById("amount4");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == amount3)
+//                        x.remove(i);
+//                }
+//                });
+//                
+//                 $("#medicationA1").change(function(){
+//                var med1 = $(this).val();
+//                        var x = document.getElementById("medicationA2");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == med1)
+//                        x.remove(i);
+//                }
+//                });
+//                  $("#medicationA2").change(function(){
+//                var med2 = $(this).val();
+//                        var x = document.getElementById("medicationB1");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == med2)
+//                        x.remove(i);
+//                }
+//                });
+//                
+//                $("#medicationB1").change(function(){
+//                var med3 = $(this).val();
+//                        var x = document.getElementById("medicationB2");
+//                        for (var i = 0; i < x.length; i++){
+//                if (x.options[i].value == med3)
+//                        x.remove(i);
+//                }
+//                });
+//                
+//              
+
+$("#patientInventory").validate();
