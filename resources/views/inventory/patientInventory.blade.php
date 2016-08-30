@@ -103,14 +103,13 @@
                                       <div class="col-sm-6 form-group">
                                             {{ Form::label('amount1', 'Test Dose 1 ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
-                                                <select class="form-control">
-                                                    <option>Select DD9</option>
-                                                    <option value="Wesley Pope">Wesley Pope</option>
-                                                    <option value=" MD - Kisha Farrell"> MD - Kisha Farrell</option>
-                                                    <option value=" ANP - Justin Henson">ANP - Justin Henson</option>
-                                                    <option value="ANP - Steven Scholen">ANP - Steven Scholen</option>
-                                                    <option value="MD">MD</option>
-                                                </select>
+                                                
+                                                <?php $dd9 = dropDown9();?>
+                                                
+                                                {{ Form::select('dd9', (['' => 'Select DD9 value'] + $dd9), null, ['class' => 'form-control input required', 'id' => 'dd9']) }}
+                                                
+                                                
+                                                
                                             </div>
                                         </div>  
                                     <div>

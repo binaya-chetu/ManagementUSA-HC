@@ -165,5 +165,15 @@ function dropDownMedication()
     $medication = ['T101' =>'T101', 'T105' => 'T105', 'T106' => 'T106', 'ST1' =>'ST1', 'ST9A' => 'ST9A', 'ST9E' => 'ST9E', 'BM1' =>'BM1', 'BM3' => 'BM3', 'BM6' => 'BM6', 'QUAD4' => 'QUAD4'];
     return $medication;
 }
+/**
+ * Function to find the DropDown 9
+ *
+ * @return array()
+ */
+function dropDown9()
+{
+    $dd9 = ['Wesley Pope' =>'Wesley Pope', 'MD - Kisha Farrell' => 'MD - Kisha Farrell', 'ANP - Justin Henson' => 'ANP - Justin Henson', 'ANP - Steven Scholen' =>'ANP - Steven Scholen', 'MD' => 'MD'];
+    return $dd9;
+}
 
-
+                                                   
