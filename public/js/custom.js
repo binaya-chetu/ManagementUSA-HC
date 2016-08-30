@@ -1159,59 +1159,119 @@ function checkAppointmentTime(){
         
         });
       
-//              $("#amount1").change(function(){
-//                var amount1 = $(this).val();
-//                        var x = document.getElementById("amount2");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == amount1)
-//                        x.remove(i);
-//                }
-//                });
-//                
-//               $("#amount2").change(function(){
-//                var amount2 = $(this).val();
-//                        var x = document.getElementById("amount3");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == amount2)
-//                        x.remove(i);
-//                }
-//                });
-//
-//            $("#amount3").change(function(){
-//                var amount3 = $(this).val();
-//                        var x = document.getElementById("amount4");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == amount3)
-//                        x.remove(i);
-//                }
-//                });
-//                
-//                 $("#medicationA1").change(function(){
-//                var med1 = $(this).val();
-//                        var x = document.getElementById("medicationA2");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == med1)
-//                        x.remove(i);
-//                }
-//                });
-//                  $("#medicationA2").change(function(){
-//                var med2 = $(this).val();
-//                        var x = document.getElementById("medicationB1");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == med2)
-//                        x.remove(i);
-//                }
-//                });
-//                
-//                $("#medicationB1").change(function(){
-//                var med3 = $(this).val();
-//                        var x = document.getElementById("medicationB2");
-//                        for (var i = 0; i < x.length; i++){
-//                if (x.options[i].value == med3)
-//                        x.remove(i);
-//                }
-//                });
-//                
-//              
+      
+      /***********************For internal validation of Doses************************/
+      
+      
+                        $("#amount1").change(function(){
 
-$("#patientInventory").validate();
+                var amount1 = $(this).val();
+                        var x = document.getElementById("amount2");
+                        var y = document.getElementById("amount3");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount1)
+                {
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount2").change(function(){
+
+                var amount2 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount3");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount2){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount3").change(function(){
+                var amount3 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount2");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount3){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount4").change(function(){
+                var amount4 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount2");
+                        var z = document.getElementById("amount3");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount4){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#medicationA1").change(function(){
+                var med1 = $(this).val();
+                        var x = document.getElementById("medicationA2");
+                        var y = document.getElementById("medicationB1");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med1){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationA2").change(function(){
+                var med2 = $(this).val();
+                        var x = document.getElementById("medicationA1");
+                        var y = document.getElementById("medicationB1");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med2){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationB1").change(function(){
+                var med3 = $(this).val();
+                        var x = document.getElementById("medicationA1");
+                        var y = document.getElementById("medicationA2");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med3){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationB2").change(function(){
+                var med4 = $(this).val();
+                        var x = document.getElementById("medicationA2");
+                        var y = document.getElementById("medicationA1");
+                        var z = document.getElementById("medicationB1");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med4){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                  
