@@ -258,70 +258,13 @@
                         <div class="col-sm-6">
                             {{ Form::text('paid_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
                         </div>                        
-                    </div>  
-                    <div class="form-group" id="emi_option">
-                        <label class="col-sm-12 control-label" for="amount"><center>You have entered less amount, Please select a <a href="javascript:void(0)" class="emi_popuup">EMI options</a></center></label>
-                    </div>
+                    </div>                    
                 </div>
             </div>
-
-            <!-- Dialog -->
-            <div id="checkoutPopup" class="modal-block modal-block-primary mfp-hide"> 
-                <section class="panel panel-primary">
-                    <header class="panel-heading">
-                        <h2 class="panel-title">Select EMI's Option</h2>
-                    </header>
-                    <div class="panel-body">        
-
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label class="col-sm-12 errorEMI">*Please select an EMI's option </label>
-
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('emi', 3, false, ['class' => 'emiRadio', 'id' =>'radio1' ]) }}
-                                        <span>$100/month for 3 EMIs</span>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('emi', 6, false, ['class' => 'emiRadio', 'id' =>'radio2']) }}
-                                        <span>$100/month for 3 EMIs</span>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('emi', 9, false, ['class' => 'emiRadio', 'id' =>'radio3']) }}
-                                        <span>$100/month for 3 EMIs</span>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        {{ Form::radio('emi', 12, false, ['class' => 'emiRadio', 'id' =>'radio4']) }}
-                                        <span>$100/month for 3 EMIs</span>
-                                    </label>
-                                </div>
-                            </div>                        
-                        </div> 
-
-                    </div>
-                    <footer class="panel-footer">
-                        <div class="row">                  
-                            <div class="col-md-8 text-right">                                
-                                {{ Form::button( 'Select', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'button', 'id' => 'emiSubmit')) }}                
-                                <button class="btn btn-default closePop">Cancel</button>
-                            </div>
-                        </div>
-                    </footer>
-                </section>
-            </div>
-
         </div>
         <footer class="panel-footer">
             <div class="row">
-                <div class="col-md-12 col-md-offset-4">
-                    {{ Form::hidden('remaining_amount', 0.00, [ 'id' => 'remaining_amount']) }}
-                    {{ Form::hidden('emi_month', null, [ 'id' => 'emi_month']) }}
+                <div class="col-md-12 col-md-offset-4">                    
                     {{ Form::hidden('total_amount', $total_cart_price, [ 'id' => 'total_amount']) }}
                     {{ Form::button('<i class="fa fa-btn fa-user"></i> Place Order',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
                     <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
@@ -347,49 +290,9 @@
             {
                 alert("Paid amount shouldn't more than total order price.");
                 return false;
-            } else if (parseFloat(amount) < parseFloat(original_price)) {
-                var emi_plan_value = $('#emi_month').val();
-                if(emi_plan_value == ''){
-                    alert("Please select an EMI's option from the Emi link.");
-                    $('#emi_option').show();
-                    return false;
-                }                
-            }else{
-                $('#emi_month').val('');
-                $('input[name="emi"]').val('');
             }
         }
     });
-    $('#paid_amount').on('blur', function() {
-        var amount = $(this).val();
-        if(amount != ''){
-            if (parseFloat(amount) < parseFloat(original_price)) {
-                var remaining = parseFloat(original_price) - parseFloat(amount);
-                if(parseFloat(remaining) < parseFloat(original_price)){
-                    $('#remaining_amount').val(parseFloat(remaining).toFixed(2));
-                    
-                    var quarter = parseFloat(parseFloat(remaining) / 3, 2); 
-                    var str1 = "$" + quarter.toFixed(2)+ "/month for 3 EMI's";
-                    $('#radio1').siblings().text(str1);
-                    //$('#radio1').value(quarter.toFixed(2));
-                    
-                    var half = parseFloat(parseFloat(remaining) / 6, 2); 
-                    var str2 = "$" + half.toFixed(2)+ "/month for 6 EMI's";
-                    $('#radio2').siblings().text(str2);
-                    //$('#radio2').value(half.toFixed(2));
-                    
-                    var third_quarter = parseFloat(parseFloat(remaining) / 9, 2); 
-                    var str3 = "$" + third_quarter.toFixed(2)+ "/month for 9 EMI's";
-                    $('#radio3').siblings().text(str3);
-                    //$('#radio3').value(third_quarter.toFixed(2));
-                    
-                    var yearly = parseFloat(parseFloat(remaining) / 12, 2); 
-                    var str4 = "$" + yearly.toFixed(2)+ "/month for 12 EMI's";
-                    $('#radio4').siblings().text(str4);
-                    //$('#radio4').value(yearly.toFixed(2));
-                }
-            }
-        }
-    });
+
 </script>
 @endsection
