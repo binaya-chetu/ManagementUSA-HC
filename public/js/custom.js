@@ -204,7 +204,7 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-
+    
     $('#patientdob').val('');
     $('#durationExample').on('blur', function(){
         checkAppointmentTime();       
@@ -282,6 +282,24 @@ $(document).ready(function() {
         /*
          * End of Functions for Add appointment.
          */
+        
+        // Code for the print Invoice
+        $("#print_invoice").click(function(){
+        if (document.getElementById("email_invoice").checked){
+        var invoice_id = $("#invoice_id").val();
+        $.ajax({
+        url: ajax_url+"products/emailInvoice/",
+                data:{invoiceid:invoice_id},
+                success: function(result){
+                alert("hello");
+                           // $("#div1").html(result);
+                         }});
+                    //  window.print();
+                }
+                else{
+                window.print();
+                }
+            });
 
         $(document).on("click", ".edit-row", function(ev) {
 		$.ajaxSetup({
@@ -989,27 +1007,11 @@ $(document).on("click", ".patient_status", function(event) {
             }
         });
     });
-     $(document).ready(function(){
-        $("#print_invoice").click(function(){
-        if (document.getElementById("email_invoice").checked){
-        var invoice_id = $("#invoice_id").val();
-                $.ajax({
-                url: ajax_url+"products/emailInvoice/",
-                        data:{invoiceid:invoice_id},
-                        success: function(result){
-                        alert("hello");
-                                   // $("#div1").html(result);
-                                 }});
-                            //  window.print();
-                        }
-                        else{
-                        window.print();
-                        }
-                    });
-        });
                 $('#changeStatus').validate();
-
+            
                $("#requestFollowup").validate();
+                $("#patientInventory").validate();
+               
     
 function showAppointmentCount(){
     $.ajaxSetup({
@@ -1156,4 +1158,152 @@ function checkAppointmentTime(){
         }
         
         });
-        
+      
+      /***********************For internal validation of Doses************************/
+      
+      
+                        $("#amount1").change(function(){
+
+                var amount1 = $(this).val();
+                        var x = document.getElementById("amount2");
+                        var y = document.getElementById("amount3");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount1)
+                {
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount2").change(function(){
+
+                var amount2 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount3");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount2){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount3").change(function(){
+                var amount3 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount2");
+                        var z = document.getElementById("amount4");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount3){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#amount4").change(function(){
+                var amount4 = $(this).val();
+                        var x = document.getElementById("amount1");
+                        var y = document.getElementById("amount2");
+                        var z = document.getElementById("amount3");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == amount4){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+                }
+                });
+                        $("#medicationA1").change(function(){
+                var med1 = $(this).val();
+                        var x = document.getElementById("medicationA2");
+                        var y = document.getElementById("medicationB1");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med1){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationA2").change(function(){
+                var med2 = $(this).val();
+                        var x = document.getElementById("medicationA1");
+                        var y = document.getElementById("medicationB1");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med2){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationB1").change(function(){
+                var med3 = $(this).val();
+                        var x = document.getElementById("medicationA1");
+                        var y = document.getElementById("medicationA2");
+                        var z = document.getElementById("medicationB2");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med3){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+                        $("#medicationB2").change(function(){
+                var med4 = $(this).val();
+                        var x = document.getElementById("medicationA2");
+                        var y = document.getElementById("medicationA1");
+                        var z = document.getElementById("medicationB1");
+                        for (var i = 0; i < x.length; i++){
+                if (x.options[i].value == med4){
+                x.remove(i);
+                        y.remove(i);
+                        z.remove(i);
+                }
+
+                }
+                });
+        /* --------------------------START: Functions for the Checkout page pop-up --------------  */
+        $('#emi_option').hide();    
+        $('.errorEMI').hide();
+        $(document).on("click", ".emi_popuup", function(ev) {
+            $('#emi_value').val('');
+            $('input[name=emi]').attr('checked',false);
+            $.magnificPopup.open({
+                items: {
+                    src: '#checkoutPopup',
+                    type: 'inline'
+                }
+            });
+        });
+        //store the value after selecting the option button
+        $(document).on("click", 'input[name="emi"]', function(ev){
+            $('.errorEMI').hide();
+            $('#emi_month').val($(this).val());
+        });        
+        // check that the option button for emi is selected or not
+        $(document).on("click", '#emiSubmit', function(ev){
+            var check = 1;    
+            $('.emiRadio').each(function(){
+                    if(this.checked) {
+                        check = 2;
+                    }
+                });
+            if(check == 1){
+                $('.errorEMI').show();
+            }else{
+                $.magnificPopup.close();
+            }
+        });
+
+       /* --------------------------END: Functions for the Checkout page pop-up --------------  */

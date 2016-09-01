@@ -140,3 +140,40 @@ function showCart($id){
       //  return view('cart.cart',['category_list' => $category_list, 'category_detail_list' => $category_detail_list, 'original_package_price' => $original_package_price, 'discouonted_package_price' => $discouonted_package_price, 'package_discount' => $package_discount]);
         return $data;
 }
+
+/**
+ * Function to find the amount of medicine  for the Blade file
+ *
+ * @return array()
+ */
+function dropDownAmount()
+{
+    $amount = ['0.0125' =>'0.0125', '0.0375' => '0.0375', '0.0625' => '0.0625', '0.0875' =>'0.0875', '0.1125' => '0.1125', '0.1375' => '0.1375', '0.1625' =>'0.1625', '0.1875' => '0.1875', '0.2125' => '0.2125', '0.2375' => '0.2375', '0.2625' => '0.2625', 
+            '0.2875' => '0.2875', '0.3125' => '0.3125', '0.3375' => '0.3375', '0.3625' => '0.3625', '0.3875' => '0.3875', '0.4125' => '0.4125', '0.4375' => '0.4375', '0.4625' => '0.4625', '0.4875' => '0.4875', '0.5125' => '0.5125', '0.5375' => '0.5375', '0.5625' => '0.5625', 
+            '0.5875' => '0.5875', '0.6125"' => '0.6125', '0.6375' => '0.6375', '0.6625' => '0.6625', '0.6875' => '0.6875', '0.7125' => '0.7125', '0.7375' => '0.7375', '0.7625' => '0.7625', '0.7875' => '0.7875', '0.8125' => '0.8125', '0.8375' => '0.8375', '0.8625' => '0.8625', 
+            '0.8875' => '0.8875', '0.9125' => '0.9125'
+    ];
+    return $amount;
+}
+/**
+ * Function to find the medication of Drop Downs 
+ *
+ * @return array()
+ */
+function dropDownMedication()
+{
+    $medication = ['T101' =>'T101', 'T105' => 'T105', 'T106' => 'T106', 'ST1' =>'ST1', 'ST9A' => 'ST9A', 'ST9E' => 'ST9E', 'BM1' =>'BM1', 'BM3' => 'BM3', 'BM6' => 'BM6', 'QUAD4' => 'QUAD4'];
+    return $medication;
+}
+/**
+ * Function to find the DropDown 9
+ *
+ * @return array()
+ */
+function dropDown9()
+{
+    $dd9 = ['Wesley Pope' =>'Wesley Pope', 'MD - Kisha Farrell' => 'MD - Kisha Farrell', 'ANP - Justin Henson' => 'ANP - Justin Henson', 'ANP - Steven Scholen' =>'ANP - Steven Scholen', 'MD' => 'MD'];
+    return $dd9;
+}
+
+                                                   

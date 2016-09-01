@@ -72,3 +72,6 @@ th.countColoumn { border-left: none;}
 a.saleAnchor:hover{ color:inherit; }
 
 .panel-action-toggle { display: none; }
+#checkoutPopup{ max-width: 400px; }
+#checkoutPopup .panel .panel-heading { padding: 10px; }
+#checkoutPopup .panel .errorEMI { color:red; }
