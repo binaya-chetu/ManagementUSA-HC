@@ -1274,7 +1274,6 @@ function checkAppointmentTime(){
                 }
                 });
         /* --------------------------START: Functions for the Checkout page pop-up --------------  */
-        $('#emi_option').hide();    
         $('.errorEMI').hide();
         $(document).on("click", ".emi_popuup", function(ev) {
             $('#emi_value').val('');
@@ -1289,7 +1288,6 @@ function checkAppointmentTime(){
         //store the value after selecting the option button
         $(document).on("click", 'input[name="emi"]', function(ev){
             $('.errorEMI').hide();
-            $('#emi_month').val($(this).val());
         });        
         // check that the option button for emi is selected or not
         $(document).on("click", '#emiSubmit', function(ev){

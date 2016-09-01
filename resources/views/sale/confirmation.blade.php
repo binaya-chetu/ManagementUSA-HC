@@ -14,7 +14,7 @@
     <div class="row">
 
         <div class="col-md-12">
-                    
+
             <section class="panel panel-primary">
                 <header class="panel-heading">
                     <h2 class="panel-title">Checkout Confirmation </h2>                    
@@ -31,11 +31,11 @@
                             <p><span class="value">{{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name }}</span></p>
                             <address>{{ $patientCart->patient->patientDetail->address1 }}<br> {{ $patientCart->patient->patientDetail->address2 }} {{ $patientCart->patient->patientDetail->city }} 
                                 @if(isset($patientCart->patient->patientDetail->patientStateName->name))
-                                    {{ $patientCart->patient->patientDetail->patientStateName->name }}
+                                {{ $patientCart->patient->patientDetail->patientStateName->name }}
                                 @endif<br/> 
                                 {{ isset($patientCart->patient->patientDetail->phone) ? 'Contact :'.$patientCart->patient->patientDetail->phone : ''  }} <br/> 
                                 {{ $patientCart->patient->email }}</address>
-                           
+
                         </div>
                         <div class="col-sm-6 mt-md text-right">
                             <p><span class="text-dark">Agent Detail:</span></p>
@@ -47,142 +47,148 @@
                             <h3>Patient Address</h3>
                         </div>              
                     </div>
-            
-            
-             <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Name :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name or '' }}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Address :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->address1 or '' }} {{ $patientCart['patient']['patientDetail']->address2 or '' }}
-                        </div>
-                    </div>
-                </div>   
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>City :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->city or '' }}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>State :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{  $patientCart->patient->patientDetail->patientStateName->name or '' }} 
-                        </div>
-                    </div>
-                </div>   
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Zip code :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->zipCode or '' }}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Phone :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{  $patientCart['patient']['patientDetail']->phone or '' }} 
-                        </div>
-                    </div>
-                </div>  
-                    <div class="table-responsive">		
-					@if(isset($category_list) && !empty($category_list))
-						<table class="table table-bordered mb-none removeSearchBox" id="cartItemList">
-							<thead>
-								<tr>
-									<th>Category</th>
-									<th>Agent</th>
-									<th>Patient</th>
-									<th class="text-center">Duration</th>
-									<th class="text-center">Price</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>					
-							@foreach($category_list as $i => $cat)
-								<tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" data-details-table = '{{ $i }}'>
-									<td>{{ $cat['category'] }}</td>
-									<td>{{ $cat['user'] }}</td>
-									<td>{{ $cat['patient'] }}</td>
-									<td class="center">{{ $cat['duration'] }}</td>
-									<td class="center">${{ number_format($discouonted_package_price[$i], 2) }}</td>
-									<td class="center">
-										<a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
-											<i class="fa fa-trash-o"></i>
-										</a>
-									</td>
-								</tr>									
-							@endforeach
-								<tr class="noDetail">
-									<td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
-								</tr>
-							</tbody>
-						</table>
 
-						<div id="rowDetails" style="display:none">
-						@foreach($category_detail_list as $ind => $val)	
-							<table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
-								<thead>
-									<tr>
-										<th>sku</th>
-										<th>Product Name</th>
-										<th>Unit</th>
-										<th>Count</th>
-										<th>Individual Price</th>
-										<th>Package Price</th>
-									</tr>
-								</thead>
-								<tbody>								
-								@foreach($val as $item)
-									<tr>
-										<td>{{ $item['sku'] }}</td>
-										<td>{{ $item['product'] }}</td>
-										<td class="center">{{ $item['unit_of_measurement'] }}</td>
-										<td class="center">{{ $item['count'] }}</td>
-										<td class="center">${{ number_format($item['original_price'], 2) }}</td>
-										<td class="center">${{ number_format($item['discount_price'], 2) }}</td>
-									</tr>
-								@endforeach
-									<tr>
-										<td></td>
-										<td colspan="4"><strong>Total price</strong></td>
-										<td>${{ number_format($original_package_price[$ind], 2) }}</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td colspan="4"><strong>Total discouont</strong></td>
-										<td>${{ number_format($package_discount[$ind], 2) }}</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td colspan="4"><strong>Discounted package price</strong></td>
-										<td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
-									</tr>
-								</tbody>
-							</table>
-						@endforeach				
-						</div>
-					@endif						
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Name :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name or '' }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Address :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{ $patientCart['patient']['patientDetail']->address1 or '' }} {{ $patientCart['patient']['patientDetail']->address2 or '' }}
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>City :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{ $patientCart['patient']['patientDetail']->city or '' }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>State :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{  $patientCart->patient->patientDetail->patientStateName->name or '' }} 
+                            </div>
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Zip code :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{ $patientCart['patient']['patientDetail']->zipCode or '' }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Phone :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                {{  $patientCart['patient']['patientDetail']->phone or '' }} 
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row">                
+                        <div class="col-sm-12">
+                            <h3>Cart Item Details</h3>
+                        </div>              
                     </div>
-                     <div class="row">                
+
+                    <div class="table-responsive">		
+                        @if(isset($category_list) && !empty($category_list))
+                        <table class="table table-bordered mb-none removeSearchBox" id="cartItemList">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Agent</th>
+                                    <th>Patient</th>
+                                    <th class="text-center">Duration</th>
+                                    <th class="text-center">Price</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>					
+                                @foreach($category_list as $i => $cat)
+                                <tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" data-details-table = '{{ $i }}'>
+                                    <td>{{ $cat['category'] }}</td>
+                                    <td>{{ $cat['user'] }}</td>
+                                    <td>{{ $cat['patient'] }}</td>
+                                    <td class="center">{{ $cat['duration'] }}</td>
+                                    <td class="center">${{ number_format($discouonted_package_price[$i], 2) }}</td>
+                                    <td class="center">
+                                        <a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>									
+                                @endforeach
+                                <tr class="noDetail">
+                                    <td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div id="rowDetails" style="display:none">
+                            @foreach($category_detail_list as $ind => $val)	
+                            <table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
+                                <thead>
+                                    <tr>
+                                        <th>sku</th>
+                                        <th>Product Name</th>
+                                        <th>Unit</th>
+                                        <th>Count</th>
+                                        <th>Individual Price</th>
+                                        <th>Package Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>								
+                                    @foreach($val as $item)
+                                    <tr>
+                                        <td>{{ $item['sku'] }}</td>
+                                        <td>{{ $item['product'] }}</td>
+                                        <td class="center">{{ $item['unit_of_measurement'] }}</td>
+                                        <td class="center">{{ $item['count'] }}</td>
+                                        <td class="center">${{ number_format($item['original_price'], 2) }}</td>
+                                        <td class="center">${{ number_format($item['discount_price'], 2) }}</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="4"><strong>Total price</strong></td>
+                                        <td>${{ number_format($original_package_price[$ind], 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="4"><strong>Total discouont</strong></td>
+                                        <td>${{ number_format($package_discount[$ind], 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="4"><strong>Discounted package price</strong></td>
+                                        <td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @endforeach				
+                        </div>
+                        @endif						
+                    </div>
+                    <div class="row">                
                         <div class="col-sm-12">
                             <h3>Payment Method</h3>
                         </div>              
@@ -194,38 +200,44 @@
                             </div>
                             <div class="col-sm-8">
                                 @if($payment['payment_type'] == 0)
-                                    Cash in Hand
+                                Cash in Hand
                                 @else if($payment['payment_type'] == 1)
-                                    Credit Card
+                                Credit Card
                                 @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-4">
-                                <label>Amount Received:</label>
+                                <label>Total Amt.:</label>
                             </div>
                             <div class="col-sm-8">
-                                @if(isset($payment['paid_amount']))
-                                    ${{ $payment['paid_amount'] or '' }}
-                                @endif
+                                ${{ number_format($total_cart_price, 2) }}
                             </div>
                         </div>
-                    </div> 
-                    @if($payment['total_amount'] > $payment['paid_amount'])
+                    </div>                     
                     <div class="row">
                         <div class="col-md-6">
                             <div class="col-md-4">
-                                <label>EMI's Option :</label>
+                                <label>Amt. Received:</label>
                             </div>
                             <div class="col-sm-8">
-                                <?php $emi_amount = number_format(($payment['remaining_amount'] / $payment['emi_month']), 2); 
-                                echo '$'.$emi_amount.'/month for '.$payment['emi_month'].' months'; ?>
+                                ${{ $payment['paid_amount'] or '' }}                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Remaining Amt. :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                $<?php 
+                                $remaining = $total_cart_price - $payment['paid_amount'];
+                                echo number_format($remaining, 2);
+                                ?> <a href="javascript:void(0)" class="emi_popuup">EMI options</a>
                             </div>
                         </div>                        
-                    </div> 
-                    @endif
+                    </div>                     
                 </div>
-                
+
                 <footer class="panel-footer">
                     {{ Form::open(['url' => '/sale/makePayment', 'method' => "post", 'class'=>'form-horizontal', 'id' =>'checkoutForm' ]) }}
                     {{ Form::hidden('patient_id',$patientCart['patient']->id) }}   
@@ -235,16 +247,75 @@
                     {{ Form::hidden('paid_amount', $payment['paid_amount']) }}
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
-                             {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
-                                <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
+                            {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
+                            <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
                         </div
                     </div>
                     {{ Form::close() }}
                 </footer>
             </section>
-            
+
 
         </div>
     </div>
+    <?php 
+    /* code for the EMI Calculation */
+    $quarter = $remaining / 3 ;
+    $half = $remaining / 6;
+    $thirdQuarter = $remaining / 9;
+    $year = $remaining / 12;    
+    
+    ?>
+    
+    <!-- Dialog -->
+            <div id="checkoutPopup" class="modal-block modal-block-primary mfp-hide"> 
+                <section class="panel panel-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Select EMI's Option</h2>
+                    </header>
+                    <div class="panel-body">        
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label class="col-sm-12 errorEMI">*Please select an EMI's option </label>
+
+                                <div class="radio">
+                                    <label>
+                                        {{ Form::radio('emi', 3, false, ['class' => 'emiRadio', 'id' =>'radio1' ]) }}
+                                        <span>$<?php echo number_format($quarter, 2); ?>/month for 3 EMIs</span>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        {{ Form::radio('emi', 6, false, ['class' => 'emiRadio', 'id' =>'radio2']) }}
+                                        <span>$<?php echo number_format($half, 2); ?>/month for 3 EMIs</span>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        {{ Form::radio('emi', 9, false, ['class' => 'emiRadio', 'id' =>'radio3']) }}
+                                        <span>$<?php echo number_format($thirdQuarter, 2); ?>/month for 3 EMIs</span>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        {{ Form::radio('emi', 12, false, ['class' => 'emiRadio', 'id' =>'radio4']) }}
+                                        <span>$<?php echo number_format($year, 2); ?>/month for 3 EMIs</span>
+                                    </label>
+                                </div>
+                            </div>                        
+                        </div> 
+
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">                  
+                            <div class="col-md-8 text-right">                                
+                                {{ Form::button( 'Select', array( 'class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'button', 'id' => 'emiSubmit')) }}                
+                                <button class="btn btn-default closePop">Cancel</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            </div>
 </section>
 @endsection

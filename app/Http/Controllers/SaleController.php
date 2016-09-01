@@ -90,9 +90,7 @@ class SaleController extends Controller
                
         $payment['payment_type'] = $request['payment_type'];
         $payment['paid_amount'] = $request['paid_amount'];
-        $payment['remaining_amount'] = $request['remaining_amount'];
         $payment['total_amount'] = $request['total_amount'];
-        $payment['emi_month'] = $request['emi_month'];
         return view('sale.confirmation', [
             'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 
             'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 
