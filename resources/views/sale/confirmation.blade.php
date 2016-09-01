@@ -137,10 +137,12 @@
                                     </td>
                                 </tr>									
                                 @endforeach
+                            </tbody>
+							<tfoot>
                                 <tr class="noDetail">
                                     <td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
-                                </tr>
-                            </tbody>
+                                </tr>							
+							</tfoot>
                         </table>
 
                         <div id="rowDetails" style="display:none">
