@@ -123,7 +123,7 @@
 									<td>{{ $cat['user'] }}</td>
 									<td>{{ $cat['patient'] }}</td>
 									<td class="center">{{ $cat['duration'] }}</td>
-									<td class="center">{{ $discouonted_package_price[$i] }}</td>
+									<td class="center">${{ number_format($discouonted_package_price[$i], 2) }}</td>
 									<td class="center">
 										<a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
 											<i class="fa fa-trash-o"></i>
@@ -132,7 +132,7 @@
 								</tr>									
 							@endforeach
 								<tr class="noDetail">
-									<td></td><td colspan="4">Total </td><td class="center">{{ $total_cart_price }}</td>
+									<td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -157,24 +157,24 @@
 										<td>{{ $item['product'] }}</td>
 										<td class="center">{{ $item['unit_of_measurement'] }}</td>
 										<td class="center">{{ $item['count'] }}</td>
-										<td class="center">{{ $item['original_price'] }}</td>
-										<td class="center">{{ $item['discount_price'] }}</td>
+										<td class="center">${{ number_format($item['original_price'], 2) }}</td>
+										<td class="center">${{ number_format($item['discount_price'], 2) }}</td>
 									</tr>
 								@endforeach
 									<tr>
 										<td></td>
 										<td colspan="4"><strong>Total price</strong></td>
-										<td>{{ $original_package_price[$ind] }}</td>
+										<td>${{ number_format($original_package_price[$ind], 2) }}</td>
 									</tr>
 									<tr>
 										<td></td>
 										<td colspan="4"><strong>Total discouont</strong></td>
-										<td>{{ $package_discount[$ind] }}</td>
+										<td>${{ number_format($package_discount[$ind], 2) }}</td>
 									</tr>
 									<tr>
 										<td></td>
 										<td colspan="4"><strong>Discounted package price</strong></td>
-										<td>{{ $discouonted_package_price[$ind] }}</td>
+										<td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -188,30 +188,42 @@
                         </div>              
                     </div>
                     <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Method :</label>
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Method :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                @if($payment['payment_type'] == 0)
+                                    Cash in Hand
+                                @else if($payment['payment_type'] == 1)
+                                    Credit Card
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-sm-8">
-                            @if($payment['payment_type'] == 0)
-                                Cash in Hand
-                            @else if($payment['payment_type'] == 1)
-                                Credit Card
-                            @endif
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>Amount Received:</label>
+                            </div>
+                            <div class="col-sm-8">
+                                @if(isset($payment['paid_amount']))
+                                    ${{ $payment['paid_amount'] or '' }}
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Amount Received:</label>
-                        </div>
-                        <div class="col-sm-8">
-                            @if(isset($payment['paid_amount']))
-                                ${{ $payment['paid_amount'] or '' }}
-                            @endif
-                        </div>
-                    </div>
-                </div> 
-                        
+                    </div> 
+                    @if($payment['total_amount'] > $payment['paid_amount'])
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label>EMI's Option :</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <?php $emi_amount = number_format(($payment['remaining_amount'] / $payment['emi_month']), 2); 
+                                echo '$'.$emi_amount.'/month for '.$payment['emi_month'].' months'; ?>
+                            </div>
+                        </div>                        
+                    </div> 
+                    @endif
                 </div>
                 
                 <footer class="panel-footer">
