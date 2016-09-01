@@ -387,7 +387,26 @@
 
                         </ul>
                     </li>
-                    @endif
+                    @endif 
+                    
+                  
+                    <li class="nav-parent {{ Request::segment(1) === 'doses' ? 'nav-active nav-expanded' : null }}">
+                        <a href="#">
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Dose Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            
+                            <li class="{{ (Request::segment(1) === 'doses') && (Request::segment(2) === 'doseManagement') ? 'nav-active' : null }}">
+                                <a href="{{ url('doses/doseManagement') }}">
+                                    Manage Doses
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                 
+             
                 </ul>
             </nav>
         </div>

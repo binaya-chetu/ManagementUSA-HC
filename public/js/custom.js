@@ -205,6 +205,8 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 		
 $(document).ready(function() {
 
+    $("#hidden-doses").hide();
+
     $('#patientdob').val('');
     $('#durationExample').on('blur', function(){
         checkAppointmentTime();       
@@ -1163,7 +1165,8 @@ function checkAppointmentTime(){
       /***********************For internal validation of Doses************************/
       
       
-                        $("#amount1").change(function(){
+      
+              $("#amount1").change(function(){
 
                 var amount1 = $(this).val();
                         var x = document.getElementById("amount2");
@@ -1193,6 +1196,7 @@ function checkAppointmentTime(){
                 }
                 });
                         $("#amount3").change(function(){
+
                 var amount3 = $(this).val();
                         var x = document.getElementById("amount1");
                         var y = document.getElementById("amount2");
@@ -1275,3 +1279,24 @@ function checkAppointmentTime(){
                 }
                 });
                   
+                  
+    /*************************Dose Managemnet functionality****************/
+                 
+                        $("#patient_to_choose").change(function(){
+                            var patient_id = $(this).val();
+                           // alert(patient_id);
+                            $("#hidden-doses").show();
+                            $.ajax({     
+                              method: 'post',
+                              url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
+                                success: function(data) {
+                                    $("#pname").html(data[0]['first_name']+" "+data[0]['last_name']); 
+                                     $("#pdob").html(data[0]['patient_detail']['dob']); 
+                                }
+                      });
+                 });
+                  
+                  
+                  document.getElementById("prevent").addEventListener("click", function(event){
+              event.preventDefault()
+            });                 
