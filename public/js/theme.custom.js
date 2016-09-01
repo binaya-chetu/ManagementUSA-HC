@@ -322,8 +322,7 @@ $(function() {
 
 //code for the delete confirmation pop-up 
    $(function(){
-   $('.confirmation-callback').confirmation({
-        
+    $('.confirmation-callback').confirmation({
 		onConfirm: function() {        
 			var link = $(this).attr('href');
               
@@ -332,12 +331,7 @@ $(function() {
 	}); 
     
 	$(document).on('click', '.confirmation-callback', function(){
-		$(this).confirmation({
-			onConfirm: function() {        
-				var link = $(this).attr('href');
-				window.location = ajax_url+link;
-			}
-		});
+		$(this).confirmation('show');
 	});
 	
     $("#addAppointment").on("submit", function(event) {

@@ -28,7 +28,7 @@
 
         </header>
         {{ Form::open(['url' => '/sale/confirmation/'.base64_encode($patientCart['patient']->id), 'method' => "post", 'class'=>'form-horizontal', 'id' =>'checkoutForm' ]) }}
-            {!! csrf_field() !!}
+        {!! csrf_field() !!}
         <div class="panel-body">
             <div class="row">
                 @if(Session::has('flash_message'))
@@ -55,167 +55,169 @@
                     <h3>Patient Address</h3>
                 </div>              
             </div>
-            
-            
-             <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Name :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name or '' }}
-                        </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>Name :</label>
                     </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Address :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->address1 or '' }} {{ $patientCart['patient']['patientDetail']->address2 or '' }}
-                        </div>
+                    <div class="col-sm-8">
+                        {{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name or '' }}
                     </div>
-                </div>   
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>City :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->city or '' }}
-                        </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>Address :</label>
                     </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>State :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{  $patientCart->patient->patientDetail->patientStateName->name or '' }} 
-                        </div>
+                    <div class="col-sm-8">
+                        {{ $patientCart['patient']['patientDetail']->address1 or '' }} {{ $patientCart['patient']['patientDetail']->address2 or '' }}
                     </div>
-                </div>   
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Zip code :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{ $patientCart['patient']['patientDetail']->zipCode or '' }}
-                        </div>
+                </div>
+            </div>   
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>City :</label>
                     </div>
-                    <div class="col-md-6">
-                        <div class="col-md-4">
-                            <label>Phone :</label>
-                        </div>
-                        <div class="col-sm-8">
-                            {{  $patientCart['patient']['patientDetail']->phone or '' }} 
-                        </div>
+                    <div class="col-sm-8">
+                        {{ $patientCart['patient']['patientDetail']->city or '' }}
                     </div>
-                </div>  
-            
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>State :</label>
+                    </div>
+                    <div class="col-sm-8">
+                        {{  $patientCart->patient->patientDetail->patientStateName->name or '' }} 
+                    </div>
+                </div>
+            </div>   
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>Zip code :</label>
+                    </div>
+                    <div class="col-sm-8">
+                        {{ $patientCart['patient']['patientDetail']->zipCode or '' }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>Phone :</label>
+                    </div>
+                    <div class="col-sm-8">
+                        {{  $patientCart['patient']['patientDetail']->phone or '' }} 
+                    </div>
+                </div>
+            </div>  
+
             <div class="row">                
                 <div class="col-sm-12">
                     <h3>Cart Item Details</h3>
                 </div>              
             </div>
 
-			@if(isset($category_list) && !empty($category_list))
-				<table class="table table-bordered mb-none removeSearchBox" id="cartItemList">
-					<thead>
-						<tr>
-							<th>Category</th>
-							<th>Agent</th>
-							<th>Patient</th>
-							<th class="text-center">Duration</th>
-							<th class="text-center">Price</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>					
-					@foreach($category_list as $i => $cat)
-						<tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" data-details-table = '{{ $i }}'>
-							<td>{{ $cat['category'] }}</td>
-							<td>{{ $cat['user'] }}</td>
-							<td>{{ $cat['patient'] }}</td>
-							<td class="center">{{ $cat['duration'] }}</td>
-							<td class="center">{{ $discouonted_package_price[$i] }}</td>
-							<td class="center">
-								<a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
-									<i class="fa fa-trash-o"></i>
-								</a>
-							</td>
-						</tr>									
-					@endforeach
-						<tr class="noDetail">
-							<td></td><td colspan="4">Total </td><td class="center">{{ $total_cart_price }}</td>
-						</tr>
-					</tbody>
-				</table>
+            @if(isset($category_list) && !empty($category_list))
+            <table class="table table-bordered mb-none removeSearchBox" id="cartItemList">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Agent</th>
+                        <th>Patient</th>
+                        <th class="text-center">Duration</th>
+                        <th class="text-center">Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>					
+                    @foreach($category_list as $i => $cat)
+                    <tr class="gradeX background-{{ isset($cat['category_type'])? strtolower($cat['category_type']) : 'default' }}" data-details-table = '{{ $i }}'>
+                        <td>{{ $cat['category'] }}</td>
+                        <td>{{ $cat['user'] }}</td>
+                        <td>{{ $cat['patient'] }}</td>
+                        <td class="center">{{ $cat['duration'] }}</td>
+                        <td class="center">${{ number_format($discouonted_package_price[$i], 2) }}</td>
+                        <td class="center">
+                            <a data-href="/cart/removeItem/{{ base64_encode($i) }}" href="javascrpt:void(0)" class="on-default remove-row confirmation-callback" data-original-title="Remove from cart" title="Remove from cart">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>									
+                    @endforeach
+                </tbody>
+				<tfoot>
+                    <tr class="noDetail">
+                        <td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
+                    </tr>				
+				</tfoot>
+            </table>
 
-				<div id="rowDetails" style="display:none">
-				@foreach($category_detail_list as $ind => $val)	
-					<table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
-						<thead>
-							<tr>
-								<th>sku</th>
-								<th>Product Name</th>
-								<th>Unit</th>
-								<th>Count</th>
-								<th>Individual Price</th>
-								<th>Package Price</th>
-							</tr>
-						</thead>
-						<tbody>								
-						@foreach($val as $item)
-							<tr>
-								<td>{{ $item['sku'] }}</td>
-								<td>{{ $item['product'] }}</td>
-								<td class="center">{{ $item['unit_of_measurement'] }}</td>
-								<td class="center">{{ $item['count'] }}</td>
-								<td class="center">{{ $item['original_price'] }}</td>
-								<td class="center">{{ $item['discount_price'] }}</td>
-							</tr>
-						@endforeach
-							<tr>
-								<td></td>
-								<td colspan="4"><strong>Total price</strong></td>
-								<td>{{ $original_package_price[$ind] }}</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td colspan="4"><strong>Total discouont</strong></td>
-								<td>{{ $package_discount[$ind] }}</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td colspan="4"><strong>Discounted package price</strong></td>
-								<td>{{ $discouonted_package_price[$ind] }}</td>
-							</tr>
-						</tbody>
-					</table>
-				@endforeach				
-				</div>
-                                @else
-				<table class="table table-bordered">
-					<tr><td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
-					<td class="col-sm-8 col-md-6" colspan=2><h5><a href="/sale/index"> <button type="button" class="btn btn-default">
-								<span class="fa fa-shopping-cart"></span> Continue Shopping
-							</button>
-						</a></h5></td>
-					</tr>
-				</table>	
-			@endif
-           
+            <div id="rowDetails" style="display:none">
+                @foreach($category_detail_list as $ind => $val)	
+                <table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
+                    <thead>
+                        <tr>
+                            <th>sku</th>
+                            <th>Product Name</th>
+                            <th>Unit</th>
+                            <th>Count</th>
+                            <th>Individual Price</th>
+                            <th>Package Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>								
+                        @foreach($val as $item)
+                        <tr>
+                            <td>{{ $item['sku'] }}</td>
+                            <td>{{ $item['product'] }}</td>
+                            <td class="center">{{ $item['unit_of_measurement'] }}</td>
+                            <td class="center">{{ $item['count'] }}</td>
+                            <td class="center">${{ number_format($item['original_price'], 2) }}</td>
+                            <td class="center">${{ number_format($item['discount_price'], 2) }}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td></td>
+                            <td colspan="4"><strong>Total price</strong></td>
+                            <td>${{ number_format($original_package_price[$ind], 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="4"><strong>Total discouont</strong></td>
+                            <td>${{ number_format($package_discount[$ind], 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="4"><strong>Discounted package price</strong></td>
+                            <td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                @endforeach				
+            </div>
+            @else
+            <table class="table table-bordered">
+                <tr><td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
+                    <td class="col-sm-8 col-md-6" colspan=2><h5><a href="/sale/index"> <button type="button" class="btn btn-default">
+                                    <span class="fa fa-shopping-cart"></span> Continue Shopping
+                                </button>
+                            </a></h5></td>
+                </tr>
+            </table>	
+            @endif
+
             <div class="row">                
                 <div class="col-sm-12">
                     <h3>Payment Methods</h3>
                 </div>              
             </div>
-            
+
             <div class="row">
                 <div class="form-group">
                     {{ Form::label('card', 'Payment Type', array('class' => 'col-sm-3 control-label mandatory')) }}
                     <div class="col-sm-6">
-                         <?php   $method = ['0' => 'Cash In Hand', '1' => 'Credit Card']; ?>
+                        <?php $method = ['0' => 'Cash In Hand', '1' => 'Credit Card']; ?>
                         {{ Form::select('payment_type', ['' => 'Please Select Payment Method']+$method, null, ['class' => 'form-control required', 'id' => 'paymentMethod']) }}                     
                     </div>
                 </div>
@@ -226,11 +228,11 @@
                             {{ Form::text('cardholder', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cardholder Name', 'id' => 'address1', 'rows' => 3]) }}
                         </div>
                     </div>
-                
+
                     <div class="form-group">
                         {{ Form::label('card', 'Select Card', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
-                             <?php  $card = ['master' => 'Master Card', 'visa' => 'Visa']; ?>
+                            <?php $card = ['master' => 'Master Card', 'visa' => 'Visa']; ?>
                             {{ Form::select('card', ['' => 'Please Select Card']+$card, null, ['class' => 'form-control input required']) }}                     
                         </div>
                     </div>
@@ -241,7 +243,7 @@
                             {{ Form::select('year', ['' => 'Please Select Year']+$expYear,null, ['class' => 'form-control input required']) }}                     
                         </div>
                         <div class="col-sm-3">
-                            <?php  $expMonth = ['01' => '01', '02' => '02', '03' => '03', '4' => '04', '05' => '05', '06' => '06', '07' => '07', '08' => '08', '09' => '09', '10' => '10', '11' => '11', '12' => '12' ] ?>
+                            <?php $expMonth = ['01' => '01', '02' => '02', '03' => '03', '4' => '04', '05' => '05', '06' => '06', '07' => '07', '08' => '08', '09' => '09', '10' => '10', '11' => '11', '12' => '12'] ?>
                             {{ Form::select('month', ['' => 'Please Select Month']+$expMonth, null, ['class' => 'form-control input required']) }}                     
                         </div>
                     </div>
@@ -256,16 +258,16 @@
                     <div class="form-group">
                         {{ Form::label('amount', 'Enter Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
-                            {{ Form::text('paid_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
-                        </div>
-                    </div>
+                            {{ Form::text('paid_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                        </div>                        
+                    </div>                    
                 </div>
             </div>
-            
         </div>
         <footer class="panel-footer">
             <div class="row">
-                <div class="col-md-12 col-md-offset-4">
+                <div class="col-md-12 col-md-offset-4">                    
+                    {{ Form::hidden('total_amount', $total_cart_price, [ 'id' => 'total_amount']) }}
                     {{ Form::button('<i class="fa fa-btn fa-user"></i> Place Order',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
                     <a class="btn btn-default" href="#" onclick="window.history.go(-1);">Back</a>
                 </div>
@@ -274,4 +276,25 @@
         {{ Form::close() }}
     </section>
 </section>
+
+
+<script>
+    
+    var original_price = '<?php echo $total_cart_price; ?>';
+    $('#checkoutForm').on('submit', function() {
+       
+        var amount = $('#paid_amount').val();
+        var payment_method = parseFloat($('#paymentMethod').val());
+        
+        if (payment_method === 0) {
+
+            if (parseFloat(amount) > parseFloat(original_price))
+            {
+                alert("Paid amount shouldn't more than total order price.");
+                return false;
+            }
+        }
+    });
+
+</script>
 @endsection

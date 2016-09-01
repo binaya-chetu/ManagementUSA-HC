@@ -205,6 +205,7 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 		
 $(document).ready(function() {
 
+
     $("#hidden-doses").hide();
 
     $('#patientdob').val('');
@@ -284,6 +285,24 @@ $(document).ready(function() {
         /*
          * End of Functions for Add appointment.
          */
+        
+        // Code for the print Invoice
+        $("#print_invoice").click(function(){
+        if (document.getElementById("email_invoice").checked){
+        var invoice_id = $("#invoice_id").val();
+        $.ajax({
+        url: ajax_url+"products/emailInvoice/",
+                data:{invoiceid:invoice_id},
+                success: function(result){
+                alert("hello");
+                           // $("#div1").html(result);
+                         }});
+                    //  window.print();
+                }
+                else{
+                window.print();
+                }
+            });
 
         $(document).on("click", ".edit-row", function(ev) {
 		$.ajaxSetup({
@@ -991,24 +1010,6 @@ $(document).on("click", ".patient_status", function(event) {
             }
         });
     });
-     $(document).ready(function(){
-        $("#print_invoice").click(function(){
-        if (document.getElementById("email_invoice").checked){
-        var invoice_id = $("#invoice_id").val();
-                $.ajax({
-                url: ajax_url+"products/emailInvoice/",
-                        data:{invoiceid:invoice_id},
-                        success: function(result){
-                        alert("hello");
-                                   // $("#div1").html(result);
-                                 }});
-                            //  window.print();
-                        }
-                        else{
-                        window.print();
-                        }
-                    });
-        });
                 $('#changeStatus').validate();
             
                $("#requestFollowup").validate();
@@ -1161,7 +1162,6 @@ function checkAppointmentTime(){
         
         });
       
-      
       /***********************For internal validation of Doses************************/
       
       
@@ -1278,8 +1278,7 @@ function checkAppointmentTime(){
 
                 }
                 });
-                  
-                  
+ 
     /*************************Dose Managemnet functionality****************/
                  
                         $("#patient_to_choose").change(function(){
@@ -1300,3 +1299,37 @@ function checkAppointmentTime(){
                   document.getElementById("prevent").addEventListener("click", function(event){
               event.preventDefault()
             });                 
+
+        /* --------------------------START: Functions for the Checkout page pop-up --------------  */
+        $('.errorEMI').hide();
+        $(document).on("click", ".emi_popuup", function(ev) {
+            $('#emi_value').val('');
+            $('input[name=emi]').attr('checked',false);
+            $.magnificPopup.open({
+                items: {
+                    src: '#checkoutPopup',
+                    type: 'inline'
+                }
+            });
+        });
+        //store the value after selecting the option button
+        $(document).on("click", 'input[name="emi"]', function(ev){
+            $('.errorEMI').hide();
+        });        
+        // check that the option button for emi is selected or not
+        $(document).on("click", '#emiSubmit', function(ev){
+            var check = 1;    
+            $('.emiRadio').each(function(){
+                    if(this.checked) {
+                        check = 2;
+                    }
+                });
+            if(check == 1){
+                $('.errorEMI').show();
+            }else{
+                $.magnificPopup.close();
+            }
+        });
+
+       /* --------------------------END: Functions for the Checkout page pop-up --------------  */
+
