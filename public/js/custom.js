@@ -1295,10 +1295,10 @@ function checkAppointmentTime(){
                       });
                  });
                   
-                  
-                  document.getElementById("prevent").addEventListener("click", function(event){
-              event.preventDefault()
-            });                 
+//                  
+//                  document.getElementById("prevent").addEventListener("click", function(event){
+//              event.preventDefault()
+//            });                 
 
         /* --------------------------START: Functions for the Checkout page pop-up --------------  */
         $('.errorEMI').hide();
