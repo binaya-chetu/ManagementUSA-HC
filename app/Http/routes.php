@@ -796,10 +796,16 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl:doseManagement_read']
     ]);
           
-     Route::post('/doseManagement/getPatientDetails/{patient_id}', [
+    Route::post('/doseManagement/getPatientDetails/{patient_id}', [
         'uses' => 'DoseManagmentController@getPatientDetails',
         'as' => 'doses.doseManagement',
-       'middleware' => ['acl:doseManagement_read']
+       //'middleware' => ['acl:doseManagement_read']
           
+    ]);
+    
+    Route::post('/doses/store', [
+       'uses' => 'DoseManagmentController@store',
+        'as' => 'doses.doseManagement',
+        //'middleware' => ['acl.doseManagement_read']
     ]);
 });

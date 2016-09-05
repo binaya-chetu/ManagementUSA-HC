@@ -1289,11 +1289,43 @@ function checkAppointmentTime(){
                               method: 'post',
                               url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
                                 success: function(data) {
-                                    $("#pname").html(data[0]['first_name']+" "+data[0]['last_name']); 
-                                     $("#pdob").html(data[0]['patient_detail']['dob']); 
+                                    //console.log(data);
+                                    var count = data['trimix_doses'];
+                                    //console.log(count.length);
+                                    
+                                    $("#pname").html(data['first_name']+" "+data['last_name']); 
+                                    $("#pdob").html(data['patient_detail']['dob']); 
+                                    $("#patient_id").val(data['patient_detail']['user_id']);
+                                    var title = doseTitle(count.length);
+                                    $("#dose_title").html('<strong> Test Dose' + title +'</strong>');
+                                    if(count.length == 0) {
+                                        $("#dose_title").html('<strong> Test Dose 1</strong>');
+                                    }
+                                    else if(count.length == 1) {
+                                        $("#dose_title").html('<strong> Test Dose 2</strong>');
+                                    }
+                                    else if(count.length == 2) {
+                                        $("#dose_title").html('<strong> Test Dose A </strong>');
+                                    }
                                 }
                       });
                  });
+                 
+                 
+                function doseTitle(count)
+                {
+                    if(count == 0 || count == 1)
+                    {
+                        return title = count + 1;
+                    }
+                    else
+                    {
+                        var i = 63 + count;
+                        alert(i);
+                        return false;
+                            return String.fromCharCode(i);
+                    }
+                }
                   
 //                  
 //                  document.getElementById("prevent").addEventListener("click", function(event){
