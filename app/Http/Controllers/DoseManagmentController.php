@@ -50,5 +50,5 @@ class DoseManagmentController extends Controller
         return $patientData;
         die;
     }
-
+    
 }
