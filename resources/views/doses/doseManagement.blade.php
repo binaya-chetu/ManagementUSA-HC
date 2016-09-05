@@ -200,7 +200,7 @@
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationB1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB1']) }} 
+                                                    {{ Form::select('medicationB1', (['' => 'Select Medication 2'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB1']) }} 
 
                                                 </div>
                                             </div> 
@@ -221,7 +221,7 @@
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationB2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB2']) }} 
+                                                    {{ Form::select('medicationB2', (['' => 'Select Medication 2'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB2']) }} 
 
 
                                                 </div>
