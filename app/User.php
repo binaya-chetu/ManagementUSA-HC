@@ -151,124 +151,132 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     
     public function patientDetail() 
     {
-        return $this->hasOne('App\Patient', 'user_id', 'id');
+        return $this->hasOne('App\Patient', 'user_id');
     }
 	
-	public function adamsQuestionaires()
-	{
-		return $this->hasOne('App\AdamsQuestionaires', 'patient_id');
-	}
-	public function allergiesList()    
-	{
-		return $this->hasMany('App\AllergiesList', 'patient_id');
-	}
+    public function adamsQuestionaires()
+    {
+            return $this->hasOne('App\AdamsQuestionaires', 'patient_id');
+    }
+    
+    public function allergiesList()    
+    {
+            return $this->hasMany('App\AllergiesList', 'patient_id');
+    }
+    
     public function reason() 
     {
         return $this->hasMany('App\AppointmentReasons', 'patient_id');
+    }
+    
+    public function appointments()
+    {
+            return $this->hasMany('App\Appointments', 'patient_id');
+    }
+    public function appointmentRequest() 
+    {
+            return $this->hasMany('App\AppointmentRequest', 'user_id');
+    }
+
+    public function cart() 
+    {
+            return $this->hasMany('App\Cart', 'user_id');
+    }
+
+    public function cart_patient() 
+    {
+            return $this->hasMany('App\Cart', 'patient_id');
+    }
+
+    public function cosmetics() 
+    {
+            return $this->hasOne('App\Cosmetics', 'patient_id');
+    }
+    public function erectileDysfunctions() 
+    {
+            return $this->hasOne('App\ErectileDysfunctions', 'patient_id');
+    }
+    public function highTestosterone()  
+    {
+            return $this->hasOne('App\HighTestosterone', 'patient_id');
+    }
+    public function illnessList() 
+    {
+            return $this->hasMany('App\IllnessList', 'patient_id');
+    }
+    public function medicalHistories() 
+    {
+            return $this->hasOne('App\MedicalHistories', 'patient_id');
+    }
+    public function patientMedicationList() 
+    {
+            return $this->hasMany('App\PatientMedicationList', 'patient_id');
+    }
+    public function patientVitaminList() 
+    {
+            return $this->hasMany('App\PatientVitaminList', 'patient_id');
+    }
+    public function priapus() 
+    {
+            return $this->hasOne('App\Priapus', 'patient_id');
+    }
+    public function sale() 
+    {
+            return $this->hasMany('App\Sale', 'patient_id');
+    }
+    public function surgeryList() 
+    {
+            return $this->hasMany('App\SurgeryList', 'patient_id');
+    }
+    public function vitamins() 
+    {
+            return $this->hasMany('App\Vitamins', 'patient_id');
+    }
+    public function weightLoss() 
+    {
+            return $this->hasOne('App\WeightLoss', 'patient_id');
+    }
+
+    public function payment() 
+    {
+            return $this->hasMany('App\Payment', 'agent_id');
+    }
+    
+    public function trimixDoses() 
+    {
+            return $this->hasMany('App\TrimixDoses', 'patient_id');
+    }
+	
+    protected static function boot() {
+        parent::boot();
+        static::deleting(function($user) {
+            if($user->role == config("constants.PATIENT_ROLE_ID")){		
+                $user->patientDetail()->delete();
+                $user->adamsQuestionaires()->delete();
+                $user->allergiesList()->delete();
+                $user->reason()->delete();
+                $user->cart()->delete();
+                $user->cosmetics()->delete();
+                $user->erectileDysfunctions()->delete();
+                $user->highTestosterone()->delete();
+                $user->illnessList()->delete();
+                $user->medicalHistories()->delete();
+                $user->patientMedicationList()->delete();
+                $user->patientVitaminList()->delete();
+                $user->priapus()->delete();
+                //$user->sale()->delete(); 
+                $user->surgeryList()->delete();
+                $user->vitamins()->delete();
+                $user->weightLoss()->delete();
+                $apptReq = AppointmentRequest::where('user_id', '=', $user->id)->get()->pluck('id');
+                if(sizeof($apptReq->toArray()) > 0){
+                        AppointmentRequest::destroy($apptReq->toArray());		
+                }
+            } elseif($user->role == config("constants.DOCTOR_ROLE_ID")){
+                    $user->doctorDetail()->delete();				
+            } else{
+                    $user->userDetail()->delete();				
+            }
+        });
     }	
-	public function appointments()
-	{
-		return $this->hasMany('App\Appointments', 'patient_id');
-	}
-	public function appointmentRequest() 
-	{
-		return $this->hasMany('App\AppointmentRequest', 'user_id');
-	}
-
-	public function cart() 
-	{
-		return $this->hasMany('App\Cart', 'user_id');
-	}
-
-	public function cart_patient() 
-	{
-		return $this->hasMany('App\Cart', 'patient_id');
-	}
-
-	public function cosmetics() 
-	{
-		return $this->hasOne('App\Cosmetics', 'patient_id');
-	}
-	public function erectileDysfunctions() 
-	{
-		return $this->hasOne('App\ErectileDysfunctions', 'patient_id');
-	}
-	public function highTestosterone()  
-	{
-		return $this->hasOne('App\HighTestosterone', 'patient_id');
-	}
-	public function illnessList() 
-	{
-		return $this->hasMany('App\IllnessList', 'patient_id');
-	}
-	public function medicalHistories() 
-	{
-		return $this->hasOne('App\MedicalHistories', 'patient_id');
-	}
-	public function patientMedicationList() 
-	{
-		return $this->hasMany('App\PatientMedicationList', 'patient_id');
-	}
-	public function patientVitaminList() 
-	{
-		return $this->hasMany('App\PatientVitaminList', 'patient_id');
-	}
-	public function priapus() 
-	{
-		return $this->hasOne('App\Priapus', 'patient_id');
-	}
-	public function sale() 
-	{
-		return $this->hasMany('App\Sale', 'patient_id');
-	}
-	public function surgeryList() 
-	{
-		return $this->hasMany('App\SurgeryList', 'patient_id');
-	}
-	public function vitamins() 
-	{
-		return $this->hasMany('App\Vitamins', 'patient_id');
-	}
-	public function weightLoss() 
-	{
-		return $this->hasOne('App\WeightLoss', 'patient_id');
-	}
-	
-	public function payment() 
-	{
-		return $this->hasMany('App\Payment', 'agent_id');
-	}
-	
-	protected static function boot() {
-		parent::boot();
-		static::deleting(function($user) {
-			if($user->role == config("constants.PATIENT_ROLE_ID")){		
-				$user->patientDetail()->delete();
-				$user->adamsQuestionaires()->delete();
-				$user->allergiesList()->delete();
-				$user->reason()->delete();
-				$user->cart()->delete();
-				$user->cosmetics()->delete();
-				$user->erectileDysfunctions()->delete();
-				$user->highTestosterone()->delete();
-				$user->illnessList()->delete();
-				$user->medicalHistories()->delete();
-				$user->patientMedicationList()->delete();
-				$user->patientVitaminList()->delete();
-				$user->priapus()->delete();
-				//$user->sale()->delete(); 
-				$user->surgeryList()->delete();
-				$user->vitamins()->delete();
-				$user->weightLoss()->delete();
-				$apptReq = AppointmentRequest::where('user_id', '=', $user->id)->get()->pluck('id');
-				if(sizeof($apptReq->toArray()) > 0){
-					AppointmentRequest::destroy($apptReq->toArray());		
-				}
-			} elseif($user->role == config("constants.DOCTOR_ROLE_ID")){
-				$user->doctorDetail()->delete();				
-			} else{
-				$user->userDetail()->delete();				
-			}
-		});
-	}	
 }

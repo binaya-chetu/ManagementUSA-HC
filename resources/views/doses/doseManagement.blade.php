@@ -107,18 +107,18 @@
                             </div>
                         </div>-->
 
-                        {{ Form::open(array('url' => '#', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patientInventory')) }}
+                        {{ Form::open(array('url' => '/doses/store', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patientInventory')) }}
                         <div class="panel-body">
                             <!-- Display Validation Errors -->
 
                             {{ csrf_field() }}
-
+                            {{ Form::hidden('patient_id', '', array('id' => 'patient_id')) }}
                             <div class="toggle" data-plugin-toggle>
                                 <h4 style="text-align:center">   <div class="row-title"> Trimix /Sublingual ED Therapy </div></h4>
                                 <section class="toggle">
                                     <label>Intitial Test Dosing Deduct from Inventory Only</label>
                                     <div  class="toggle-content">
-                                        <h4 class="row-title"> Test Dose 1</h4>
+                                        <h4 class="row-title" id="dose_title"></h4>
                                         <div class = "row">
 
 
@@ -136,7 +136,6 @@
                                                     @endif
                                                 </div>
                                             </div>
-
 
 
                                             <div>
