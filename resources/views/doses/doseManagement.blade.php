@@ -56,13 +56,12 @@
                     <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em>{!! session('flash_message') !!}</em></div>
                     @endif
                 </div>
-
                 <div class="row">
                     <div class="col-md-6 commentdiv">
                         Patient Name
                     </div>
                     <div class="col-md-6 commentdiv">
-                     DOB
+                        DOB
                     </div>
                     <div class="col-md-6 commentdiv" id = "pname">
                     </div>
@@ -77,7 +76,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <section class="panel">
-                        <header class="panel-heading">
+<!--                        <header class="panel-heading">
                             <h6 class="panel-title" id = "small-heading" >Package Totals</h6>
 
                         </header>
@@ -106,7 +105,7 @@
                                 <div class="col-md-2"><span class="show-grid-block">5698</span></div>
                                 <div class="col-md-2"><span class="show-grid-block">5669</span></div>
                             </div>
-                        </div>
+                        </div>-->
 
                         {{ Form::open(array('url' => '/doses/store', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patientInventory')) }}
                         <div class="panel-body">
@@ -123,18 +122,23 @@
                                         <h4 class="row-title" id="dose_title"></h4>
                                         <div class = "row">
 
-                                            <div class="col-sm-6 form-group">
+
+                                            <div class="col-sm-6 form-group{{ $errors->has('doctor') ? ' has-error' : '' }}">
                                                 {{ Form::label('doctor', ' Doctor ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
-
-                                                    <?php $dd9 = dropDown9(); ?>
-
-                                                    {{ Form::select('doctor', (['' => 'Select Doctor'] + $dd9), null, ['class' => 'form-control input required', 'id' => 'dd9']) }}
-
-
-
+                                                    <div class="input-group">
+                                                        <?php $dd9 = dropDown9(); ?>
+                                                        {{ Form::select('doctor', (['' => 'Select Doctor'] + $dd9), null, ['class' => 'form-control input required', 'id' => 'dd9']) }}
+                                                    </div>
+                                                    @if ($errors->has('doctor'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('doctor') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div>  
+                                            </div>
+
+
                                             <div>
                                             </div>
                                         </div>

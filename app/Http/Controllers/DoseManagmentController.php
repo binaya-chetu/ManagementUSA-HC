@@ -128,5 +128,5 @@ class DoseManagmentController extends Controller
             return Redirect::back();
         }
     }
-
+    
 }

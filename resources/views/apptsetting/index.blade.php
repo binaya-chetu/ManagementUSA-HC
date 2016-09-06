@@ -324,4 +324,47 @@
         </div>
     </div>
 </section>
+<<<<<<< Updated upstream
+=======
+<script>
+    $('document').ready(function() {
+        $('#nosetAppointment').hide();
+        $('#setAppointment').hide();
+    })
+    $('.callStatus').on('click', function() {
+        var call_value = $(this).val();
+        if (call_value == 0) {
+            $('#nosetAppointment').hide();
+            $('#setAppointment').show();
+        } else {
+            $('#setAppointment').hide();
+            $('#nosetAppointment').show();
+        }
+    });
+     $('#durationExample').timepicker({
+        'minTime': '09:00am',
+        'maxTime': '05:00pm',
+        'showDuration': true
+    });
+    
+
+
+    /*
+     * Code for the Checking the followup
+     */
+
+    $('#followupWeek').on('click', function(){
+        if($(this).is(':checked')){
+            var date = new Date();
+            date.setDate(date.getDate() + 7);
+            var dateMsg = ("0" + (date.getMonth() + 1)).slice(-2) +'/'+("0" + date.getDate()).slice(-2)+'/'+date.getFullYear();
+            $('#followupDate').val(dateMsg);
+            $('#followupDate').attr('disabled', true);
+        }else{
+            $('#followupDate').removeAttr('disabled');            
+        }
+    });
+
+</script>
+>>>>>>> Stashed changes
 @endsection

@@ -42,7 +42,10 @@ $(function() {
     
     // common validation for add/edit doctor.
     jQuery('#doctor').validate({  
+<<<<<<< Updated upstream
         ignore:  ".ignore",
+=======
+>>>>>>> Stashed changes
         rules : {
             password : {
                 minlength : 6
@@ -75,7 +78,10 @@ $(function() {
     
     // common validation for add/edit users.
     jQuery('#addUser').validate({
+<<<<<<< Updated upstream
         ignore:  ".ignore",
+=======
+>>>>>>> Stashed changes
        rules : {
             password : {
                 minlength : 6
@@ -116,7 +122,11 @@ $(function() {
     $('#editAppointment').validate({
           rules: {
             email: {
+<<<<<<< Updated upstream
               //required: true,
+=======
+              required: true,
+>>>>>>> Stashed changes
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },

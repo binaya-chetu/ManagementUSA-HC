@@ -13,6 +13,7 @@ return [
 	'MAIL_ENCRYPTION'				=> 'tls',
 	
 	'PATIENT_ROLE_SLUG'				=> 'patient',
+
 	'PATIENT_ROLE_ID'				=> 6,
 	'DOCTOR_ROLE_SLUG'				=> 'doctor',
 	'DOCTOR_ROLE_ID'				=> 5,
@@ -27,4 +28,5 @@ return [
 	'BRONZE_PKG_ID'					=> 1,
 	'SILVER_PKG_ID'					=> 2,
 	'GOLD_PKG_ID'					=> 3
+
 ];
