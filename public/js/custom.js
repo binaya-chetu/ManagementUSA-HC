@@ -1170,6 +1170,11 @@ function checkAppointmentTime(){
 
                 var amount1 = $(this).val();
                         var x = document.getElementById("amount2");
+                        $("#amount1 option").each(function()
+                        {
+                            console.log($(this).val());
+                        });
+                        return flase;
                         var y = document.getElementById("amount3");
                         var z = document.getElementById("amount4");
                         for (var i = 0; i < x.length; i++){
