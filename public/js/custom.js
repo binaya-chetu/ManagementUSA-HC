@@ -1337,21 +1337,57 @@ function checkAppointmentTime(){
         //store the value after selecting the option button
         $(document).on("click", 'input[name="emi"]', function(ev){
             $('.errorEMI').hide();
-        });        
-        // check that the option button for emi is selected or not
-        $(document).on("click", '#emiSubmit', function(ev){
-            var check = 1;    
-            $('.emiRadio').each(function(){
-                    if(this.checked) {
-                        check = 2;
-                    }
-                });
-            if(check == 1){
-                $('.errorEMI').show();
-            }else{
-                $.magnificPopup.close();
-            }
-        });
+        });  
+
+
+	$('.emiDatepicker').datepicker({
+		//startDate: new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate(),
+		startDate: '0d',
+		endDate: '+30d',
+	});	
+	
+	/**
+	* showEmiDetails(val) renders emi details on sale confirmation page
+	* @emiType: value of emi type (number of months)
+	*/
+	function showEmiDetails(emiType, totalEmiAmount){
+		$("#emiDetailTable").hide();
+		$("#emiDetailTable").find('tbody').empty();
+		emiType = parseInt(emiType);
+		totalEmiAmount = Number(totalEmiAmount);
+	
+		var startDate = moment($("input[name='emiDatepicker']").val()).isValid()? moment($("input[name='emiDatepicker']").val()) : moment();
+		var emiAmount = (totalEmiAmount/emiType).toFixed(2);
+		var table = $("#emiDetailTable");
+		var tbody = table.find('tbody');
+		
+		for(var i=1; i <= emiType; i++){
+			startDate.add(1, 'months');
+			tbody.append('<tr><td>'+ i +'</td><td>'+emiAmount+'</td><td>'+ startDate.format("DD-MMM-YYYY")+'</td><td>Unpaid</td></tr>');
+		}
+		$("#confirmPageBody").append(table);
+		$("#confirmPageBody").find('#emiDetailTable').slideDown();
+	}	
+	
+	// check that the option button for emi is selected or not
+	$(document).on("click", '#emiSubmit', function(ev){
+		var emiType = $('input[name="emi"]:checked').val();
+		var totalEmiAmount = $('input[name="totalEmiAmount"]').val();
+		if(!emiType){
+			$('.errorEMI').show();
+		} else{
+			$.magnificPopup.close();
+			var emiDate = $("input[name='emiDatepicker']").val() ? $("input[name='emiDatepicker']").val() : moment().add(1, 'months').format('MM-DD-YYYY');
+			emiDate = moment(emiDate);
+			emiDateArray = [emiDate.format("MM-DD-YYYY")];
+			for(var i=0;i < emiType; i++){
+				emiDate.add(1, 'months');
+				emiDateArray.push(emiDate.format("MM-DD-YYYY"));
+			}
+			$("#checkoutForm").append('<input type="hidden" name="emiType" value="'+emiType+'"><input type="hidden" name="emiDate" value="'+emiDateArray+'">');
+			showEmiDetails(emiType, totalEmiAmount);
+		}
+	});
 
        /* --------------------------END: Functions for the Checkout page pop-up --------------  */
 
