@@ -118,7 +118,7 @@ $(function() {
     $('#editAppointment').validate({
           rules: {
             email: {
-              required: true,
+              //required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
