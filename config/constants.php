@@ -13,6 +13,7 @@ return [
 	'MAIL_ENCRYPTION'				=> 'tls',
 	
 	'PATIENT_ROLE_SLUG'				=> 'patient',
+<<<<<<< Updated upstream
 	'PATIENT_ROLE_ID'				=> 6,
 	'DOCTOR_ROLE_SLUG'				=> 'doctor',
 	'DOCTOR_ROLE_ID'				=> 5,
@@ -27,4 +28,13 @@ return [
 	'BRONZE_PKG_ID'					=> 1,
 	'SILVER_PKG_ID'					=> 2,
 	'GOLD_PKG_ID'					=> 3
+=======
+	'DOCTOR_ROLE_SLUG'				=> 'doctor',
+	'ADMIN_ROLE_SLUG'				=> 'admin',
+	'AUTHORS_ROLE_SLUG'				=> 'authors',
+	'USER_ROLE_SLUG'				=> 'user',
+	'APPOINTMENT_SET_FLAG'			=> 0,
+	'APPOINTMENT_NO_SET_FLAG'		=> 1
+	
+>>>>>>> Stashed changes
 ];

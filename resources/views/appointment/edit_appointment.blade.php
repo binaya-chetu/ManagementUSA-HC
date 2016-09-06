@@ -70,7 +70,11 @@
             </div> 
         </div> 
         <div class="form-group"> 
+<<<<<<< Updated upstream
             {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label')) }}
+=======
+            {{ Form::label('email', 'Email', array('class' => 'col-sm-4 control-label mandatory')) }}
+>>>>>>> Stashed changes
             <div class="col-sm-6">
                 {{ Form::text('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Email']) }}
                 <span class="help-block email">
@@ -159,5 +163,10 @@
                 window.location = ajax_url + link;
             }
         });
+<<<<<<< Updated upstream
     });   
 </script>
+=======
+    });
+</script>
+>>>>>>> Stashed changes

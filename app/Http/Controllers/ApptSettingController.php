@@ -48,6 +48,7 @@ class ApptSettingController extends Controller {
      */
 
     public function index($value = null) {
+<<<<<<< Updated upstream
         $patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
         if (!$patientRole || !($patientRoleId = $patientRole->id)) {
             App::abort(404, 'Role patient not found.');
@@ -58,6 +59,18 @@ class ApptSettingController extends Controller {
                 ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                 ->get();
 
+=======
+		$patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
+		if(!$patientRole || !($patientRoleId = $patientRole->id)){
+			 App::abort(404, 'Role patient not found.');
+		}
+
+		$patients = DB::table('users')
+			->where('users.role', $patientRoleId)
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
+            ->get();
+		
+>>>>>>> Stashed changes
         //$resources = AppointmentSource::lists('name', 'id');  // $resources not required remove if no error occur
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
         $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
@@ -67,6 +80,34 @@ class ApptSettingController extends Controller {
         ]);
     }
 
+<<<<<<< Updated upstream
+=======
+    /*
+     * Save the Marketign Calls 
+     * 
+     * @param Illuminate\Http\Request
+     * 
+     * @return \resource\view\apptsetting\marketingCall
+     */
+
+  /*   public function saveMarketingCall(Request $request) {
+        $call = new TelemarketingCall();
+        $call->requested_date = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
+        $call->first_name = $request->first_name;
+        $call->last_name = $request->last_name;
+        $call->email = $request->email;
+        $call->phone = $request->phone;
+        $call->comment = $request->comment;
+        if ($call->save()) {
+            \Session::flash('flash_message', 'New data has been added successfully.');
+            return redirect()->back();
+        } else {
+            \Session::flash('flash_message', 'Some error occured.');
+            return redirect()->back();
+        }
+    } */
+
+>>>>>>> Stashed changes
     /**
      * Listing all the Call List from the Api
      *
@@ -82,6 +123,11 @@ class ApptSettingController extends Controller {
      * @return \resource\view\apptsetting\requestFollowUp
      */
     public function requestFollowUp() {
+<<<<<<< Updated upstream
+=======
+        $patients = DB::table('appointment_requests')->orderBy('id', 'asc')->get(['id', 'first_name', 'last_name', 'email', 'location', 'appt_source']);
+        $resources = AppointmentSource::lists('name', 'id');
+>>>>>>> Stashed changes
         $current_date = date('Y-m-d');
         $requestFollowups = AppointmentRequest::with('patient', 'patient.patientDetail', 'noSetReason', 'noSetReason.reasonCode')
                 ->where('appointment_requests.status', 1)
@@ -273,6 +319,7 @@ class ApptSettingController extends Controller {
      * @return \Illuminate\View\View
      */
 
+<<<<<<< Updated upstream
     public function saveAppointment(Request $request) {
         $formData = $request->all();
         if ($formData['status'] == 1) {
@@ -379,10 +426,103 @@ class ApptSettingController extends Controller {
             return redirect()->action('AppointmentController@listappointment');
         } else {
             \Session::flash('flash_message', 'Appointment put on the hold successfully.');
+=======
+    public function saveApptFollowup(Request $request) {
+        $formData = $request->all();
+		if(!$formData){
+			App::abort(404, 'Empty form data.');
+		}
+		
+		$patientRole = DB::table('roles')->select('id')->where('role_slug', config("constants.PATIENT_ROLE_SLUG"))->first();
+		if(!$patientRole || !($patientRole = $patientRole->id)){
+			App::abort(404, 'Cannot fetch role from database.');
+		}
+		
+		$id = $formData['patient_id']; 
+
+		$user = App\User::firstOrCreate(['id' => $id]);
+		$id = $user->id;
+		
+		$userCheck = User::where('email', '=', $formData['email'])->first();
+		if ($userCheck != null && $userCheck->id != $id) {
+           \Session::flash('error_message', 'Email id you provided is already registered.');
+			return Redirect::back();
+		}	
+		
+		$user->first_name 	= $formData['first_name'];
+		$user->last_name	= $formData['last_name'];
+		$user->email		= $formData['email'];
+		$user->role			= $patientRole;
+		$user->save();
+
+		$patient = App\Patient::firstOrCreate(['user_id' => $id]);
+		$patient->phone = $formData['phone'];
+		$patient->dob	= $formData['dob'];
+		$patient->hash	= $this->getPatientHash($id);
+		$patient->save();
+
+		//$appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
+		$appointment_requests = new App\AppointmentRequest;
+		$appointment_requests->user_id			= $id; 
+		if(isset($appointment_requests->marketing_phone)){
+			$appointment_requests->marketing_phone	= $formData['marketing_phone']; 
+		}
+		$appointment_requests->created_by		= $formData['created_by']; 
+		$appointment_requests->appt_source		= $formData['appt_source'];
+		$appointment_requests->status 			= $formData['status'];
+		$appointment_requests->reason_id 		= $formData['reason_id'];
+		$appointment_requests->comment			= $formData['comment'];	
+		$appointment_requests->created_at = date('Y-m-d H:i:s', strtotime($formData['created'] . " " . $formData['created_time']));
+		//if($formData['status'] == config("constants.APPOINTMENT_NO_SET_FLAG")){
+            if (isset($formData['followup_status'])) {
+                $appointment_requests->followup_date = date('Y-m-d', strtotime('+7 days'));
+                $appointment_requests->followup_status = 1;
+            }else {
+                $appointment_requests->followup_date = date('Y-m-d', strtotime($formData['followup_date']));
+                $appointment_requests->followup_status = 0;
+            }			
+/* 		} else{
+			$appointment_requests->followup_date	= $formData['followup_date'];
+		} */	
+		$appointment_requests->save();
+
+		$reason = new App\AppointmentReasons;
+		$reason->patient_id = $id;
+		$reason->reason_id  = $formData['reason_id'];
+		$reason->save();
+		
+		if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){
+			//$appointment = App\Appointment::firstOrCreate(['user_id' => $id]);
+			$appointment = new App\Appointment;
+			$appointment->patient_id	= $id;
+			$appointment->apptTime		= date('Y-m-d H:i:s', strtotime($formData['appDate'] . " " . $formData['appTime']));
+			$appointment->createdBy		= Auth::user()->id;
+			$appointment->patient_id	= $user->id;
+			$appointment->appt_source	= $formData['appt_source'];
+			$appointment->request_id	= $appointment_requests->id;
+			if($formData['email_invitation']){
+				$appointment->email_invitation = 1;
+				$user->hash = $patient->hash;
+				$this->emailPatientEditForm($user);
+			}
+			$appointment->save();
+		}
+			
+		// Case of selecting patient from drop down 
+        if($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")){
+            \Session::flash('flash_message', 'Appointment updated successfully.');
+            return redirect()->action('AppointmentController@listappointment');        
+        }else{
+            \Session::flash('flash_message', 'Appointment updated successfully.');
+>>>>>>> Stashed changes
             return redirect()->back();
         }
     }
+<<<<<<< Updated upstream
 
+=======
+	
+>>>>>>> Stashed changes
     /**
      * Function for the checking the enter email is already exist in users table or not
      *
@@ -407,12 +547,21 @@ class ApptSettingController extends Controller {
      */
 
     public function findAppointmentDetail(Request $request) {
+<<<<<<< Updated upstream
         $appointment = DB::table('users')
                 ->leftJoin('patient_details', 'users.id', '=', 'patient_details.user_id')
                 ->where('users.id', $request['id'])
                 ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'patient_details.phone', 'patient_details.dob')
                 ->first();
 
+=======
+ 		$appointment = DB::table('users')
+            ->leftJoin('patient_details', 'users.id', '=', 'patient_details.user_id')
+			->where('users.id', $request['id'])
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'patient_details.phone')
+            ->first(); 
+			
+>>>>>>> Stashed changes
         if ($appointment && $appointment->id) {
             echo json_encode($appointment);
         } else {

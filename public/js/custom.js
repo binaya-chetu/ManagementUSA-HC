@@ -1289,29 +1289,12 @@ function checkAppointmentTime(){
                               method: 'post',
                               url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
                                 success: function(data) {
-
-                                        var count = data['trimix_doses'];
-                                      console.log(count);
-                                   //  console.log(data);                                    console.log(count.length);
+                                    var count = data['trimix_doses'];
+                                    
                                     $("#pname").html(data['first_name']+" "+data['last_name']); 
                                     $("#pdob").html(data['patient_detail']['dob']); 
                                     $("#patient_id").val(data['patient_detail']['user_id']);
                                     var title = doseTitle(count.length);
-
-                                    $("#dose_title").html('<strong> Test Dose' + title +'</strong>');
-                                    if(count.length == 0) {
-                                        $("#dose_title").html('<strong> Test Dose 1</strong>');
-                                    }
-                                    else if(count.length == 1) {
-                                        $("#dose_title").html('<strong> Test Dose 2</strong>');
-                                    }
-                                    else if(count.length == 2) {
-                                        $("#dose_title").html('<strong> Test Dose A </strong>');
-                                    }
-                                     else if(count.length == 3) {
-                                        $("#dose_title").html('<strong> Test Dose B </strong>');
-                                    }
-
                                 }
                       });
                  });
@@ -1328,15 +1311,9 @@ function checkAppointmentTime(){
                     else
                     {
                         var i = 63 + count;
-
                         var title = String.fromCharCode(i);
                         $("#dose_title").html('<strong> Home Test Dose ' + title + '</strong>');
                         $("#dose_type").val(title);
-
-                    //    alert(i);
-                        return false;
-                            return String.fromCharCode(i);
-
                     }
                 }
                   
