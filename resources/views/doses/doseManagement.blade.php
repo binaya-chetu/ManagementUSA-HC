@@ -114,6 +114,7 @@
 
                             {{ csrf_field() }}
                             {{ Form::hidden('patient_id', '', array('id' => 'patient_id')) }}
+                            {{ Form::hidden('dose_type', '', array('id' => 'dose_type')) }}
                             <div class="toggle" data-plugin-toggle>
                                 <h4 style="text-align:center">   <div class="row-title"> Trimix /Sublingual ED Therapy </div></h4>
                                 <section class="toggle">
