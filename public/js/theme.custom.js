@@ -42,8 +42,7 @@ $(function() {
     
     // common validation for add/edit doctor.
     jQuery('#doctor').validate({  
-   ignore:  ".ignore",
-
+        ignore:  ".ignore",
         rules : {
             password : {
                 minlength : 6
@@ -119,11 +118,7 @@ $(function() {
     $('#editAppointment').validate({
           rules: {
             email: {
-
-              //required: true,
-
               required: true,
-
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },

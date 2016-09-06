@@ -37,6 +37,7 @@ class Cart extends Model
 
 			$category_detail_list[$v->id] = [];
 			foreach($v->categories->packages as $ind => $val){
+				$category_detail_list[$v->id][$ind]['package_id'] = $val->id;
 				$category_detail_list[$v->id][$ind]['product_id'] = $val->product_id;
 				$category_detail_list[$v->id][$ind]['sku'] = $val->product->sku;
 				$category_detail_list[$v->id][$ind]['product'] = $val->product->name;
