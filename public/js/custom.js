@@ -1289,10 +1289,9 @@ function checkAppointmentTime(){
                               method: 'post',
                               url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
                                 success: function(data) {
-                                    //console.log(data);
+                                  //  console.log(data);
                                     var count = data['trimix_doses'];
                                     //console.log(count.length);
-                                    
                                     $("#pname").html(data['first_name']+" "+data['last_name']); 
                                     $("#pdob").html(data['patient_detail']['dob']); 
                                     $("#patient_id").val(data['patient_detail']['user_id']);
@@ -1306,6 +1305,9 @@ function checkAppointmentTime(){
                                     }
                                     else if(count.length == 2) {
                                         $("#dose_title").html('<strong> Test Dose A </strong>');
+                                    }
+                                     else if(count.length == 3) {
+                                        $("#dose_title").html('<strong> Test Dose B </strong>');
                                     }
                                 }
                       });
@@ -1321,7 +1323,7 @@ function checkAppointmentTime(){
                     else
                     {
                         var i = 63 + count;
-                        alert(i);
+                    //    alert(i);
                         return false;
                             return String.fromCharCode(i);
                     }
