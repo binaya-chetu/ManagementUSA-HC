@@ -1290,13 +1290,9 @@ function checkAppointmentTime(){
                               url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
                                 success: function(data) {
 
-                                    var count = data['trimix_doses'];
-                                    
-
-                                  //  console.log(data);
-                                    var count = data['trimix_doses'];
-                                    //console.log(count.length);
-
+                                        var count = data['trimix_doses'];
+                                      console.log(count);
+                                   //  console.log(data);                                    console.log(count.length);
                                     $("#pname").html(data['first_name']+" "+data['last_name']); 
                                     $("#pdob").html(data['patient_detail']['dob']); 
                                     $("#patient_id").val(data['patient_detail']['user_id']);
