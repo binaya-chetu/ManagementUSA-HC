@@ -204,7 +204,10 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
 };
 		
 $(document).ready(function() {
-    
+
+
+    $("#hidden-doses").hide();
+
     $('#patientdob').val('');
     $('#durationExample').on('blur', function(){
         checkAppointmentTime();       
@@ -1162,7 +1165,8 @@ function checkAppointmentTime(){
       /***********************For internal validation of Doses************************/
       
       
-                        $("#amount1").change(function(){
+      
+              $("#amount1").change(function(){
 
                 var amount1 = $(this).val();
                         var x = document.getElementById("amount2");
@@ -1192,6 +1196,7 @@ function checkAppointmentTime(){
                 }
                 });
                         $("#amount3").change(function(){
+
                 var amount3 = $(this).val();
                         var x = document.getElementById("amount1");
                         var y = document.getElementById("amount2");
@@ -1273,6 +1278,50 @@ function checkAppointmentTime(){
 
                 }
                 });
+ 
+    /*************************Dose Managemnet functionality****************/
+                 
+                        $("#patient_to_choose").change(function(){
+                            var patient_id = $(this).val();
+                           // alert(patient_id);
+                            $("#hidden-doses").show();
+                            $.ajax({     
+                              method: 'post',
+                              url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
+                                success: function(data) {
+                                    var count = data['trimix_doses'];
+                                    
+                                    $("#pname").html(data['first_name']+" "+data['last_name']); 
+                                    $("#pdob").html(data['patient_detail']['dob']); 
+                                    $("#patient_id").val(data['patient_detail']['user_id']);
+                                    var title = doseTitle(count.length);
+                                }
+                      });
+                 });
+                 
+                 
+                function doseTitle(count)
+                {
+                    if(count == 0 || count == 1)
+                    {
+                        var title = count + 1;
+                        $("#dose_title").html('<strong> Test Dose ' + title + '</strong>');
+                        $("#dose_type").val(title);
+                    }
+                    else
+                    {
+                        var i = 63 + count;
+                        var title = String.fromCharCode(i);
+                        $("#dose_title").html('<strong> Home Test Dose ' + title + '</strong>');
+                        $("#dose_type").val(title);
+                    }
+                }
+                  
+//                  
+//                  document.getElementById("prevent").addEventListener("click", function(event){
+//              event.preventDefault()
+//            });                 
+
         /* --------------------------START: Functions for the Checkout page pop-up --------------  */
         $('.errorEMI').hide();
         $(document).on("click", ".emi_popuup", function(ev) {
@@ -1341,3 +1390,4 @@ function checkAppointmentTime(){
 	});
 
        /* --------------------------END: Functions for the Checkout page pop-up --------------  */
+

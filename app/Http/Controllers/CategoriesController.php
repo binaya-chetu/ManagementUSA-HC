@@ -157,8 +157,7 @@ class CategoriesController extends Controller
 
                     $product[] = $pro;
                     $proUpdated = App\Products::firstOrNew(array('sku' => $n['sku']));
-                    $proUpdated->fill($pro)->save();
-
+                    $proUpdated->fill($pro)->save();    
                     $packRows = ['product_id' => $proUpdated->getKey(), 'category_id' => $n['category_id'], 'product_count' => $n['p_count'], 'product_price' => $n['spl_price'], 'category_type' => $category_types[ucfirst($n['package'])]];
                     $packageRows[] = $packRows;
                     $proUpdated = App\Packages::firstOrNew(array('product_id' => $proUpdated->getKey(), 'category_id' => $n['category_id'], 'category_type' => $category_types[ucfirst($n['package'])]));

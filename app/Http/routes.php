@@ -787,4 +787,25 @@ Route::group(['middleware' => 'web'], function () {
         'middleware' => ['acl:patient_inventory_read']
     ]);
            
+    /*
+     * To show the patient Doses details
+     */
+    Route::get('/doses/doseManagement', [
+        'uses' => 'DoseManagmentController@index',
+        'as' => 'doses.doseManagement',
+        //'middleware' => ['acl:doseManagement_read']
+    ]);
+          
+    Route::post('/doseManagement/getPatientDetails/{patient_id}', [
+        'uses' => 'DoseManagmentController@getPatientDetails',
+        'as' => 'doses.doseManagement',
+       //'middleware' => ['acl:doseManagement_read']
+          
+    ]);
+    
+    Route::post('/doses/store', [
+       'uses' => 'DoseManagmentController@store',
+        'as' => 'doses.doseManagement',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
 });

@@ -183,6 +183,7 @@ class InventoryController extends Controller
      * @return\Illuminate\Http\Response
      */
      public function patientInventory() {
+         
         $dropDowns = DB::table('dose_dropdown')
                         ->join('dropdown_details', function ($join) {
                             $join->on('dose_dropdown.id', '=', 'dropdown_details.dropdown_id');

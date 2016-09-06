@@ -172,7 +172,7 @@ function dropDownMedication()
  */
 function dropDown9()
 {
-    $dd9 = ['Wesley Pope' =>'Wesley Pope', 'MD - Kisha Farrell' => 'MD - Kisha Farrell', 'ANP - Justin Henson' => 'ANP - Justin Henson', 'ANP - Steven Scholen' =>'ANP - Steven Scholen', 'MD' => 'MD'];
+    $dd9 = ['MD - Wesley Pope' =>'MD - Wesley Pope', 'MD - Kisha Farrell' => 'MD - Kisha Farrell', 'ANP - Justin Henson' => 'ANP - Justin Henson', 'ANP - Steven Scholen' =>'ANP - Steven Scholen'];
     return $dd9;
 }
 

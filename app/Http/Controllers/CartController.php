@@ -117,6 +117,7 @@ class CartController extends Controller
      *
      * @return ajax response
      */
+    
     public function countCartItem(Request $request){
         $cart = Cart::where('patient_id', $request->id)->get()->count();
         echo $cart;die;
