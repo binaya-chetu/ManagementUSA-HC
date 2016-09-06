@@ -154,7 +154,7 @@
                                             </div>   
 
                                             <div class="col-sm-6 form-group">
-                                                {{ Form::label('medicationa1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                                {{ Form::label('medicationa1', 'Medication', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
@@ -222,7 +222,7 @@
                                             </div>   
 
                                             <div class="col-sm-6 form-group">
-                                                {{ Form::label('medicationb2', 'Medication2 ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                                {{ Form::label('medicationb2', 'Medication2', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
