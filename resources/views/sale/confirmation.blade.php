@@ -25,6 +25,9 @@
                         @if(Session::has('flash_message'))
                         <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                         @endif
+                        @if(Session::has('error_message'))
+                        <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
+                        @endif						
                     </div>
                     <div class="row">
                         <div class="col-sm-6 mt-md">

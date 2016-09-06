@@ -105,16 +105,17 @@ class SaleController extends Controller
      *  */
     public function makePayment(Request $request) {    
         $formData = $request->all();
-		$payment = Session::get('checkout_payment');
-
+		$payment = Session::get('checkout_payment');	
 		if(($payment['paid_amount'] < $payment['total_amount']) && !isset($formData['emiType'])){
- \Session::flash('error_message', 'PLease select prefered EMI option.');
-$url = 'sale/confirmation/'.base64_encode($formData['patient_id']);
-return Redirect::to(\URL::previous());
-//return redirect()->back();
-//return Redirect::action('SaleController@index');			
-die('Flash error');
-		} 
+			\Session::flash('error_message', 'Please select prefered EMI option.');
+			return redirect()->back();
+		}  
+
+		if(!$payment || !array_filter($payment)){
+			\Session::flash('error_message', 'Your session expired. Please try again');
+			$url = 'sale/checkout/'.base64_encode($formData['patient_id']);
+			return redirect()->to($url);		
+		}
 
         $payments = new Payment;
         
@@ -133,7 +134,8 @@ die('Flash error');
 			$emiStartDate = DateTime::createFromFormat('m-d-Y', $emiStartDate);			
 			$today = new DateTime();
 			if($emiStartDate < $today || $emiStartDate > $today->modify('next month')){
-die('Emi date out of limit'); // with-in month from today
+				\Session::flash('error_message', 'Selected due date out of limit.');
+				return redirect()->back();				
 			}
 			$amount_left = $payment['total_amount'] - $payment['paid_amount'];			
 			$emiType = $formData['emiType'];
