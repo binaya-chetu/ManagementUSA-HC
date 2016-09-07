@@ -50,11 +50,23 @@
         </div>
         <div id = "hidden-doses">
 
+
             <div class="panel-body">
                 <div class="row">
-                    @if(Session::has('flash_message'))
-                    <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em>{!! session('flash_message') !!}</em></div>
-                    @endif
+                    <div class="col-md-6 ">
+                        Patient Name
+                    </div>
+                    <div class="col-md-6 ">
+                        DOB
+                    </div>
+                    <div class="col-md-6 " id = "pname">
+                    </div>
+                    <div class="col-md-6 " id = "pdob">
+                    </div>
+                </div>
+
+                <div class="panel-body" class ='treatment-done'  id="dose_details">
+
                 </div>
                 <div class="row">
                     <div class="col-md-6 commentdiv">
@@ -76,36 +88,36 @@
             <div class="row">
                 <div class="col-md-12">
                     <section class="panel">
-<!--                        <header class="panel-heading">
+                        <header class="panel-heading">
                             <h6 class="panel-title" id = "small-heading" >Package Totals</h6>
 
                         </header>
-                        <div class="panel-body">
-                            <div class="row show-grid">
-                                <div class="col-md-2"><span class="show-grid-block">Trimix</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">Sublingual</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">Office Visit</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">Redose</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">Antidotes</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">Prolyfic Treatment</span></div>
-                            </div>
-                            <div class="row show-grid">
-                                <div class="col-md-2"><span class="show-grid-block">50%</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">5%</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">61%</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">30%</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">20%</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">10%</span></div>
-                            </div>
-                            <div class="row show-grid">
-                                <div class="col-md-2"><span class="show-grid-block">3305</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">5896</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">8000</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">9600</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">5698</span></div>
-                                <div class="col-md-2"><span class="show-grid-block">5669</span></div>
-                            </div>
-                        </div>-->
+                        <!--                        <div class="panel-body">
+                                                    <div class="row show-grid">
+                                                        <div class="col-md-2"><span class="show-grid-block">Trimix</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">Sublingual</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">Office Visit</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">Redose</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">Antidotes</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">Prolyfic Treatment</span></div>
+                                                    </div>
+                                                    <div class="row show-grid">
+                                                        <div class="col-md-2"><span class="show-grid-block">50%</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">5%</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">61%</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">30%</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">20%</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">10%</span></div>
+                                                    </div>
+                                                    <div class="row show-grid">
+                                                        <div class="col-md-2"><span class="show-grid-block">3305</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">5896</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">8000</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">9600</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">5698</span></div>
+                                                        <div class="col-md-2"><span class="show-grid-block">5669</span></div>
+                                                    </div>
+                                                </div>-->
 
                         {{ Form::open(array('url' => '/doses/store', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'patientInventory')) }}
                         <div class="panel-body">
@@ -113,22 +125,25 @@
 
                             {{ csrf_field() }}
                             {{ Form::hidden('patient_id', '', array('id' => 'patient_id')) }}
+                            {{ Form::hidden('dose_type', '', array('id' => 'dose_type')) }}
                             <div class="toggle" data-plugin-toggle>
                                 <h4 style="text-align:center">   <div class="row-title"> Trimix /Sublingual ED Therapy </div></h4>
                                 <section class="toggle">
                                     <label>Intitial Test Dosing Deduct from Inventory Only</label>
                                     <div  class="toggle-content">
-                                        <h4 class="row-title" id="dose_title"></h4>
+                                        </br>
+                                        <h3 class="row-title" id="dose_title"></h3>
+                                        </br>
                                         <div class = "row">
-
-
                                             <div class="col-sm-6 form-group{{ $errors->has('doctor') ? ' has-error' : '' }}">
                                                 {{ Form::label('doctor', ' Doctor ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
-                                                    <div class="input-group">
-                                                        <?php $dd9 = dropDown9(); ?>
-                                                        {{ Form::select('doctor', (['' => 'Select Doctor'] + $dd9), null, ['class' => 'form-control input required', 'id' => 'dd9']) }}
-                                                    </div>
+                                                    
+                                                    <?php $dd9 = dropDown9(); ?>
+
+                                                    {{ Form::select('doctor', (['' => 'Select Doctor'] + $dd9), null, ['class' => 'form-control input required', 'id' => 'dd9']) }}
+
+
                                                     @if ($errors->has('doctor'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('doctor') }}</strong>
@@ -136,104 +151,143 @@
                                                     @endif
                                                 </div>
                                             </div>
-
-
+                                            
+                                            
                                             <div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6 form-group">
+
+                                            <div class="col-sm-6 form-group{{ $errors->has('amount1') ? ' has-error' : '' }}">
                                                 {{ Form::label('amount1', 'Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $amount = dropDownAmount(); ?>
 
-                                                    {{ Form::select('amount1', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required', 'id' => 'amount1']) }}
+                                                    {{ Form::select('amount1', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount1']) }}
 
+                                                    @if ($errors->has('amount1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('amount1') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div>   
+                                            </div>
 
-                                            <div class="col-sm-6 form-group">
+                                            <div class="col-sm-6 form-group{{ $errors->has('medicationa1') ? ' has-error' : '' }}">
                                                 {{ Form::label('medicationa1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationA1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationA1']) }} 
+                                                    {{ Form::select('medicationa1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationA1']) }} 
 
+                                                    @if ($errors->has('medicationA1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('medicationa1') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div> 
+                                            </div>
+
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-6 form-group">
-
-
+                                              <div class="col-sm-6 form-group{{ $errors->has('amount2') ? ' has-error' : '' }}">
                                                 {{ Form::label('amount2', 'Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $amount = dropDownAmount(); ?>
 
-                                                    {{ Form::select('amount2', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required', 'id' => 'amount2']) }}
+                                                    {{ Form::select('amount2', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount2']) }}
 
+                                                    @if ($errors->has('amount1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('amount2') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div>   
-
-                                            <div class="col-sm-6 form-group">
-                                                {{ Form::label('medicationa2', 'Medication', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                            </div>
+                                               <div class="col-sm-6 form-group{{ $errors->has('medicationa2') ? ' has-error' : '' }}">
+                                                {{ Form::label('medicationa2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationA2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationA2']) }} 
+                                                    {{ Form::select('medicationa2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationa2']) }} 
 
+                                                    @if ($errors->has('medicationa2'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('medicationa2') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div> 
+                                            </div>
+                                            
+                                          
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6 form-group">
+                                            <div class="col-sm-6 form-group{{ $errors->has('amount3') ? ' has-error' : '' }}">
                                                 {{ Form::label('amount3', 'Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
-
                                                     <?php $amount = dropDownAmount(); ?>
 
-                                                    {{ Form::select('amount3', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required', 'id' => 'amount3']) }}
+                                                    {{ Form::select('amount3', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount3']) }}
 
+                                                    @if ($errors->has('amount1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('amount3') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div>   
-
-                                            <div class="col-sm-6 form-group">
-
-                                                {{ Form::label('medicationb1', 'Medication2', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                            </div>
+                                            
+                                              <div class="col-sm-6 form-group{{ $errors->has('medicationb1') ? ' has-error' : '' }}">
+                                                {{ Form::label('medicationb1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationB1', (['' => 'Select Medication 2'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB1']) }} 
+                                                    {{ Form::select('medicationb1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationb1']) }} 
 
+                                                    @if ($errors->has('medicationb1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('medicationb1') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6 form-group">
+                                         <div class="col-sm-6 form-group{{ $errors->has('amount4') ? ' has-error' : '' }}">
                                                 {{ Form::label('amount4', 'Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $amount = dropDownAmount(); ?>
 
-                                                    {{ Form::select('amount4', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required', 'id' => 'amount4']) }}
+                                                    {{ Form::select('amount4', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount4']) }}
 
+                                                    @if ($errors->has('amount1'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('amount4') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div>   
-
-                                            <div class="col-sm-6 form-group">
-                                                {{ Form::label('medicationb2', 'Medication2 ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                            </div>
+                                            
+                                              <div class="col-sm-6 form-group{{ $errors->has('medicationb2') ? ' has-error' : '' }}">
+                                                {{ Form::label('medicationb2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                                 <div class="col-sm-9">
                                                     <?php $medication = dropDownMedication(); ?>
 
-                                                    {{ Form::select('medicationB2', (['' => 'Select Medication 2'] + $medication), null, ['class' => 'form-control input required', 'id' => 'medicationB2']) }} 
+                                                    {{ Form::select('medicationb2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationb2']) }} 
 
-
+                                                    @if ($errors->has('medicationb2'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('medicationb2') }}</strong>
+                                                    </span>
+                                                    @endif
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-6 form-group">
+                                            </br>
+                                            <div class="col-sm-12 form-group" >
                                                 {{ Form::button(
                                             '<i class="fa fa-plus"></i> Submit',
                                             array(

@@ -84,7 +84,7 @@ class DoseManagmentController extends Controller
         
         $trimixData->patient_id = $request->patient_id;
         $trimixData->agent_id = Auth::user()->id;
-        $trimixData->dose_type = 'A';
+        $trimixData->dose_type = $request->dose_type;
         $trimixData->quantity = (isset($request->quantity)) ? $request->quantity : 1;
         $trimixData->doctor = $request->doctor;
         $trimixData->amount1 = $request->amount1;
@@ -100,6 +100,26 @@ class DoseManagmentController extends Controller
         
         // save user data in user table
         if ($trimixData->save()) {
+            if($request->dose_type != 1)
+            {
+                if($request->dose_type == 2)
+                {
+                    $dose = $request->dose_type - 1;
+                }
+                else if($request->dose_type == 'A')
+                {
+                    $dose = 2;
+                }
+                else
+                {
+                    $dose = chr(ord($request->dose_type) - 1);
+                }
+                DB::table('trimix_doses')
+                ->where('patient_id', '=', $request->patient_id)
+                        ->where('dose_type', '=', $dose)
+                ->update(['dose_end_date' => date('Y-m-d h:i:s')]);
+            }
+            
             // set the flash message.
             \Session::flash('flash_message', 'Doses saved successfully.');
             return redirect('/doses/doseManagement');
