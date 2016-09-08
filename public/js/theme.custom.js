@@ -75,7 +75,9 @@ $(function() {
     
     // common validation for add/edit users.
     jQuery('#addUser').validate({
+
         ignore:  ".ignore",
+
        rules : {
             password : {
                 minlength : 6
@@ -116,7 +118,7 @@ $(function() {
     $('#editAppointment').validate({
           rules: {
             email: {
-              //required: true,
+              required: true,
               email: true,
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },

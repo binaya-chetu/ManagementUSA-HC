@@ -217,7 +217,7 @@
                 <div class="form-group">
                     {{ Form::label('card', 'Payment Type', array('class' => 'col-sm-3 control-label mandatory')) }}
                     <div class="col-sm-6">
-                        <?php $method = ['0' => 'Cash In Hand', '1' => 'Credit Card']; ?>
+                        <?php $method = ['0' => 'Cash', '1' => 'Credit Card']; ?>
                         {{ Form::select('payment_type', ['' => 'Please Select Payment Method']+$method, null, ['class' => 'form-control required', 'id' => 'paymentMethod']) }}                     
                     </div>
                 </div>

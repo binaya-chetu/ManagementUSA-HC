@@ -1166,123 +1166,61 @@ function checkAppointmentTime(){
       
       
       
-              $("#amount1").change(function(){
-
+            $("#amount1").change(function(){
                 var amount1 = $(this).val();
-                        var x = document.getElementById("amount2");
-                        $("#amount1 option").each(function()
-                        {
-                            console.log($(this).val());
-                        });
-                        return flase;
-                        var y = document.getElementById("amount3");
-                        var z = document.getElementById("amount4");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == amount1)
-                {
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-                }
-                });
-                        $("#amount2").change(function(){
-
+                $("#amount2 option[value='" + amount1 + "']").remove();
+                $("#amount3 option[value='" + amount1 + "']").remove();
+                $("#amount4 option[value='" + amount1 + "']").remove();
+            });
+            
+            $("#amount2").change(function(){
                 var amount2 = $(this).val();
-                        var x = document.getElementById("amount1");
-                        var y = document.getElementById("amount3");
-                        var z = document.getElementById("amount4");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == amount2){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-                }
-                });
-                        $("#amount3").change(function(){
-
+                $("#amount1 option[value='" + amount2 + "']").remove();
+                $("#amount3 option[value='" + amount2 + "']").remove();
+                $("#amount4 option[value='" + amount2 + "']").remove();
+            });
+            
+            $("#amount3").change(function(){
                 var amount3 = $(this).val();
-                        var x = document.getElementById("amount1");
-                        var y = document.getElementById("amount2");
-                        var z = document.getElementById("amount4");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == amount3){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-                }
-                });
-                        $("#amount4").change(function(){
+                $("#amount1 option[value='" + amount3 + "']").remove();
+                $("#amount2 option[value='" + amount3 + "']").remove();
+                $("#amount4 option[value='" + amount3 + "']").remove();
+            });
+            
+            $("#amount4").change(function(){
                 var amount4 = $(this).val();
-                        var x = document.getElementById("amount1");
-                        var y = document.getElementById("amount2");
-                        var z = document.getElementById("amount3");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == amount4){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-                }
-                });
-                        $("#medicationA1").change(function(){
+                $("#amount1 option[value='" + amount4 + "']").remove();
+                $("#amount2 option[value='" + amount4 + "']").remove();
+                $("#amount3 option[value='" + amount4 + "']").remove();
+            });
+            
+            $("#medicationA1").change(function(){
                 var med1 = $(this).val();
-                        var x = document.getElementById("medicationA2");
-                        var y = document.getElementById("medicationB1");
-                        var z = document.getElementById("medicationB2");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == med1){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-
-                }
-                });
-                        $("#medicationA2").change(function(){
+                $("#medicationA2 option[value='" + med1 + "']").remove();
+                $("#medicationB1 option[value='" + med1 + "']").remove();
+                $("#medicationB2 option[value='" + med1 + "']").remove();
+            });
+            
+            $("#medicationA2").change(function(){
                 var med2 = $(this).val();
-                        var x = document.getElementById("medicationA1");
-                        var y = document.getElementById("medicationB1");
-                        var z = document.getElementById("medicationB2");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == med2){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-
-                }
-                });
-                        $("#medicationB1").change(function(){
+                $("#medicationA1 option[value='" + med2 + "']").remove();
+                $("#medicationB1 option[value='" + med2 + "']").remove();
+                $("#medicationB2 option[value='" + med2 + "']").remove();
+            });
+            
+            $("#medicationB1").change(function(){
                 var med3 = $(this).val();
-                        var x = document.getElementById("medicationA1");
-                        var y = document.getElementById("medicationA2");
-                        var z = document.getElementById("medicationB2");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == med3){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-
-                }
-                });
-                        $("#medicationB2").change(function(){
+                $("#medicationA1 option[value='" + med3 + "']").remove();
+                $("#medicationA2 option[value='" + med3 + "']").remove();
+                $("#medicationB2 option[value='" + med3 + "']").remove();
+            });
+            
+            $("#medicationB2").change(function(){
                 var med4 = $(this).val();
-                        var x = document.getElementById("medicationA2");
-                        var y = document.getElementById("medicationA1");
-                        var z = document.getElementById("medicationB1");
-                        for (var i = 0; i < x.length; i++){
-                if (x.options[i].value == med4){
-                x.remove(i);
-                        y.remove(i);
-                        z.remove(i);
-                }
-
-                }
-                });
+                $("#medicationA1 option[value='" + med4 + "']").remove();
+                $("#medicationA2 option[value='" + med4 + "']").remove();
+                $("#medicationB1 option[value='" + med4 + "']").remove();
+            });
  
     /*************************Dose Managemnet functionality****************/
                  
@@ -1342,21 +1280,57 @@ function checkAppointmentTime(){
         //store the value after selecting the option button
         $(document).on("click", 'input[name="emi"]', function(ev){
             $('.errorEMI').hide();
-        });        
-        // check that the option button for emi is selected or not
-        $(document).on("click", '#emiSubmit', function(ev){
-            var check = 1;    
-            $('.emiRadio').each(function(){
-                    if(this.checked) {
-                        check = 2;
-                    }
-                });
-            if(check == 1){
-                $('.errorEMI').show();
-            }else{
-                $.magnificPopup.close();
-            }
-        });
+        });  
+
+
+	$('.emiDatepicker').datepicker({
+		//startDate: new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate(),
+		startDate: '0d',
+		endDate: '+30d',
+	});	
+	
+	/**
+	* showEmiDetails(val) renders emi details on sale confirmation page
+	* @emiType: value of emi type (number of months)
+	*/
+	function showEmiDetails(emiType, totalEmiAmount){
+		$("#emiDetailTable").hide();
+		$("#emiDetailTable").find('tbody').empty();
+		emiType = parseInt(emiType);
+		totalEmiAmount = Number(totalEmiAmount);
+	
+		var startDate = moment($("input[name='emiDatepicker']").val()).isValid()? moment($("input[name='emiDatepicker']").val()) : moment();
+		var emiAmount = (totalEmiAmount/emiType).toFixed(2);
+		var table = $("#emiDetailTable");
+		var tbody = table.find('tbody');
+		
+		for(var i=1; i <= emiType; i++){
+			startDate.add(1, 'months');
+			tbody.append('<tr><td>'+ i +'</td><td>'+emiAmount+'</td><td>'+ startDate.format("DD-MMM-YYYY")+'</td><td>Unpaid</td></tr>');
+		}
+		$("#confirmPageBody").append(table);
+		$("#confirmPageBody").find('#emiDetailTable').slideDown();
+	}	
+	
+	// check that the option button for emi is selected or not
+	$(document).on("click", '#emiSubmit', function(ev){
+		var emiType = $('input[name="emi"]:checked').val();
+		var totalEmiAmount = $('input[name="totalEmiAmount"]').val();
+		if(!emiType){
+			$('.errorEMI').show();
+		} else{
+			$.magnificPopup.close();
+			var emiDate = $("input[name='emiDatepicker']").val() ? $("input[name='emiDatepicker']").val() : moment().add(1, 'months').format('MM-DD-YYYY');
+			emiDate = moment(emiDate);
+			emiDateArray = [emiDate.format("MM-DD-YYYY")];
+			for(var i=0;i < emiType; i++){
+				emiDate.add(1, 'months');
+				emiDateArray.push(emiDate.format("MM-DD-YYYY"));
+			}
+			$("#checkoutForm").append('<input type="hidden" name="emiType" value="'+emiType+'"><input type="hidden" name="emiDate" value="'+emiDateArray+'">');
+			showEmiDetails(emiType, totalEmiAmount);
+		}
+	});
 
        /* --------------------------END: Functions for the Checkout page pop-up --------------  */
 
