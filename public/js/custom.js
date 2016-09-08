@@ -1156,54 +1156,47 @@ var data = $(this).serializeArray();
                         /*************************Dose Managemnet functionality****************/
 
                         $("#patient_to_choose").change(function(){
-                $("#dose_details").html('');
-                        var patient_id = $(this).val();
-                        $("#hidden-doses").show();
-                        $.ajax({
-                        method: 'post',
-                                url: ajax_url + "/doseManagement/getPatientDetails/" + patient_id,
-                                success: function(data) {
-                                var count = data['trimix_doses'];
-                                        if (count.length > 0)
-                                { j = 0;
-                                        for (i = 0; i < count.length; i++){
-                                j = j + 1;
-                                        if (j > 2){
-                                j = "A";
-                                } else if (j > 3){
-                                j = "B";
-                                }
+                            $("#dose_details").html('');
+                                    var patient_id = $(this).val();
+                                    $("#hidden-doses").show();
+                                    $.ajax({
+                                    method: 'post',
+                                            url: ajax_url + "/doseManagement/getPatientDetails/" + patient_id,
+                                            success: function(data) {
+                                            var count = data['trimix_doses'];
+                                               if (count.length > 0)
+                                            {       //j = 0;
+                                                for (i = 0; i < count.length; i++){
+                                                 $("#dose_details").append('<div class = "row"> <div class = "row-title"> Test Dose ' + j + '<span id = "perm-link">  <input class = "permanent-dose" type="checkbox"  value = ' + data['trimix_doses'][i]['dose_type'] + ' /> &nbsp;&nbsp;Make it permanent  </span></div> <div class="col-sm-6 form-group"><lable>Doctor: ' + data['trimix_doses'][i]['doctor'] + '</lable></div>' +
+                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount1'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA1'] + ' </lable></div><hr>' +
+                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount2'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA2'] + ' </lable></div><hr>' +
+                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount3'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB1'] + ' </lable></div><hr>' +
+                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount4'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB2'] + ' </lable></div><hr>');
+                                                 }
+                                            }
 
-                                $("#dose_details").append('<div class = "row"> <div class = "row-title"> Test Dose ' + j + '<span id = "perm-link">  <input class = "permanent-dose" type="checkbox"  value = ' + data['trimix_doses'][i]['dose_type'] + ' /> &nbsp;&nbsp;Make it permanent  </span></div> <div class="col-sm-6 form-group"><lable>Doctor: ' + data['trimix_doses'][i]['doctor'] + '</lable></div>' +
-                                        ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount1'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA1'] + ' </lable></div><hr>' +
-                                        ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount2'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA2'] + ' </lable></div><hr>' +
-                                        ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount3'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB1'] + ' </lable></div><hr>' +
-                                        ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount4'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB2'] + ' </lable></div><hr>');
-                                }
-                                }
-
-                                $("#pname").html(data['first_name'] + " " + data['last_name']);
-                                        $("#pdob").html(data['patient_detail']['dob']);
-                                        $("#patient_id").val(data['patient_detail']['user_id']);
-                                        var title = doseTitle(count.length);
-                                }
-                        });
-                });
+                                                $("#pname").html(data['first_name'] + " " + data['last_name']);
+                                                        $("#pdob").html(data['patient_detail']['dob']);
+                                                        $("#patient_id").val(data['patient_detail']['user_id']);
+                                                        var title = doseTitle(count.length);
+                                            }
+                                    });
+                                });
                         function doseTitle(count)
                         {
-                        if (count == 0 || count == 1)
-                        {
-                        var title = count + 1;
-                                $("#dose_title").html('<strong> Test Dose ' + title + '</strong>');
-                                $("#dose_type").val(title);
-                        }
-                        else
-                        {
-                        var i = 63 + count;
-                                var title = String.fromCharCode(i);
-                                $("#dose_title").html('<strong> Home Test Dose ' + title + '</strong>');
-                                $("#dose_type").val(title);
-                        }
+                            if (count == 0 || count == 1)
+                            {
+                                var title = count + 1;
+                                    $("#dose_title").html('<strong> Test Dose ' + title + '</strong>');
+                                    $("#dose_type").val(title);
+                            }
+                            else
+                            {
+                                var i = 63 + count;
+                                        var title = String.fromCharCode(i);
+                                        $("#dose_title").html('<strong> Home Test Dose ' + title + '</strong>');
+                                        $("#dose_type").val(title);
+                            }
                         }
 
                 /* --------------------------START: Functions for the Checkout page pop-up --------------  */
