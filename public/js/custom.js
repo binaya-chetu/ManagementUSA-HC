@@ -19,8 +19,8 @@ allowedExtensions: [],
         }
         });
         });
-};
-        })(jQuery);
+        };
+})(jQuery);
         var initCalendarDragNDrop = function() {
         $('#external-events div.external-event').each(function() {
         var eventObject = {
@@ -35,7 +35,7 @@ allowedExtensions: [],
                 revertDuration: 0  //  original position after the drag
         });
         });
-                };
+        };
         var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt = "00:00:00", inputDate = null, defaultView = "month") {
         var $calendar = $('#calendar');
                 var date = (inputDate == null)? new Date() : new Date(inputDate);
@@ -122,7 +122,7 @@ allowedExtensions: [],
                 .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
                 $calendarButtons
                 .attr({'class': 'btn btn-sm btn-default'});
-                };
+        };
         var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes = 30, start = '00:00:00', end = '24:00:00') {
         var $calendar = $('#calendar');
                 var date = (inputDate == null || inputDate == "" || inputDate == undefined)? new Date() : new Date(inputDate);
@@ -189,7 +189,7 @@ allowedExtensions: [],
                 .wrapAll('<div class="btn-group mb-sm mt-sm"></div>');
                 $calendarButtons
                 .attr({'class': 'btn btn-sm btn-default'});
-                };
+        };
         $(document).ready(function() {
 
 
@@ -197,10 +197,10 @@ $("#hidden-doses").hide();
         $('#patientdob').val('');
         $('#durationExample').on('blur', function(){
 checkAppointmentTime();
-});
+        });
         $('#calendarDate').on('blur', function(){
 checkAppointmentTime();
-});
+        });
         showAppointmentCount();
         // remove search box from table with class .removeSearchBox	
         $(".removeSearchBox").closest('.dataTables_wrapper').find('.datatables-header').remove();
@@ -216,13 +216,13 @@ var pay_type = $(this).val();
         if (parseInt(pay_type) == 0){
 $('.creditCard').hide();
         $('.cashInHand').show();
-} else if (parseInt(pay_type) == 1){
+        } else if (parseInt(pay_type) == 1){
 $('.cashInHand').hide();
         $('.creditCard').show();
-} else{
+        } else{
 $('.cashInHand').hide();
         $('.creditCard').hide();
-}
+        }
 
 });
         /* Checkout Page End */
@@ -231,7 +231,7 @@ $('.cashInHand').hide();
         $('select.chosen').chosen();
         $('.add-appointment-submit').submit(function(event) {
 event.preventDefault();
-});
+        });
         $.validator.setDefaults({ignore: ":hidden:not(select)"});
         $.validator.addMethod("aFunction", function(value, element) {
         if (value === "none")
@@ -247,23 +247,23 @@ event.preventDefault();
         var j = 1;
         $("#addAppPatient").click(function() {
 if (i === 1)
-{
-$("#email").rules("add", { remote: ajax_url + "/apptsetting/uniqueEmail"});
-        $('#patient_come [type=text], #patient_come [type=email]').val('');
-        $('#patient_come').show();
-        $('#patient_id').val('');
-        $('#addAppPatient').html('Choose Patient <i class="fa fa-minus"></i>');
-        $('.patient_id').hide();
-        i = 2;
-} else
-{
-$('#patient_come').hide();
-        $('.patient_id').show();
-        $('#addAppPatient').html('<i class="fa fa-plus"></i> Add Patient');
-        i = 1;
-}
+        {
+        $("#email").rules("add", { remote: ajax_url + "/apptsetting/uniqueEmail"});
+                $('#patient_come [type=text], #patient_come [type=email]').val('');
+                $('#patient_come').show();
+                $('#patient_id').val('');
+                $('#addAppPatient').html('Choose Patient <i class="fa fa-minus"></i>');
+                $('.patient_id').hide();
+                i = 2;
+                } else
+        {
+        $('#patient_come').hide();
+                $('.patient_id').show();
+                $('#addAppPatient').html('<i class="fa fa-plus"></i> Add Patient');
+                i = 1;
+                }
 return false;
-});
+        });
         /*
          * End of Functions for Add appointment.
          */
@@ -280,16 +280,16 @@ var invoice_id = $("#invoice_id").val();
                         // $("#div1").html(result);
                 }});
         //  window.print();
-}
+        }
 else{
 window.print();
-}
+        }
 });
         $(document).on("click", ".edit-row", function(ev) {
 $.ajaxSetup({
 headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
+        }
 });
         var appointmentId = $(this).attr('rel');
         $.ajax({
@@ -343,15 +343,15 @@ headers: {
                 type: 'inline'
         }
         });
-});
+        });
         $('.list-edit').on('change', function() {
 
 $.ajaxSetup({
 headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
+        }
 });
-});
+        });
         /*
          * Below Function are Called for View Appointment.
          */
@@ -361,9 +361,9 @@ $.magnificPopup.open({
 items: {
 src: '#modal-add-view-appointment',
         type: 'inline'
-}
+        }
 });
-});
+        });
         $(document).on("click", ".fc-event-inner", function(ev) {
 var text = $(this).data('id');
         $.ajaxSetup({
@@ -424,20 +424,20 @@ var text = $(this).data('id');
                 type: 'inline'
         }
         });
-});
+        });
         $("#addAppointment #doctor_id, #editAppointment #doctor_id").on('change', function(e){
 var doctor_id = $(this).val();
         if (doctor_id == ''){
 $(".showDocScheddulerLInk a").remove();
         return false;
-}
+        }
 $(".showDocScheddulerLInk").html('<a href="#" data-link = "' + doctor_id + '">Show scheduler</a>');
-});
+        });
         $(document).on('click', '.showDocScheddulerLInk a', function(e){
 $.ajaxSetup({
 headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
+        }
 });
         var doctor_id = $(this).data('link');
         var date = $("#appDate").val();
@@ -467,7 +467,7 @@ headers: {
                                 $.magnificPopup.proto.close.call(this);
                                 }
                         }
-                    };
+                        };
                         $.magnificPopup.open({
                         items: {
                         src: '#docApptSchedule',
@@ -481,11 +481,11 @@ headers: {
                 alert("failure");
                 }
         });
-})
+        })
 
         $(document).on('click', '.addMedicineListRow', function(){
 new emrFormNewPopUpRow();
-});
+        });
         $(document).on('click', '.saveMedicineList', function(){
 $('#vitaminSupplimentBox').html('');
         var data = [];
@@ -497,7 +497,7 @@ row = {};
         row['condition'] = $(v).find('.condition input').val();
         if (row['name'] != ''){
 data.push(row);
-}
+        }
 });
         data = JSON.stringify(data);
         input = jQuery('<input/>', {
@@ -506,7 +506,7 @@ data.push(row);
                 name: 'vitaminSuppliments'
         });
         $('#vitaminSupplimentBox').append(input);
-});
+        });
         $(document).on('click', '.saveIllnessList', function(){
 $('#illnessListBox').html('');
         var data = [];
@@ -515,7 +515,7 @@ row = {};
         row['illness'] = $(v).find('.illness input').val();
         if (row['illness'] != ''){
 data.push(row);
-}
+        }
 });
         data = JSON.stringify(data);
         input = jQuery('<input/>', {
@@ -524,7 +524,7 @@ data.push(row);
                 name: 'illness'
         });
         $('#illnessListBox').append(input);
-});
+        });
         $(document).on('click', '.saveMedicationList', function(){
 $('#medicationListBox').html('');
         var data = [];
@@ -536,7 +536,7 @@ row = {};
         row['condition'] = $(v).find('.condition input').val();
         if (row['name'] != ''){
 data.push(row);
-}
+        }
 });
         data = JSON.stringify(data);
         input = jQuery('<input/>', {
@@ -545,7 +545,7 @@ data.push(row);
                 name: 'medicationList'
         });
         $('#medicationListBox').append(input);
-});
+        });
         $(document).on('click', '.saveSurgeryList', function(){
 $('#surgeryListBox').html('');
         var data = [];
@@ -556,7 +556,7 @@ row = {};
         row['surgery_reason'] = $(v).find('.surgery_reason input').val();
         if (row['type_of_surgery'] != ''){
 data.push(row);
-}
+        }
 });
         data = JSON.stringify(data);
         input = jQuery('<input/>', {
@@ -565,22 +565,22 @@ data.push(row);
                 name: 'surgeryList'
         });
         $('#surgeryListBox').append(input);
-});
+        });
         $(document).on('click', '.saveAllergiesList', function(){
 new saveEmrPopupList();
-});
+        });
         $(document).on('click', '.deleteVitListRow', function(){
 if ($(this).closest('tr').siblings().length > 0){
 $(this).closest('tr').remove();
-} else{
+        } else{
 alert("Cannot delete the only row present");
-}
+        }
 });
         /*  remove error message when next file is loaded on import products page */
         $("#addcategories").find('#categoryFile').on('change', function(){
 $(".help-block").remove();
         $(".has-error").removeClass('has-error');
-});
+        });
         $('#nosetAppointment').hide();
         $('#setAppointment').hide();
         /*
@@ -594,9 +594,9 @@ var date = new Date();
         var dateMsg = ("0" + (date.getMonth() + 1)).slice( - 2) + '/' + ("0" + date.getDate()).slice( - 2) + '/' + date.getFullYear();
         $('#followupDate').val(dateMsg);
         $('#followupDate').attr('disabled', true);
-} else{
+        } else{
 $('#followupDate').removeAttr('disabled');
-}
+        }
 });
         $('.callStatus').on('click', function() {
 var call_value = $(this).val();
@@ -605,12 +605,12 @@ $('#nosetAppointment').hide();
         $("input, select, textarea", $("#nosetAppointment")).attr("disabled", "disabled");
         $("input, select, textarea", $("#setAppointment")).removeAttr("disabled");
         $('#setAppointment').show();
-} else {
+        } else {
 $('#setAppointment').hide();
         $("input, select, textarea", $("#setAppointment")).attr("disabled", "disabled");
         $("input, select, textarea", $("#nosetAppointment")).removeAttr("disabled");
         $('#nosetAppointment').show();
-}
+        }
 });
         $(document).on('change', $("#changeStatus").find('select[name="patient_status"]'), function(){
 var val = $("#changeStatus").find('select[name="patient_status"]').val();
@@ -618,11 +618,11 @@ var val = $("#changeStatus").find('select[name="patient_status"]').val();
         if (val != 4){
 if ($("#labFilesUpload").length != 0){
 $("#labFilesUpload").remove();
-}
+        }
 } else{
 var fileInput = '<div class="form-group" id="labFilesUpload"><label for="labFiles" class="col-sm-4 control-label">Upload Lab report files</label><div class="col-md-6"><input id="fileupload" type="file" name="labFiles[]" data-url="#" class="form-control input valid"  multiple></div></div>';
         $("#changeStatus").find('.panel-body').append(fileInput);
-}
+        }
 });
         /*
          * Click on add cart icon on the fornt office sale
@@ -634,7 +634,7 @@ var patientId = $('select[name="patient_id"]').val();
 showMessage('Please select patient from Select Patient drop down.', 'error');
         //notifyUser('Please select patient from Select Patient drop down.', 'error');
         return false;
-}
+        }
 var catId = $(this).data('cat-value');
         var pkgId = $(this).data('pkg-val');
         $.ajax({
@@ -658,7 +658,7 @@ var catId = $(this).data('cat-value');
                 }
                 }
         });
-});
+        });
         /*
          * count the cart if the patient will change by drop down in the front office sale
          */
@@ -679,10 +679,10 @@ method: 'post',
         }
         }
 });
-} else{
+        } else{
 $('.cartLink .badge').text(0);
         $('.saleAnchor').removeAttr('href');
-}
+        }
 });
         $("#editProductInventoryForm").on('submit', function(e){
 var data = $(this).serializeArray();
@@ -704,8 +704,8 @@ var data = $(this).serializeArray();
                 }
         });
         e.preventDefault();
-});
         });
+});
         /**
          * notifyUser(text, type) renders PNotify messages
          * @text: refers to  message to be rendered
@@ -841,7 +841,7 @@ var data = $(this).serializeArray();
                                 new Blob([data], {type : 'text/csv'},
                                         'My file.csv'
                                         ));
-                        });
+                });
                         /*
                          * Show the appointment patient record on the selection form choosing patient at the time of create appointment
                          */
@@ -985,7 +985,7 @@ var data = $(this).serializeArray();
                                                 $('.requestCount').text(combine.requestFollowups);
                                         }
                                 });
-                                }
+                        }
 
                 function checkAppointmentTime(){
                 var nowtime = new Date();
@@ -1009,7 +1009,6 @@ var data = $(this).serializeArray();
                 }
                 }
                 }
-
                 }
 
                 $(document).on("click", ".createAppointment", function(ev) {
@@ -1068,8 +1067,6 @@ var data = $(this).serializeArray();
                                 data: {"id": user_id },
                                 success: function(response) {
                                 var combine = JSON.parse(response);
-                                        console.log(combine);
-                                        // console.log(combine.requestFollowup.patient.first_name);
                                         $('#first_name').val(combine.requestFollowup.patient.first_name);
                                         $('#last_name').val(combine.requestFollowup.patient.last_name);
                                         $('#requestComment').val(combine.comment);
@@ -1108,92 +1105,64 @@ var data = $(this).serializeArray();
                         /***********************For internal validation of Doses************************/
 
 
-            $("#amount1").change(function(){
+                        $("#amount1").change(function(){
                 var amount1 = $(this).val();
-                $("#amount2 option[value='" + amount1 + "']").remove();
-                $("#amount3 option[value='" + amount1 + "']").remove();
-                $("#amount4 option[value='" + amount1 + "']").remove();
-            });
-            
-            $("#amount2").change(function(){
+                        $("#amount2 option[value='" + amount1 + "']").remove();
+                        $("#amount3 option[value='" + amount1 + "']").remove();
+                        $("#amount4 option[value='" + amount1 + "']").remove();
+                });
+                        $("#amount2").change(function(){
                 var amount2 = $(this).val();
-                $("#amount1 option[value='" + amount2 + "']").remove();
-                $("#amount3 option[value='" + amount2 + "']").remove();
-                $("#amount4 option[value='" + amount2 + "']").remove();
-            });
-            
-            $("#amount3").change(function(){
+                        $("#amount1 option[value='" + amount2 + "']").remove();
+                        $("#amount3 option[value='" + amount2 + "']").remove();
+                        $("#amount4 option[value='" + amount2 + "']").remove();
+                });
+                        $("#amount3").change(function(){
                 var amount3 = $(this).val();
-                $("#amount1 option[value='" + amount3 + "']").remove();
-                $("#amount2 option[value='" + amount3 + "']").remove();
-                $("#amount4 option[value='" + amount3 + "']").remove();
-            });
-            
-            $("#amount4").change(function(){
+                        $("#amount1 option[value='" + amount3 + "']").remove();
+                        $("#amount2 option[value='" + amount3 + "']").remove();
+                        $("#amount4 option[value='" + amount3 + "']").remove();
+                });
+                        $("#amount4").change(function(){
                 var amount4 = $(this).val();
-                $("#amount1 option[value='" + amount4 + "']").remove();
-                $("#amount2 option[value='" + amount4 + "']").remove();
-                $("#amount3 option[value='" + amount4 + "']").remove();
-            });
-            
-            $("#medicationA1").change(function(){
+                        $("#amount1 option[value='" + amount4 + "']").remove();
+                        $("#amount2 option[value='" + amount4 + "']").remove();
+                        $("#amount3 option[value='" + amount4 + "']").remove();
+                });
+                        $("#medicationA1").change(function(){
                 var med1 = $(this).val();
-                $("#medicationA2 option[value='" + med1 + "']").remove();
-                $("#medicationB1 option[value='" + med1 + "']").remove();
-                $("#medicationB2 option[value='" + med1 + "']").remove();
-            });
-            
-            $("#medicationA2").change(function(){
+                        $("#medicationA2 option[value='" + med1 + "']").remove();
+                        $("#medicationB1 option[value='" + med1 + "']").remove();
+                        $("#medicationB2 option[value='" + med1 + "']").remove();
+                });
+                        $("#medicationA2").change(function(){
                 var med2 = $(this).val();
-                $("#medicationA1 option[value='" + med2 + "']").remove();
-                $("#medicationB1 option[value='" + med2 + "']").remove();
-                $("#medicationB2 option[value='" + med2 + "']").remove();
-            });
-            
-            $("#medicationB1").change(function(){
+                        $("#medicationA1 option[value='" + med2 + "']").remove();
+                        $("#medicationB1 option[value='" + med2 + "']").remove();
+                        $("#medicationB2 option[value='" + med2 + "']").remove();
+                });
+                        $("#medicationB1").change(function(){
                 var med3 = $(this).val();
-                $("#medicationA1 option[value='" + med3 + "']").remove();
-                $("#medicationA2 option[value='" + med3 + "']").remove();
-                $("#medicationB2 option[value='" + med3 + "']").remove();
-            });
-            
-            $("#medicationB2").change(function(){
+                        $("#medicationA1 option[value='" + med3 + "']").remove();
+                        $("#medicationA2 option[value='" + med3 + "']").remove();
+                        $("#medicationB2 option[value='" + med3 + "']").remove();
+                });
+                        $("#medicationB2").change(function(){
                 var med4 = $(this).val();
-                $("#medicationA1 option[value='" + med4 + "']").remove();
-                $("#medicationA2 option[value='" + med4 + "']").remove();
-                $("#medicationB1 option[value='" + med4 + "']").remove();
-            });
-
+                        $("#medicationA1 option[value='" + med4 + "']").remove();
+                        $("#medicationA2 option[value='" + med4 + "']").remove();
+                        $("#medicationB1 option[value='" + med4 + "']").remove();
+                });
                         /*************************Dose Managemnet functionality****************/
-
-//                        $("#patient_to_choose").change(function(){
-//                            var patient_id = $(this).val();
-//                           // alert(patient_id);
-//                            $("#hidden-doses").show();
-//                            $.ajax({     
-//                              method: 'post',
-//                              url: ajax_url +"/doseManagement/getPatientDetails/"+patient_id,
-//                                success: function(data) {
-//                                    var count = data['trimix_doses'];
-//                                    
-//                                    $("#pname").html(data['first_name']+" "+data['last_name']); 
-//                                    $("#pdob").html(data['patient_detail']['dob']); 
-//                                    $("#patient_id").val(data['patient_detail']['user_id']);
-//                                    var title = doseTitle(count.length);
-//                                }
-//                      });
-//                 });
 
                         $("#patient_to_choose").change(function(){
                 $("#dose_details").html('');
                         var patient_id = $(this).val();
-                        // alert(patient_id);
                         $("#hidden-doses").show();
                         $.ajax({
                         method: 'post',
                                 url: ajax_url + "/doseManagement/getPatientDetails/" + patient_id,
                                 success: function(data) {
-                                //console.log(data);
                                 var count = data['trimix_doses'];
                                         if (count.length > 0)
                                 { j = 0;
@@ -1236,10 +1205,6 @@ var data = $(this).serializeArray();
                                 $("#dose_type").val(title);
                         }
                         }
-
-//                $(".permanent-dose").on('check', function(){
-//                    alert("Are you sure you want to continue");
-//                });
 
                 /* --------------------------START: Functions for the Checkout page pop-up --------------  */
                 $('.errorEMI').hide();
