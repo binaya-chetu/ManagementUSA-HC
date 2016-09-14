@@ -48,6 +48,18 @@ class DoseManagmentController extends Controller
         return view('doses.doseManagement',['patients' => $patients ]);
     }
    
+     public function callInResults()
+    {
+       
+       $patients = User::where('role', $this->patient_role)
+                        ->join('patient_details', function ($join) {
+                                $join->on('users.id', '=', 'patient_details.user_id')
+                                     ->where('patient_details.never_treat_status', '=', 0);
+                            })->get(['users.id', 'first_name', 'last_name']);
+        
+        return view('doses.callInResults',['patients' => $patients ]);
+    }
+   
     
     public function getPatientDetails(Request $request) {
         $patientData = User::with('patientDetail', 'trimixDoses')->where('id',$request->patient_id)->first();

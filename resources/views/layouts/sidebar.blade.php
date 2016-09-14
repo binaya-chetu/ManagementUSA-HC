@@ -402,6 +402,11 @@
                                     Manage Doses
                                 </a>
                             </li>
+                            <li class="{{ (Request::segment(1) === 'doses') && (Request::segment(2) === 'callInResults') ? 'nav-active' : null }}">
+                                <a href="{{ url('doses/callInResults') }}">
+                                   Patient's Feedback
+                                </a>
+                            </li>
 
                         </ul>
                     </li>

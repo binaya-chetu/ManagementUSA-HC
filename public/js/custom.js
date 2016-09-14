@@ -190,12 +190,12 @@ allowedExtensions: [],
                 $calendarButtons
                 .attr({'class': 'btn btn-sm btn-default'});
         };
-        $(document).ready(function() {
-
-
-$("#hidden-doses").hide();
-        $('#patientdob').val('');
-        $('#durationExample').on('blur', function(){
+        $(document).ready(function() {           
+            $("#testDosePart").hide();
+            $("#callInResults").hide();
+            $("#hidden-doses").hide();
+            $('#patientdob').val('');
+            $('#durationExample').on('blur', function(){
 checkAppointmentTime();
         });
         $('#calendarDate').on('blur', function(){
@@ -230,7 +230,7 @@ $('.cashInHand').hide();
         $('#external-events').hide();
         $('select.chosen').chosen();
         $('.add-appointment-submit').submit(function(event) {
-event.preventDefault();
+        event.preventDefault();
         });
         $.validator.setDefaults({ignore: ":hidden:not(select)"});
         $.validator.addMethod("aFunction", function(value, element) {
@@ -246,7 +246,7 @@ event.preventDefault();
         var i = 1;
         var j = 1;
         $("#addAppPatient").click(function() {
-if (i === 1)
+        if (i === 1)
         {
         $("#email").rules("add", { remote: ajax_url + "/apptsetting/uniqueEmail"});
                 $('#patient_come [type=text], #patient_come [type=email]').val('');
@@ -262,7 +262,7 @@ if (i === 1)
                 $('#addAppPatient').html('<i class="fa fa-plus"></i> Add Patient');
                 i = 1;
                 }
-return false;
+        return false;
         });
         /*
          * End of Functions for Add appointment.
@@ -328,6 +328,7 @@ headers: {
                         $('input:radio[name="gender"][value="' + combine.patient.patient_detail.gender + '"]').prop('checked', true);
                         $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
                         $('#durationExample').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
+                        
                         var date = Date.parse(combine.patient.patient_detail.dob) || 0;
                         if (date > 0){
                 $('#patientdob').datepicker('setDate', moment(combine.patient.patient_detail.dob).format('MM/DD/YYYY'));
@@ -425,14 +426,14 @@ var text = $(this).data('id');
         }
         });
         });
-        $("#addAppointment #doctor_id, #editAppointment #doctor_id").on('change', function(e){
-var doctor_id = $(this).val();
-        if (doctor_id == ''){
-$(".showDocScheddulerLInk a").remove();
-        return false;
-        }
-$(".showDocScheddulerLInk").html('<a href="#" data-link = "' + doctor_id + '">Show scheduler</a>');
-        });
+            $("#addAppointment #doctor_id, #editAppointment #doctor_id").on('change', function(e){
+    var doctor_id = $(this).val();
+            if (doctor_id == ''){
+    $(".showDocScheddulerLInk a").remove();
+            return false;
+            }
+    $(".showDocScheddulerLInk").html('<a href="#" data-link = "' + doctor_id + '">Show scheduler</a>');
+            });
         $(document).on('click', '.showDocScheddulerLInk a', function(e){
 $.ajaxSetup({
 headers: {
@@ -1084,22 +1085,22 @@ var data = $(this).serializeArray();
                         });
                 });
                         $(document).on("change", "#selectCategory", function(ev) {
-                $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
-                        var cat_id = $(this).val();
-                        if (cat_id != ''){
-                $.ajax({
-                type: "POST",
-                        url: ajax_url + "/categories/selectCategoryDetail",
-                        data: {"id": cat_id },
-                        success: function(response) {
-                        var combine = JSON.parse(response);
-                        }
-                });
-                }
+                            $.ajaxSetup({
+                            headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                            });
+                                    var cat_id = $(this).val();
+                                    if (cat_id != ''){
+                            $.ajax({
+                            type: "POST",
+                                    url: ajax_url + "/categories/selectCategoryDetail",
+                                    data: {"id": cat_id },
+                                    success: function(response) {
+                                    var combine = JSON.parse(response);
+                                    }
+                            });
+                     }   
 
                 });
                         /***********************For internal validation of Doses************************/
@@ -1153,7 +1154,8 @@ var data = $(this).serializeArray();
                         $("#medicationA2 option[value='" + med4 + "']").remove();
                         $("#medicationB1 option[value='" + med4 + "']").remove();
                 });
-                        /*************************Dose Managemnet functionality****************/
+                
+             /*************************Dose Managemnet functionality****************/
 
                         $("#patient_to_choose").change(function(){
                             $("#dose_details").html('');
@@ -1165,23 +1167,27 @@ var data = $(this).serializeArray();
                                             success: function(data) {
                                             var count = data['trimix_doses'];
                                                if (count.length > 0)
-                                            {       //j = 0;
-                                                for (i = 0; i < count.length; i++){
-                                                 $("#dose_details").append('<div class = "row"> <div class = "row-title"> Test Dose ' + j + '<span id = "perm-link">  <input class = "permanent-dose" type="checkbox"  value = ' + data['trimix_doses'][i]['dose_type'] + ' /> &nbsp;&nbsp;Make it permanent  </span></div> <div class="col-sm-6 form-group"><lable>Doctor: ' + data['trimix_doses'][i]['doctor'] + '</lable></div>' +
-                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount1'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA1'] + ' </lable></div><hr>' +
-                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount2'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA2'] + ' </lable></div><hr>' +
-                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount3'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB1'] + ' </lable></div><hr>' +
-                                                         ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount4'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB2'] + ' </lable></div><hr>');
-                                                 }
-                                            }
+                                                    {       //j = 0;
+                                                        for (i = 0; i < count.length; i++){
+                                                                $("#dose_details").append('<div class = "row"> <div class = "row-title"> Test Dose ' + data['trimix_doses'][i]['dose_type'] + '<span id = "perm-link">  <input class = "permanent-dose" type="checkbox"  value = ' + data['trimix_doses'][i]['dose_type'] + ' /> &nbsp;&nbsp;Make it permanent  </span></div>'+
+                                                                 '<div class="col-sm-6 form-group"><lable>Doctor: ' + data['trimix_doses'][i]['doctor'] + '</lable></div>' +
+                                                                 ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount1'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA1'] + ' </lable></div><hr>' +
+                                                                 ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount2'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationA2'] + ' </lable></div><hr>' +
+                                                                 ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount3'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB1'] + ' </lable></div><hr>' +
+                                                                 ' <div class="col-sm-6 form-group"><lable>Amount: ' + data['trimix_doses'][i]['amount4'] + '</lable></div>  <div class="col-sm-6 form-group"><lable>Medication:' + data['trimix_doses'][i]['medicationB2'] + ' </lable></div><hr></div>');
+                                                         }
+                                                    }
 
                                                 $("#pname").html(data['first_name'] + " " + data['last_name']);
+                                                 $("#patientName").html(data['first_name'] + " " + data['last_name']);
                                                         $("#pdob").html(data['patient_detail']['dob']);
                                                         $("#patient_id").val(data['patient_detail']['user_id']);
                                                         var title = doseTitle(count.length);
                                             }
                                     });
                                 });
+                                
+                                
                         function doseTitle(count)
                         {
                             if (count == 0 || count == 1)
@@ -1189,17 +1195,25 @@ var data = $(this).serializeArray();
                                 var title = count + 1;
                                     $("#dose_title").html('<strong> Test Dose ' + title + '</strong>');
                                     $("#dose_type").val(title);
+                                    $("#callInResults").hide();
+                                    if(title == 2){
+                                         $("#testDosePart").show();
+                                         
+                                    }
+                                     
                             }
                             else
                             {
-                                var i = 63 + count;
+                                    var i = 63 + count;
                                         var title = String.fromCharCode(i);
                                         $("#dose_title").html('<strong> Home Test Dose ' + title + '</strong>');
                                         $("#dose_type").val(title);
+                                        $("#callInResults").show();
+                                        $("#testDosePart").hide();
                             }
                         }
 
-                /* --------------------------START: Functions for the Checkout page pop-up --------------  */
+   /* --------------------------START: Functions for the Checkout page pop-up --------------  */
                 $('.errorEMI').hide();
                         $(document).on("click", ".emi_popuup", function(ev) {
                 $('#emi_value').val('');
@@ -1229,5 +1243,5 @@ var data = $(this).serializeArray();
                 $.magnificPopup.close();
                 }
                 });
-                        /* --------------------------END: Functions for the Checkout page pop-up --------------  */
+     /* --------------------------END: Functions for the Checkout page pop-up --------------  */
 

@@ -808,4 +808,14 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'doses.doseManagement',
         //'middleware' => ['acl.doseManagement_read']
     ]);
+    
+    
+     /*
+     * To show the patient Doses details
+     */
+    Route::get('/doses/callInResults', [
+        'uses' => 'DoseManagmentController@callInResults',
+        'as' => 'doses.callInResults',
+        //'middleware' => ['acl:doseManagement_read']
+    ]);
 });
