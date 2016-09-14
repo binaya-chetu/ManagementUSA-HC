@@ -112,6 +112,9 @@ $(function() {
     // Validation for Inventory Imports form
     $('#inventory_imports').validate();
     
+    //Validate the trimix feedback form
+     $('#storeFeedback').validate();
+    
     //validation for followup pop-up form.
     $('#editAppointment').validate({
           rules: {

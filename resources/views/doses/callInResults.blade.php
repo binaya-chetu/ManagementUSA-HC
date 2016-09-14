@@ -78,7 +78,8 @@
 
        <section id = "callInResults">
                                         
-<hr>
+        {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'storeFeedback')) }}
+            {!! csrf_field() !!} 
     <div class="row">
         <div class="col-sm-2 form-group{{ $errors->has('time') ? ' has-error' : '' }}">
             {{ Form::label('time', 'Time', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -103,8 +104,9 @@
      <div class="row">
           <div class="col-sm-2 form-group{{ $errors->has('time') ? ' has-error' : '' }}">
            <select class="form-control"  required = "required " name = "time">
+               <option value="">Select Time</option>
            <?php for($hours=0; $hours<=12; $hours++) // the interval for hours is '1'
-                for($mins=0; $mins<60; $mins+=5) // the interval for mins is '30'
+                for($mins=5; $mins<60; $mins+=5) // the interval for mins is '30'
                     echo '<option>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
                        .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>'; ?>
            </select>
@@ -145,7 +147,7 @@
                 @endif
         </div>
          <div class="col-sm-2 form-group{{ $errors->has('perm') ? ' has-error' : '' }}">
-            {{ Form::checkbox('perm',null, ['class' => 'form-control input required perm', 'id' => 'perm']) }}
+            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'checked' => 'false', 'id' => 'perm']) }}
                  @if ($errors->has('perm'))
                  <span class="help-block">
                      <strong>{{ $errors->first('perm') }}</strong>
@@ -153,7 +155,7 @@
                  @endif
        </div>
     </div>
-                                        </section>
+               </section>
                                         <div class="row">
                                             </br>
                                             <div class="col-sm-12 form-group" >

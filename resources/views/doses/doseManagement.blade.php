@@ -1,5 +1,6 @@
 @extends('layouts.common')
 @section('content')
+
 <section role="main" class="content-body">
     <header class="page-header">       
         <h2>Dose Management </h2>
@@ -62,7 +63,7 @@
             </div>
              <div class="toggle" data-plugin-toggle>
                        <section class="toggle">
-                           <label>Saved Doses</label>
+                           <label>Given Doses Details</label>
                            <div class="toggle-content">
                                <div class="panel-body" class ='treatment-done'  id="dose_details">
 
@@ -137,9 +138,7 @@
                                             {{ Form::label('amount2', 'Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
                                                 <?php $amount = dropDownAmount(); ?>
-
                                                 {{ Form::select('amount2', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount2']) }}
-
                                                 @if ($errors->has('amount1'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('amount2') }}</strong>
@@ -248,4 +247,123 @@
         </div>
     </div>
 </section>
+
+
+    <div id="feedbackPopup" class="modal-block modal-block-primary mfp-hide">  
+       <section class="panel panel-primary">
+       <header class="panel-heading">
+                <h2 class="panel-title">Add Feedback</h2>
+            </header>
+           <div class="panel-body">
+             {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'doseManagemnet')) }}
+            {!! csrf_field() !!}
+            <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
+               {{ Form::label('time', 'Time', array('class' => 'col-sm-3 control-label mandatory')) }}
+
+                <div class="col-md-6"> 
+                  <select class="form-control"  required = "required " name = "time">
+                   <option value="">Select Time</option>
+                    <?php for($hours=0; $hours<=12; $hours++) // the interval for hours is '1'
+                         for($mins=5; $mins<60; $mins+=5) // the interval for mins is '30'
+                             echo '<option>'.str_pad($hours,2,'0',STR_PAD_LEFT).':'
+                                .str_pad($mins,2,'0',STR_PAD_LEFT).'</option>'; ?>
+                    </select>
+                </div>
+                         @if ($errors->has('time'))
+                         <span class="help-block">
+                             <strong>{{ $errors->first('time') }}</strong>
+                         </span>
+                         @endif
+            </div>
+          
+             <div class="form-group{{ $errors->has('percent') ? ' has-error' : '' }}"> 
+                 {{ Form::label('percent', 'Percent', array('class' => 'col-sm-3 control-label mandatory')) }}
+                 <div class="col-sm-6 form-group{{ $errors->has('percent') ? ' has-error' : '' }}">
+                    <?php $ddvalue = dropDown4(); ?>
+                    {{ Form::select('percent', (['' => 'Select'] + $ddvalue), null, ['class' => 'form-control input required percent', 'id' => 'percent']) }}
+                 @if ($errors->has('percent'))
+                 <span class="help-block">
+                     <strong>{{ $errors->first('percent') }}</strong>
+                 </span>
+                 @endif
+             </div>
+  
+            </div> 
+            
+                  <div class="form-group{{ $errors->has('pain') ? ' has-error' : '' }}"> 
+                 {{ Form::label('pain', 'Pain', array('class' => 'col-sm-3 control-label mandatory')) }}
+                    <div class="col-sm-6 form-group{{ $errors->has('pain') ? ' has-error' : '' }}">
+                   <?php $ddvalue = dropDown7(); ?>
+                 {{ Form::select('pain', (['' => 'Select'] + $ddvalue), null, ['class' => 'form-control input required pain', 'id' => 'pain']) }}
+                     @if ($errors->has('pain'))
+                     <span class="help-block">
+                         <strong>{{ $errors->first('pain') }}</strong>
+                     </span>
+                     @endif
+                   </div>
+  
+                  </div> 
+            
+              <div class="form-group{{ $errors->has('antidote') ? ' has-error' : '' }}"> 
+                 {{ Form::label('antidote', 'Antidote ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                 <div class="col-sm-6 form-group{{ $errors->has('antidote') ? ' has-error' : '' }}">
+             <?php $ddvalue = dropDown8(); ?>
+            {{ Form::select('antidote', (['' => 'Select'] + $ddvalue), null, ['class' => 'form-control input required antidote', 'id' => 'antidote']) }}
+                @if ($errors->has('antidote'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('antidote') }}</strong>
+                </span>
+                @endif
+             </div>
+            </div> 
+           <div class="form-group{{ $errors->has('notes') ? ' has-error' : '' }}"> 
+            {{ Form::label('notes', 'Notes', array('class' => 'col-sm-3 control-label mandatory')) }}
+              <div class="col-sm-6 form-group{{ $errors->has('notes') ? ' has-error' : '' }}">
+            {{ Form::textarea('notes', null, ['class' => 'form-control', 'placeholder' => 'Add note', 'id' => 'notes', 'rows' => '1']) }}
+                @if ($errors->has('notes'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('notes') }}</strong>
+                </span>
+                @endif
+              </div>
+            </div> 
+            
+            
+             <div class="form-group{{ $errors->has('perm') ? ' has-error' : '' }}"> 
+                {{ Form::label('perm', 'Perm', array('class' => 'col-sm-3 control-label mandatory')) }}
+                 <div class="col-sm-6 form-group{{ $errors->has('perm') ? ' has-error' : '' }}">
+            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'checked' => 'false', 'id' => 'perm']) }}
+                 @if ($errors->has('perm'))
+                 <span class="help-block">
+                     <strong>{{ $errors->first('perm') }}</strong>
+                 </span>
+                 @endif
+                </div>
+            </div> 
+            
+           </div>
+           
+
+ 
+    <footer class="panel-footer">
+        <div class="row">
+          
+            <div class="col-md-12 text-center">
+                {{ Form::button(
+                                    '<i class="fa fa-btn fa-user"></i>  Save feedback',
+                                    array(
+                                        'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
+                                        'type'=>'submit')) 
+                }}
+                <button class="btn btn-default closePop">Cancel</button>
+            </div>
+       
+
+
+        </div>
+    </footer>
+</section>
+{{ Form::close() }}
+  </div>         
+
 @endsection

@@ -818,4 +818,11 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'doses.callInResults',
         //'middleware' => ['acl:doseManagement_read']
     ]);
+    
+    Route::post('/doses/storeFeedback', [
+       'uses' => 'DoseManagmentController@storeFeedback',
+        'as' => 'doses.doseManagement',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
 });
