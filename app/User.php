@@ -246,6 +246,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
             return $this->hasMany('App\TrimixDoses', 'patient_id');
     }
+    
+    public function paymentByPatientId()
+    {
+        return $this->hasMany('App\Payment', 'patient_id');
+    }
 	
     protected static function boot() {
         parent::boot();

@@ -4,7 +4,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Patients List</h2>
-
         <div class="right-wrapper pull-right">
             {!! Breadcrumbs::render('patient') !!}
 

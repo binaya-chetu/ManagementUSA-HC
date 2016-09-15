@@ -175,5 +175,148 @@ function dropDown9()
     $dd9 = ['MD - Wesley Pope' =>'MD - Wesley Pope', 'MD - Kisha Farrell' => 'MD - Kisha Farrell', 'ANP - Justin Henson' => 'ANP - Justin Henson', 'ANP - Steven Scholen' =>'ANP - Steven Scholen'];
     return $dd9;
 }
+/**
+ * Function to find the DropDown 4
+ *
+ * @return array()
+ */
+function dropDown4()
+{
+    for($i = 0; $i<=100;$i = $i+5)
+        {
+            $ddvalue[$i] = $i; 
+        }
+             
+    return $ddvalue;
+}
 
-                                                   
+/**
+ * Function to find the DropDown 5
+ *
+ * @return array()
+ */
+function dropDown5()
+{
+    $ddvalue = ['2*2' =>'2*2', '3*3' => '3*3'];        
+    return $ddvalue;
+}
+
+        
+/**
+ * Function to find the DropDown6
+ *
+ * @return array()
+ */
+function dropDown6()
+{ 
+//    for($i = 0; $i<=60;$i = $i+5)
+//        {
+//            $min[$i] = $i; 
+//        }
+    for($j = 1; $j <= 12; $j++){
+        $hour = $j % 12 ? $j % 12 : 12;
+        $amp = $j >= 12 ? ' pm' : ' am';
+        $hour[$j] = $hour.$amp;
+    }
+ 
+    echo  $hourTime = $hour;die;
+    return $hourTime;
+}
+
+ /**
+ * Function to find the DropDown7
+ *
+ * @return array()
+ */                                              
+function dropDown7()
+{
+    $ddvalue = ['None' =>'None', 'Burning' => 'Burning','Testes Pain' =>'Testes Pain', 'Sensitive to Touch' => 'Sensitive to Touch'];        
+    return $ddvalue;
+}
+
+
+ /**
+ * Function to find the DropDown8
+ *
+ * @return array()
+ */           
+function dropDown8()
+{
+    $ddvalue = ['Yes' =>'Yes', 'No' => 'No'];        
+    return $ddvalue;
+}
+
+ /**
+ * Function to find the DropDown810
+ *
+ * @return array()
+ */           
+function dropDown10()
+{
+    $ddvalue = ['1' =>'1', '2' => '2','3' =>'3', '4' => '4','5' =>'5', '6' => '6','7' =>'7', '8' => '8','9' =>'9', '10' => '10','11' =>'11', '12' => '12','13' =>'13', '14' => '14','15' =>'15', '16' => '16','17' =>'17', '18' => '18','19' =>'19', '20' => '20 ','21' =>'21', '22' => '22','23' =>'23', '24' => '25'];        
+    return $ddvalue;
+}
+ /**
+ * Function to find the DropDown11
+ *
+ * @return array()
+ */           
+function dropDown11()
+{
+    $ddvalue = ['150 MG Sildenafil' =>'150 MG Sildenafil', '80 MG Vardenafil' => '80 MG Vardenafil',' 80 MG Tadalafil' =>' 80 MG Tadalafil'];        
+    return $ddvalue;
+}
+
+/**
+ * Function to find the DropDown12
+ *
+ * @return array()
+ */           
+function dropDown12()
+{
+    $ddvalue = ['10 MG' =>'10 MG', '20 MG' =>'20 MG','30 MG' =>'30 MG','40 MG' =>'40 MG','50 MG' =>'50 MG','60 MG' =>'60 MG','70 MG' =>'70 MG','80 MG' =>'80 MG','90 MG' =>'90 MG','100 MG' =>'100 MG','110 MG' =>'110 MG','120 MG' =>'120 MG','130 MG' =>'130 MG','140 MG' =>'140 MG','150 MG' =>'150 MG'];        
+    return $ddvalue;
+}
+
+/**
+ * Function to find the DropDown13
+ *
+ * @return array()
+ */           
+function dropDown13()
+{
+    $ddvalue = ['Sildenafil' =>'Sildenafil','Tadalafil' =>'Tadalafil','Vardenafil' =>'Vardenafil'];        
+    return $ddvalue;
+}
+
+/**
+ * Function to find the DropDown14
+ *
+ * @return array()
+ */           
+function dropDown14()
+{
+    $ddvalue = ['Sildenafil' =>'Sildenafil','Tadalafil' =>'Tadalafil','Vardenafil' =>'Vardenafil'];        
+    return $ddvalue;
+}
+
+/**
+ * Function to find the DropDown15
+ *
+ * @return array()
+ */           
+function dropDown15()
+{
+    $ddvalue = ['Visa' =>'Visa','Mastercard' =>'Mastercard','Discover' =>'Discover','Amex' =>'Amex'];        
+    return $ddvalue;
+}
+/**
+ * Function to find the DropDown16
+ *
+ * @return array()
+ */           
+function dropDown16()
+{
+    $ddvalue = ['2'=>'2'];        
+    return $ddvalue;
+}

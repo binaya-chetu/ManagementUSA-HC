@@ -73,4 +73,9 @@ class Payment extends Model
     {
         return $this->belongsTo('App\User', 'agent_id');
     }	
+    
+    public function patientDetails()
+    {
+        return $this->belongsTo('App\User', 'patient_id');
+    }
 }

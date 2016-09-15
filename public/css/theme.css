@@ -17589,3 +17589,19 @@ html.dark .thumbnail {
 {
     width:auto !important;
 }
+#prevent{
+    float:right;
+}
+.row-title{
+    font-size:16px !important;
+    font-weight: bold;
+}
+#perm-link{
+    float:right;
+}
+
+
+.error
+{
+    color:red;
+}
