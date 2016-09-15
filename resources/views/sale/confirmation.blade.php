@@ -19,11 +19,14 @@
                 <header class="panel-heading">
                     <h2 class="panel-title">Checkout Confirmation </h2>                    
                 </header>
-                <div class="panel-body">
+                <div class="panel-body" id="confirmPageBody">
                     <div class="row">
                         @if(Session::has('flash_message'))
                         <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                         @endif
+                        @if(Session::has('error_message'))
+                        <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
+                        @endif						
                     </div>
                     <div class="row">
                         <div class="col-sm-6 mt-md">
@@ -210,7 +213,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-4">
-                                <label>Total Amt.:</label>
+                                <label>Total Amt:</label>
                             </div>
                             <div class="col-sm-8">
                                 ${{ number_format($total_cart_price, 2) }}
@@ -228,7 +231,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-4">
-                                <label>Remaining Amt. :</label>
+                                <label>Remaining Amt:</label>
                             </div>
                             <div class="col-sm-8">
                                 $<?php 
@@ -237,7 +240,29 @@
                                 ?> <a href="javascript:void(0)" class="emi_popuup">EMI options</a>
                             </div>
                         </div>                        
-                    </div>                     
+                    </div>
+					<div id="emiDetailTable" style="display:none">
+						<div class="row">
+							<div class="col-md-12"><h3>EMI payment details</h3></div>
+						</div>	
+						<div>
+							<div class="table-responsive">
+								<table class="table table-striped mb-none">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Installment Amount</th>
+											<th>Due Date</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									</tbody>
+								</table>
+							</div>	
+						</div>
+					</div>					
                 </div>
 
                 <footer class="panel-footer">
@@ -280,8 +305,10 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label class="col-sm-12 errorEMI">*Please select an EMI's option </label>
-
-                                <div class="radio">
+								<label>Select prefered payment day</label>
+								<input class="emiDatepicker" name="emiDatepicker" placeholder="prefered payment day" data-date-format="mm/dd/yyyy">
+								<input type="hidden" name="totalEmiAmount" value="<?php echo $remaining; ?>">
+								<div class="radio">
                                     <label>
                                         {{ Form::radio('emi', 3, false, ['class' => 'emiRadio', 'id' =>'radio1' ]) }}
                                         <span>$<?php echo number_format($quarter, 2); ?>/month for 3 EMIs</span>

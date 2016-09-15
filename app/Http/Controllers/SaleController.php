@@ -13,7 +13,9 @@ use App\State;
 use App\Categories;
 use App\Cart;
 use App\Payment;
+use App\Emi;
 use App\Order;
+use DateTime;
 use App\OrderDetail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -81,17 +83,16 @@ class SaleController extends Controller
      * @return \resource\view\sale\confirmation.blade.php
      *  */
     public function confirmation($id, Request $request) {
-        //echo '<pre>'; print_r($request->all());die;
         $patientId = base64_decode($id);
         $cart = Cart::getCartDetails($patientId);
         $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')
-                            ->where('patient_id', $patientId)->get()->first();
-        //echo '<pre>';print_r($patientCart->toArray());die;
-               
+                            ->where('patient_id', $patientId)->get()->first();             
         $payment['payment_type'] = $request['payment_type'];
         $payment['paid_amount'] = $request['paid_amount'];
         $payment['total_amount'] = $request['total_amount'];
-        return view('sale.confirmation', [
+		
+		Session::set('checkout_payment', $payment);		    
+		return view('sale.confirmation', [
             'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 
             'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 
             'package_discount' => $cart['package_discount'], 'total_cart_price' => $cart['total_cart_price'], 'payment' => $payment
@@ -103,23 +104,62 @@ class SaleController extends Controller
      * @return \resource\view\sale\index.blade.php
      *  */
     public function makePayment(Request $request) {    
-        
         $formData = $request->all();
+		$payment = Session::get('checkout_payment');	
+		if(($payment['paid_amount'] < $payment['total_amount']) && !isset($formData['emiType'])){
+			\Session::flash('error_message', 'Please select prefered EMI option.');
+			return redirect()->back();
+		}  
+
+		if(!$payment || !$payment['paid_amount'] || !$payment['total_amount']){
+			\Session::flash('error_message', 'Your session expired. Please try again');
+			$url = 'sale/checkout/'.base64_encode($formData['patient_id']);
+			return redirect()->to($url);		
+		}
+
         $payments = new Payment;
         
         $payments->patient_id = $formData['patient_id'];
         $payments->agent_id = $formData['agent_id'];
         $payments->payment_type = $formData['payment_type'];
-        $payments->total_amount = $formData['total_amount'];
-        $payments->paid_amount = $formData['paid_amount'];
+        $payments->total_amount = $payment['total_amount'];
+        $payments->paid_amount = $payment['paid_amount'];	
         $payments->save();
-        
+        $payment_id = $payments->id;
+
+		if($payment['paid_amount'] < $payment['total_amount'] && isset($formData['emiType'])){
+			// save emi data
+			$formData['emiDate'] = explode(',', $formData['emiDate']);
+			$emiStartDate = $formData['emiDate'][0];
+			$emiStartDate = DateTime::createFromFormat('m-d-Y', $emiStartDate);			
+			$today = new DateTime();
+			if($emiStartDate < $today || $emiStartDate > $today->modify('next month')){
+				\Session::flash('error_message', 'Selected due date out of limit.');
+				return redirect()->back();				
+			}
+			$amount_left = $payment['total_amount'] - $payment['paid_amount'];			
+			$emiType = $formData['emiType'];
+			$emi_amount = $amount_left/$emiType;
+			for($i = 0; $i < $emiType; $i++){
+				$emi = new Emi;
+				$emi->type = $formData['emiType'];				
+				$emi->emi_amount = $emi_amount; // per installment amount
+				$emi->patient_id = $formData['patient_id'];
+				$emi->agent_id = $formData['agent_id']; 
+				$emi->payment_id = $payment_id;
+				$emi->due_date = $emiStartDate; 
+				$emi->save();
+				$emiStartDate->modify('next month');
+			}			
+		}
+		
         /* -------- START::Call the function saveOrder to save the order data ------- */
         $cart = Cart::getCartDetails($formData['patient_id']);
         $this->saveOrder($cart, $payments->id);
         /* -------------------------- END -------------------------------------------- */
         
         if (Cart::where('patient_id', $formData['patient_id'])->delete()) {
+			Session::set('checkout_payment', '');
             \Session::flash('flash_message', 'Your order placed successfully.');
             return Redirect::action('SaleController@index');
         }
