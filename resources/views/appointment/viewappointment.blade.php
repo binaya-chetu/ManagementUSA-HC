@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Calendar</h2>
+        <h2>Appointment Calendar</h2>
 
         <div class="right-wrapper pull-right">
             @if(!empty(Request::segment(2)))
