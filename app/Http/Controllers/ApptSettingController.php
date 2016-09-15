@@ -303,12 +303,6 @@ class ApptSettingController extends Controller {
         $user->email = $formData['email'];
         $user->role = $patientRole;        
         $user->save();
-        /* code for add the data in MSAccess database */
-//        $dbName = realpath( "../../managementUSA.mdb"); 
-//        $connection = odbc_connect("Driver={Microsoft Access Driver (*.mdb)};Dbq=$dbName",'root', '');
-//        $str = "'".$formData['first_name']."','".$formData['last_name']."','".$formData['email']."','".$formData['phone']."'";
-//        $stmt="INSERT INTO user(first_name, last_name, email, phone) VALUES($str)"; 
-//        $resultset1=odbc_exec($connection,$stmt);        
         
         $patient = App\Patient::firstOrCreate(['user_id' => $id]);
         $patient->phone = $formData['phone'];

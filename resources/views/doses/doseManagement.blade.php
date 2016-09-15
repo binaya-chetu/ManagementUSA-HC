@@ -45,6 +45,11 @@
             {{ Form::close() }}
         </div>
     </div>
+    
+    <div id ="error_details">
+        
+    </div>
+    
     <div id = "hidden-doses">
         <div class="panel-body">
             <div class="row">
@@ -335,7 +340,7 @@
              <div class="form-group{{ $errors->has('perm') ? ' has-error' : '' }}"> 
                 {{ Form::label('perm', 'Perm', array('class' => 'col-sm-3 control-label mandatory')) }}
                  <div class="col-sm-6 form-group{{ $errors->has('perm') ? ' has-error' : '' }}">
-            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'checked' => 'false', 'id' => 'perm']) }}
+            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'id' => 'perm']) }}
                  @if ($errors->has('perm'))
                  <span class="help-block">
                      <strong>{{ $errors->first('perm') }}</strong>

@@ -1710,14 +1710,15 @@ if (cat_id != '') {
                 $("#patient_to_choose").change(function(){
                     $("#dose_details").html('');
                             var patient_id = $(this).val();
-                            $("#hidden-doses").show();
+                           
                             $.ajax({
                             method: 'post',
                                     url: ajax_url + "/doseManagement/getPatientDetails/" + patient_id,
                                     success: function(data) {
                                     var count = data['trimix_doses'];
                                        if (count.length > 0)
-                                            {       //j = 0;
+                                            {   $("#error_details").html(' ');  
+                                                $("#hidden-doses").show();
                                                 for (i = 0; i < count.length; i++){
                                                         $("#dose_details").append('<table class = "table table-bordered"> <tr> <td class = "table-text"><div class = "row-title"> Test Dose ' + data['trimix_doses'][i]['dose_type'] +'</div>'+
                                                          '<div class="col-sm-12 form-group"><strong>Doctor:</strong> ' + data['trimix_doses'][i]['doctor'] + '</div>' +
@@ -1729,7 +1730,12 @@ if (cat_id != '') {
                                                          '</td></tr></table>');
                                                  }
                                             }
-
+                                            else 
+                                            {       $("#hidden-doses").hide();   
+                                                    $("#error_details").html(' ');
+                                                    $("#error_details").append('<table class = "table table-bordered"> <tr> <td class = "table-text"><div  class = "row-title error"> There is not any package available for selected patient!!! </div></td></tr></table>');
+                                            }
+                                            
                                         $("#pname").html(data['first_name'] + " " + data['last_name']);
                                          $("#patientName").html(data['first_name'] + " " + data['last_name']);
                                                 $("#pdob").html(data['patient_detail']['dob']);
