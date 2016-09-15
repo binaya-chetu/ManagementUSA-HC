@@ -47,21 +47,17 @@ class DoseManagmentController extends Controller
         
         return view('doses.doseManagement',['patients' => $patients ]);
     }
-   
-     public function callInResults()
-    {
-       $patients = User::where('role', $this->patient_role)
-                        ->join('patient_details', function ($join) {
-                                $join->on('users.id', '=', 'patient_details.user_id')
-                                     ->where('patient_details.never_treat_status', '=', 0);
-                            })->get(['users.id', 'first_name', 'last_name']);
-        
-        return view('doses.callInResults',['patients' => $patients ]);
-    }
-   
     
+   
+     /**
+     * This function is used to get  the trimix doses and patient details having Trimix package.
+     *
+     * @param Request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getPatientDetails(Request $request) {
-        $patientData = User::with('patientDetail', 'trimixDoses')->where('id',$request->patient_id)->first();
+        $patientData = User::with('patientDetail', 'paymentByPatientId', 'trimixDoses')->where('id',$request->patient_id)->first();
         return $patientData;
         exit();
     }
@@ -155,7 +151,7 @@ class DoseManagmentController extends Controller
             'pain' => 'required',
             'antidote' => 'required',
         ]);
-      //  echo "<pre>";print_r($request->all());die;
+     
         $trimixFeedback = new TrimixDosesFeedback;
         $trimixFeedback->agent_id = Auth::user()->id;
         $trimixFeedback->trimix_dose_id = 1;
