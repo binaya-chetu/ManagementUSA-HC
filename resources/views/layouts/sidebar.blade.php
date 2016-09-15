@@ -388,8 +388,7 @@
                         </ul>
                     </li>
                     @endif 
-                    
-                  
+                   
                     <li class="nav-parent {{ Request::segment(1) === 'doses' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -402,11 +401,11 @@
                                     Manage Doses
                                 </a>
                             </li>
-                            <li class="{{ (Request::segment(1) === 'doses') && (Request::segment(2) === 'callInResults') ? 'nav-active' : null }}">
+<!--                            <li class="{{ (Request::segment(1) === 'doses') && (Request::segment(2) === 'callInResults') ? 'nav-active' : null }}">
                                 <a href="{{ url('doses/callInResults') }}">
                                    Patient's Feedback
                                 </a>
-                            </li>
+                            </li>-->
 
                         </ul>
                     </li>

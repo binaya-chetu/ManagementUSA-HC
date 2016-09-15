@@ -75,7 +75,6 @@ class DoseManagmentController extends Controller
      */
     public function store(Request $request)
     {
-        
         // define validation rule
         $this->validate($request, [
             'doctor' => 'required',
@@ -92,7 +91,6 @@ class DoseManagmentController extends Controller
         //echo "<pre>";print_r($request->all());die;
         // create TrimixDoses object
         $trimixData = new TrimixDoses;
-        
         $trimixData->patient_id = $request->patient_id;
         $trimixData->agent_id = Auth::user()->id;
         $trimixData->dose_type = $request->dose_type;
@@ -157,7 +155,6 @@ class DoseManagmentController extends Controller
             'pain' => 'required',
             'antidote' => 'required',
         ]);
-        
       //  echo "<pre>";print_r($request->all());die;
         $trimixFeedback = new TrimixDosesFeedback;
         $trimixFeedback->agent_id = Auth::user()->id;

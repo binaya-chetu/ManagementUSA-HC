@@ -11,7 +11,7 @@ class TrimixDosesFeedback extends Model
      *
      * @var string
      */
-    protected $table = 'trimix_doses_feedback';
+    protected $table = 'trimix_dose_feedback';
     protected $fillable = [
         'trimix_dose_id',
         'agent_id',
