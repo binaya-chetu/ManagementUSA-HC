@@ -1,7 +1,6 @@
 @extends('layouts.common')
 
 @section('content')
- <!--link rel="stylesheet" href="{{ URL::asset('vendor/dropzone/css/dropzone.css') }}" /-->
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">

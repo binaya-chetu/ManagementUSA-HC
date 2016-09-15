@@ -130,12 +130,6 @@
             </div>
         </div>
         <div  id="setAppointment">
-<!--            <div class="form-group">
-                {{ Form::label('reason_id', 'Reason for Visit', array('class' => 'col-sm-3 control-label mandatory')) }}
-                <div class="col-md-8">
-                    {{ Form::select('reason_id', ['' => 'Choose the Reason'] + $setReasonCode, null, ['class' => 'form-control required']) }}
-                </div>
-            </div>-->
             <div class="form-group">
                 {{ Form::label('appDate', 'Appointment Time', array('class' => 'col-sm-3 control-label mandatory')) }}
 
@@ -164,8 +158,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <footer class="panel-footer">
         <div class="row">                  
