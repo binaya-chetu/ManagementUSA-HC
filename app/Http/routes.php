@@ -812,4 +812,12 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'doses.doseManagement',
         //'middleware' => ['acl.doseManagement_read']
     ]);
+	
+	
+	
+    Route::get('/document/baseurl', [
+       'uses' => 'Dcoumentsign@baseurl',
+        'as' => 'Dcoumentsign.baseurl',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
 });
