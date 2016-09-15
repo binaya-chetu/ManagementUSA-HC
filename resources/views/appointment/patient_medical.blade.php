@@ -1480,18 +1480,6 @@
     });
 
     /** 
-     * Click on the Major surgeries then a pop-up will show corresponding that
-     * */
-//    $(document).on("click", "#surgeries1", function(ev) {
-//        $('#common_modal .panel-title').text('List of Sergeries');
-//        $.magnificPopup.open({
-//            items: {
-//                src: '#common_modal',
-//                type: 'inline'
-//            }
-//        });
-//    });
-    /** 
      * Click on the the radio button to show the medicine list with corresponding id in the pop-up
      * */
     
@@ -1523,43 +1511,7 @@
             }
         });
     });
-    /** 
-     * Click on the Other Illness then a pop-up will show corresponding that
-     * */
-//    $(document).on("click", "#illness1", function(ev) {
-//        $('#common_modal .panel-title').text('List of Other Illness');
-//        $.magnificPopup.open({
-//            items: {
-//                src: '#common_modal',
-//                type: 'inline'
-//            }
-//        });
-//    });
-    /** 
-     * Click on the Medication then a pop-up will show corresponding that
-     * */
-//    $(document).on("click", "#medication1", function() {
-//        $('#common_modal .panel-title').text('List of Medication');
-//        $.magnificPopup.open({
-//            items: {
-//                src: '#common_modal',
-//                type: 'inline'
-//            }
-//        });
-//    });
-
-    /** 
-     * Click on the Allergies then a pop-up will show corresponding that
-     * */
-//    $(document).on("click", "#vitamin_taken1", function(ev) {
-//        $('#common_modal .panel-title').text('List of testosterone');
-//        $.magnificPopup.open({
-//            items: {
-//                src: '#common_modal',
-//                type: 'inline'
-//            }
-//        });
-//    });
+    
 </script>
 @endsection
 

@@ -1,12 +1,7 @@
 @extends('layouts.common')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @section('content')
-<style>
-    #awesome
-    {
-        
-    }
-</style>
+
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Create Appointment From Tele-Marketing Call</h2>

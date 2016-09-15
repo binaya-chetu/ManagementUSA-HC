@@ -97,8 +97,6 @@
                                             <td class="table-text">{{ $follow->web_lead->location }}</td>
                                             <td class="table-text"> {{ date('Y-m-d h:ia', strtotime($follow->web_lead->requested_date)) }}</td>
                                             <td class="actions">
-<!--                                                <a href="javascript:void(0);" class="on-editing save-row lead_popup" title="Edit" rel="{{ $follow->web_lead->id }}"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            -->
                                             </td>
                                         </tr>  
                                         @endforeach  
@@ -184,18 +182,7 @@
     $('document').ready(function() {
         $('#reasonCode').hide();
         $('#callStatus').validate();
-    })
-
-//    $('.lead_popup').on('click', function() {
-//        $('#apptId').val($(this).attr('rel'));
-//
-//        $.magnificPopup.open({
-//            items: {
-//                src: '#modalCall',
-//                type: 'inline'
-//            }
-//        });
-//    });
+    });
     $('.callStatus').on('click', function() {
         var call_value = $(this).val();
         if (call_value == 1) {

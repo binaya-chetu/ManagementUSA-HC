@@ -41,4 +41,9 @@ class TrimixDoses extends Model
     {
         return $this->belongsTo('App\User', 'patient_id');
     }
+    
+     public function trimixFeedback() 
+    {
+        return $this->hasOne('App\TrimixDosesFeedback', 'trimix_dose_id');
+    }
 }

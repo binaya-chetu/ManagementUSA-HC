@@ -388,7 +388,7 @@
                         </ul>
                     </li>
                     @endif 
-                  
+
                     <li class="nav-parent {{ Request::segment(1) === 'doses' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>

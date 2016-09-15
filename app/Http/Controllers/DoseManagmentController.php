@@ -17,6 +17,7 @@ use Exception;
 use App\User;
 use App\Patient;
 use App\TrimixDoses;
+use App\TrimixDosesFeedback;
 
 class DoseManagmentController extends Controller
 {
@@ -38,7 +39,6 @@ class DoseManagmentController extends Controller
      */
     public function index()
     {
-       
        $patients = User::where('role', $this->patient_role)
                         ->join('patient_details', function ($join) {
                                 $join->on('users.id', '=', 'patient_details.user_id')
@@ -46,6 +46,17 @@ class DoseManagmentController extends Controller
                             })->get(['users.id', 'first_name', 'last_name']);
         
         return view('doses.doseManagement',['patients' => $patients ]);
+    }
+   
+     public function callInResults()
+    {
+       $patients = User::where('role', $this->patient_role)
+                        ->join('patient_details', function ($join) {
+                                $join->on('users.id', '=', 'patient_details.user_id')
+                                     ->where('patient_details.never_treat_status', '=', 0);
+                            })->get(['users.id', 'first_name', 'last_name']);
+        
+        return view('doses.callInResults',['patients' => $patients ]);
     }
    
     
@@ -56,7 +67,7 @@ class DoseManagmentController extends Controller
     }
     
     /**
-     * This function is used to save the new role in tables.
+     * This function is used to save the trimix doses in trimix_doses tables.
      *
      * @param Request
      *
@@ -64,7 +75,6 @@ class DoseManagmentController extends Controller
      */
     public function store(Request $request)
     {
-        
         // define validation rule
         $this->validate($request, [
             'doctor' => 'required',
@@ -79,9 +89,8 @@ class DoseManagmentController extends Controller
         ]);
         
         //echo "<pre>";print_r($request->all());die;
-        // create User object
+        // create TrimixDoses object
         $trimixData = new TrimixDoses;
-        
         $trimixData->patient_id = $request->patient_id;
         $trimixData->agent_id = Auth::user()->id;
         $trimixData->dose_type = $request->dose_type;
@@ -98,7 +107,7 @@ class DoseManagmentController extends Controller
         $trimixData->antidote = (isset($request->antidote)) ? $request->antidote : '';
         $trimixData->dose_start_date = date('Y-m-d h:i:s');
         
-        // save user data in user table
+        // save trimix doses data in table
         if ($trimixData->save()) {
             if($request->dose_type != 1)
             {
@@ -128,5 +137,42 @@ class DoseManagmentController extends Controller
             return Redirect::back();
         }
     }
-
+    
+    
+    /**
+     * This function is used to save the patient feedback for trimix doses in trimix_dose_feedback tables.
+     *
+     * @param Request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFeedback(Request $request)
+    {
+        // define validation rule
+        $this->validate($request, [
+            'time' => 'required',
+            'percent' => 'required',
+            'pain' => 'required',
+            'antidote' => 'required',
+        ]);
+      //  echo "<pre>";print_r($request->all());die;
+        $trimixFeedback = new TrimixDosesFeedback;
+        $trimixFeedback->agent_id = Auth::user()->id;
+        $trimixFeedback->trimix_dose_id = 1;
+        $trimixFeedback->time = $request->time;
+        $trimixFeedback->percentage = $request->percent;
+        $trimixFeedback->antidote = $request->antidote;
+        $trimixFeedback->notes = $request->notes;
+        
+        // save user data in user table
+        if ($trimixFeedback->save()) {
+             // set the flash message.
+            \Session::flash('flash_message', 'Doses saved successfully.');
+            return redirect('/doses/doseManagement');
+        } else {
+            \Session::flash('flash_message', 'There are something went wrong Plz Try again.');
+            return Redirect::back();
+        }
+    }
+    
 }

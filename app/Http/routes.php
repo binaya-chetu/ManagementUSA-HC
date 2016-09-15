@@ -813,9 +813,25 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+
     Route::get('/apptsetting/pdfList', function() {
         return view('apptsetting.pdf_list');
     });
-   
+
+     /*
+     * To show the patient Doses details
+     */
+    Route::get('/doses/callInResults', [
+        'uses' => 'DoseManagmentController@callInResults',
+        'as' => 'doses.callInResults',
+        //'middleware' => ['acl:doseManagement_read']
+    ]);
+    
+    Route::post('/doses/storeFeedback', [
+       'uses' => 'DoseManagmentController@storeFeedback',
+        'as' => 'doses.doseManagement',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+
     
 });
