@@ -5,18 +5,6 @@
         <h2 class="panel-title">Edit Appointment</h2>
     </header>
     <div class="panel-body">
-<!--        <div class="form-group">
-            {{ Form::label('Doctor', 'Doctor', array('class' => 'col-sm-4 control-label')) }}
-            <div class="col-md-6">
-                <select  class="form-control chosen" name="doctor_id" id="doctor_id">
-                    <option value="">Choose Doctor</option>
-                    @foreach ($doctors as $doctor)
-                    <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->last_name }}</option>
-                    @endforeach
-                </select>    
-            </div>
-            <div class="showDocScheddulerLInk"></div>
-        </div>-->
         <div class="form-group">
             {{ Form::label('appointment_time', 'Choose Date & Time', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-md-4">
@@ -38,22 +26,6 @@
             {{ Form::hidden('appointment_id', 1,['id' => 'appointment_id']) }}   
             {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
         </div>   
-        
-<!--        <div class="form-group">
-            {{ Form::label('patient', 'Patient', array('class' => 'col-sm-4 control-label')) }}
-
-            <div class="col-md-6">
-                <select  class="form-control chosen" name="patient_id" id="patient_id" disabled="true">
-                    <option value="" disabled>Choose Patient</option>
-                    @foreach ($patients as $patient)
-                    <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
-                    @endforeach                 
-                </select>    
-                {{ Form::hidden('clinic', Auth::user()->id) }}
-                {{ Form::hidden('patient_id') }}               
-            </div>
-        </div>-->
-        
         <!-- Patient Edited Details -->
         <div class="form-group"> 
             {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
@@ -97,25 +69,6 @@
                 @endif 
             </div> 
         </div> 
-<!--        <div class="form-group"> 
-            {{ Form::label('gender', 'Gender', array('class' => 'col-sm-4 control-label')) }}
-            <div class="col-sm-6"> 
-                <div class="col-sm-3"> 
-                    <div class="radio-custom radio-primary"> 
-                        {{ Form::radio('gender', 'Male', true, ['id' => 'awesome']) }}
-                        <label for="awesome">Male
-                        </label> 
-                    </div> 
-                </div> 
-                <div class="col-sm-3"> 
-                    <div class="radio-custom radio-primary"> 
-                        {{ Form::radio('gender', 'Female', false, ['id' => 'very-awesome']) }}
-                        <label for="very-awesome">Female
-                        </label> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> -->
         <div class="form-group"> 
             {{ Form::label('address', 'Address line 1', array('class' => 'col-sm-4 control-label')) }}
             <div class="col-sm-6"> 
