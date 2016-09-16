@@ -158,9 +158,8 @@ return [
         App\Providers\Validation\ValidationServiceProvider::class,
 	'Maatwebsite\Excel\ExcelServiceProvider',
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-		
-
-    ],
+		Tjphippen\Docusign\DocusignServiceProvider::class,
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -209,6 +208,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+		'Docusign' => Tjphippen\Docusign\Facades\Docusign::class,
     ],
 
 ];

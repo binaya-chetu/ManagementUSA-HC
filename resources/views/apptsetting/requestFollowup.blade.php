@@ -76,7 +76,7 @@
                             </div></td>
                             <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($requestFollowup->created_at)) }}</div></td>
                             <td class="actions" style = "text-align:center">
-                                <a href="javascript:void(0)" class="on-default request-follow-up" rel="{{ $requestFollowup->user_id }}"><i class="fa fa-pencil"></i></a>
+                                <a href="javascript:void(0)" class="on-default request-follow-up" rel="<?php echo $requestFollowup->user_id.'/'.$requestFollowup->id; ?>"><i class="fa fa-pencil"></i></a>
                                  
                             </td>
                         </tr>
@@ -93,22 +93,20 @@
 </div>
 <?php } ?>
 <script>
-$(document).on("click", ".request-follow-up", function(ev) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.magnificPopup.open({
-        items: {
-            src: '#modalCall',
-            type: 'inline'
-        }
-    });
-});
-$('.request-follow-up').on('click', function() {
-  $('#user_id').val($(this).attr('rel'));
-});
+//$(document).on("click", ".request-follow-up", function(ev) {
+//    $.ajaxSetup({
+//        headers: {
+//            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//        }
+//    });
+//    $.magnificPopup.open({
+//        items: {
+//            src: '#modalCall',
+//            type: 'inline'
+//        }
+//    });
+//    $('#appointment_request_id').val($(this).attr('rel'));
+//});
 
 
 $('#durationExample').timepicker({

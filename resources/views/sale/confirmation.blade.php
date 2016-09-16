@@ -317,19 +317,19 @@
                                 <div class="radio">
                                     <label>
                                         {{ Form::radio('emi', 6, false, ['class' => 'emiRadio', 'id' =>'radio2']) }}
-                                        <span>$<?php echo number_format($half, 2); ?>/month for 3 EMIs</span>
+                                        <span>$<?php echo number_format($half, 2); ?>/month for 6 EMIs</span>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
                                         {{ Form::radio('emi', 9, false, ['class' => 'emiRadio', 'id' =>'radio3']) }}
-                                        <span>$<?php echo number_format($thirdQuarter, 2); ?>/month for 3 EMIs</span>
+                                        <span>$<?php echo number_format($thirdQuarter, 2); ?>/month for 9 EMIs</span>
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
                                         {{ Form::radio('emi', 12, false, ['class' => 'emiRadio', 'id' =>'radio4']) }}
-                                        <span>$<?php echo number_format($year, 2); ?>/month for 3 EMIs</span>
+                                        <span>$<?php echo number_format($year, 2); ?>/month for 12 EMIs</span>
                                     </label>
                                 </div>
                             </div>                        

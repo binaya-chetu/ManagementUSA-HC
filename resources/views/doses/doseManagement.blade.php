@@ -45,6 +45,13 @@
             {{ Form::close() }}
         </div>
     </div>
+    
+    <div id ="error_details">
+        <div class="alert showSellMessage alert-danger" style="display: none;">
+            <em>Please select patient from Select Patient drop down.</em>
+        </div>
+    </div>
+    
     <div id = "hidden-doses">
         <div class="panel-body">
             <div class="row">
@@ -258,7 +265,7 @@
                 <h2 class="panel-title">Add Feedback</h2>
             </header>
            <div class="panel-body">
-             {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'doseManagemnet')) }}
+             {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'storeFeedback')) }}
             {!! csrf_field() !!}
             <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
                {{ Form::label('time', 'Time', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -335,7 +342,7 @@
              <div class="form-group{{ $errors->has('perm') ? ' has-error' : '' }}"> 
                 {{ Form::label('perm', 'Perm', array('class' => 'col-sm-3 control-label mandatory')) }}
                  <div class="col-sm-6 form-group{{ $errors->has('perm') ? ' has-error' : '' }}">
-            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'checked' => 'false', 'id' => 'perm']) }}
+            {{ Form::checkbox('perm', 'false', ['class' => 'form-control input required perm', 'id' => 'perm']) }}
                  @if ($errors->has('perm'))
                  <span class="help-block">
                      <strong>{{ $errors->first('perm') }}</strong>

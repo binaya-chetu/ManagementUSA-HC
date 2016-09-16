@@ -1057,14 +1057,27 @@ var data = $(this).serializeArray();
                         }
                         });
                 });
-                        $(document).on("click", ".request-follow-up", function(ev) {
+          $(document).on("click", ".request-follow-up", function(ev) {
+              
                 $.ajaxSetup({
                 headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
 
                 });
-                        var user_id = $(this).attr('rel');
+                $.magnificPopup.open({
+                        items: {
+                            src: '#modalCall',
+                            type: 'inline'
+                        }
+                    });
+                var request_string = $(this).attr('rel');
+                var total_str = request_string.split('/');
+                var user_id = total_str[0];
+                var request_id = total_str[1];
+                $('#user_id').val(user_id);
+                $('#appointment_request_id').val(request_id);
+                        //var user_id = $(this).attr('rel');
                         $.ajax({
                         type: "POST",
                                 url: ajax_url + "/apptsetting/editRequestfollowup",
