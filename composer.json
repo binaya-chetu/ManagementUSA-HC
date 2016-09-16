@@ -22,7 +22,6 @@
 		"maatwebsite/excel": "~2.1.0",
 		"barryvdh/laravel-dompdf": "0.6.*",
 		"tck/odbc": "dev-master",
-		"tjphippen/docusign": "0.3.*@dev"
     },
     "autoload": {
         "classmap": [
