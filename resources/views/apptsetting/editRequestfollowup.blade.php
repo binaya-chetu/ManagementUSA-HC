@@ -80,7 +80,8 @@
                         </span>
                         @endif 
                     </div> 
-                     {{ Form::hidden('user_id', null, ['id' => 'user_id']) }} 
+                    {{ Form::hidden('user_id', null, ['id' => 'user_id']) }} 
+                     {{ Form::hidden('appointment_request_id', null, ['id' => 'appointment_request_id']) }} 
                 </div> 
 
 

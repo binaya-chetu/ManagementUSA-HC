@@ -143,7 +143,8 @@ class DoseManagmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function storeFeedback(Request $request)
-    {
+    { 
+        
         // define validation rule
         $this->validate($request, [
             'time' => 'required',
@@ -159,11 +160,10 @@ class DoseManagmentController extends Controller
         $trimixFeedback->percentage = $request->percent;
         $trimixFeedback->antidote = $request->antidote;
         $trimixFeedback->notes = $request->notes;
-        
         // save user data in user table
         if ($trimixFeedback->save()) {
              // set the flash message.
-            \Session::flash('flash_message', 'Doses saved successfully.');
+            \Session::flash('flash_message', 'Feedback saved successfully.');
             return redirect('/doses/doseManagement');
         } else {
             \Session::flash('flash_message', 'There are something went wrong Plz Try again.');
