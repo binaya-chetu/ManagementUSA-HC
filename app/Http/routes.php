@@ -819,7 +819,7 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
 
-    Route::get('/apptsetting/pdfList', function() {
+    Route::get('/apptsettingFront/pdfList', function() {
         return view('apptsetting.pdf_list');
     });
 

@@ -230,9 +230,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <section id = "testDosePart">
+<!--                                    <section id = "testDosePart">
                                         @include('doses.testDosePart')
-                                    </section>
+                                    </section>-->
 
                                     <div class="row">
                                         </br>
