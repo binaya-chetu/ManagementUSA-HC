@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use View;
 use App;
 use Auth;
 use App\Cashlogs;
 use App\Order;
-use App\OrderDetail;
+use App\Payment;
 
 class AccountingController extends Controller
 {
@@ -169,7 +165,7 @@ class AccountingController extends Controller
      */
     public function dailySalesReport()
     {
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+        $sales = Order::with('orderDetail', 'invoice', 'payment', 'payment.agent')
                 ->whereDate('created_at', '=', date('Y-m-d'))
                 ->orderBy('id', 'DESC')
                 ->get();
@@ -189,7 +185,7 @@ class AccountingController extends Controller
     {
         $fromDate = \Carbon\Carbon::now()->subDay()->startOfWeek()->toDateString(); // or ->format(..)
         $tillDate = \Carbon\Carbon::now()->toDateString();
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+        $sales = Order::with('orderDetail', 'invoice', 'payment', 'payment.agent')
                 ->whereBetween( \DB::raw('date(created_at)'), [$fromDate, $tillDate] )
                 ->orderBy('id', 'DESC')
                 ->get();
@@ -207,7 +203,7 @@ class AccountingController extends Controller
      */
     public function monthlySalesReport()
     {
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+        $sales = Order::with('orderDetail', 'invoice', 'payment', 'payment.agent')
             ->whereRaw('MONTH(created_at) = MONTH(NOW())')
                 ->whereRaw('Year(created_at) = YEAR(NOW())')
                     ->orderBy('id', 'DESC')->get();
@@ -225,11 +221,11 @@ class AccountingController extends Controller
      */
     public function yearlySalesReport()
     {
-        $sales = Order::with('orderDetail', 'categories', 'categoryType', 'agent', 'invoice')
+        $sales = Order::with('orderDetail', 'invoice', 'payment', 'payment.agent')
                 ->whereYear('created_at', '=', date('Y'))
                 ->orderBy('id', 'DESC')
                 ->get();
-        
+        //echo "<pre>";print_r($sales);die;
         return view('account.sales_report', [
             'sales' => $sales
         ]);

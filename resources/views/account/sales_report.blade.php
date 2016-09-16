@@ -55,12 +55,12 @@
                         <th>Invoice Number</th>
                         <th>Package</th>
                         <th>Type</th>
-                        <th>Duration</th>
+                        <th>Payment Mode</th>
                         <th>Price</th>
                         <th>Discount</th>
                         <th>Total Amount</th>
-                        <th>Agent</th>
-                        <th>Action</th>
+                        <!--<th>Agent</th>
+                        <th>Action</th>-->
                     </tr>
                 </thead>
                 @if(count($sales))
@@ -79,18 +79,18 @@
                     <tr class="gradeX">
                         <td>{{ ++$i }}</td>
                         <td>{{ $sale->id }}</td>
-                        <td>{{ $sale->invoice->invoice_number }}</td>
-                        <td>{{ $sale->categories->cat_name }}</td>
-                        <td>{{ $sale->categoryType->name }}</td>
-                        <td>{{ $sale->categories->duration_months }}</td>
-                        <td>${{ $sale->subtotal_amount }}</td>
-                        <td>${{ $sale->discount_amount }}</td>
-                        <td>${{ $sale->total_amount }}</td>
-                        <td>{{ $sale->agent->first_name }} {{ $sale->agent->last_name }}</td>
+                        <td>{{ $sale->invoice->invoice_number}}</td>
+                        <td>{{ $sale->category }}</td>
+                        <td>{{ $sale->package_type }}</td>
+                        <td>@if($sale->payment->payment_type == 0) Cash  @else Credit Card @endif</td>
+                        <td>${{ $sale->price }}</td>
+                        <td>${{ $sale->discount_price }} </td>
+                        <td>${{ $sale->price - $sale->discount_price }}</td>
+                        <!--<td></td>
                         <td class="actions">
                             <a href="/accounting/show/{{ base64_encode($sale->id) }}" class="on-default" title="View Order Detail"><i class="fa fa-eye"></i></a>
                             <!--<a href="javascript:void(0)" data-href="/accounting/destroy/{{ base64_encode($sale->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a>-->
-                        </td>
+                        <!--</td>-->
                     </tr>
                     @endforeach
                 </tbody>
