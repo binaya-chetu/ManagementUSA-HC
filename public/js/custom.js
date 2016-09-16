@@ -1106,554 +1106,7 @@ var data = $(this).serializeArray();
                      }   
 
                 });
-                     
-
-   /* --------------------------START: Functions for the Checkout page pop-up --------------  */
-                $('.errorEMI').hide();
-                        $(document).on("click", ".emi_popuup", function(ev) {
-                $('#emi_value').val('');
-                        $('input[name=emi]').attr('checked', false);
-                        $.magnificPopup.open({
-                        items: {
-                        src: '#checkoutPopup',
-                                type: 'inline'
-                        }
-                        });
-                });
-                        //store the value after selecting the option button
-                        $(document).on("click", 'input[name="emi"]', function(ev){
-                $('.errorEMI').hide();
-                });
-                        // check that the option button for emi is selected or not
-                        $(document).on("click", '#emiSubmit', function(ev){
-                var check = 1;
-                        $('.emiRadio').each(function(){
-                if (this.checked) {
-                check = 2;
-                }
-                });
-                        if (check == 1){
-                $('.errorEMI').show();
-                } else{
-                $.magnificPopup.close();
-                }
-                });
-     /* --------------------------END: Functions for the Checkout page pop-up --------------  */
-    
- 
-  
-    $(document).on('change', $("#changeStatus").find('select[name="patient_status"]'), function() {
-        var val = $("#changeStatus").find('select[name="patient_status"]').val();
-        //4 is for ready lab report
-        if (val != 4) {
-            if ($("#labFilesUpload").length != 0) {
-                $("#labFilesUpload").remove();
-            }
-        } else {
-            var fileInput = '<div class="form-group" id="labFilesUpload"><label for="labFiles" class="col-sm-4 control-label">Upload Lab report files</label><div class="col-md-6"><input id="fileupload" type="file" name="labFiles[]" data-url="#" class="form-control input valid"  multiple></div></div>';
-            $("#changeStatus").find('.panel-body').append(fileInput);
-        }
-    });
-    /*
-     * Click on add cart icon on the fornt office sale
-     */
-    $('.showSellMessage').hide();
-    $(".addPackageToCart").on('click', function() {
-        var patientId = $('select[name="patient_id"]').val();
-        if (patientId == '') {
-            showMessage('Please select patient from Select Patient drop down.', 'error');
-            //notifyUser('Please select patient from Select Patient drop down.', 'error');
-            return false;
-        }
-        var catId = $(this).data('cat-value');
-        var pkgId = $(this).data('pkg-val');
-        $.ajax({
-            method: 'post',
-            dataType: 'json',
-            url: location.protocol + '//' + location.host + '/cart/addProduct',
-            data: {
-                'category_id': catId,
-                'category_type': pkgId,
-                'patient_id': patientId,
-                'request_type': 'json'
-            },
-            success: function(data) {
-                if (data.response) {
-                    $('.cartLink .badge').text(data.totalItem);
-                    if (data.totalItem > 0) {
-                        $('.saleAnchor').attr('href', ajax_url + '/cart/cart/' + btoa(patientId));
-                    } else {
-                        $('.saleAnchor').removeAttr('href');
-                    }
-                    showMessage(data.msg, 'success');
-                    //notifyUser(data.msg, 'success');
-                } else {
-                    showMessage(data.msg, 'error');
-                    //notifyUser(data.msg, 'error');
-                }
-            }
-        });
-    });
-    /*
-     * count the cart if the patient will change by drop down in the front office sale
-     */
-    $('#front_sale_patient').on('change', function() {
-        var patient_id = $(this).val();
-        if (patient_id != '') {
-            $.ajax({
-                method: 'post',
-                dataType: 'json',
-                url: ajax_url + '/cart/countCartItem/' + patient_id,
-                success: function(data) {
-                    $('.cartLink .badge').text(data);
-                    // make the cart icon as anchor tag if item > 0
-                    if (parseInt(data) > 0) {
-                        $('.saleAnchor').attr('href', ajax_url + '/cart/cart/' + btoa(patient_id));
-                    } else {
-                        $('.saleAnchor').removeAttr('href');
-                    }
-                }
-            });
-        } else {
-            $('.cartLink .badge').text(0);
-            $('.saleAnchor').removeAttr('href');
-        }
-    });
-    $("#editProductInventoryForm").on('submit', function(e) {
-        var data = $(this).serializeArray();
-        $.ajax({
-            url: location.protocol + '//' + location.host + '/product/updateProduct',
-            method: 'post',
-            data: data,
-            dataType: 'json',
-            success: function(data) {
-                $('#modalEditProduct').find('.alert').remove();
-                if (data.response) {
-                    $('#modalEditProduct').find('.panel-body').prepend('<div class="alert alert-success">' + data.msg + '</div>');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 3000);
-                } else {
-                    $('#modalEditProduct').find('.panel-body').prepend('<div class="alert alert-danger">' + data.msg + '</div>');
-                }
-            }
-        });
-        e.preventDefault();
-    });
-
-/**
- * notifyUser(text, type) renders PNotify messages
- * @text: refers to  message to be rendered
- * @type: refers to type of message like success, error
- */
-function showMessage(msg, type) {
-
-    if (type == 'error') {
-        $('.showSellMessage').removeClass('alert-success');
-        $('.showSellMessage').addClass('alert-danger');
-    } else if (type == 'success') {
-        $('.showSellMessage').removeClass('alert-danger');
-        $('.showSellMessage').addClass('alert-success');
-    }
-
-    $('.showSellMessage em').html(msg);
-    $('.showSellMessage').show();
-    setTimeout(function() {
-        $('.showSellMessage').css('display', 'none');
-    }, 6000);
-}
-/**
- * notifyUser(text, type) renders PNotify messages
- * @text: refers to  message to be rendered
- * @type: refers to type of message like success, error
- */
-function notifyUser(text, type) {
-    new PNotify({
-        text: text,
-        type: type
-    });
-}
-/**
- * saveEmrPopupList: saves lsit data from emr form popup to database
- */
-function saveEmrPopupList() {
-    $('#allergiesListBox').html('');
-    var data = [];
-    $(".allergiesInput").closest('tr').each(function(i, v) {
-        row = {};
-        row['allergic_medicine'] = $(v).find('.allergic_medicine input').val();
-        if (row['allergic_medicine'] != '') {
-            data.push(row);
-        }
-    });
-    data = JSON.stringify(data);
-    input = jQuery('<input/>', {
-        type: 'hidden',
-        value: data,
-        name: 'allergiesList'
-    });
-    $('#allergiesListBox').append(input);
-};
-/**
- * emrFormNewPopUpRow: adds new empty row to popup forms within patient emr form
- * 
- */
-function emrFormNewPopUpRow() {
-    var clone = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last').clone('true');
-    var lastRow = $(".addMedicineListRow").closest('.panel-footer').prev('.panel-body').find('tr:last');
-    var n = parseInt($(lastRow).data('count'));
-    n += 1;
-    $(clone).attr('data-count', n);
-    $.each(clone.find('td'), function(i, v) {
-        if ($(v).find('input').length > 0) {
-            id = $(v).find('input').attr('id');
-            name = $(v).find('input').attr('name');
-            id = id.substring(0, id.lastIndexOf('_')) + '_' + n;
-            name = name.substring(0, name.lastIndexOf('_')) + '_' + n;
-            $(v).find('input').attr({
-                'id': id,
-                'name': name
-            });
-            $(v).find('input').val('');
-        }
-    });
-    clone.insertAfter(lastRow);
-}
-(function($) {
-
-    'use strict';
-    var datatableInit = function() {
-        var $table = $('#datatable-tabletools');
-        $table.dataTable({
-            sDom: "<'text-right mb-md'T>" + $.fn.dataTable.defaults.sDom,
-            oTableTools: {
-                sSwfPath: $table.data('swf-path'),
-                aButtons: [{
-                        sExtends: 'pdf',
-                        sButtonText: 'PDF'
-                    }, {
-                        sExtends: 'csv',
-                        sButtonText: 'CSV'
-                    },
-                    //                                        {
-                    //                                        sExtends: 'xls',
-                    //                                                sButtonText: 'Excel'
-                    //                                        },
-                    {
-                        sExtends: 'print',
-                        sButtonText: 'Print',
-                        sInfo: 'Please press CTR+P to print or ESC to quit'
-                    }
-                ]
-            },
-            aoColumnDefs: [{
-                orderable: false,
-                aTargets: [0] //disable sorting for the 1st column
-            }],
-            order: []
-        });
-    };
-    $(function() {
-        datatableInit();
-    });
-}).apply(this, [jQuery]);
-$(document).on("click", "#add_marketing_call", function(ev) {
-    $.magnificPopup.open({
-        items: {
-            src: '#modal_add_marketing_call',
-            type: 'inline'
-        }
-    });
-});
-var table = $('table')[0];
-var button = $('th')[0];
-$(button).on('click', function(e) {
-    var data = table
-        .data()
-        .map(function(row) {
-            return row.join(',');
-        })
-        .join('\n');
-    saveAs(
-        new Blob([data], {
-                type: 'text/csv'
-            },
-            'My file.csv'
-        ));
-});
-/*
- * Show the appointment patient record on the selection form choosing patient at the time of create appointment
- */
-$('#patient_id').on('change', function() {
-    var appt_request_id = $(this).val();
-    if (appt_request_id != '') {
-        $('#patientMainDiv span.comment').remove();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#emailParent').removeClass('has-error');
-        $('#emailParent label[class=error]').remove();
-        $('#patient_come [type=text], #patient_come [type=email]').val('');
-        $.ajax({
-            type: "POST",
-            url: ajax_url + "/apptsetting/findAppointmentDetail",
-            data: {
-                "id": appt_request_id
-            },
-            success: function(response) {
-                var combine = JSON.parse(response);
-                $('#first_name').val(combine.first_name);
-                $('#last_name').val(combine.last_name);
-                $('#email').val(combine.email);
-                $('#phone').val(combine.phone);
-                var date = Date.parse(combine.dob) || 0;
-                if (date > 0) {
-                    $('#patientdob').datepicker('setDate', moment(combine.dob).format('MM/DD/YYYY'));
-                } else {
-                    $('#patientdob').val('');
-                }
-                $('#email').rules('remove', 'remote');
-                $('#patient_come').show();
-            }
-        });
-    } else {
-        $("#email").rules("add", "required");
-        $('#patient_come').hide();
-    }
-});
-/*
- * Validate the form for creating new form by the Appt Setting 
- */
-$('#addApptRequest').validate({
-    rules: {
-        email: {
-            //required: true,
-            email: true,
-            remote: ajax_url + "/apptsetting/uniqueEmail"
-        },
-        marketing_phone: {
-            minlength: 14
-        },
-        phone: {
-            minlength: 14
-        }
-    },
-    messages: {
-        email: {
-            remote: 'Email already registered'
-        },
-        marketing_phone: {
-            minlength: 'Please enter at least 10 digits.'
-        },
-        phone: {
-            minlength: 'Please enter at least 10 digits.'
-        }
-    }
-});
-/*
- * Validate the form for creating new form by the Appt Setting 
- */
-
-$('#saveAppointmentAfterReport').validate({
-    rules: {
-        email: {
-            email: true,
-            //remote: ajax_url+ "/apptsetting/uniqueEmail"
-        },
-        marketing_phone: {
-            minlength: 14
-        },
-        phone: {
-            minlength: 14
-        }
-    },
-    messages: {
-        email: {
-            //remote: 'Email already registered'
-        },
-        marketing_phone: {
-            minlength: 'Please enter at least 10 digits.'
-        },
-        phone: {
-            minlength: 'Please enter at least 10 digits.'
-        }
-    }
-});
-$(document).on("click", ".patient_status", function(ev) {
-    $.magnificPopup.open({
-        items: {
-            src: '#modal-add-view-appointment',
-            type: 'inline'
-        }
-    });
-});
-$(document).on("click", ".patient_status", function(event) {
-    event.preventDefault();
-    var appointmentId = $(this).attr('rel');
-    var patientId = $(this).data('patientid');
-    $('#patient_appt_id').val(appointmentId);
-    $('#patient_id').val(patientId);
-    $.magnificPopup.open({
-        items: {
-            src: '#modal-change-patient-status',
-            type: 'inline'
-        }
-    });
-});
-$('#changeStatus').validate();
-$("#requestFollowup").validate();
-$("#patientInventory").validate();
-
-function showAppointmentCount() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        type: "POST",
-        url: ajax_url + "/appointment/countAppointments",
-        success: function(response) {
-            var combine = JSON.parse(response);
-            $('.labCount').text(combine.lab_appointment);
-            $('.upcomingCount').text(combine.upcoming_appointment);
-            $('.visitCount').text(combine.visit_appointment);
-            $('.readyCount').text(combine.ready_appointment);
-            $('.followupCount').text(combine.followup_appointment);
-            $('.appointmentCount').text(combine.appointments);
-            $('.anotherAppointment').text(combine.anotherAppointments);
-            $('.requestCount').text(combine.requestFollowups);
-        }
-    });
-}
-
-function checkAppointmentTime() {
-    var nowtime = new Date();
-    var select_time = $('#durationExample').val();
-    if (select_time != '') {
-        var ampm = select_time.slice(-2);
-        var time = select_time.slice(0, -2);
-        var hours = Number(time.match(/^(\d+)/)[1]);
-        var mins = Number(time.match(/:(\d+)/)[1]);
-        if (ampm == "pm" && hours < 12) hours = hours + 12;
-        if (ampm == "am" && hours == 12) hours = hours - 12;
-        var d = new Date();
-        d.setHours(hours);
-        d.setMinutes(mins);
-        var select_date = $('#calendarDate').val();
-        var day = new Date(select_date);
-        if (day.getDate() == nowtime.getDate()) {
-            if (hours <= nowtime.getHours()) {
-                alert('Please make the appointment for the upcoming time');
-                $('#durationExample').val('');
-            }
-        }
-    }
-
-}
-
-$(document).on("click", ".createAppointment", function(ev) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    var appointmentId = $(this).attr('rel');
-    $.ajax({
-        type: "POST",
-        url: ajax_url + "/appointment/editappointment",
-        data: {
-            "id": appointmentId
-        },
-        success: function(response) {
-            var combine = JSON.parse(response);
-            if (combine.appointment.status < 2) {
-                $('.followButton').show();
-            } else {
-                $('.followButton').hide();
-            }
-            if (combine.patient.patient_detail.patient_status == 0) {
-                $('#patientSaleStatus').val('0');
-            } else {
-                $('#patientSaleStatus').val('1');
-            }
-            $('input[name=appointment_id]').val(combine.appointment.id);
-            $('input[name=appointment_request_id]').val(combine.appointment.request_id);
-            $('input[name=patient_id]').val(combine.patient.id);
-            $('input[name=first_name]').val(combine.patient.first_name);
-            $('input[name=last_name]').val(combine.patient.last_name);
-            $('#email').val(combine.patient.email);
-            $('#phone').val(combine.patient.patient_detail.phone);
-            $('input[data-plugin-datepicker]').datepicker('setDate', moment(combine.appointment.apptTime).format('MM/DD/YYYY'));
-            $('input[data-plugin-timepicker]').timepicker('setTime', moment(combine.appointment.apptTime).format('hh:mm A'));
-            $('#patientdob').datepicker('setDate', moment(combine.patient.dob).format('MM/DD/YYYY'));
-        }
-    });
-    $.magnificPopup.open({
-        items: {
-            src: '#modalForm',
-            type: 'inline'
-        }
-    });
-});
-$(document).on("click", ".request-follow-up", function(ev) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-
-    });
-    var user_id = $(this).attr('rel');
-    $.ajax({
-        type: "POST",
-        url: ajax_url + "/apptsetting/editRequestfollowup",
-        data: {
-            "id": user_id
-        },
-        success: function(response) {
-            var combine = JSON.parse(response);
-            console.log(combine);
-            // console.log(combine.requestFollowup.patient.first_name);
-            $('#first_name').val(combine.requestFollowup.patient.first_name);
-            $('#last_name').val(combine.requestFollowup.patient.last_name);
-            $('#requestComment').val(combine.comment);
-            $('#email').val(combine.requestFollowup.patient.email);
-            $('#phone').val(combine.requestFollowup.patient.patient_detail.phone);
-            $('#address1').val(combine.requestFollowup.patient.patient_detail.address1);
-            var date = Date.parse(combine.requestFollowup.patient.patient_detail.dob) || 0;
-            if (date > 0) {
-                $('#dob').datepicker('setDate', moment(combine.requestFollowup.patient.patient_detail.dob).format('MM/DD/YYYY'));
-            } else {
-                $('#dob').val('');
-            }
-
-        }
-    });
-});
-$(document).on("change", "#selectCategory", function(ev) {
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-var cat_id = $(this).val();
-if (cat_id != '') {
-    $.ajax({
-        type: "POST",
-        url: ajax_url + "/categories/selectCategoryDetail",
-        data: {
-            "id": cat_id
-        },
-        success: function(response) {
-            var combine = JSON.parse(response);
-        }
-    });
-}
-});
-
-   /***********************For internal validation of Doses************************/
+       /***********************For internal validation of Doses************************/
 
 
                         $("#amount1").change(function(){
@@ -1710,14 +1163,15 @@ if (cat_id != '') {
                 $("#patient_to_choose").change(function(){
                     $("#dose_details").html('');
                             var patient_id = $(this).val();
-                            $("#hidden-doses").show();
+                           
                             $.ajax({
                             method: 'post',
                                     url: ajax_url + "/doseManagement/getPatientDetails/" + patient_id,
                                     success: function(data) {
                                     var count = data['trimix_doses'];
                                        if (count.length > 0)
-                                            {       //j = 0;
+                                            {   $("#error_details").html(' ');  
+                                                $("#hidden-doses").show();
                                                 for (i = 0; i < count.length; i++){
                                                         $("#dose_details").append('<table class = "table table-bordered"> <tr> <td class = "table-text"><div class = "row-title"> Test Dose ' + data['trimix_doses'][i]['dose_type'] +'</div>'+
                                                          '<div class="col-sm-12 form-group"><strong>Doctor:</strong> ' + data['trimix_doses'][i]['doctor'] + '</div>' +
@@ -1729,7 +1183,12 @@ if (cat_id != '') {
                                                          '</td></tr></table>');
                                                  }
                                             }
-
+                                            else 
+                                            {       $("#hidden-doses").hide();   
+                                                    $("#error_details").html(' ');
+                                                    $("#error_details").append('<table class = "table table-bordered"> <tr> <td class = "table-text"><div  class = "row-title error"> There is not any package available for selected patient!!! </div></td></tr></table>');
+                                            }
+                                            
                                         $("#pname").html(data['first_name'] + " " + data['last_name']);
                                          $("#patientName").html(data['first_name'] + " " + data['last_name']);
                                                 $("#pdob").html(data['patient_detail']['dob']);
@@ -1764,8 +1223,42 @@ if (cat_id != '') {
                     }
                 }
 
+
+   /* --------------------------START: Functions for the Checkout page pop-up --------------  */
+                $('.errorEMI').hide();
+                        $(document).on("click", ".emi_popuup", function(ev) {
+                $('#emi_value').val('');
+                        $('input[name=emi]').attr('checked', false);
+                        $.magnificPopup.open({
+                        items: {
+                        src: '#checkoutPopup',
+                                type: 'inline'
+                        }
+                        });
+                });
+                        //store the value after selecting the option button
+                        $(document).on("click", 'input[name="emi"]', function(ev){
+                $('.errorEMI').hide();
+                });
+                        // check that the option button for emi is selected or not
+                        $(document).on("click", '#emiSubmit', function(ev){
+                var check = 1;
+                        $('.emiRadio').each(function(){
+                if (this.checked) {
+                check = 2;
+                }
+                });
+                        if (check == 1){
+                $('.errorEMI').show();
+                } else{
+                $.magnificPopup.close();
+                }
+                });
+     /* --------------------------END: Functions for the Checkout page pop-up --------------  */
+
+
 /* --------------------------START: Functions for the Checkout page pop-up --------------  */
-$('.errorEMI').hide();
+/* $('.errorEMI').hide();
 $(document).on("click", ".emi_popuup", function(ev) {
     $('#emi_value').val('');
     $('input[name=emi]').attr('checked', false);
@@ -1775,24 +1268,24 @@ $(document).on("click", ".emi_popuup", function(ev) {
             type: 'inline'
         }
     });
-});
+});*/
 //store the value after selecting the option button
-$(document).on("click", 'input[name="emi"]', function(ev) {
+/* $(document).on("click", 'input[name="emi"]', function(ev) {
     $('.errorEMI').hide();
-});
+});*/
 // check that the option button for emi is selected or not
-$(document).on("click", '#emiSubmit', function(ev) {
+/* $(document).on("click", '#emiSubmit', function(ev) {
     var check = 1;
     $('.emiRadio').each(function() {
         if (this.checked) {
             check = 2;
         }
     });
-});
+});*/
 //store the value after selecting the option button
-$(document).on("click", 'input[name="emi"]', function(ev) {
+/* $(document).on("click", 'input[name="emi"]', function(ev) {
     $('.errorEMI').hide();
-});
+});*/
 
 
 $('.emiDatepicker').datepicker({

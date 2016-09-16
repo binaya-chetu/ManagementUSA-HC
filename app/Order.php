@@ -44,29 +44,9 @@ class Order extends Model
     {
         return $this->hasOne('App\Invoice', 'order_id');
     }
-    
-    public function categories()
-    {
-        return $this->belongsTo('App\Categories', 'package_id');
-    }
-    
-    public function categoryType()
-    {
-        return $this->belongsTo('App\CategoryTypes', 'package_type');
-    }
-    
-    public function agent()
-    {
-        return $this->belongsTo('App\User', 'agent_id');
-    }
-    
-    public function packages()
-    {
-        return $this->hasOne('App\Packages', 'package_id');
-    }
 	
     public function payment()
     {
-        return $this->belongsTo('App\Packages', 'payment_id');
+        return $this->belongsTo('App\Payment', 'payment_id');
     }
 }
