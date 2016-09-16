@@ -180,8 +180,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{{ Request::segment(2) === 'forms' ? 'nav-active' : null }}">
-                                <a href="{{ url('/apptsetting/pdfList') }}">
+                            <li class="{{ Request::segment(2) === 'pdfList' ? 'nav-active' : null }}">
+                                <a href="{{ url('/apptsettingFront/pdfList') }}">
                                     Forms                                   
                                 </a>
                             </li>
