@@ -47,7 +47,9 @@
     </div>
     
     <div id ="error_details">
-        
+        <div class="alert showSellMessage alert-danger" style="display: none;">
+            <em>Please select patient from Select Patient drop down.</em>
+        </div>
     </div>
     
     <div id = "hidden-doses">
@@ -263,7 +265,7 @@
                 <h2 class="panel-title">Add Feedback</h2>
             </header>
            <div class="panel-body">
-             {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'doseManagemnet')) }}
+             {{ Form::open(array('url' => '/doses/storeFeedback', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'storeFeedback')) }}
             {!! csrf_field() !!}
             <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
                {{ Form::label('time', 'Time', array('class' => 'col-sm-3 control-label mandatory')) }}
