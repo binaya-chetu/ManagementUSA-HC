@@ -261,7 +261,6 @@ class AppointmentController extends Controller {
      */
 
     public function saveappointment(Request $request) {
-
         $appointment = Appointment::find($request->appointment_id);
         $appointment->apptTime = date('Y-m-d H:i:s', strtotime($request->appDate . " " . $request->appTime));
         $appointment->lastUpdatedBy = $request->lastUpdatedBy;
@@ -278,8 +277,9 @@ class AppointmentController extends Controller {
         }
         $patientInput['first_name'] = $request->first_name;
         $patientInput['last_name'] = $request->last_name;
-
-        $patientInput['email'] = $request->email;
+        if(isset($request->email)){
+            $patientInput['email'] = $request->email;
+        }        
         $patientDetailData = Patient::where('user_id', $appointment->patient_id)->get()->first();
         //echo '<pre>';        print_r($patientDetailData->toArray());die;
         if ($request->dob) {
