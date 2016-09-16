@@ -819,9 +819,16 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
 
-    Route::get('/apptsettingFront/pdfList', function() {
-        return view('apptsetting.pdf_list');
-    });
+    
+    /*
+     * To listing the PDF forms for the patient
+     */
+    
+    Route::get('/apptsettingFront/pdfList',[ 
+         'uses' => 'ApptsettingController@pdfList',
+        'as' => 'apptsetting.pdf_list',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
 
      /*
      * To save feedback of the patient Doses details
