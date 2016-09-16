@@ -173,11 +173,6 @@
                                     Patients
                                 </a>
                                 <ul class="nav nav-children">
-                                    <!--                                    <li class="{{ Request::segment(2) === 'addpatient' ? 'nav-active' : null }}">
-                                                                            <a href="/patient/addpatient">
-                                                                                Add New Patient
-                                                                            </a>
-                                                                        </li>-->
                                     <li class="{{ Request::segment(1) === 'patient' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                         <a href="/patient">
                                             Patients List
@@ -377,11 +372,6 @@
                             <li class="{{ (Request::segment(1) === 'product') && (Request::segment(2) === 'inventory') ? 'nav-active' : null }}">
                                 <a href="{{ url('product/inventory') }}">
                                     Product Inventory
-                                </a>
-                            </li>
-                            <li class="{{ (Request::segment(1) === 'inventory') && (Request::segment(2) === 'patientInventory') ? 'nav-active' : null }}">
-                                <a href="{{ url('inventory/patientInventory') }}">
-                                    Patient Inventory
                                 </a>
                             </li>
 
