@@ -111,11 +111,11 @@ class SaleController extends Controller
 			return redirect()->back();
 		}  
 
-		if(!$payment || !$payment['paid_amount'] || !$payment['total_amount']){
+/* 		if(empty($payment) || empty($payment['paid_amount']) || empty($payment['total_amount'])){
 			\Session::flash('error_message', 'Your session expired. Please try again');
 			$url = 'sale/checkout/'.base64_encode($formData['patient_id']);
 			return redirect()->to($url);		
-		}
+		} */
 
         $payments = new Payment;
         
