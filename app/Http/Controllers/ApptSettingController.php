@@ -543,5 +543,14 @@ class ApptSettingController extends Controller {
         odbc_result_all($resultset,"border=1");
         die;
     }
+    
+    /**
+     * Function for the showing the PDF Files
+     *
+     * @return \Illuminate\View\View
+     */
+    public function pdfList() {
+      return view('apptsetting.pdf_list');
+    }
 
 }

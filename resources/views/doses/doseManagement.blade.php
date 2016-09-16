@@ -127,14 +127,14 @@
                                         </div>
 
 
-                                        <div class="col-sm-6 form-group{{ $errors->has('medicationa1') ? ' has-error' : '' }}">
-                                            {{ Form::label('medicationa1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                        <div class="col-sm-6 form-group{{ $errors->has('medicationA1') ? ' has-error' : '' }}">
+                                            {{ Form::label('medicationA1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
                                                 <?php $medication = dropDownMedication(); ?>
-                                                {{ Form::select('medicationa1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationA1']) }} 
+                                                {{ Form::select('medicationA1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationA1']) }} 
                                                 @if ($errors->has('medicationA1'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('medicationa1') }}</strong>
+                                                    <strong>{{ $errors->first('medicationA1') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -148,7 +148,7 @@
                                             <div class="col-sm-9">
                                                 <?php $amount = dropDownAmount(); ?>
                                                 {{ Form::select('amount2', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount2']) }}
-                                                @if ($errors->has('amount1'))
+                                                @if ($errors->has('amount2'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('amount2') }}</strong>
                                                 </span>
@@ -156,14 +156,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-6 form-group{{ $errors->has('medicationa2') ? ' has-error' : '' }}">
-                                            {{ Form::label('medicationa2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                        <div class="col-sm-6 form-group{{ $errors->has('medicationA2') ? ' has-error' : '' }}">
+                                            {{ Form::label('medicationA2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
                                                 <?php $medication = dropDownMedication(); ?>
-                                                {{ Form::select('medicationa2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationa2']) }} 
-                                                @if ($errors->has('medicationa2'))
+                                                {{ Form::select('medicationA2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationA2']) }} 
+                                                @if ($errors->has('medicationA2'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('medicationa2') }}</strong>
+                                                    <strong>{{ $errors->first('medicationA2') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -189,14 +189,14 @@
                                         </div>
 
 
-                                        <div class="col-sm-6 form-group{{ $errors->has('medicationb1') ? ' has-error' : '' }}">
-                                            {{ Form::label('medicationb1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                        <div class="col-sm-6 form-group{{ $errors->has('medicationB1') ? ' has-error' : '' }}">
+                                            {{ Form::label('medicationB1', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
                                                 <?php $medication = dropDownMedication(); ?>
-                                                {{ Form::select('medicationb1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationb1']) }} 
-                                                @if ($errors->has('medicationb1'))
+                                                {{ Form::select('medicationB1', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationB1']) }} 
+                                                @if ($errors->has('medicationB1'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('medicationb1') }}</strong>
+                                                    <strong>{{ $errors->first('medicationB1') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -209,7 +209,7 @@
                                             <div class="col-sm-9">
                                                 <?php $amount = dropDownAmount(); ?>
                                                 {{ Form::select('amount4', (['' => 'Select Amount'] + $amount), null, ['class' => 'form-control input required amount', 'id' => 'amount4']) }}
-                                                @if ($errors->has('amount1'))
+                                                @if ($errors->has('amount4'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('amount4') }}</strong>
                                                 </span>
@@ -217,14 +217,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-6 form-group{{ $errors->has('medicationb2') ? ' has-error' : '' }}">
-                                            {{ Form::label('medicationb2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
+                                        <div class="col-sm-6 form-group{{ $errors->has('medicationB2') ? ' has-error' : '' }}">
+                                            {{ Form::label('medicationB2', 'Medication ', array('class' => 'col-sm-3 control-label mandatory')) }}
                                             <div class="col-sm-9">
                                                 <?php $medication = dropDownMedication(); ?>
-                                                {{ Form::select('medicationb2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationb2']) }} 
-                                                @if ($errors->has('medicationb2'))
+                                                {{ Form::select('medicationB2', (['' => 'Select Medication'] + $medication), null, ['class' => 'form-control input required amount', 'id' => 'medicationB2']) }} 
+                                                @if ($errors->has('medicationB2'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('medicationb2') }}</strong>
+                                                    <strong>{{ $errors->first('medicationB2') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>

@@ -1122,53 +1122,60 @@ var data = $(this).serializeArray();
        /***********************For internal validation of Doses************************/
 
 
-                        $("#amount1").change(function(){
-                var amount1 = $(this).val();
-                        $("#amount2 option[value='" + amount1 + "']").remove();
-                        $("#amount3 option[value='" + amount1 + "']").remove();
-                        $("#amount4 option[value='" + amount1 + "']").remove();
+                $("#amount1").change(function(){
+                    var amount1 = $(this).val();
+                    $("#amount2 option[value='" + amount1 + "']").remove();
+                    $("#amount3 option[value='" + amount1 + "']").remove();
+                    $("#amount4 option[value='" + amount1 + "']").remove();
                 });
-                        $("#amount2").change(function(){
-                var amount2 = $(this).val();
-                        $("#amount1 option[value='" + amount2 + "']").remove();
-                        $("#amount3 option[value='" + amount2 + "']").remove();
-                        $("#amount4 option[value='" + amount2 + "']").remove();
+                
+                $("#amount2").change(function(){
+                    var amount2 = $(this).val();
+                    $("#amount1 option[value='" + amount2 + "']").remove();
+                    $("#amount3 option[value='" + amount2 + "']").remove();
+                    $("#amount4 option[value='" + amount2 + "']").remove();
                 });
-                        $("#amount3").change(function(){
-                var amount3 = $(this).val();
-                        $("#amount1 option[value='" + amount3 + "']").remove();
-                        $("#amount2 option[value='" + amount3 + "']").remove();
-                        $("#amount4 option[value='" + amount3 + "']").remove();
+                
+                $("#amount3").change(function(){
+                    var amount3 = $(this).val();
+                    $("#amount1 option[value='" + amount3 + "']").remove();
+                    $("#amount2 option[value='" + amount3 + "']").remove();
+                    $("#amount4 option[value='" + amount3 + "']").remove();
                 });
-                        $("#amount4").change(function(){
-                var amount4 = $(this).val();
-                        $("#amount1 option[value='" + amount4 + "']").remove();
-                        $("#amount2 option[value='" + amount4 + "']").remove();
-                        $("#amount3 option[value='" + amount4 + "']").remove();
+                        
+                $("#amount4").change(function(){
+                    var amount4 = $(this).val();
+                    $("#amount1 option[value='" + amount4 + "']").remove();
+                    $("#amount2 option[value='" + amount4 + "']").remove();
+                    $("#amount3 option[value='" + amount4 + "']").remove();
                 });
-                        $("#medicationA1").change(function(){
-                var med1 = $(this).val();
-                        $("#medicationA2 option[value='" + med1 + "']").remove();
-                        $("#medicationB1 option[value='" + med1 + "']").remove();
-                        $("#medicationB2 option[value='" + med1 + "']").remove();
+                        
+                $("#medicationA1").change(function(){
+                    var med1 = $(this).val();
+                    $("#medicationA2 option[value='" + med1 + "']").remove();
+                    $("#medicationB1 option[value='" + med1 + "']").remove();
+                    $("#medicationB2 option[value='" + med1 + "']").remove();
                 });
-                        $("#medicationA2").change(function(){
-                var med2 = $(this).val();
-                        $("#medicationA1 option[value='" + med2 + "']").remove();
-                        $("#medicationB1 option[value='" + med2 + "']").remove();
-                        $("#medicationB2 option[value='" + med2 + "']").remove();
+                       
+                $("#medicationA2").change(function(){
+                    var med2 = $(this).val();
+                    $("#medicationA1 option[value='" + med2 + "']").remove();
+                    $("#medicationB1 option[value='" + med2 + "']").remove();
+                    $("#medicationB2 option[value='" + med2 + "']").remove();
                 });
-                        $("#medicationB1").change(function(){
-                var med3 = $(this).val();
-                        $("#medicationA1 option[value='" + med3 + "']").remove();
-                        $("#medicationA2 option[value='" + med3 + "']").remove();
-                        $("#medicationB2 option[value='" + med3 + "']").remove();
+                       
+                $("#medicationB1").change(function(){
+                    var med3 = $(this).val();
+                    $("#medicationA1 option[value='" + med3 + "']").remove();
+                    $("#medicationA2 option[value='" + med3 + "']").remove();
+                    $("#medicationB2 option[value='" + med3 + "']").remove();
                 });
-                        $("#medicationB2").change(function(){
-                var med4 = $(this).val();
-                        $("#medicationA1 option[value='" + med4 + "']").remove();
-                        $("#medicationA2 option[value='" + med4 + "']").remove();
-                        $("#medicationB1 option[value='" + med4 + "']").remove();
+                        
+                $("#medicationB2").change(function(){
+                    var med4 = $(this).val();
+                    $("#medicationA1 option[value='" + med4 + "']").remove();
+                    $("#medicationA2 option[value='" + med4 + "']").remove();
+                    $("#medicationB1 option[value='" + med4 + "']").remove();
                 });
                 
              /*************************Dose Managemnet functionality****************/
