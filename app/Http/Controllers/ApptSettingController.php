@@ -442,8 +442,7 @@ class ApptSettingController extends Controller {
      */
 
     public function anotherAppointment(Request $request) {
-        $formData = $request->all();
-
+        $formData = $request->all();        
         if (!$formData) {
             App::abort(404, 'Empty form data.');
         }
@@ -492,17 +491,18 @@ class ApptSettingController extends Controller {
         if (isset($formData['followup_status'])) {
             $appointment_requests->followup_date = date('Y-m-d', strtotime('+7 days'));
             $appointment_requests->followup_status = 1;
-        } else {
+        } else if (isset($formData['followup_date'])){
             $appointment_requests->followup_date = date('Y-m-d', strtotime($formData['followup_date']));
             $appointment_requests->followup_status = 0;
         }
         $appointment_requests->save();
-
+        if(isset($formData['reason_id'])){
         $reason = new App\AppointmentReasons;
         $reason->patient_id = $id;
         $reason->reason_id = $formData['reason_id'];
         $reason->request_id = $appointment_requests->id;
         $reason->save();
+        }
 
         if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {
             $appointment = new App\Appointment;
