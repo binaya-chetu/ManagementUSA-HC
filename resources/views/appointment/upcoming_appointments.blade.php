@@ -3,7 +3,7 @@
 @section('content')
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>Followup List</h2>
+        <h2>Upcoming Appointment</h2>
 
         <div class="right-wrapper pull-right">
             {!! Breadcrumbs::render('appointment.followup') !!}
@@ -20,7 +20,7 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
 
-            <h2 class="panel-title">Appointment Followup List</h2>
+            <h2 class="panel-title">Upcoming Appointment</h2>
         </header>
         <div class="panel-body">
             @if(Session::has('flash_message'))
@@ -35,7 +35,6 @@
                         <th>Appt. Date</th>
                         <th>Followup Action</th>   
                         <th>Followup Date</th>   
-                        <!--th>Status</th-->   
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -61,7 +60,6 @@
             </table>
         </div>
     </section>
-    <!-- end: page -->
 </section>
 
 @endsection

@@ -429,15 +429,16 @@ class AppointmentController extends Controller {
     }
 
     /**
-     * Followup listing of the appointment  
+     * Upcoming listing of the appointment  
      *
      * @return \resource\view\appointment\followp.blade.php
+     * Modified Date: 17 Sep 2016
      */
-    public function followup() {
+    public function upcomingappointments() {
         $followup = FollowUp::with(['appointment', 'followupStatus', 'schedule', 'schedule.appointment', 'appointment.patient' => function($query) {
                 $query->select('id', 'first_name', 'last_name');
             }])->orderBy('id', 'DESC')->get();
-        return view('appointment.followup', ['followup' => $followup]);
+        return view('appointment.upcoming_appointments', ['followup' => $followup]);
     }
 
     /**
@@ -554,19 +555,20 @@ class AppointmentController extends Controller {
     }
 
     /*
-     * Find the list of all appointment which appointment time are within 24 Hours.
+     * Find the list of all appointment which appointment time are within 72 Hours.
      * 
      * @return \resource\view\apptsetting\listappointment.blade.php
+     * Modified Date: 17 Sep 2016
      */
 
-    public function upcomingappointments() {
-        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->whereNotIn('status', [ 2, 6])->orderBy('id', 'DESC')->get();
+    public function followup() {
+        $appointments = Appointment::with('patient', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '<=', date('Y-m-d', strtotime("+3 day")))->whereNotIn('status', [ 2, 6])->orderBy('id', 'DESC')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
 
         return view('appointment.listappointment', [
-            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus, 'type' => 'upcoming'
+            'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus, 'type' => 'followup'
         ]);
     }
 
@@ -1221,8 +1223,8 @@ class AppointmentController extends Controller {
     public function countAppointments() {
         $appointment = array();
         $appointments = Appointment::count();
-        $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();
-        $upcomingAppointment = Appointment::whereDate('apptTime', '=', date('Y-m-d', strtotime("+1 day")))->whereNotIn('status', [ 2, 6])->count();
+        $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();      
+        $upcomingAppointment = Appointment::whereDate('apptTime', '<=', date('Y-m-d', strtotime("+3 day")))->whereNotIn('status', [ 2, 6])->count();
         $visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
         $readyappointments = Appointment::where('patient_status', '4')->count();
         $anotherAppointments = Appointment::where('relative_id', '!=', '0')->count();
