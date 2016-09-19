@@ -1,6 +1,7 @@
 @extends('layouts.common')
 
 @section('content')
+
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>View User Profile :  {{ $user->first_name }} {{ $user->last_name }}</h2>
