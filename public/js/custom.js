@@ -886,64 +886,64 @@ var data = $(this).serializeArray();
                         $('#patient_come').hide();
                 }
                 });
-                        /*
-                         * Validate the form for creating new form by the Appt Setting 
-                         */
-                        $('#addApptRequest').validate({
-                rules: {
-                email: {
-                //required: true,
-                email: true,
-                        remote: ajax_url + "/apptsetting/uniqueEmail"
-                },
-                        marketing_phone: {
-                        minlength: 14
-                        },
-                        phone: {
-                        minlength: 14
-                        }
-                },
-                        messages:{
-                        email: {
-                        remote: 'Email already registered'
-                        },
-                                marketing_phone: {
-                                minlength: 'Please enter at least 10 digits.'
-                                },
-                                phone: {
-                                minlength: 'Please enter at least 10 digits.'
-                                }
-                        }
-                });
-                        /*
-                         * Validate the form for creating new form by the Appt Setting 
-                         */
+	/*
+	 * Validate the form for creating new form by the Appt Setting 
+	 */
+	$('#addApptRequest').validate({
+		rules: {
+			email: {
+				//required: true,
+				email: true,
+				remote: ajax_url + "/apptsetting/uniqueEmail"
+			},
+			marketing_phone: {
+				phoneUS: true
+			},
+			phone: {
+				phoneUS: true
+			}
+		},
+		messages:{
+			email: {
+				remote: 'Email already registered'
+			},
+			marketing_phone: {
+				phoneUS: 'Please enter a valid phone number'
+			},
+			phone: {
+				phoneUS: 'Please enter a valid phone number'
+			}
+		}
+	});
+	/*
+	* Validate the form for creating new form by the Appt Setting 
+	*/
 
-                        $('#saveAppointmentAfterReport').validate({
-                rules: {
-                email: {
-                email: true,
-                        //remote: ajax_url+ "/apptsetting/uniqueEmail"
-                },
-                        marketing_phone: {
-                        minlength: 14
-                        },
-                        phone: {
-                        minlength: 14
-                        }
-                },
-                        messages:{
-                        email: {
-                        //remote: 'Email already registered'
-                        },
-                                marketing_phone: {
-                                minlength: 'Please enter at least 10 digits.'
-                                },
-                                phone: {
-                                minlength: 'Please enter at least 10 digits.'
-                                }
-                        }
-                });
+	$('#saveAppointmentAfterReport').validate({
+		rules: {
+			email: {
+				email: true,
+				//remote: ajax_url+ "/apptsetting/uniqueEmail"
+			},
+			marketing_phone: {
+				phoneUS: true
+			},
+			phone: {
+				phoneUS: true
+			}
+		},
+		messages:{
+			email: {
+				//remote: 'Email already registered'
+			},
+			marketing_phone: {
+				phoneUS: 'Please enter a valid phone number'
+			},
+			phone: {
+				phoneUS: 'Please enter a valid phone number'
+			}
+		}
+	});
                         $(document).on("click", ".patient_status", function(ev) {
                 $.magnificPopup.open({
                 items: {
