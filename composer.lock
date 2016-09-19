@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5fbe4829edb20c87cc85cc77838d6422",
-    "content-hash": "8a33cd4e33fe20114ec4a2a84ec96cfb",
+    "hash": "350396a1daada28734474cee9bf1660a",
+    "content-hash": "e598d57a817951de8d5f1d3008e7a9cc",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1719,16 +1719,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3"
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4dd659edadffdc2143e4753df655d866dbfeedf0",
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0",
                 "shasum": ""
             },
             "require": {
@@ -1766,7 +1766,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-04-19 13:41:41"
+            "time": "2016-09-16 12:04:44"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -4079,16 +4079,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "2.1.4",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "b5c91156f6bd29f68f4f2c51186faae4310a5a68"
+                "reference": "700eba02f76f2971c81726a4f6a04121c1977e64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/b5c91156f6bd29f68f4f2c51186faae4310a5a68",
-                "reference": "b5c91156f6bd29f68f4f2c51186faae4310a5a68",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/700eba02f76f2971c81726a4f6a04121c1977e64",
+                "reference": "700eba02f76f2971c81726a4f6a04121c1977e64",
                 "shasum": ""
             },
             "require": {
@@ -4142,7 +4142,7 @@
                 "import",
                 "laravel"
             ],
-            "time": "2016-08-28 20:25:51"
+            "time": "2016-09-15 21:03:21"
         },
         {
             "name": "mockery/mockery",
@@ -5408,63 +5408,6 @@
             "time": "2015-12-08 16:14:14"
         },
         {
-            "name": "tjphippen/docusign",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tjphippen/docusign.git",
-                "reference": "ae6c81c581fedd2e45f92cb7151d7fbf3ed80104"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tjphippen/docusign/zipball/ae6c81c581fedd2e45f92cb7151d7fbf3ed80104",
-                "reference": "ae6c81c581fedd2e45f92cb7151d7fbf3ed80104",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0",
-                "illuminate/support": "~5.1",
-                "laravel/framework": "5.*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Tjphippen\\Docusign\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "TJ Phippen",
-                    "email": "tj@tjphippen.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "DocuSign Rest API Wrapper for Laravel 5",
-            "homepage": "https://github.com/tjphippen/docusign",
-            "keywords": [
-                "documents",
-                "docusign",
-                "envelope",
-                "laravel",
-                "laravel 5",
-                "sign"
-            ],
-            "time": "2016-02-12 22:19:51"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.1.0",
             "source": {
@@ -5518,8 +5461,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "tck/odbc": 20,
-        "tjphippen/docusign": 20
+        "tck/odbc": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

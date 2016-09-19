@@ -323,15 +323,20 @@ p.drop-caps.colored.secundary:first-child:first-letter {
 /* Navigation */
 ul.nav-main > li.nav-active > a {
 	box-shadow: 2px 0 0 #0088cc inset;
+        background: #08c;
+        color: #fff;
+        
 }
 
 ul.nav-main > li.nav-active > i {
-	color: #0088cc;
+	color: #fff;
 }
 
 ul.nav-main li .nav-children li.nav-active > a {
 	color: #0088cc;
 }
+
+
 /* Nano Scroller Plugin */
 html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 	background: #0088cc;

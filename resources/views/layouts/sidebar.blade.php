@@ -15,22 +15,22 @@
             ?>
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
-                    <li class="{{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
+                    <li class="left-menu-devider {{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('/') }}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="{{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
+                    <li class="left-menu-devider {{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('/home/userProfile') }}">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>My Profile</span>
                         </a>
                     </li>
                     @if(in_array('appointment_setting', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
                         <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
                             <span>Appointment</span>
                         </a>
                         <ul class="nav nav-children">                       
@@ -123,9 +123,9 @@
                     </li>
                     @endif
                     @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'patient' ||  Request::segment(1) === 'walkin'  ||  Request::segment(1) === 'appointmentApptSetting' ||  Request::segment(1) === 'apptsettingFront'  ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'patient' ||  Request::segment(1) === 'walkin'  ||  Request::segment(1) === 'appointmentApptSetting' ||  Request::segment(1) === 'apptsettingFront'  ? 'nav-active nav-expanded' : null }}">
                         <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-building-o" aria-hidden="true"></i>
                             <span>Front Office</span>
                         </a>
                         <ul class="nav nav-children">
@@ -200,9 +200,9 @@
                     </li>
                     @endif
                     @if(in_array('pos', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'sale' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'sale' ? 'nav-active nav-expanded' : null }}">
                         <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-tag" aria-hidden="true"></i>
                             <span>Sale</span>
                         </a>
                         <ul class="nav nav-children">
@@ -215,29 +215,11 @@
                         </ul>
                     </li>
                     @endif
-<!--                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
-                        <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>ACL Management</span>
-                        </a>
-                        <ul class="nav nav-children">
-                            <li class="{{ Request::segment(2) === 'listRole' || 
-                                Request::segment(2) === 'addRole' || 
-                                Request::segment(2) === 'editRole' ||
-                                Request::segment(2) === 'listPermission' ? 'nav-active' : null }}">
-                                <a href="{{ url('/acl/listRole') }}">
-                                    Roles
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    @endif-->
                     @if(in_array('user_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'user' ||
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'user' ||
                                 Request::segment(1) === 'doctor' || Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-users" aria-hidden="true"></i>
                             <span>User Management</span>
                         </a>
                         <ul class="nav nav-children">
@@ -277,9 +259,9 @@
                     </li>       
                     @endif
                     @if(in_array('product_categories', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'categories'? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'categories'? 'nav-active nav-expanded' : null }}">
                         <a>
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
                         <ul class="nav nav-children">
@@ -312,9 +294,9 @@
                     </li>
                     @endif-->
                     @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-calculator" aria-hidden="true"></i>
                             <span>Accounting</span>
                         </a>
                         <ul class="nav nav-children">
@@ -373,17 +355,17 @@
                     </li>
                     @endif
                     @if(in_array('finance', $permissions) || (Auth::user()->role == '1'))
-                    <li>
+                    <li  class="left-menu-devider">
                         <a href="#">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-money" aria-hidden="true"></i>
                             <span>Finance</span>
                         </a>
                     </li>
                     @endif
                     @if(in_array('inventory_management', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'product' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'product' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
                             <span>Inventory</span>
                         </a>
                         <ul class="nav nav-children">
@@ -402,9 +384,9 @@
                     </li>
                     @endif 
 
-                    <li class="nav-parent {{ Request::segment(1) === 'doses' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent left-menu-devider {{ Request::segment(1) === 'doses' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
-                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <i class="fa fa-medkit" aria-hidden="true"></i>
                             <span>Dose Management</span>
                         </a>
                         <ul class="nav nav-children">
