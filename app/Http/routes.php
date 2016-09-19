@@ -394,12 +394,20 @@ Route::group(['middleware' => 'web'], function () {
         'uses' => 'AppointmentController@savePatientMedicalRecord',
         'as' => 'appointment.savePatientMedicalRecord',
     ]);
-    
-      Route::post('/appointment/countAppointments', [
+     
+    Route::get('/appointment/countAppointments', [
         'uses' => 'AppointmentController@countAppointments',
         'as' => 'appointment.countAppointments',
         'middleware' => ['acl:appointment_write']
     ]);
+    
+    Route::post('/appointment/countAppointments', [
+        'uses' => 'AppointmentController@countAppointments',
+        'as' => 'appointment.countAppointments',
+        'middleware' => ['acl:appointment_write']
+    ]);
+      
+    
       
     Route::get('/appointment/labReadyAppointments', [
         'uses' => 'AppointmentController@labReadyAppointments',
