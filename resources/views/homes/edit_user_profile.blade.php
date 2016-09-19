@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                     
+
                         <div class="col-sm-6 form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                              {{ Form::label('phone', 'Phone', array('class' => 'col-sm-3 control-label mandatory')) }}
                             <div class="col-sm-9">
@@ -178,7 +178,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                                <a href='{{'/home/userProfile'}}' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>
