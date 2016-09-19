@@ -361,13 +361,13 @@ class PatientController extends Controller {
        if (!($patient = User::with(
                'patientDetail',
                'PatientDetail.patientStateName',
-               'roleName'
-              
-             
+               'roleName',
+               'adamsQuestionaires'
             )
             ->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
+        //echo "<pre>";print_r($patient);die;
          $packageData = showCart($id);
          $catList = $packageData['category_list'];
          $cartDetailList = $packageData['category_detail_list'];
