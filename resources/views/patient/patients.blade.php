@@ -50,7 +50,7 @@
                     @foreach ($patients as $patient)
                     <tr class="gradeX">
                         <td>{{ ++$i }}</td>
-                        <td><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($patient->id) }}">{{ $patient->first_name }} {{ $patient->last_name }}</a></td>
+                        <td><a class="defaultColor" href="/patient/view/{{ base64_encode($patient->id) }}">{{ $patient->first_name }} {{ $patient->last_name }}</a></td>
                         <td><a class="defaultColor" href="/patient/view/{{ base64_encode($patient->id) }}">{{ $patient->email }}</a></td>
                         <td>{{ $patient['patientDetail']->phone }}</td>
                         <td>@if($patient['patientDetail']->city){{ $patient['patientDetail']->city }} @else {{ 'N/A' }} @endif</td>                      
