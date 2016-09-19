@@ -29,14 +29,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tabs tabs-primary">
-                        <ul class="nav nav-tabs">
+<!--                        <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#marketing" data-toggle="tab"><i class="fa fa-star"></i> Web Leads</a>
                             </li>
                             <li>
                                 <a href="#follow" data-toggle="tab">Follow-up ({{ count($follows)}}) </a>
                             </li>
-                        </ul>
+                        </ul>-->
                         <div class="tab-content">
                             <div id="marketing" class="tab-pane active">
                                 <table class="table table-bordered table-striped mb-none" id="datatable-tabletools" data-swf-path="{{ URL::asset('vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf') }}">
@@ -48,7 +48,7 @@
                                             <th>Phone</th>
                                             <th>Location</th>
                                             <th>Requested Time</th>
-                                            <th>Actions</th>
+<!--                                            <th>Actions</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,10 +61,10 @@
                                             <td class="table-text">{{ $web->phone }}</td>                        
                                             <td class="table-text">{{ $web->location }}</td>
                                             <td class="table-text"> {{ date('Y-m-d h:ia', strtotime($web->requested_date)) }}</td>
-                                            <td class="actions">
+<!--                                            <td class="actions">
                                                 <a href="javascript:void(0);" class="on-editing save-row lead_popup" title="Edit" rel="{{ $web->id }}"><i class="fa fa-pencil"></i></a>
                                                 <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                                            </td>
+                                            </td>-->
                                         </tr>
                                         @endforeach                    
                                     </tbody>
