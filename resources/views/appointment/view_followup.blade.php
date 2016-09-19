@@ -124,9 +124,11 @@
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
-                        <div class="col-sm-9">
-                            <a href="/patient/view/{{ base64_encode($followup->appointment->patient->id) }}" class="btn btn-primary">View Patient</a>
+                        <div class="col-sm-10">
                            <a href="/appointment/followup" class="btn btn-default">Back</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="/patient/view/{{ base64_encode($followup->appointment->patient->id) }}" class="btn btn-primary">View Patient</a>
                         </div>
                     </div>
                 </footer>
