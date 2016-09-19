@@ -29,6 +29,9 @@
                         <a href="#package_details" data-toggle="tab">Package Details</a>
                     </li>
                     @endif
+                    <li>
+                        <a href="#adam_questionaires" data-toggle="tab">Adam Questionaires</a>
+                    </li>
                     
                 </ul>
                
@@ -306,6 +309,241 @@
                         
 			@endif
 			</section>
+                        </div>
+                    </div>
+                    
+                    <div id="adam_questionaires" class="tab-pane">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How would you rate your libido (sex drive)? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->libido_rate))
+                                    <?php switch($patient->adamsQuestionaires->libido_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How are you rate your energy level? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->energy_rate))
+                                    <?php switch($patient->adamsQuestionaires->energy_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How are you rate your strength/endurance? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                 @if(isset($patient->adamsQuestionaires->strength_rate))
+                                    <?php switch($patient->adamsQuestionaires->strength_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                 @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How are you rate your enjoyment of life? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->enjoy_rate))
+                                    <?php switch($patient->adamsQuestionaires->enjoy_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How are you at your happiness level? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->happiness_rate))
+                                    <?php switch($patient->adamsQuestionaires->happiness_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How strong are your erections? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->erection_rate))
+                                    <?php switch($patient->adamsQuestionaires->erection_rate) {
+                                        case 1: echo "Poor";
+                                            break;
+                                        case 2: echo "Weak";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Strong";
+                                            break;
+                                        case 5: echo "Very Strong";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How are you at your work performance over the last four weeks? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->performance_rate))
+                                    <?php switch($patient->adamsQuestionaires->performance_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How often do you fall asleep after dinner? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->sleep_rate))
+                                    <?php switch($patient->adamsQuestionaires->sleep_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How would you rate your sports ability over the past four weeks? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->sport_rate))
+                                    <?php switch($patient->adamsQuestionaires->sport_rate) {
+                                        case 1: echo "Terrible";
+                                            break;
+                                        case 2: echo "Poor";
+                                            break;
+                                        case 3: echo "Average";
+                                            break;
+                                        case 4: echo "Good";
+                                            break;
+                                        case 5: echo "Exellent";
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-sm-offset-1">
+                                <label>How much height have you lost? :</label>
+                            </div>
+                            <div class="col-sm-5">
+                                @if(isset($patient->adamsQuestionaires->lost_height_rate))
+                                    <?php switch($patient->adamsQuestionaires->lost_height_rate) {
+                                        case 1: echo '2" or More';
+                                            break;
+                                        case 2: echo '1.5 - 1.9"';
+                                            break;
+                                        case 3: echo '1 - 1.4"';
+                                            break;
+                                        case 4: echo '.5 - .9"';
+                                            break;
+                                        case 5: echo '0 - .4"';
+                                            break;
+                                        default: echo "N/A";
+                                            
+                                    } ?>
+                                @else
+                                    {{ 'N/A' }}
+                                @endif
+                            </div>
                         </div>
                     </div>
 
