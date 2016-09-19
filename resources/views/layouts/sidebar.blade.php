@@ -215,7 +215,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
+<!--                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -232,10 +232,10 @@
                             </li>
                         </ul>
                     </li>
-                    @endif
+                    @endif-->
                     @if(in_array('user_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'user' ||
-                                Request::segment(1) === 'doctor'  ? 'nav-active nav-expanded' : null }}">
+                                Request::segment(1) === 'doctor' || Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>User Management</span>
@@ -248,14 +248,31 @@
                             </li>-->
                             <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' || Request::segment(2) === 'addUser' ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/listUsers') }}">
-                                    Users List
+                                    Users
                                 </a>
                             </li>
                             <li class="{{ Request::segment(1) === 'doctor' || Request::segment(2) === 'addDoctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
                                 <a href="/doctor">
-                                    Doctors List
+                                    Doctors
                                 </a>
-                            </li>                            
+                            </li> 
+                            @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
+                            <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
+                                <a>                                    
+                                    <span>ACL </span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li class="{{ Request::segment(2) === 'listRole' || 
+                                        Request::segment(2) === 'addRole' || 
+                                        Request::segment(2) === 'editRole' ||
+                                        Request::segment(2) === 'listPermission' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/acl/listRole') }}">
+                                            Roles
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endif
                         </ul>
                     </li>       
                     @endif
@@ -273,7 +290,7 @@
                             </li>-->
                             <li class="{{ Request::segment(2) === 'listCategories' || Request::segment(2) === 'newCategory' ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/listCategories') }}">
-                                    Categories List
+                                    Categories
                                 </a>
                             </li>
                              @if(in_array('product_imports', $permissions) || (Auth::user()->role == '1'))
