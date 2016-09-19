@@ -27,7 +27,7 @@ $(function() {
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
-                minlength: 14
+                phoneUS: true
             }
         },
         messages:{
@@ -35,7 +35,7 @@ $(function() {
                   remote: 'Email already exists in database'
               },
               phone: {
-                  minlength: 'Please enter at least 10 digits.'
+                  phoneUS: 'Please enter a valid phone number'
               }
         }
     });
@@ -57,7 +57,7 @@ $(function() {
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
-                minlength: 14
+                phoneUS: true
             }
         },
         messages:{
@@ -65,7 +65,7 @@ $(function() {
                   remote: 'Email already exists in database'
               },
               phone: {
-                  minlength: 'Please enter at least 10 digits.'
+                  phoneUS: 'Please enter a valid phone number'
               }
         }
     });
@@ -92,7 +92,7 @@ $(function() {
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
-                minlength: 14
+               phoneUS: true
             }
         },
         messages:{
@@ -100,7 +100,7 @@ $(function() {
                   remote: 'Email already exists in database'
               },
               phone: {
-                  minlength: 'Please enter at least 10 digits'
+				phoneUS: 'Please enter a valid phone number'
               }
         }
     });
@@ -126,7 +126,7 @@ $(function() {
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
-                minlength: 14
+                phoneUS: true
             }
           },
           messages:{
@@ -134,7 +134,7 @@ $(function() {
                   remote: 'Email already exist in database'
               },
               phone: {
-                  minlength: 'Please enter at least 10 digits.'
+                 phoneUS: 'Please enter a valid phone number'
               }
           }
     });
@@ -147,7 +147,7 @@ $(function() {
               remote: ajax_url+ "/appointment/uniquePatientEmail"
             },
             phone: {
-                minlength: 14
+                phoneUS: true
             }
           },
           messages:{
@@ -155,7 +155,7 @@ $(function() {
                   remote: 'Email already exist in database'
               },
               phone: {
-                  minlength: 'Please enter at least 10 digits.'
+                  phoneUS: 'Please enter a valid phone number'
               }
           }
     });

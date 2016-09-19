@@ -98,24 +98,24 @@
                                     <td>{{ $item['product'] }}</td>
                                     <td class="center">{{ $item['unit_of_measurement'] }}</td>
                                     <td class="center">{{ $item['count'] }}</td>
-                                    <td class="center">{{ $item['original_price'] }}</td>
-                                    <td class="center">{{ $item['discount_price'] }}</td>
+                                    <td class="center">${{ number_format($item['original_price'], 2) }}</td>
+                                    <td class="center">${{ number_format($item['discount_price'], 2) }}</td>									
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Total price</strong></td>
-                                    <td>{{ $original_package_price[$ind] }}</td>
+                                    <td>${{ number_format($original_package_price[$ind], 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Total discouont</strong></td>
-                                    <td>{{ $package_discount[$ind] }}</td>
+                                    <td>${{ number_format($package_discount[$ind], 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Discounted package price</strong></td>
-                                    <td>{{ $discouonted_package_price[$ind] }}</td>
+                                    <td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
