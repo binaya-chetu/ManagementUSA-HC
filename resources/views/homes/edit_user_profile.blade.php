@@ -178,7 +178,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                               <a href='{{'/home/userProfile'}}' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>
