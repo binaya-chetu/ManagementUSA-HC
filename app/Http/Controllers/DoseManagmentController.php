@@ -84,7 +84,7 @@ class DoseManagmentController extends Controller
             'medicationB2' => 'required'
         ]);
         
-        //echo "<pre>";print_r($request->all());die;
+       //echo "<pre>";print_r($request->all());die;
         // create TrimixDoses object
         $trimixData = new TrimixDoses;
         $trimixData->patient_id = $request->patient_id;

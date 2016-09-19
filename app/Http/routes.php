@@ -839,4 +839,33 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'doses.doseManagement',
         //'middleware' => ['acl.doseManagement_read']
     ]);
+    
+    
+    /*
+     * To Show the profile details of User
+     */
+    Route::get('/home/userProfile', [
+       'uses' => 'HomeController@userProfile',
+        'as' => 'homes.user_profile',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
+    /*
+     * To edit the profile details of User
+     */
+    Route::get('/home/editUserProfile/{id}', [
+       'uses' => 'HomeController@editUserProfile',
+        'as' => 'homes.edit_user_profile',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
+    /*
+     * To edit the profile details of User
+     */
+    Route::Post('/home/updateUserProfile/{id}', [
+       'uses' => 'HomeController@updateUserProfile',
+        'as' => 'homes.edit_user_profile',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
 });
