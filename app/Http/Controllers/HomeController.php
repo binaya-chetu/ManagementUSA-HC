@@ -8,6 +8,9 @@ use App\Appointment;
 use App\User;
 use App\Role;
 use App\FollowupStatus;
+use Auth;
+use App\State;
+use App\UserDetail;
 
 /**
  * This class is used to handle home page related action
@@ -92,6 +95,94 @@ class HomeController extends Controller {
             'doctors' => $doctors,
             'followupStatus' => $followupStatus
         ]);
+    }
+    
+    
+   
+    /** Niwedita : to show the profile details of user
+    * This function is used to view the patient details.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function userProfile() {
+       $user_id =  Auth::user()->id;
+       if (!($user = User::with(
+               'userDetail',
+               'userDetail.userStateName',
+               'roleName'
+            )
+            ->find($user_id))) {
+            App::abort(404, 'Page not found.');
+        }
+         
+        return view('homes.user_profile', [
+            'user' => $user
+        ]);
+    }
+    
+    /**
+     * This function is used to fetch layout of edit user profile form and user details to display on that form
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editUserProfile($id = null) {
+        if (!($user = User::with('userDetail')->find(base64_decode($id)))) {
+            App::abort(404, 'Page not found.');
+        }
+
+        // get the state list from state table
+        $states = State::lists('name', 'id')->toArray();
+
+        return view('homes.edit_user_profile', [
+            'user' => $user,
+            'states' => $states
+        ]);
+    }
+    
+    /**
+     * This function is used to update the user profile detail
+     *
+     * @param $id and $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateUserProfile($id = null, Request $request) {
+        if (!($userData = User::find($id))) {
+            App::abort(404, 'Page not found.');
+        }
+
+        // validation rule
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'phone' => 'required',
+            'zipCode' => 'required|min:6|max:15'
+        ]);
+
+        $userInput['first_name'] = $request->first_name;
+        $userInput['last_name'] = $request->last_name;
+
+        // get user details data by user id
+        $userDetailData = UserDetail::where('user_id', $id)->get();
+        if ($request->dob) {
+            $userDetailInput['dob'] = date('Y-m-d', strtotime($request->dob));
+        }
+        $userDetailInput['gender'] = $request->gender;
+        $userDetailInput['phone'] = $request->phone;
+        $userDetailInput['address1'] = $request->address1;
+        $userDetailInput['address2'] = $request->address2;
+        $userDetailInput['city'] = $request->city;
+        $userDetailInput['state'] = $request->state;
+        $userDetailInput['zipCode'] = $request->zipCode;
+        // save user data in user table and user details data in user details table.
+        if ($userData->fill($userInput)->save() && $userDetailData[0]->fill($userDetailInput)->save()) {
+            \Session::flash('flash_message', 'User Profile updated successfully.');
+            return redirect('/home/userProfile');
+        } else {
+            return redirect('/home/editUserProfile');
+        }
     }
 
 }

@@ -35,8 +35,8 @@
                         <th>Phone No.</th>
                         <th>Call Time</th>
                         <th>Source</th>
-                        <!---Niwedita: Removing Actions!>
-<!--                        <th>Actions</th>-->
+                    
+                        <!--  <th>Actions</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
 
                         <td class="table-text"> 31-05-2016 11:00am</td>
                         <td class="table-text">Advertisement</td>
-<!--                        <td class="actions">
+                            <!--   <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
                         </td>-->
@@ -57,7 +57,7 @@
 
                         <td class="table-text"> 31-05-2016 12:00am</td>
                         <td class="table-text">Newsletter</td>
-<!--                        <td class="actions">
+                        <!--  <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
                         </td>-->
@@ -68,7 +68,7 @@
 
                         <td class="table-text"> 31-05-2016 11:00am</td>
                         <td class="table-text">Digital Media</td>
-<!--                        <td class="actions">
+                        <!--  <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
                         </td>-->
@@ -79,8 +79,7 @@
 
                         <td class="table-text"> 30-05-2016 4:00pm</td>
                         <td class="table-text">Advertisement</td>
-                          <!---Niwedita: Removing Actions!>
-<!--                        <td class="actions">
+                        <!--  <td class="actions">
                             <a href="#" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
                         </td>-->

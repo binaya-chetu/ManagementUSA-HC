@@ -37,7 +37,7 @@
                     <ul class="list-unstyled">
                         <li class="divider"></li>
                                 
-                      <li>
+                        <li>
                             <a role="menuitem" tabindex="-1" href="{{ url('/home/userProfile') }}"><i class="fa fa-user"></i> My Profile</a>
                         </li>
                         <!--  <li>
