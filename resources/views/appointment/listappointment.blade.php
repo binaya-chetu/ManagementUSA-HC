@@ -65,7 +65,7 @@
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
-                        <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
+                        <td class="table-text"><div><a class="defaultColor" href="/patient/view/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
                         <td class="table-text"><div><?php 
                                 $reasonArr = $appointment->patient->reason->toArray();
                                 $reasonArray = array_column($reasonArr, 'reason_code');

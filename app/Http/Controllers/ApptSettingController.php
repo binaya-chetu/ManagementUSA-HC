@@ -475,7 +475,7 @@ class ApptSettingController extends Controller {
 
         $relative_appointment = Appointment::where('id', $formData['appointment_id'])->first();
 
-        $relative_appointment->patient_status = config("constants.APPOINTMENT_AFTER_REPORT_FLAG");
+        $relative_appointment->progress_status = config("constants.APPOINTMENT_AFTER_REPORT_FLAG");
         $relative_appointment->save();
 
         $exist_request = AppointmentRequest::where('id', $formData['appointment_request_id'])->first();
@@ -519,7 +519,20 @@ class ApptSettingController extends Controller {
                 $user->hash = $patient->hash;
                 $this->emailPatientEditForm($user);
             }
-            $appointment->save();
+            $apptDate = date('Y-m-d', strtotime($formData['appDate']));
+            $today = date('Y-m-d');
+            if ($today == $apptDate) {
+                $appointment->status = $this->confirmedAppointmentStatus;
+                $appointment->save();
+                $followUp = new App\FollowUp;
+                $followUp->action = $this->confirmedAppointmentStatus;
+                $followUp->appt_id = $appointment->id;
+                $followUp->created_by = Auth::user()->id;
+                $followUp->comment = $appointment_requests->comment;
+                $followUp->save();
+            } else {
+                $appointment->save();
+            }
         }
         // Case of selecting patient from drop down 
         if ($formData['status'] == config("constants.APPOINTMENT_SET_FLAG")) {

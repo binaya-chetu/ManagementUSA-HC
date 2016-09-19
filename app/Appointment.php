@@ -24,6 +24,7 @@ class Appointment extends Model {
 		'doctor_id',
 		'comment',
 		'patient_status',
+                'progress_status',
 		'created_at',
 		'updated_at',
 		'deleted_at'

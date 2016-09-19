@@ -37,7 +37,8 @@
                         <th>Patient</th>                        
                         <th>Source</th>
                         <th>Reason for Visit</th>
-                        <th>Patient status</th>
+                        <th>Patient Status</th>
+                        <th>Appointment Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -48,7 +49,7 @@
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
-                        <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
+                        <td class="table-text"><div><a class="defaultColor" href="/patient/view/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
 
                         <td class="table-text"><div>
                                 <?php
@@ -77,20 +78,26 @@
                                 switch ($appointment->patient_status) {
                                     case 1: echo "Show";
                                         break;
-                                    case 2: echo "Send To Lab ";
-                                        break;
-                                    case 3: echo "Waiting for Lab Report";
-                                        break;
-                                    case 4: echo "Lab Report Ready";
-                                        break;
-                                    case 5: echo "No Show";
+                                    case 2: echo "No Show";
                                         break;
                                     default: echo "None";
                                         break;
                                 }
-                                ?></div></td>
+                            ?></div></td>
+                        <td class="table-text"><div><?php
+                                switch ($appointment->progress_status) {
+                                    case 1: echo "Send To Lab";
+                                        break;
+                                    case 2: echo "Waiting For Lab Report";
+                                        break;
+                                    case 3: echo "Ready Lab Report";
+                                        break;
+                                    default: echo "Pending";
+                                        break;
+                                }
+                            ?></div></td>
                         <td class="actions">                            
-                            @if($appointment->patient_status < 2)
+                            @if($appointment->patient_status < 1)
                                 <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                             @endif
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
@@ -107,17 +114,58 @@
     {!! csrf_field() !!}
     <section class="panel panel-primary">
         <header class="panel-heading">
-            <h2 class="panel-title">Select Patient Status</h2>
+            <h2 class="panel-title">Select Status</h2>
         </header>
         <div class="panel-body">
-            <div class="form-group">
+<!--            <div class="form-group">
                 {{ Form::label('status', 'Patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-md-6">
                     <?php $states = ['1' => 'Show', '2' => 'Send To Lab', '3' => 'Waiting For Lab Report', '4' => 'Ready Lab Report', '5' => 'No Show']; ?>
                     {{ Form::select('patient_status', ['' => 'Please Select Patient Status'] + $states, null, ['class' => 'form-control input required']) }}
                 </div>
                 {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}
-            </div>
+            </div>-->
+            {{ Form::hidden('appointment_id', 0, array('id' => 'patient_appt_id')) }}
+            <div class="form-group">							
+                {{ Form::label('patient_status', 'Patient Status', array('class' => 'col-sm-4 control-label mandatory')) }}
+                <div class="col-sm-6">
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('patient_status', 1, 1, ['id' => 'optionsRadios1']) }}
+                            Show
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('patient_status', 2, 0,  ['id' => 'optionsRadios2']) }}
+                            No Show
+                        </label>
+                    </div>    
+                </div>
+            </div>   
+            <div class="form-group">							
+                {{ Form::label('progress_status', 'Appointment Status', array('class' => 'col-sm-4 control-label mandatory')) }}
+                <div class="col-sm-6">
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('progress_status', 1, 1, ['id' => 'optionsRadios3']) }}
+                            Send To Lab
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('progress_status', 2, 0, ['id' => 'optionsRadios4']) }}
+                            Waiting For Lab Report
+                        </label>
+                    </div>    
+                    <div class="radio">
+                        <label>
+                            {{ Form::radio('progress_status', 3, 0,  ['id' => 'optionsRadios5']) }}
+                            Ready Lab Report
+                        </label>
+                    </div>   
+                </div>
+            </div> 
             
         </div>
         <footer class="panel-footer">

@@ -1190,9 +1190,7 @@ class AppointmentController extends Controller {
             }
             $labReports = App\LabReports::insert($files);
         }
-
-
-        $values = ['patient_status' => $request->patient_status];
+        $values = ['patient_status' => $request->patient_status, 'progress_status' => $request->progress_status];
         Appointment::where('id', $request->appointment_id)->update($values);
         \Session::flash('flash_message', 'Patient Status updated successfully');
         return redirect()->back();
@@ -1206,7 +1204,7 @@ class AppointmentController extends Controller {
     public function labAppointments() {
         $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
                 $query->where('reason_id', '>', 8);
-            }, 'patient.reason.reasonCode'])->whereIn('patient_status', [2, 3])->get();
+            }, 'patient.reason.reasonCode'])->whereIn('progress_status', [1, 2])->get();
         $patients = User::where('role', $this->patient_role)->get();
 
         return view('appointment.lab_appointments', [
@@ -1223,10 +1221,10 @@ class AppointmentController extends Controller {
     public function countAppointments() {
         $appointment = array();
         $appointments = Appointment::count();
-        $labAppointment = Appointment::whereIn('patient_status', [2, 3])->count();      
+        $labAppointment = Appointment::whereIn('progress_status', [1, 2])->count();      
         $upcomingAppointment = Appointment::whereDate('apptTime', '<=', date('Y-m-d', strtotime("+3 day")))->whereNotIn('status', [ 2, 6])->count();
         $visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
-        $readyappointments = Appointment::where('patient_status', '4')->count();
+        $readyappointments = Appointment::where('progress_status', '3')->count();
         $anotherAppointments = Appointment::where('relative_id', '!=', '0')->count();
         $followup = FollowUp::count();
         $current_date = date('Y-m-d');
@@ -1251,7 +1249,7 @@ class AppointmentController extends Controller {
     public function labReadyAppointments() {
         $appointments = Appointment::with(['patient', 'patient.patientDetail', 'patient.reason' => function($query) {
                 $query->where('reason_id', '>', 8);
-            }, 'patient.reason.reasonCode'])->where('patient_status', '4')->get();
+            }, 'patient.reason.reasonCode'])->where('progress_status', '3')->get();
         $patients = User::where('role', $this->patient_role)->get();
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
         $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
