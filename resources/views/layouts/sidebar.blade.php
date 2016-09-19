@@ -15,13 +15,13 @@
             ?>
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
-                    <li class="left-menu-devider {{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
+                    <li class="left-menu-devider {{ Request::segment(1) == '' || (Request::segment(1) == 'home' && Request::segment(2) == '' ) ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('/') }}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="left-menu-devider {{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
+                    <li class="left-menu-devider {{  Request::segment(2) === 'userProfile' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('/home/userProfile') }}">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>My Profile</span>
