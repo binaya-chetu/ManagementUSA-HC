@@ -21,11 +21,17 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    <li class="{{ Request::segment(1) === '' ? 'nav-active nav-expanded' : null }}">
+                        <a href="{{ url('/home/userProfile') }}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
                     @if(in_array('appointment_setting', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'apptsetting' || Request::segment(1) === 'appointment'  ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Appt. Settings</span>
+                            <span>Appointment</span>
                         </a>
                         <ul class="nav nav-children">                       
 
@@ -82,15 +88,15 @@
                                 </ul>
                             </li>
 
-                            <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/followup') }}">
-                                    Follow-up Appointment<span class="badge followupCount"></span>
+                            <li class="{{ Request::segment(2) === 'upcomingappointments' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/upcomingappointments') }}">
+                                    Upcoming Appointment<span class="badge followupCount"></span>
                                 </a>
                             </li>
 
-                            <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/upcomingappointments') }}">
-                                    Upcoming Appointments<span class="badge upcomingCount"></span>
+                            <li class="{{ Request::segment(2) === 'followup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/followup') }}">
+                                    Follow-up Appointments<span class="badge upcomingCount"></span>
                                 </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
@@ -137,14 +143,14 @@
                                 </a>
                                 <ul class="nav nav-children">
 
-                                    <li class="{{ Request::segment(2) === 'followup' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointmentApptSetting/followup') }}">
-                                            Follow-up Appointment<span class="badge followupCount"></span>
+                                    <li class="{{ Request::segment(2) === 'upcomingappointments' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/upcomingappointments') }}">
+                                             Upcoming Appointment<span class="badge followupCount"></span>
                                         </a>
                                     </li>
-                                    <li class="{{ Request::segment(2) === 'upcomingappointments' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointmentApptSetting/upcomingappointments') }}">
-                                            Upcoming Appointments<span class="badge upcomingCount"></span>
+                                    <li class="{{ Request::segment(2) === 'followup' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/followup') }}">
+                                            Followup Appointments<span class="badge upcomingCount"></span>
                                         </a>
                                     </li>
                                     <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
@@ -168,7 +174,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
+<!--                            <li class="nav-parent {{ Request::segment(1) === 'patient' ? 'nav-expanded' : null }}">
                                 <a>
                                     Patients
                                 </a>
@@ -179,6 +185,11 @@
                                         </a>
                                     </li>
                                 </ul>
+                            </li>-->
+                            <li class="{{ Request::segment(1) === 'patient' || ( Request::segment(1) === 'patient' && Request::segment(2) === 'edit') && empty(Request::segment(2)) ? 'nav-active' : null }}">
+                                <a href="/patient">
+                                    Patients List
+                                </a>
                             </li>
                             <li class="{{ Request::segment(2) === 'pdfList' ? 'nav-active' : null }}">
                                 <a href="{{ url('/apptsettingFront/pdfList') }}">
@@ -192,7 +203,7 @@
                     <li class="nav-parent {{ Request::segment(1) === 'sale' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Front Office Sale</span>
+                            <span>Sale</span>
                         </a>
                         <ul class="nav nav-children">
                             <li class="{{ Request::segment(2) === 'index' || Request::segment(2) === 'checkout' ? 'nav-active' : null }}">
@@ -204,7 +215,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
+<!--                    @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
@@ -221,73 +232,85 @@
                             </li>
                         </ul>
                     </li>
-                    @endif
+                    @endif-->
                     @if(in_array('user_management', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'user' ||
-                                Request::segment(1) === 'doctor'  ? 'nav-active nav-expanded' : null }}">
+                                Request::segment(1) === 'doctor' || Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>User Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
+<!--                            <li class="{{ Request::segment(2) === 'addUser'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/addUser') }}">
                                     Add New User
                                 </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' ? 'nav-active' : null }}">
+                            </li>-->
+                            <li class="{{ Request::segment(2) === 'listUsers' || Request::segment(2) === 'editUser' || Request::segment(2) === 'viewUser' || Request::segment(2) === 'addUser' ? 'nav-active' : null }}">
                                 <a href="{{ url('/user/listUsers') }}">
-                                    Users List
+                                    Users
                                 </a>
                             </li>
-                            <li class="nav-parent {{ Request::segment(1) === 'doctor' ? 'nav-expanded' : null }}">
-                                <a>
+                            <li class="{{ Request::segment(1) === 'doctor' || Request::segment(2) === 'addDoctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
+                                <a href="/doctor">
                                     Doctors
                                 </a>
+                            </li> 
+                            @if(in_array('acl_management', $permissions) || (Auth::user()->role == '1'))
+                            <li class="nav-parent {{ Request::segment(1) === 'acl' ? 'nav-active nav-expanded' : null }}">
+                                <a>                                    
+                                    <span>ACL </span>
+                                </a>
                                 <ul class="nav nav-children">
-                                    <li class="{{ Request::segment(2) === 'addDoctor' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/doctor/addDoctor') }}">
-                                            Add New Doctor
-                                        </a>
-                                    </li>
-                                    <li class="{{ Request::segment(1) === 'doctor' && empty(Request::segment(2)) ? 'nav-active' : null }}">
-                                        <a href="/doctor">
-                                            Doctors List
+                                    <li class="{{ Request::segment(2) === 'listRole' || 
+                                        Request::segment(2) === 'addRole' || 
+                                        Request::segment(2) === 'editRole' ||
+                                        Request::segment(2) === 'listPermission' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/acl/listRole') }}">
+                                            Roles
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+                            @endif
                         </ul>
                     </li>       
                     @endif
                     @if(in_array('product_categories', $permissions) || (Auth::user()->role == '1'))
-                    <li class="nav-parent {{ Request::segment(1) === 'categories' && Request::segment(2) != 'addcategories' ? 'nav-active nav-expanded' : null }}">
+                    <li class="nav-parent {{ Request::segment(1) === 'categories'? 'nav-active nav-expanded' : null }}">
                         <a>
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Categories</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li class="{{ Request::segment(2) === 'newCategory'  ? 'nav-active' : null }}">
+<!--                            <li class="{{ Request::segment(2) === 'newCategory'  ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/newCategory') }}">
                                     Add New Category
                                 </a>
-                            </li>
-                            <li class="{{ Request::segment(2) === 'listCategories'  ? 'nav-active' : null }}">
+                            </li>-->
+                            <li class="{{ Request::segment(2) === 'listCategories' || Request::segment(2) === 'newCategory' ? 'nav-active' : null }}">
                                 <a href="{{ url('/categories/listCategories') }}">
-                                    Categories List
+                                    Categories
                                 </a>
                             </li>
+                             @if(in_array('product_imports', $permissions) || (Auth::user()->role == '1'))
+                            <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
+                                <a href="{{ url('categories/addcategories') }}">
+                                    <span>Product Imports</span>
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </li>
                     @endif
-                    @if(in_array('product_imports', $permissions) || (Auth::user()->role == '1'))
+<!--                    @if(in_array('product_imports', $permissions) || (Auth::user()->role == '1'))
                     <li class="{{ Request::segment(2) === 'addcategories' ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('categories/addcategories') }}">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                             <span>Product Imports</span>
                         </a>
                     </li>
-                    @endif
+                    @endif-->
                     @if(in_array('accounting', $permissions) || (Auth::user()->role == '1'))
                     <li class="nav-parent {{ Request::segment(1) === 'accounting' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
@@ -361,7 +384,7 @@
                     <li class="nav-parent {{ Request::segment(1) === 'product' ? 'nav-active nav-expanded' : null }}">
                         <a href="#">
                             <i class="fa fa-copy" aria-hidden="true"></i>
-                            <span>Inventory Management</span>
+                            <span>Inventory</span>
                         </a>
                         <ul class="nav nav-children">
                             <li class="{{ (Request::segment(1) === 'product') && (Request::segment(2) === 'create') ? 'nav-active' : null }}">

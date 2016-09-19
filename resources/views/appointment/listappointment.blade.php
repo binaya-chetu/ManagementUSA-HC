@@ -6,16 +6,16 @@
     <header class="page-header">
 
         <h2>
-            @if(isset($type) && $type == 'upcoming')
-                Upcoming Appointments
+            @if(isset($type) && $type == 'followup')
+                Followup Appointments
             @else
                 List Appointments
             @endif</h2>
         </h2>
 
         <div class="right-wrapper pull-right appt_list">
-            @if(Request::segment(2) === 'upcomingappointments')
-            {!! Breadcrumbs::render('appointment.upcomingappointments') !!}
+            @if(Request::segment(2) === 'followup')
+            {!! Breadcrumbs::render('appointment.followup') !!}
             @else
             {!! Breadcrumbs::render('appointment.listappointment') !!}
             @endif
@@ -30,8 +30,8 @@
                 <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
             </div>
             <h2 class="panel-title">
-                @if(isset($type) && $type == 'upcoming')
-                    Upcoming Appointments
+                @if(isset($type) && $type == 'followup')
+                    Followup Appointments
                 @else
                     List Appointments
                 @endif</h2>
@@ -65,7 +65,7 @@
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
 
-                        <td class="table-text"><div><a class="defaultColor" href="/appointment/patientMedical/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
+                        <td class="table-text"><div><a class="defaultColor" href="/patient/view/{{ base64_encode($appointment['patient']->id) }}">{{ $appointment['patient']->first_name }} {{ $appointment['patient']->last_name }}</a></div></td>
                         <td class="table-text"><div><?php 
                                 $reasonArr = $appointment->patient->reason->toArray();
                                 $reasonArray = array_column($reasonArr, 'reason_code');

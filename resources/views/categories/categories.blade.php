@@ -28,6 +28,13 @@
                 @if(Session::has('error_message'))
                     <div class="alert alert-warning"><span class="glyphicon glyphicon-ok"></span><em>{!! session('error_message') !!}</em></div>
                 @endif
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-md">
+                            <a id="addToTable" class="btn btn-primary" href='/categories/newCategory'>Add Category <i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
                     <div class="col-md-12">
                          @foreach($categories as $category)
                          <li><a  href="{{ url('/categories/categoryDetails/'.base64_encode($category->id))}}">{{$category->cat_name}}</a></li>
