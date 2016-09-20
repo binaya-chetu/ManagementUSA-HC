@@ -206,7 +206,7 @@
                             <div class="col-sm-8">
                                 @if($payment['payment_type'] == 0)
                                 Cash in Hand
-                                @else if($payment['payment_type'] == 1)
+                                @elseif($payment['payment_type'] == 1)
                                 Credit Card
                                 @endif
                             </div>
