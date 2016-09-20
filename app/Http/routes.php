@@ -876,4 +876,9 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+    
+    Route::any('/api', [
+       'uses' => 'clientapiController@getApiResponse' 
+    ]);
+    
 });
