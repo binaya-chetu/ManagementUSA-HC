@@ -90,7 +90,7 @@
     </div>
     <footer class="panel-footer">
         <div class="row">
-            @if(isset($type) && $type == 'upcoming')
+            @if(isset($type) && $type == 'followup')
             <div class="col-md-4 followButton">
                 {{ Form::button('Follow Up', [ 'class' => 'btn btn-primary followUp' ]) }}
             </div>

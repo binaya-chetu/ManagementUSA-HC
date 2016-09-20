@@ -3,7 +3,7 @@
 @section('content')
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2>View Followup</h2>
+        <h2>View Upcoming Appointment</h2>
         <div class="right-wrapper pull-right">
             {!! Breadcrumbs::render('appointment.viewFollowup', $followup) !!}
             
@@ -16,7 +16,7 @@
             <div class="tabs">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#followupTab" data-toggle="tab"><i class="fa fa-star"></i> Followup Information</a>
+                        <a href="#followupTab" data-toggle="tab"><i class="fa fa-star"></i> Appointment Information</a>
                     </li>
                     <li>
                         <a href="#patientTab" data-toggle="tab">Patient Information</a>
@@ -24,7 +24,7 @@
                 </ul>
                 <div class="tab-content">
                     <div id="followupTab" class="tab-pane active">
-                        <p>Appointment Follow-up Information</p>
+                        <p>Upcoming Appointment Information</p>
                         <div class="row">
                             <div class="col-md-2 col-sm-offset-1">
                                 <label>Appt. Time :</label>
