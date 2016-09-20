@@ -1273,5 +1273,17 @@ class AppointmentController extends Controller {
             'appointments' => $appointments, 'patients' => $patients
         ]);
     }
+    
+	/**
+     * Function find the current status of Appointment
+     *
+     * @return \resource\view\Appointment\lab_appointment.php
+     */
+    public function checkAppointmentStatus($id) {
+        
+        $appointment = Appointment::where('id', $id)->select('progress_status')->first();       
+        echo json_encode($appointment);
+        die;
+    }
 
 }

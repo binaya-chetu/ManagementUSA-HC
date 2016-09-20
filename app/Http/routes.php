@@ -876,4 +876,13 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+    /*
+     * To find the appointment status
+     */
+    Route::match(['get', 'post'],'/appointment/checkAppointmentStatus/{id}', [
+       'uses' => 'AppointmentController@checkAppointmentStatus',
+        'as' => 'appointment.checkAppointmentStatus',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
 });

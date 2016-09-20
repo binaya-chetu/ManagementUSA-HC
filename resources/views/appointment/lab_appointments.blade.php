@@ -136,20 +136,7 @@
             </div>
             
 			<div class="form-group">
-			
-<!--div id="dropzonePreview" class="form-group dz-default dz-message dropzone-previews">
-  <span>Drop files</span>
-</div-->
-
-			
-			</div>
-			
-			<!--div class="form-group" id="labFilesUpload">
-				{{ Form::label('labFiles', 'Upload Lab report files', array('class' => 'col-sm-4 control-label')) }}
-				<div class="col-md-6">                                   
-					{{ Form::file('labFiles', null, ['class' => 'form-control input', 'multiple' => 'multiple']) }}
-				</div>	
-			</div-->      
+			</div> 
         </div>
         <footer class="panel-footer">
             <div class="row">
@@ -161,68 +148,5 @@
         </footer>
     </section>
     {{ Form::close() }}  
-	
-	
- <!--script src="{{ URL::asset('vendor/dropzone/dropzone.min.js') }}"></script>
- <script>
- Dropzone.options.changeStatus = { // The camelized version of the ID of the form element
-
-  // The configuration we've talked about above
-  paramName: 'labFiles',
-  autoProcessQueue: false,
-  uploadMultiple: true,
-  parallelUploads: 100,
-  maxFiles: 100,
-  
-  addRemoveLinks: true,
-
-  // The setting up of the dropzone
-  init: function() {
-    var myDropzone = this;
-
-    // First change the button to actually tell Dropzone to process the queue.
-    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
-      // Make sure that the form isn't actually being sent.
-      e.preventDefault();
-      e.stopPropagation();
-      myDropzone.processQueue();
-    });
-
-    // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-    // of the sending event because uploadMultiple is set to true.
-    this.on("sendingmultiple", function() {
-      // Gets triggered when the form is actually being sent.
-      // Hide the success button or the complete form.
-    });
-    this.on("successmultiple", function(files, response) {
-      // Gets triggered when the files have successfully been sent.
-      // Redirect user or notify of success.
-    });
-    this.on("errormultiple", function(files, response) {
-      // Gets triggered when there was an error sending the files.
-      // Maybe show form again, and notify user of error
-    });
-  }
-
-}
- </script-->
-</div>
-
-
-<!--script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.ui.widget.js') }}"></script>
-<script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.iframe-transport.js') }}"></script>
-<script src="{{ URL::asset('vendor/custom_fileupload/js/jquery.fileupload.js') }}"></script>
-<script>
-$(function () {
-    $('#fileupload').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
-        }
-    });
-});
-</script-->	
-
+</div>	
 @endsection

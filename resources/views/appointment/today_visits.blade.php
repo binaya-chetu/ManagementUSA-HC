@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>App Date and Time</th>
+                        <th>Appointment time</th>
                         <th>Patient</th>                        
                         <th>Source</th>
                         <th>Reason for Visit</th>
@@ -97,7 +97,7 @@
                                 }
                             ?></div></td>
                         <td class="actions">                            
-                            @if($appointment->patient_status < 1)
+                            @if($appointment->progress_status < 1)
                                 <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                             @endif
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
