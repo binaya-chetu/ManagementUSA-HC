@@ -5,7 +5,7 @@
     <header class="page-header">
         <h2>All PDF Forms</h2>
         <div class="right-wrapper pull-right">
-           
+           {!! Breadcrumbs::render('frontpdfform.pdf_list') !!}
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
     </header>
@@ -29,7 +29,7 @@
                 @endif
                     <div class="col-md-12">
                         <li><a target="_blank" href="{{ URL::asset('/consent/HGH_Consent_OKC.html') }}">HGH Consent OKC</a></li>
-                        <li><a target="_blank" href="{{ URL::asset('/consent/HGH_consent_Tulsa.html') }}">HGH Consent Tulsa</a></li>
+                        <li><a target="_blank" href="{{ URL::asset('/consent/HGH_Consent_Tulsa.html') }}">HGH Consent Tulsa</a></li>
                         <li><a target="_blank" href="{{ URL::asset('/consent/Implied_Consent_Prolific_OKC.html') }}">Implied Consent Prolific OKC</a></li>
                         <li><a target="_blank" href="{{ URL::asset('/consent/Implied_Consent_Weight_Loss_OKC.html') }}">Implied Consent Weight Loss OKC</a></li>
                         <li><a target="_blank" href="{{ URL::asset('/consent/Implied_Consent_Weight_Loss_Tulsa.html') }}">Implied Consent Weight Loss Tulsa</a></li>

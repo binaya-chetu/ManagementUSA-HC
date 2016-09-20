@@ -11,7 +11,12 @@
         </h2>
 
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('appointment.appointmentAfterReport') !!}
+            
+            @if(Request::segment(1) === 'appointmentApptSetting')
+                {!! Breadcrumbs::render('frontapptafterreport.appointmentAfterReport') !!}
+            @else
+                {!! Breadcrumbs::render('appointment.appointmentAfterReport') !!}
+            @endif
         
         </div>
     </header>

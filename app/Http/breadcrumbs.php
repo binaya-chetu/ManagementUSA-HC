@@ -1,152 +1,152 @@
 <?php
 
-// Home / Appt. Settings / Create Appointment
-Breadcrumbs::register('apptsetting.index', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Create Appointment', route('apptsetting.index'));
-});
-
-// Home / Appt. Settings / Create Appointment
-Breadcrumbs::register('apptsetting.marketingCall', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Create Appointment', route('apptsetting.marketingCall'));
-});
-
-// Home / Appt. Settings / Missed Call List
+// Home / Appointment / Missed Call List
 Breadcrumbs::register('apptsetting.missedCall', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Missed Call List', route('apptsetting.missedCall'));
+    $breadcrumbs->push('Appointment / Missed Call List', route('apptsetting.missedCall'));
 });
 
-// Home / Appt. Settings / Web Leads
+// Home / Appointment / Create Appointment
+Breadcrumbs::register('apptsetting.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Appointment / Create Appointment', route('apptsetting.index'));
+});
+
+// Home / Appointment / Create Appointment
+Breadcrumbs::register('apptsetting.marketingCall', function ($breadcrumbs) {
+    $breadcrumbs->push('Appointment / Create Appointment', route('apptsetting.marketingCall'));
+});
+
+// Home / Appointment / Web Leads
 Breadcrumbs::register('apptsetting.webLead', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Web Leads', route('apptsetting.webLead'));
+    $breadcrumbs->push('Appointment / Web Leads', route('apptsetting.webLead'));
 });
 
-// Home / Appt. Settings / Request Follow-up
+// Home / Appointment / Request Follow-up
 Breadcrumbs::register('apptsetting.requestFollowUp', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Request Follow-up', route('apptsetting.requestFollowUp'));
+    $breadcrumbs->push('Appointment / Request Follow-up', route('apptsetting.requestFollowUp'));
 });
 
 // Home / Appt. Settings / Appointments / Add New Appointment
 Breadcrumbs::register('appointment.newAppointment', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Appointments / Add New Appointment', route('appointment.newAppointment'));
+    $breadcrumbs->push('Appointment / Appointments / Add New Appointment', route('appointment.newAppointment'));
 });
 
-// Home / Appt. Settings / Appointments / Appointments List
+// Home / Appointment / List Appointments
 Breadcrumbs::register('appointment.listappointment', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Appointments / Appointments List', route('appointment.listappointment'));
+    $breadcrumbs->push('Appointment / List Appointments', route('appointment.listappointment'));
 });
 
-// Home / Appt. Settings / Appointments / Appointments List / Patient Medical History
+// Home / Appointment / List Appointments / Patient Medical History
 Breadcrumbs::register('appointment.patientMedical', function ($breadcrumbs, $patient) {
     $breadcrumbs->push(
-        'Appt. Settings / Appointments / Appointments List / Patient Medical History',
+        'Appointment / List Appointments / Patient Medical History',
         route('appointment.patientMedical', $patient->id)
     );
 });
 
-// Home / Appt. Settings / Appointments / View Appointments
+// Home / Appointment / View Appointments
 Breadcrumbs::register('appointment.viewappointment', function ($breadcrumbs) {
     $breadcrumbs->push(
-        'Appt. Settings / Appointments / View Appointments',
+        'Appointment / View Appointments',
         route('appointment.viewappointment')
     );
 });
 
-// Home / Appt. Settings / Followup Appointments
+// Home / Appointment / Follow-up Appointments
 Breadcrumbs::register('appointment.followup', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Followup Appointments', route('appointment.followup'));
+    $breadcrumbs->push('Appointment / Follow-up Appointments', route('appointment.followup'));
 });
 
-// Home / Appt. Settings / Appointments Followup List / View Followup
+// Home / Appointment / Upcoming Appointments / View Upcoming
 Breadcrumbs::register('appointment.viewFollowup', function ($breadcrumbs, $followup) {
     $breadcrumbs->push(
-        'Appt. Settings / Appointments Followup List / View Followup',
+        'Appointment / Upcoming Appointments / View Upcoming',
         route('appointment.viewFollowup', $followup->id)
     );
 });
 
-// Home / Appt. Settings / Upcoming Appointments
+// Home / Appointment / Upcoming Appointments
 Breadcrumbs::register('appointment.upcomingappointments', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Upcoming Appointments', route('appointment.upcomingappointments'));
+    $breadcrumbs->push('Appointment / Upcoming Appointments', route('appointment.upcomingappointments'));
 });
 
-// Home / Appt. Settings / Today Visit
+// Home / Appointment / Today Visit
 Breadcrumbs::register('appointment.todayVisits', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Today Visit', route('appointment.todayVisits'));
+    $breadcrumbs->push('Appointment / Today Visit', route('appointment.todayVisits'));
 });
 
-// Home / Appt. Settings / Lab Appointments
+// Home / Appointment / Lab Appointments
 Breadcrumbs::register('appointment.labAppointments', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Lab Appointments', route('appointment.labAppointments'));
+    $breadcrumbs->push('Appointment / Lab Appointments', route('appointment.labAppointments'));
 });
 
-// Home / Appt. Settings / Lab Ready Reports
+// Home / Appointment / Lab Ready Reports
 Breadcrumbs::register('appointment.labReadyAppointments', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Lab Ready Reports', route('appointment.labReadyAppointments'));
+    $breadcrumbs->push('Appointment / Lab Ready Reports', route('appointment.labReadyAppointments'));
 });
 
-// Home / Appt. Settings / Appointment After Report
+// Home / Appointment / Appointment After Report
 Breadcrumbs::register('appointment.appointmentAfterReport', function ($breadcrumbs) {
-    $breadcrumbs->push('Appt. Settings / Appointment After Report', route('appointment.appointmentAfterReport'));
+    $breadcrumbs->push('Appointment / Appointment After Report', route('appointment.appointmentAfterReport'));
 });
 
-// Home / POS / Patients / Add New Patient
-Breadcrumbs::register('patient.addpatient', function ($breadcrumbs) {
-    $breadcrumbs->push('POS / Patients / Add New Patient', route('patient.addpatient'));
+// Home / Front Office / Create Appointment
+Breadcrumbs::register('frontoffice.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Create Appointment', route('frontoffice.index'));
 });
 
-// Home / POS / Patients / Patient Lists
+// Home / Appt. Settings / Appointment / Follow-Up Appintments
+Breadcrumbs::register('frontfollowup.followup', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointment / Follow-Up Appintments ', route('frontfollowup.followup'));
+});
+
+// Home / Front Office /  Appointmebnt / Upcoming Appointment
+Breadcrumbs::register('frontupcoming.upcomingappointments', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointmebnt / Upcoming Appointment', route('frontupcoming.upcomingappointments'));
+});
+
+// Home / Front Office / Appointment / Today Visits
+Breadcrumbs::register('fronttodayvisit.todayVisits', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointment / Today Visits', route('fronttodayvisit.todayVisits'));
+});
+
+// Home / Front Office / Appointment / Lab Appointments
+Breadcrumbs::register('frontlabappt.labAppointments', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointment / Lab Appointments', route('frontlabappt.labAppointments'));
+});
+
+// Home / Front Office / Appointment / Lab Ready Reports
+Breadcrumbs::register('frontlabreadyreport.labReadyAppointments', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointment / Lab Ready Reports', route('frontlabreadyreport.labReadyAppointments'));
+});
+
+// Home / Front Office / Appointment / Appointment After Report
+Breadcrumbs::register('frontapptafterreport.appointmentAfterReport', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Appointment / Appointment After Report', route('frontapptafterreport.appointmentAfterReport'));
+});
+
+// Home / Front Office / Patients List
 Breadcrumbs::register('patient', function ($breadcrumbs) {
-    $breadcrumbs->push('POS / Patients / Patient Lists', route('patient'));
+    $breadcrumbs->push('Front Office / Patients List', route('patient'));
 });
 
-// Home / POS / Patients / View Patient
+// Home / Front Office / View Patient
 Breadcrumbs::register('patient.view', function ($breadcrumbs, $patient) {
-    $breadcrumbs->push('POS / Patients / View Patient', route('patient.view', $patient->id));
+    $breadcrumbs->push('Front Office / View Patient', route('patient.view', $patient->id));
 });
 
-// Home / POS / Patients / Edit Patient
+// Home / Front Office / Edit Patient
 Breadcrumbs::register('patient.edit', function ($breadcrumbs, $patient) {
-    $breadcrumbs->push('POS / Patients / Edit Patient', route('patient.edit', $patient->id));
+    $breadcrumbs->push('Front Office / Edit Patient', route('patient.edit', $patient->id));
 });
 
-// Home / POS / Doctors / Add New Doctor
-Breadcrumbs::register('doctor.addDoctor', function ($breadcrumbs) {
-    $breadcrumbs->push('POS / Doctors / Add New Doctor', route('doctor.addDoctor'));
+// Home / Front Office / Form
+Breadcrumbs::register('frontpdfform.pdf_list', function ($breadcrumbs) {
+    $breadcrumbs->push('Front Office / Form', route('frontpdfform.pdf_list'));
 });
 
-// Home / POS / Doctors / Doctors List
-Breadcrumbs::register('doctor', function ($breadcrumbs) {
-    $breadcrumbs->push('POS / Doctors / Doctors List', route('doctor'));
-});
-
-// Home / POS / Doctors / Edit Doctor
-Breadcrumbs::register('doctor.edit', function ($breadcrumbs, $doctor) {
-    $breadcrumbs->push('POS / Doctors / Edit Doctor', route('doctor.edit', $doctor->id));
-});
-
-// Home / POS / Doctors / View Doctor
-Breadcrumbs::register('doctor.view', function ($breadcrumbs, $doctor) {
-    $breadcrumbs->push('POS / Doctors / View Doctor', route('doctor.view', $doctor->id));
-});
-
-// Home / ACL Management / Roles
-Breadcrumbs::register('acl.listRole', function ($breadcrumbs) {
-    $breadcrumbs->push('ACL Management / Roles', route('acl.listRole'));
-});
-        
-// Home / ACL Management / Add New Role
-Breadcrumbs::register('acl.addRole', function ($breadcrumbs) {
-    $breadcrumbs->push('ACL Management / Add New Role', route('acl.addRole'));
-});
-
-// Home / ACL Management / Edit Role
-Breadcrumbs::register('acl.editRole', function ($breadcrumbs, $role) {
-    $breadcrumbs->push('ACL Management / Edit Role', route('acl.editRole', $role->id));
-});
-
-// Home / ACL Management / Permission Setting
-Breadcrumbs::register('acl.listPermission', function ($breadcrumbs, $roleId) {
-    $breadcrumbs->push('ACL Management / Permission Setting', route('acl.listPermission', $roleId));
+// Home / Sale / Front Office Sale
+Breadcrumbs::register('sale.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Sale / Front Office Sale', route('sale.index'));
 });
 
 // Home / User Management / Add New User
@@ -154,9 +154,9 @@ Breadcrumbs::register('user.addUser', function ($breadcrumbs) {
     $breadcrumbs->push('User Management / Add New User', route('user.addUser'));
 });
 
-// Home / User Management / Users List
+// Home / User Management / Users
 Breadcrumbs::register('user.listUsers', function ($breadcrumbs) {
-    $breadcrumbs->push('User Management / Users List', route('user.listUsers'));
+    $breadcrumbs->push('User Management / Users', route('user.listUsers'));
 });
 
 // Home / User Management / Edit User
@@ -169,6 +169,46 @@ Breadcrumbs::register('user.viewUser', function ($breadcrumbs, $id) {
     $breadcrumbs->push('User Management / View User', route('user.viewUser', $id));
 });
 
+// Home / User Management / Add New Doctor
+Breadcrumbs::register('doctor.addDoctor', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / Add New Doctor', route('doctor.addDoctor'));
+});
+
+// Home / User Management / Doctors
+Breadcrumbs::register('doctor', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / Doctors', route('doctor'));
+});
+
+// Home / User Management / Edit Doctor
+Breadcrumbs::register('doctor.edit', function ($breadcrumbs, $doctor) {
+    $breadcrumbs->push('User Management / Edit Doctor', route('doctor.edit', $doctor->id));
+});
+
+// Home / User Management / View Doctor
+Breadcrumbs::register('doctor.view', function ($breadcrumbs, $doctor) {
+    $breadcrumbs->push('User Management / View Doctor', route('doctor.view', $doctor->id));
+});
+
+// Home / User Management / ACL / Roles
+Breadcrumbs::register('acl.listRole', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / ACL / Roles', route('acl.listRole'));
+});
+        
+// Home / User Management / ACL / Add New Role
+Breadcrumbs::register('acl.addRole', function ($breadcrumbs) {
+    $breadcrumbs->push('User Management / ACL / Add New Role', route('acl.addRole'));
+});
+
+// Home / User Management / ACL / Edit Role
+Breadcrumbs::register('acl.editRole', function ($breadcrumbs, $role) {
+    $breadcrumbs->push('User Management / ACL / Edit Role', route('acl.editRole', $role->id));
+});
+
+// Home / User Management / ACL / Permission Setting
+Breadcrumbs::register('acl.listPermission', function ($breadcrumbs, $roleId) {
+    $breadcrumbs->push('User Management / ACL / Permission Setting', route('acl.listPermission', $roleId));
+});
+
 // Home / Product Categories / Add New Category
 Breadcrumbs::register('categories.addNewCategory', function ($breadcrumbs) {
     $breadcrumbs->push('Product Categories / Add New Category', route('categories.addNewCategory'));
@@ -176,7 +216,7 @@ Breadcrumbs::register('categories.addNewCategory', function ($breadcrumbs) {
 
 // Home / Product Categories / Categories List
 Breadcrumbs::register('categories.listCategories', function ($breadcrumbs) {
-    $breadcrumbs->push('Product Categories / Categories List', route('categories.listCategories'));
+    $breadcrumbs->push('Product Categories / Categories', route('categories.listCategories'));
 });
 
 // Home / Product Categories / Package Details
