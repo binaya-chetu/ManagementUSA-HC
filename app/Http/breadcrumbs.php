@@ -1,5 +1,15 @@
 <?php
 
+// Home / My Profile
+Breadcrumbs::register('homes.user_profile', function ($breadcrumbs) {
+    $breadcrumbs->push('My Profile', route('homes.user_profile'));
+});
+
+// Home / Edit Profile
+Breadcrumbs::register('homes.edit_user_profile', function ($breadcrumbs, $id) {
+    $breadcrumbs->push('Edit Profile', route('homes.edit_user_profile', $id));
+});
+
 // Home / Appointment / Missed Call List
 Breadcrumbs::register('apptsetting.missedCall', function ($breadcrumbs) {
     $breadcrumbs->push('Appointment / Missed Call List', route('apptsetting.missedCall'));

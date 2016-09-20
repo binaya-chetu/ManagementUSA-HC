@@ -5,7 +5,7 @@
     <header class="page-header">
         <h2>Edit User Profile</h2>
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('user.editUser', $user->id) !!}
+            {!! Breadcrumbs::render('homes.edit_user_profile', $user->id) !!}
             
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
