@@ -1190,7 +1190,13 @@ class AppointmentController extends Controller {
             }
             $labReports = App\LabReports::insert($files);
         }
-        $values = ['patient_status' => $request->patient_status, 'progress_status' => $request->progress_status];
+        
+        if(isset($request->patient_status)){
+            $values = ['patient_status' => $request->patient_status,  'progress_status' => $request->progress_status];
+        }else{
+            $values = [ 'progress_status' => $request->progress_status];
+        }
+
         Appointment::where('id', $request->appointment_id)->update($values);
         \Session::flash('flash_message', 'Patient Status updated successfully');
         return redirect()->back();
@@ -1272,6 +1278,18 @@ class AppointmentController extends Controller {
         return view('appointment.appointment_after_report', [
             'appointments' => $appointments, 'patients' => $patients
         ]);
+    }
+    
+	/**
+     * Function find the current status of Appointment
+     *
+     * @return \resource\view\Appointment\lab_appointment.php
+     */
+    public function checkAppointmentStatus($id) {
+        
+        $appointment = Appointment::where('id', $id)->select('progress_status')->first();       
+        echo json_encode($appointment);
+        die;
     }
 
 }

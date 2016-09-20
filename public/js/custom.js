@@ -952,19 +952,38 @@ var data = $(this).serializeArray();
                 }
                 });
                 });
-                        $(document).on("click", ".patient_status", function(event) {
-                event.preventDefault();
-                        var appointmentId = $(this).attr('rel');
-                        var patientId = $(this).data('patientid');
-                        $('#patient_appt_id').val(appointmentId);
-                        $('#patient_id').val(patientId);
-                        $.magnificPopup.open({
-                        items: {
-                        src: '#modal-change-patient-status',
-                                type: 'inline'
-                        }
+                       $(document).on("click", ".patient_status", function(event) {
+                        event.preventDefault();
+                            var appointmentId = $(this).attr('rel');
+                            var patientId = $(this).data('patientid');
+                            $('#patient_appt_id').val(appointmentId);
+                            $('#patient_id').val(patientId);
+
+                            $.magnificPopup.open({
+                            items: {
+                            src: '#modal-change-patient-status',
+                                    type: 'inline'
+                            }
+                            });
+                            $.ajaxSetup({
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                            type: "POST",
+                                url: ajax_url + "/appointment/checkAppointmentStatus/"+appointmentId,
+                                success: function(response) {
+                                    var combine = JSON.parse(response);
+                                    console.log(combine);
+                                    if(combine.progress_status == '2'){
+                                        $('#modal-change-patient-status').find(':radio[name=progress_status][value="2"]').prop('checked', true);
+                                    }else{
+                                        $('#modal-change-patient-status').find(':radio[name=progress_status][value="2"]').prop('checked', false);
+                                    }
+                                }
+                            });
                         });
-                });
                         $('#changeStatus').validate();
                         $("#requestFollowup").validate();
                         $("#patientInventory").validate();
