@@ -12,7 +12,11 @@
         ?>
         <h2>Create Appointment From {{ $type }}</h2>
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('apptsetting.index') !!}
+            @if(Request::segment(1) === 'apptsettingFront')
+                {!! Breadcrumbs::render('frontoffice.index') !!}
+            @else
+                {!! Breadcrumbs::render('apptsetting.index') !!}
+            @endif
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>

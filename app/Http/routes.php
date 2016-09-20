@@ -42,7 +42,7 @@ Route::group(['middleware' => 'web'], function () {
     
     Route::get('/apptsettingFront/index/{val?}', [
         'uses' => 'ApptSettingController@index',
-        'as' => 'apptsetting.index',
+        'as' => 'frontoffice.index',
         'middleware' => ['acl:appointment_setting_write']
     ]);
 
@@ -132,7 +132,7 @@ Route::group(['middleware' => 'web'], function () {
     
     Route::get('/sale/index', [
         'uses' => 'SaleController@index',
-        'as' => 'SaleController@index',
+        'as' => 'sale.index',
         //'middleware' => ['acl:appointment_setting_write']
     ]);
 
@@ -756,37 +756,37 @@ Route::group(['middleware' => 'web'], function () {
      */
     Route::get('/appointmentApptSetting/followup', [
        'uses' => 'AppointmentController@followup',
-       'as' => 'appointment.followup',
+       'as' => 'frontfollowup.followup',
        'middleware' => ['acl:appointment_setting_read']
     ]);
     
     Route::get('/appointmentApptSetting/upcomingappointments', [
         'uses' => 'AppointmentController@upcomingappointments',
-        'as' => 'appointment.upcomingappointments',
+        'as' => 'frontupcoming.upcomingappointments',
         'middleware' => ['acl:appointment_setting_read']
     ]);
     
     Route::get('/appointmentApptSetting/todayVisits', [
         'uses' => 'AppointmentController@todayVisits',
-        'as' => 'appointment.todayVisits',
+        'as' => 'fronttodayvisit.todayVisits',
         'middleware' => ['acl:appointment_setting_read']
     ]);
     
     Route::get('/appointmentApptSetting/labAppointments', [
         'uses' => 'AppointmentController@labAppointments',
-        'as' => 'appointment.labAppointments',
+        'as' => 'frontlabappt.labAppointments',
         'middleware' => ['acl:appointment_setting_read']
     ]);
                
     Route::get('/appointmentApptSetting/appointmentAfterReport', [
         'uses' => 'AppointmentController@appointmentAfterReport',
-        'as' => 'appointment.appointmentAfterReport',
+        'as' => 'frontapptafterreport.appointmentAfterReport',
         'middleware' => ['acl:appointment_write']
     ]);
              
     Route::get('/appointmentApptSetting/labReadyAppointments', [
         'uses' => 'AppointmentController@labReadyAppointments',
-        'as' => 'appointment.labReadyAppointments',
+        'as' => 'frontlabreadyreport.labReadyAppointments',
         'middleware' => ['acl:appointment_read']
     ]);
              

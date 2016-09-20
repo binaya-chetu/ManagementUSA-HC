@@ -5,7 +5,7 @@
     <header class="page-header">       
         <h2>Front Office Sale </h2>
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('apptsetting.index') !!}
+            {!! Breadcrumbs::render('sale.index') !!}
 
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>
