@@ -1,7 +1,9 @@
 /vendor
 /node_modules
 /public/storage
-/public/uploads
+/public/uploads/driving_license/*
+/public/uploads/lab_reports/*
+/public/uploads/patient_documents/*
 /storage/*
 /nbproject
 Homestead.yaml
