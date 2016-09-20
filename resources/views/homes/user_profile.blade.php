@@ -6,7 +6,7 @@
     <header class="page-header">
         <h2>View User Profile :  {{ $user->first_name }} {{ $user->last_name }}</h2>
         <div class="right-wrapper pull-right">
-           {!! Breadcrumbs::render('patient.view', $user) !!}
+           {!! Breadcrumbs::render('homes.user_profile') !!}
             
             <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
         </div>

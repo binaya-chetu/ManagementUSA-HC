@@ -834,7 +834,7 @@ Route::group(['middleware' => 'web'], function () {
     
     Route::get('/apptsettingFront/pdfList',[ 
          'uses' => 'ApptSettingController@pdfList',
-        'as' => 'apptsetting.pdf_list',
+        'as' => 'frontpdfform.pdf_list',
         //'middleware' => ['acl.doseManagement_read']
     ]);
 
