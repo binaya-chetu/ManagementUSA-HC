@@ -1190,7 +1190,13 @@ class AppointmentController extends Controller {
             }
             $labReports = App\LabReports::insert($files);
         }
-        $values = ['patient_status' => $request->patient_status, 'progress_status' => $request->progress_status];
+        
+        if(isset($request->patient_status)){
+            $values = ['patient_status' => $request->patient_status,  'progress_status' => $request->progress_status];
+        }else{
+            $values = [ 'progress_status' => $request->progress_status];
+        }
+
         Appointment::where('id', $request->appointment_id)->update($values);
         \Session::flash('flash_message', 'Patient Status updated successfully');
         return redirect()->back();
