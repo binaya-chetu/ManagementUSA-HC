@@ -6,7 +6,12 @@
     <header class="page-header">
         <h2>Today Visits</h2>
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('appointment.todayVisits') !!}
+            
+            @if(Request::segment(1) === 'appointmentApptSetting')
+                {!! Breadcrumbs::render('fronttodayvisit.todayVisits') !!}
+            @else
+                {!! Breadcrumbs::render('appointment.todayVisits') !!}
+            @endif
 
             <a class="sidebar-right-toggle" data-open="sidebar-right">
                 <i class="fa fa-chevron-left"></i>

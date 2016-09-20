@@ -87,18 +87,20 @@
                                     </li>
                                 </ul>
                             </li>
-
+                            
+                            <li class="{{ Request::segment(2) === 'followup' ? 'nav-active' : null }}">
+                                <a href="{{ url('/appointment/followup') }}">
+                                    Follow-up Appointments<span class="badge upcomingCount"></span>
+                                </a>
+                            </li>
+                            
                             <li class="{{ Request::segment(2) === 'upcomingappointments' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/upcomingappointments') }}">
                                     Upcoming Appointment<span class="badge followupCount"></span>
                                 </a>
                             </li>
 
-                            <li class="{{ Request::segment(2) === 'followup' ? 'nav-active' : null }}">
-                                <a href="{{ url('/appointment/followup') }}">
-                                    Follow-up Appointments<span class="badge upcomingCount"></span>
-                                </a>
-                            </li>
+                            
                             <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
                                 <a href="{{ url('/appointment/todayVisits') }}">
                                     Today Visits<span class="badge visitCount"></span>
@@ -142,17 +144,17 @@
                                     Appointment
                                 </a>
                                 <ul class="nav nav-children">
-
-                                    <li class="{{ Request::segment(2) === 'upcomingappointments' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
-                                        <a href="{{ url('/appointmentApptSetting/upcomingappointments') }}">
-                                             Upcoming Appointment<span class="badge followupCount"></span>
-                                        </a>
-                                    </li>
                                     <li class="{{ Request::segment(2) === 'followup' ? 'nav-active' : null }}">
                                         <a href="{{ url('/appointmentApptSetting/followup') }}">
                                             Followup Appointments<span class="badge upcomingCount"></span>
                                         </a>
                                     </li>
+                                    <li class="{{ Request::segment(2) === 'upcomingappointments' || Request::segment(2) === 'viewFollowup' ? 'nav-active' : null }}">
+                                        <a href="{{ url('/appointmentApptSetting/upcomingappointments') }}">
+                                             Upcoming Appointment<span class="badge followupCount"></span>
+                                        </a>
+                                    </li>
+                                    
                                     <li class="{{ Request::segment(2) === 'todayVisits' ? 'nav-active' : null }}">
                                         <a href="{{ url('/appointmentApptSetting/todayVisits') }}">
                                             Today Visits<span class="badge visitCount"></span>

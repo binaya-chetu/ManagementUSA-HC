@@ -6,7 +6,12 @@
     <header class="page-header">
         <h2>Lab Appointments</h2>
         <div class="right-wrapper pull-right">
-            {!! Breadcrumbs::render('appointment.labAppointments') !!}
+            
+            @if(Request::segment(1) === 'appointmentApptSetting')
+                {!! Breadcrumbs::render('frontlabappt.labAppointments') !!}
+            @else
+                {!! Breadcrumbs::render('appointment.labAppointments') !!}
+            @endif
 
             <a class="sidebar-right-toggle" data-open="sidebar-right">
                 <i class="fa fa-chevron-left"></i>
