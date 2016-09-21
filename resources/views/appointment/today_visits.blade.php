@@ -97,12 +97,12 @@
                                         break;
                                     case 3: echo "Ready Lab Report";
                                         break;
-                                    default: echo "Pending";
+                                    default: echo "None";
                                         break;
                                 }
                             ?></div></td>
                         <td class="actions">                            
-                            @if($appointment->progress_status < 1)
+                            @if($appointment->patient_status == 0 && $appointment->progress_status == 0 )
                                 <a href="javascript:void(0)" class="on-default patient_status" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>
                             @endif
 <!--                            <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> -->
@@ -136,19 +136,19 @@
                 <div class="col-sm-6">
                     <div class="radio">
                         <label>
-                            {{ Form::radio('patient_status', 1, 1, ['id' => 'optionsRadios1']) }}
+                            {{ Form::radio('patient_status', 1, 1, ['id' => 'optionsRadios1', 'class'=> 'patientShowStatus']) }}
                             Show
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            {{ Form::radio('patient_status', 2, 0,  ['id' => 'optionsRadios2']) }}
+                            {{ Form::radio('patient_status', 2, 0,  ['id' => 'optionsRadios2', 'class'=> 'patientShowStatus']) }}
                             No Show
                         </label>
                     </div>    
                 </div>
             </div>   
-            <div class="form-group">							
+            <div class="form-group appointmentStatus">							
                 {{ Form::label('progress_status', 'Appointment Status', array('class' => 'col-sm-4 control-label mandatory')) }}
                 <div class="col-sm-6">
                     <div class="radio">
