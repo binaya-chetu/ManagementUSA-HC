@@ -8,7 +8,6 @@
         <h2>
             Appointments After Report
         </h2>
-        </h2>
 
         <div class="right-wrapper pull-right">
             
@@ -17,7 +16,9 @@
             @else
                 {!! Breadcrumbs::render('appointment.appointmentAfterReport') !!}
             @endif
-        
+        <a class="sidebar-right-toggle" data-open="sidebar-right">
+            <i class="fa fa-chevron-left"></i>
+        </a>
         </div>
     </header>
 
