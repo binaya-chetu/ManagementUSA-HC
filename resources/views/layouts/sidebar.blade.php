@@ -21,7 +21,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="left-menu-devider {{  Request::segment(2) === 'userProfile' ? 'nav-active nav-expanded' : null }}">
+                    <li class="left-menu-devider {{  (Request::segment(2) === 'userProfile' || Request::segment(2) === 'editUserProfile') ? 'nav-active nav-expanded' : null }}">
                         <a href="{{ url('/home/userProfile') }}">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span>My Profile</span>

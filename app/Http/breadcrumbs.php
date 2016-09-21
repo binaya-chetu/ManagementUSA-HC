@@ -111,7 +111,7 @@ Breadcrumbs::register('frontfollowup.followup', function ($breadcrumbs) {
 
 // Home / Front Office /  Appointmebnt / Upcoming Appointment
 Breadcrumbs::register('frontupcoming.upcomingappointments', function ($breadcrumbs) {
-    $breadcrumbs->push('Front Office / Appointmebnt / Upcoming Appointment', route('frontupcoming.upcomingappointments'));
+    $breadcrumbs->push('Front Office / Appointment / Upcoming Appointment', route('frontupcoming.upcomingappointments'));
 });
 
 // Home / Front Office / Appointment / Today Visits
@@ -231,12 +231,12 @@ Breadcrumbs::register('categories.listCategories', function ($breadcrumbs) {
 
 // Home / Product Categories / Package Details
 Breadcrumbs::register('categories.categoryDetails', function ($breadcrumbs, $id) {
-    $breadcrumbs->push('Products / Product List', route('categories.categoryDetails', $id));
+    $breadcrumbs->push('Product Categories / Product List', route('categories.categoryDetails', $id));
 });
 
-// Home / Imports Product
+// Home / Product Categories / Imports Product
 Breadcrumbs::register('categories.addcategories', function ($breadcrumbs) {
-    $breadcrumbs->push('Imports Product', route('categories.addcategories'));
+    $breadcrumbs->push('Product Categories / Imports Product', route('categories.addcategories'));
 });
 
 // Home / Accounting / Sales Reports / Daily Sales
@@ -274,12 +274,17 @@ Breadcrumbs::register('accounting.listCashLogs', function ($breadcrumbs) {
     $breadcrumbs->push('Accounting / Petty Cash Log / Cash Log Lists', route('accounting.listCashLogs'));
 });
 
-// Home / Inventory Management / Inventory Imports
+// Home / Inventory / Inventory Imports
 Breadcrumbs::register('products.create', function ($breadcrumbs) {
-    $breadcrumbs->push('Inventory Management / Inventory Imports', route('products.create'));
+    $breadcrumbs->push('Inventory / Inventory Imports', route('products.create'));
 });
 
-// Home / Inventory Management / Product Inventory
+// Home / Inventory / Product Inventory
 Breadcrumbs::register('products.showInventory', function ($breadcrumbs) {
-    $breadcrumbs->push('Inventory Management / Product Inventory', route('products.showInventory'));
+    $breadcrumbs->push('Inventory / Product Inventory', route('products.showInventory'));
+});
+
+// Home / Dose Management / Manage Dose
+Breadcrumbs::register('doses.doseManagement', function ($breadcrumbs) {
+    $breadcrumbs->push('Dose Management / Manage Dose', route('doses.doseManagement'));
 });
