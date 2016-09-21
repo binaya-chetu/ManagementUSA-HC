@@ -1377,6 +1377,16 @@ $(document).on("click", '#emiSubmit', function(ev) {
     }
 });
 
+$(document).on("click", ".patientShowStatus", function() {
+        var patientshow = $(this).val();
+        if(patientshow == '1'){
+            $('.appointmentStatus').show();
+        }else if(patientshow == '2'){
+            $('.appointmentStatus').hide();
+        }
+});
+
+
 /* --------------------------END: Functions for the Checkout page pop-up --------------  */
  /* --------------------------START: Adding popup for patient feedback in trimix doses --------------  */  
   

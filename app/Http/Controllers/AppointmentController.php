@@ -970,11 +970,14 @@ class AppointmentController extends Controller {
         }
         
         if(isset($request->patient_status)){
-            $values = ['patient_status' => $request->patient_status,  'progress_status' => $request->progress_status];
+            if($request->patient_status == 1){
+                $values = ['patient_status' => $request->patient_status,  'progress_status' => $request->progress_status];
+            }elseif($request->patient_status == 2){
+                $values = ['patient_status' => $request->patient_status];
+            }            
         }else{
             $values = [ 'progress_status' => $request->progress_status];
         }
-
         Appointment::where('id', $request->appointment_id)->update($values);
         \Session::flash('flash_message', 'Patient Status updated successfully');
         return redirect()->back();
