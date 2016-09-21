@@ -291,6 +291,7 @@ $(document).ready(function() {
         }
     });
     $(document).on("click", ".edit-row", function(ev) {
+     
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -417,6 +418,7 @@ $(document).ready(function() {
                 } else {
                     $('#patientdob').val('');
                 }
+                alert(combine.appointment.id);
                 $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
             }
         });

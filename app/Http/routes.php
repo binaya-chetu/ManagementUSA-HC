@@ -292,7 +292,7 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'appointment.saveappointment',
         'middleware' => ['acl:appointment_setting_write']
     ]);
-    
+   
     Route::get('/appointment/delete/{id}', [
         'uses' => 'AppointmentController@deleteappointment',
         'as' => 'appointment.delete',
