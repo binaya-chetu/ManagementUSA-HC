@@ -418,8 +418,7 @@ $(document).ready(function() {
                 } else {
                     $('#patientdob').val('');
                 }
-                alert(combine.appointment.id);
-                $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
+                 $('#deleteAppointmentFromCalendar').attr('data-href', '/appointment/delete/' + btoa(combine.appointment.id));
             }
         });
         $.magnificPopup.open({
