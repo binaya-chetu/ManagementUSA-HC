@@ -108,7 +108,7 @@
     $(function() {
         $('.confirmation-callback').confirmation({
             onConfirm: function() {
-                var link = $(this).attr('href');
+                var link = $('.confirmation-callback').data('href');
                 window.location = ajax_url + link;
             }
         });
