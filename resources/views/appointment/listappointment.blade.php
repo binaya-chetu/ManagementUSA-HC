@@ -14,10 +14,12 @@
         </h2>
 
         <div class="right-wrapper pull-right appt_list">
-            @if(Request::segment(2) === 'followup')
-            {!! Breadcrumbs::render('appointment.followup') !!}
+            @if(Request::segment(2) === 'followup' && Request::segment(1) === 'appointment')
+                {!! Breadcrumbs::render('appointment.followup') !!}
+            @elseif(Request::segment(2) === 'followup' && Request::segment(1) === 'appointmentApptSetting')
+                {!! Breadcrumbs::render('frontfollowup.followup') !!}
             @else
-            {!! Breadcrumbs::render('appointment.listappointment') !!}
+                {!! Breadcrumbs::render('appointment.listappointment') !!}
             @endif
         
         </div>
