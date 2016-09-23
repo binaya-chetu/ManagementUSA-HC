@@ -1005,7 +1005,10 @@ class AppointmentController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function countAppointments() {
+    public function countAppointments(Request $request) {
+		if($request->isMethod('get')){
+			return redirect('/home');
+		}
         $appointment = array();
         $appointments = Appointment::count();
         $labAppointment = Appointment::whereIn('progress_status', [1, 2])->count();      
