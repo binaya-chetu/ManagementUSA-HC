@@ -202,12 +202,15 @@ $(document).ready(function() {
     $('#calendarDate').on('blur', function() {
         checkAppointmentTime();
     });
-    showAppointmentCount();
+
     // remove search box from table with class .removeSearchBox	
     $(".removeSearchBox").closest('.dataTables_wrapper').find('.datatables-header').remove();
+	
+    showAppointmentCount();
     setInterval(function() {
         showAppointmentCount();
     }, 5000);
+	
     /* Checkout page code start */
     $('.creditCard').hide();
     $('.cashInHand').hide();
@@ -988,28 +991,29 @@ var data = $(this).serializeArray();
                         $('#changeStatus').validate();
                         $("#requestFollowup").validate();
                         $("#patientInventory").validate();
-                        function showAppointmentCount(){
-                        $.ajaxSetup({
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                        });
-                                $.ajax({
-                                type: "POST",
-                                        url: ajax_url + "/appointment/countAppointments",
-                                        success: function(response) {
-                                        var combine = JSON.parse(response);
-                                                $('.labCount').text(combine.lab_appointment);
-                                                $('.upcomingCount').text(combine.upcoming_appointment);
-                                                $('.visitCount').text(combine.visit_appointment);
-                                                $('.readyCount').text(combine.ready_appointment);
-                                                $('.followupCount').text(combine.followup_appointment);
-                                                $('.appointmentCount').text(combine.appointments);
-                                                $('.anotherAppointment').text(combine.anotherAppointments);
-                                                $('.requestCount').text(combine.requestFollowups);
-                                        }
-                                });
-                        }
+						
+	function showAppointmentCount(){
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			type: "POST",
+			url: ajax_url + "/appointment/countAppointments",
+			success: function(response) {
+			var combine = JSON.parse(response);
+				$('.labCount').text(combine.lab_appointment);
+				$('.upcomingCount').text(combine.upcoming_appointment);
+				$('.visitCount').text(combine.visit_appointment);
+				$('.readyCount').text(combine.ready_appointment);
+				$('.followupCount').text(combine.followup_appointment);
+				$('.appointmentCount').text(combine.appointments);
+				$('.anotherAppointment').text(combine.anotherAppointments);
+				$('.requestCount').text(combine.requestFollowups);
+			}
+		});
+	}
 
                 function checkAppointmentTime(){
                 var nowtime = new Date();
