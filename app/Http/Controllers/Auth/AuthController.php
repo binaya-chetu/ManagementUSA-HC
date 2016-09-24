@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+
 class AuthController extends Controller
 {
     /*
@@ -86,25 +87,25 @@ class AuthController extends Controller
         return $user;
     }
 	
-	
-	/**
- * Handle a registration request for the application.
- *
- * @param \Illuminate\Http\Request $request
- *
- * @return \Illuminate\Http\Response
- */
-public function postRegister(Request $request)
-{
-    $validator = $this->validator($request->all());
+    /**
+    * Handle a registration request for the application.
+    *
+    * @param \Illuminate\Http\Request $request
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function postRegister(Request $request)
+    {
+       $validator = $this->validator($request->all());
 
-    if ($validator->fails()) {
-        $this->throwValidationException(
-            $request, $validator
-        );
+        if ($validator->fails()) {
+           $this->throwValidationException(
+               $request, $validator
+           );
+        }
+
+        $this->create($request->all());
+        return redirect()->route('/login');
     }
 
-   $this->create($request->all());
-    return redirect()->route('/login');
-}
 }

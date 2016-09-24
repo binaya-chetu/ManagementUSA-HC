@@ -23,6 +23,7 @@ use Session;
 use App;
 use Auth;
 
+
 class AppointmentController extends Controller {
 
     protected $patient_role = 6;
@@ -347,6 +348,8 @@ class AppointmentController extends Controller {
         }
         die;
     }
+    
+    
 
     /**
      * Function for the saving the followup with the appointment
