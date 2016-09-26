@@ -144,65 +144,47 @@ class PaymentController extends Controller {
 
     
     public function debit(Request $request ){
-        echo '<pre>'; print_r($request->all());die;
-        $card = new CreditCard(); 
-        $card->setType("visa")
-                ->setNumber("4111111111111111")
-                ->setExpireMonth("11")
-                ->setExpireYear("2019")
-                ->setCvv2("012")
-                ->setFirstName("vip")
-                ->setLastName("Kumar");
-        $fi = new FundingInstrument(); 
-        $fi->setCreditCard($card);
-        
-        $payer = new Payer(); 
-        $payer->setPaymentMethod("credit_card")
-                ->setFundingInstruments(array($fi));
-        
-        $item1 = new Item(); 
-        $item1->setName('Ground Coffee 40 oz')
-                ->setDescription('Ground Coffee 40 oz')
-                ->setCurrency('USD')
-                ->setQuantity(1)
-                ->setTax(0.3)
-                ->setPrice(7.50);
-        $item2 = new Item(); 
-        $item2->setName('Granola bars')
-                ->setDescription('Granola Bars with Peanuts')
-                ->setCurrency('USD')
-                ->setQuantity(5)
-                ->setTax(0.2)
-                ->setPrice(2);
-        
-        $itemList = new ItemList();
-        $itemList->setItems(array($item1, $item2));
-        
-        $details = new Details(); 
-        $details->setShipping(1.2) 
-                ->setTax(1.3) 
-                ->setSubtotal(17.5);
-        
-        $amount = new Amount(); 
-        $amount->setCurrency("USD") 
-                ->setTotal(20) 
-                ->setDetails($details);
-        
-        
-        $transaction = new Transaction(); 
-        $transaction->setAmount($amount) 
-                ->setItemList($itemList) 
-                ->setDescription("Payment description") 
-                ->setInvoiceNumber(uniqid());
-//        $redirect_urls = new RedirectUrls();
-//        $redirect_urls->setReturnUrl(url('payment/status'))
-//                ->setCancelUrl(url('payment/status'));
-        
-        $payment = new Payment();
-        $payment->setIntent('Sale')
-                ->setPayer($payer)
-                ->setRedirectUrls($redirect_urls)
-                ->setTransactions(array($transaction));
+        //echo '<pre>'; print_r($request->all());
+        $card = new CreditCard();
+		$card->setType("visa")
+			->setNumber(urlencode($request->number))
+			->setExpireMonth(urlencode($request->month))
+			->setExpireYear(urlencode($request->year))
+			->setCvv2(urlencode($request->cvv))
+			->setFirstName(urlencode($request->first_name))
+			->setLastName(urlencode($request->last_name));		
+				
+		$fi = new FundingInstrument();
+		$fi->setCreditCard($card);		
+		
+		$payer = new Payer();
+		$payer->setPaymentMethod("credit_card")
+			->setFundingInstruments(array($fi));
+
+		$item1 = new Item();
+		$item1->setName(urlencode($request->item_name))
+			->setDescription(urlencode($request->description))
+			->setCurrency('USD')
+			->setQuantity(urlencode($request->quantity))
+			->setPrice(urlencode($request->price));
+			
+		$itemList = new ItemList();
+		$itemList->setItems(array($item1));
+                
+		$amount = new Amount();
+		$amount->setCurrency("USD")
+			->setTotal(3396);
+	
+		$transaction = new Transaction();
+		$transaction->setAmount($amount)
+			->setItemList($itemList)
+			->setDescription("Payment description")
+			->setInvoiceNumber(uniqid());	
+	
+		$payment = new Payment();
+		$payment->setIntent("sale")
+			->setPayer($payer)
+			->setTransactions(array($transaction));	
         try {
             $payment->create($this->_api_context);
         } catch (\PayPal\Exception\PPConnectionException $ex) {

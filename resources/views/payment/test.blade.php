@@ -21,10 +21,34 @@
                 <header class="panel-heading">
                     <h2 class="panel-title">Paypal Testing</h2>
                 </header>
-                <div class="panel-body">                   
+                <div class="panel-body">    
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>                        
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td></td>
+                            <td>Himeros Male Enhancement Packages</td>
+                            <td>Gold package</td>
+                            <td>1</td>
+                            <td>$3396.00</td>
+                            </tr>
+                     </tbody>
+                    </table>
                     <div class="form-group">
                         {{ Form::label('firstName', 'First Name', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
+                            {{ Form::hidden('item_name', 'Himeros Male Enhancement Packages')}}
+                            {{ Form::hidden('description', 'Gold Packages')}}
+                            {{ Form::hidden('quantity', '1')}}
+                            {{ Form::hidden('price', '3396')}}                            
                             {{ Form::text('first_name', old('first_name'), ['class' => 'form-control required', 'placeholder' => 'First Name']) }}
                         </div>
                     </div>
@@ -81,7 +105,7 @@
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-4">
+                        <div class="col-md-12 col-md-offset-5">
                             {{ Form::button(
                                     '<i class="fa fa-btn fa-user"></i>  Save Details',
                                     array(
