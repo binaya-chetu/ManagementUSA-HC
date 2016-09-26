@@ -187,16 +187,19 @@ class PaymentController extends Controller {
 			->setTransactions(array($transaction));	
         try {
             $payment->create($this->_api_context);
-        } catch (\PayPal\Exception\PPConnectionException $ex) {
-            if (\config('app.debug')) {
-                echo "Exception: " . $ex->getMessage() . PHP_EOL;
-                $err_data = json_decode($ex->getData(), true);
-                die;
-                exit;
-            } else {
-                echo 'wrong';die;
-                return redirect('/');
-            }
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+           echo '<pre>'; print_r($ex->getCode()); // Prints the Error Code
+           echo '<pre>'; print_r(json_decode($ex->getData())); // Prints the detailed error message 
+            die;
+//            if (\config('app.debug')) {
+//                echo "Exception: " . $ex->getMessage() . PHP_EOL;
+//                $err_data = json_decode($ex->getData(), true);
+//                die;
+//                exit;
+//            } else {
+//                echo 'wrong';die;
+//                return redirect('/');
+//            }
         }
         echo '<pre>'; print_r($payment->toArray()); echo '<br>';
         foreach ($payment->getLinks() as $link) {
