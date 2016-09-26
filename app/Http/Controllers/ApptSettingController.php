@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Session;
 use App;
 use Auth;
+use App\Locations;
 
 class ApptSettingController extends Controller {
 
@@ -57,13 +58,14 @@ class ApptSettingController extends Controller {
                 ->where(['users.role' => $patientRoleId, 'users.deleted_at' => null])
                 ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                 ->get();
-
+        $locations = DB::table('locations')->get();
+       
         //$resources = AppointmentSource::lists('name', 'id');  // $resources not required remove if no error occur
         $noSetReasonCode = ReasonCode::where('type', '2')->lists('reason', 'id')->toArray();
         $setReasonCode = ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
-
+        
         return view('apptsetting.index', [
-            'value' => $value, 'patients' => $patients, 'noSetReasonCode' => $noSetReasonCode, 'setReasonCode' => $setReasonCode
+            'value' => $value, 'patients' => $patients,'locations' => $locations,'noSetReasonCode' => $noSetReasonCode, 'setReasonCode' => $setReasonCode
         ]);
     }
 
@@ -275,6 +277,7 @@ class ApptSettingController extends Controller {
 
     public function saveAppointment(Request $request) {
         $formData = $request->all();
+       
         if ($formData['status'] == 1) {
             $formData['reason_id'] = $formData['noset_reason_id'];
         }
@@ -308,8 +311,11 @@ class ApptSettingController extends Controller {
         $patient->phone = $formData['phone'];
         $patient->dob = date_create($formData['dob']);
         $patient->hash = $this->getPatientHash($id);
+         ///saving location id
+        
+        $patient->location_id = $formData['location_id'];
         $patient->save();
-
+        
         //$appointment_requests = App\AppointmentRequest::firstOrCreate(['user_id' => $id]);
         $appointment_requests = new App\AppointmentRequest;
         $appointment_requests->user_id = $id;
@@ -320,6 +326,8 @@ class ApptSettingController extends Controller {
         $appointment_requests->appt_source = $formData['appt_source'];
         $appointment_requests->status = $formData['status'];
         $appointment_requests->comment = $formData['comment'];
+        ///saving location id
+        $appointment_requests->location_id = $formData['location_id'];
         $appointment_requests->created_at = date('Y-m-d H:i:s', strtotime($formData['created'] . " " . $formData['created_time']));
         if (isset($formData['followup_status'])) {
             $appointment_requests->followup_date = date('Y-m-d', strtotime('+7 days'));

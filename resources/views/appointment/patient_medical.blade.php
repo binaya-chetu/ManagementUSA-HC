@@ -1347,7 +1347,7 @@
                         </div>
                     </div>
                 </div>
-                </form>
+             
             </div>
             <div class="panel-footer">
                 <ul class="pager">

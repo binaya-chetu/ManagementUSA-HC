@@ -40,7 +40,8 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>City</th>
-                        <th>State</th>                     
+                        <th>State</th>
+                        <th>Location</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -55,6 +56,7 @@
                         <td>{{ $patient['patientDetail']->phone }}</td>
                         <td>@if($patient['patientDetail']->city){{ $patient['patientDetail']->city }} @else {{ 'N/A' }} @endif</td>                      
                         <td>{{{ $patient['patientDetail']['patientStateName']->name or 'N/A' }}}</td>  
+                          <td>{{{ $patient['patientDetail']['patientLocationName']->name or 'N/A' }}}</td>
                         <td class="actions">
                             <a href="/patient/edit/{{ base64_encode($patient->id) }}"  title="Edit"><i class="fa fa-pencil"></i></a> | 
                             <a href="/patient/view/{{ base64_encode($patient->id) }}"  title="View"><i class="fa fa-eye"></i></a> | 

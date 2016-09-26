@@ -21,212 +21,198 @@
                     <div id="beginning" class="tab-pane active">
                         <div class="col-sm-12 inputRow">
                             <div class="form-group">
-                                {{ Form::label('weight_surgeries', 'Have you Ever Had Any Weight Loss Surgeries?  If Yes What Kind?', ['class' => 'col-sm-9 control-label']) }}
-                                <div class="col-sm-3 toggle-radio-custom">
-                                    <div class="col-sm-6 radio-custom radio-primary">
-										{{ Form::radio('weight_surgeries', '', true, ['class' => 'hidden']) }}
-                                        {{ Form::radio('weight_surgeries', '1', $weightL && $weightL->weight_surgeries == '1', ['id' => 'weight_surgeries1']) }}
-                                        {{ Form::label('weight_surgeries1', 'Yes') }}
-                                    </div>
-                                    <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('weight_surgeries', '0', $weightL && $weightL->weight_surgeries == '0', ['id' => 'weight_surgeries2']) }}
-                                        {{ Form::label('weight_surgeries2', 'No') }}
-                                    </div>
+                                {{ Form::label('weight_surgeries', 'Have you Ever Had Any Weight Loss Surgeries?  If Yes What Kind?', ['class' => 'col-sm-12 control-label']) }}
+                                 <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->weight_surgeries) && $weightL->weight_surgeries  == 1)
+                                            {{ 'Yes' }} 
+                                            @if(trim($weightL->surgeries_kind)!= '')
+                                                        <?php
+                                                        switch(trim($weightL->surgeries_kind)) { 
+                                                            case 'Liposuction': echo "Liposuction";
+                                                                break;
+                                                            case 'Gastrol Sugery': echo "Gastrol Sugery";
+                                                                break;
+                                                             case 'Laser Enhanced': echo "Laser Enhanced";
+                                                                break;
+                                                            default: echo "N/A";
+                                                        }
+                                                        ?>
+                                                    @endif
+                                            @elseif($weightL->weight_surgeries == 0)
+                                            {{'No'}}
+                                            @else
+                                            {{ 'N/A' }}
+                                        @endif
                                 </div>
+                             
                             </div>
                         </div>
-                        <div class="col-sm-12 surgeriesActive">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    {{ Form::label('kind', 'What Kind?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $kind = [ 'Liposuction ' => 'Liposuction', 'Gastrol Sugery' => 'Gastrol Sugery', 'Laser Enhanced' => 'Laser Enhanced']; ?>
-                                        {{ Form::select('surgeries_kind', ['' => 'Please Select'] + $kind, $weightL? $weightL->surgeries_kind : null, ['class' => 'form-control input']) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+               
                         <div class="col-sm-12 inputRow">
-
                             <div class="form-group">
-                                {{ Form::label('weight_supplement', 'Have you Ever Been On Any Prescription Drug or Supplement For Weight Loss? If Yes What?', ['class' => 'col-sm-9 control-label']) }}
-                                <div class="col-sm-3 toggle-radio-custom">
-                                    <div class="col-sm-6 radio-custom radio-primary">	
-										{{ Form::radio('weight_supplement', '', true, ['class' => 'hidden']) }}
-                                        {{ Form::radio('weight_supplement', '1', $weightL && $weightL->weight_supplement == '1', ['id' => 'weight_supplement1']) }}
-                                        {{ Form::label('weight_supplement1', 'Yes') }}
-                                    </div>
-                                    <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('weight_supplement', '0', $weightL && $weightL->weight_supplement == '0', ['id' => 'weight_supplement2']) }}
-                                        {{ Form::label('weight_supplement2', 'No') }}
-                                    </div>
+                                {{ Form::label('weight_supplement', 'Have you Ever Been On Any Prescription Drug or Supplement For Weight Loss? If Yes What?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    @if(isset($weightL->weight_supplement) && $weightL->weight_supplement  == 1)
+                                            {{ 'Yes' }}
+                                                @if(trim($weightL->supplement_type)!= '')
+                                                        <?php
+                                                        switch(trim($weightL->supplement_type)) { 
+                                                            case 'Phentermine': echo "Phentermine";
+                                                                break;
+                                                            case 'Thyroid': echo "Thyroid";
+                                                                break;
+                                                             case 'testosterone': echo "testosterone";
+                                                                break;
+                                                             case ' Over The Counter Pills': echo " Over The Counter Pills";
+                                                                break;
+                                                            default: echo "N/A";
+                                                        }
+                                                        ?>
+                                                    @endif
+                                            @elseif($weightL->weight_supplement == 0)
+                                                {{'No'}}
+                                                @else
+                                                {{ 'N/A' }}
+                                        @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 supplementActive">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    {{ Form::label('type', 'What type?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $type = [ 'Phentermine ' => 'Phentermine', 'Thyroid' => 'Thyroid', 'testosterone' => 'testosterone', 'Over The Counter Pills' => 'Over The Counter Pills']; ?>
-                                        {{ Form::select('supplement_type', ['' => 'Please Select'] + $type, $weightL? $weightL->supplement_type : null, ['class' => 'form-control input']) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    
                     </div>
                     <div id="weight_loss_treatment" class="tab-pane">
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('liver_disease', 'Have you encountered or been Diagnosed With Liver disease or problems?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('liver_disease', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('liver_disease', '1', $weightL && $weightL->liver_disease == '1', ['id' => 'liver_disease1']) }}
-                                            {{ Form::label('liver_disease1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('liver_disease', '0', $weightL && $weightL->liver_disease == '0', ['id' => 'liver_disease2']) }}
-                                            {{ Form::label('liver_disease2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('liver_disease', 'Have you encountered or been Diagnosed With Liver disease or problems?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->liver_disease)&& $weightL->liver_disease  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->liver_disease == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('diabetes', 'Do You Have Diabetes?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('diabetes', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('diabetes', '1', $weightL && $weightL->diabetes == '1', ['id' => 'diabetes1']) }}
-                                            {{ Form::label('diabetes1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('diabetes', '0', $weightL && $weightL->diabetes == '0', ['id' => 'diabetes2']) }}
-                                            {{ Form::label('diabetes2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('diabetes', 'Do You Have Diabetes?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                     @if(isset($weightL->diabetes)&& $weightL->diabetes  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->diabetes == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 inputRow">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    {{ Form::label('thyroid', 'Are you now or have you ever been treated for a problem with your thyroid?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->thyroid_treated)&& $weightL->thyroid_treated  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->thyroid_treated == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    {{ Form::label('hormone', 'Are you now or have you ever been treated for Testosterone or other Hormone Replacement?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->hormone_treated)&& $weightL->hormone_treated  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->hormone_treated == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('thyroid', 'Are you now or have you ever been treated for a problem with your thyroid?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('thyroid_treated', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('thyroid_treated', '1', $weightL && $weightL->thyroid_treated == '1', ['id' => 'thyroid_treated1']) }}
-                                            {{ Form::label('thyroid_treated1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('thyroid_treated', '0', $weightL && $weightL->thyroid_treated == '0', ['id' => 'thyroid_treated2']) }}
-                                            {{ Form::label('thyroid_treated2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('seizures', 'Do you suffer from seizures?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->seizures)&& $weightL->seizures  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->seizures == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('hormone', 'Are you now or have you ever been treated for Testosterone or other Hormone Replacement?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('hormone_treated', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('hormone_treated', '1', $weightL && $weightL->hormone_treated == '1', ['id' => 'hormone_treated1']) }}
-                                            {{ Form::label('hormone_treated1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('hormone_treated', '0', $weightL && $weightL->hormone_treated == '0', ['id' => 'hormone_treated2']) }}
-                                            {{ Form::label('hormone_treated2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('kidney_disorder', 'Do you suffer from any Kidney Disorder?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                       @if(isset($weightL->kidney_disorder)&& $weightL->kidney_disorder  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->kidney_disorder == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('seizures', 'Do you suffer from seizures?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('seizures', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('seizures', '1', $weightL && $weightL->seizures == '1', ['id' => 'seizures1']) }}
-                                            {{ Form::label('seizures1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('seizures', '0', $weightL && $weightL->seizures == '0', ['id' => 'seizures2']) }}
-                                            {{ Form::label('seizures2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('eating_disorder', 'Have you ever been diagnosed with a eating disorder of any Kind?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->eating_disorder)&& $weightL->eating_disorder  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->eating_disorder == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('kidney_disorder', 'Do you suffer from any Kidney Disorder?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('kidney_disorder', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('kidney_disorder', '1', $weightL && $weightL->kidney_disorder == '1', ['id' => 'kidney_disorder1']) }}
-                                            {{ Form::label('kidney_disorder1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('kidney_disorder', '0', $weightL && $weightL->kidney_disorder == '0', ['id' => 'kidney_disorder2']) }}
-                                            {{ Form::label('kidney_disorder2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('frequently_eat', 'Do you frequently eat during the night, or in between meals?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($weightL->frequently_eat)&& $weightL->frequently_eat  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->frequently_eat == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('eating_disorder', 'Have you ever been diagnosed with a eating disorder of any Kind?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('eating_disorder', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('eating_disorder', '1', $weightL && $weightL->eating_disorder == '1', ['id' => 'eating_disorder1']) }}
-                                            {{ Form::label('eating_disorder1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('eating_disorder', '0', $weightL && $weightL->eating_disorder == '0', ['id' => 'eating_disorder2']) }}
-                                            {{ Form::label('eating_disorder2', 'No') }} 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    {{ Form::label('frequently_eat', 'Do you frequently eat during the night, or in between meals?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('frequently_eat', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('frequently_eat', '1', $weightL && $weightL->frequently_eat == '1', ['id' => 'frequently_eat1']) }}
-                                            {{ Form::label('frequently_eat1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('frequently_eat', '0', $weightL && $weightL->frequently_eat == '0', ['id' => 'frequently_eat2']) }}
-                                            {{ Form::label('frequently_eat2', 'No') }} 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    {{ Form::label('eat_more', 'Due to your lifstyle to you eat out more often then you eat at home?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('eat_more', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('eat_more', '1', $weightL && $weightL->eat_more == '1', ['id' => 'eat_more1']) }}
-                                            {{ Form::label('eat_more1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('eat_more', '0', $weightL && $weightL->eat_more == '0', ['id' => 'eat_more2']) }}
-                                            {{ Form::label('eat_more2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('eat_more', 'Due to your lifstyle to you eat out more often then you eat at home?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                       @if(isset($weightL->eat_more)&& $weightL->eat_more  == 1)
+                                                  {{ 'Yes' }}
+                                              @elseif($weightL->eat_more == 0)
+                                                  {{'No'}}
+                                              @else
+                                                  {{ 'N/A' }}
+                                              @endif
                                     </div>
                                 </div>
                             </div>

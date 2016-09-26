@@ -23,48 +23,55 @@
                         <div class="col-sm-12 inputRow">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {{ Form::label('needle_afraid', 'Are you afraid of Needles?  If yes How afraid?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('needle_afraid', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('needle_afraid', '1', $vitamins && $vitamins->needle_afraid == '1', ['id' => 'needle_afraid1']) }}
-                                            {{ Form::label('needle_afraid1', 'Yes') }}
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('needle_afraid', '0', $vitamins && $vitamins->needle_afraid == '0', ['id' => 'needle_afraid2']) }}
-                                            {{ Form::label('needle_afraid2', 'No') }}
-                                        </div>
+                                    {{ Form::label('needle_afraid', 'Are you afraid of Needles?  If yes How afraid?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($vitamins->needle_afraid) && $vitamins->needle_afraid  == 1)
+                                            {{ 'Yes' }}
+                                        @elseif($vitamins->needle_afraid == 0)
+                                            {{'No'}}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="col-sm-6 needleAfraidActive">
+                            <div class="col-sm-12 needleAfraidActive">
                                 <div class="form-group">
-                                    {{ Form::label('afraid_limit', 'How Afraid?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $limit = [ 'Very ' => 'Very', 'Somewhat' => 'Somewhat', 'just a little' => 'just a little']; ?>
-                                        {{ Form::select('afraid_limit', ['' => 'Please Select'] + $limit, $vitamins? $vitamins->afraid_limit : null, ['class' => 'form-control input']) }}
+                                    {{ Form::label('afraid_limit', 'How Afraid?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12">
+                                        @if(isset($vitamins->afraid_limit))
+                                            {{ $vitamins->afraid_limit }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
 					
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('injectable_type', 'What are you seeking from IV or Injectable Vitamin Therapy?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $type = [ 'Wellness ' => 'Wellness', 'Pain Management' => 'Pain Management', 'Anti-aging' => 'Anti-aging', 'Wound Healing' => 'Wound Healing', 'Preventative Care' => 'Preventative Care']; ?>
-                                        {{ Form::select('injectable_type', ['' => 'Please Select'] + $type, $vitamins? $vitamins->injectable_type : null, ['class' => 'form-control input']) }}
+                                    {{ Form::label('injectable_type', 'What are you seeking from IV or Injectable Vitamin Therapy?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12">
+                                     @if(isset($vitamins->injectable_type))
+                                            {{ $vitamins->injectable_type }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>                              
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('total_wellness', 'How do you feel about your total wellness?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $wellness = [ 'Poor ' => 'Poor', 'Ok' => 'Ok', 'Good' => 'Good', 'Great' => 'Great']; ?>
-                                        {{ Form::select('total_wellness', ['' => 'Please Select'] + $wellness, $vitamins? $vitamins->total_wellness : null, ['class' => 'form-control input']) }}
+                                    {{ Form::label('total_wellness', 'How do you feel about your total wellness?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12">
+                                       @if(isset($vitamins->total_wellness))
+                                            {{ $vitamins->total_wellness }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -72,27 +79,28 @@
                         <div class="col-sm-12 inputRow">
 
                             <div class="form-group">
-                                {{ Form::label('weight_supplement', 'Have you Ever Been On Any Prescription Drug or Supplement For Weight Loss? If Yes What?', ['class' => 'col-sm-9 control-label']) }}
-                                <div class="col-sm-3 toggle-radio-custom">
-                                    <div class="col-sm-6 radio-custom radio-primary">
-										{{ Form::radio('weight_supplement', '', true, ['class' => 'hidden']) }}
-                                        {{ Form::radio('weight_supplement', '1', $vitamins && $vitamins->weight_supplement == '1', ['id' => 'weight_supplement1']) }}
-                                        {{ Form::label('weight_supplement1', 'Yes') }}
-                                    </div>
-                                    <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('weight_supplement', '0', $vitamins && $vitamins->weight_supplement == '0', ['id' => 'weight_supplement2']) }}
-                                        {{ Form::label('weight_supplement2', 'No') }}
-                                    </div>
+                                {{ Form::label('weight_supplement', 'Have you Ever Been On Any Prescription Drug or Supplement For Weight Loss? If Yes What?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                     @if(isset($vitamins->weight_supplement) && $vitamins->weight_supplement  == 1)
+                                            {{ 'Yes' }}
+                                        @elseif($vitamins->weight_supplement == 0)
+                                            {{'No'}}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('knowledge', 'How Much do you know about testosterone and how they work in your body?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $knowledge = [ 'Nothing' => 'Nothing', 'Very Little' => 'Very Little', 'Some' => 'Some', 'Expert' => 'Expert']; ?>
-                                        {{ Form::select('vitamin_knowledge', ['' => 'Please Select'] + $knowledge, $vitamins? $vitamins->vitamin_knowledge : null, ['class' => 'form-control input']) }}
+                                    {{ Form::label('knowledge', 'How Much do you know about testosterone and how they work in your body?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12">
+                                       @if(isset($vitamins->vitamin_knowledge))
+                                            {{ $vitamins->vitamin_knowledge }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -100,53 +108,47 @@
                     </div>
                     <div id="vitamin_treatment" class="tab-pane">
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('vitamin_taken', 'Do you currently take a Vitamin Supplement?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('vitamin_taken', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('vitamin_taken', '1', $vitamins && $vitamins->vitamin_taken == '1', ['id' => 'vitamin_taken1', 'class' => 'modelShow']) }}
-                                            {{ Form::label('vitamin_taken1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('vitamin_taken', '0', $vitamins && $vitamins->vitamin_taken == '0', ['id' => 'vitamin_taken2']) }}
-                                            {{ Form::label('vitamin_taken2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('vitamin_taken', 'Do you currently take a Vitamin Supplement?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($vitamins->vitamin_taken) && $vitamins->vitamin_taken  == 1)
+                                            {{ 'Yes' }}
+                                        @elseif($vitamins->vitamin_taken == 0)
+                                            {{ 'No' }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('wellness_tested', 'Have you ever been tested for your vitamin Total wellness?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('wellness_tested', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('wellness_tested', '1', $vitamins && $vitamins->wellness_tested == '1', ['id' => 'wellness_tested1']) }}
-                                            {{ Form::label('wellness_tested1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('wellness_tested', '0', $vitamins && $vitamins->wellness_tested == '0', ['id' => 'wellness_tested2']) }}
-                                            {{ Form::label('wellness_tested2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('wellness_tested', 'Have you ever been tested for your vitamin Total wellness?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                        @if(isset($vitamins->wellness_tested) && $vitamins->wellness_tested  == 1)
+                                            {{ 'Yes' }}
+                                        @elseif($vitamins->wellness_tested == 0)
+                                            {{ 'No' }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 inputRow">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    {{ Form::label('vitamin_before', 'Have you ever had a IV Vitamin Drip Before?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6 toggle-radio-custom">
-                                        <div class="col-sm-3 radio-custom radio-primary">
-											{{ Form::radio('vitamin_drip', '', true, ['class' => 'hidden']) }}
-                                            {{ Form::radio('vitamin_drip', '1', $vitamins && $vitamins->vitamin_drip == '1', ['id' => 'vitamin_drip1']) }}
-                                            {{ Form::label('vitamin_drip1', 'Yes') }} 
-                                        </div>
-                                        <div class="col-sm-3 radio-custom radio-primary">
-                                            {{ Form::radio('vitamin_drip', '0', $vitamins && $vitamins->vitamin_drip == '0', ['id' => 'vitamin_drip2']) }}
-                                            {{ Form::label('vitamin_drip2', 'No') }} 
-                                        </div>
+                                    {{ Form::label('vitamin_before', 'Have you ever had a IV Vitamin Drip Before?', ['class' => 'col-sm-12 control-label']) }}
+                                    <div class="col-sm-12 toggle-radio-custom">
+                                         @if(isset($vitamins->vitamin_drip) && $vitamins->vitamin_drip  == 1)
+                                            {{ 'Yes' }}
+                                        @elseif($vitamins->vitamin_drip == 0)
+                                            {{ 'No' }}
+                                        @else
+                                            {{ 'N/A' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>                           
