@@ -1,5 +1,4 @@
 @extends('layouts.common')
-
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
@@ -55,8 +54,9 @@
                         <th>Appointment Time</th>
                         <th>Patient</th>
                         <th>Reason for Visit</th>
-                        <th>Source</th>                        
-                        <th>Followup Status</th>
+                        <th>Source</th>      
+                        <th>Source</th>      
+                        <th>Location</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -111,12 +111,12 @@
                                 ?>
                             </div>
                           </td>
+                          <td> {{$appointment->appointmentRequest->locations->name or 'N/A'}}</td>
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                             <?php $date = date('Y-m-d H:i');
                                   $appointmentTime = date('Y-m-d H:i', strtotime($appointment->apptTime));
-                                  
                                   ?>                            
                             @if($appointmentTime >= $date)
                                 <a href="javascript:void(0)" class="on-default edit-row" rel="{{ $appointment->id }}"><i class="fa fa-pencil"></i></a>

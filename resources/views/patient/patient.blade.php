@@ -23,6 +23,7 @@
 						<th>Email</th>
 						<th>City</th>
 						<th>State</th>
+                                                <td>Location</td>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>

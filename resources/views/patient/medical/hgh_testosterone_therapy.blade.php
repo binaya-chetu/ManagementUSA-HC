@@ -1,4 +1,4 @@
-<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */  ?>
+<?php /* name of this file is the reason disease title (removing special chars and replacing spaces with '_') of the particular reason this file belongs  */ ?>
 <div class="col-md-12">
     <section class="panel panel-primary">
         <header class="panel-heading">
@@ -21,217 +21,321 @@
                     <div id="testo_beginning" class="tab-pane active">
                         <div class="col-sm-12 inputRow">
                             <div class="form-group">
-                                {{ Form::label('harmone', 'Have you Ever Received Harmone Therapy? IF Yes What Type?', ['class' => 'col-sm-9 control-label']) }}
-                                <div class="col-sm-3 toggle-radio-custom">
-                                    <div class="col-sm-6 radio-custom radio-primary">
-										{{ Form::radio('harmone_therapy', '', true, ['class' => 'hidden']) }}
-                                        {{ Form::radio('harmone_therapy', '1', $testosterone && $testosterone->harmone_therapy == '1', ['id' => 'harmone_therapy1']) }}
-                                        {{ Form::label('harmone_therapy1', 'Yes') }}
+                                {{ Form::label('harmone', 'Have you Ever Received Harmone Therapy? IF Yes What Type?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    @if(isset($testosterone->harmone_therapy) && $testosterone->harmone_therapy  == 1)
+                                    {{ 'Yes' }}
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            {{ Form::label('kind', 'What Type?', ['class' => 'col-sm-6 control-label']) }}
+                                            <div class="col-sm-6">
+                                                <?php $harmone_type = [ 'Testosterone ' => 'Testosterone', 'HGH' => 'HGH', 'Thyroid' => 'Thyroid']; ?>
+                                                @if(isset($testosterone->harmone_therapy_type))
+                                                <?php
+                                                switch (trim($testosterone->harmone_therapy_type)) {
+                                                    case 'Testosterone': echo "Testosterone";
+                                                        break;
+                                                    case 'HGH': echo "HGH";
+                                                        break;
+                                                    case 'Thyroid': echo "Thyroid";
+                                                        break;
+                                                    default: echo "N/A";
+                                                }
+                                                ?>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('harmone_therapy', '0', $testosterone && $testosterone->harmone_therapy == '0', ['id' => 'harmone_therapy2']) }}
-                                        {{ Form::label('harmone_therapy2', 'No') }}
-                                    </div>
+                                    @elseif($testosterone->harmone_therapy == 0)
+                                    {{'No'}}
+                                    @else
+                                    {{ 'N/A' }}
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 harmoneActive">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    {{ Form::label('kind', 'What Type?', ['class' => 'col-sm-6 control-label']) }}
-                                    <div class="col-sm-6">
-                                        <?php $harmone_type = [ 'Testosterone ' => 'Testosterone', 'HGH' => 'HGH', 'Thyroid' => 'Thyroid']; ?>
-                                        {{ Form::select('harmone_therapy_type', ['' => 'Please Select'] + $harmone_type, $testosterone? $testosterone->harmone_therapy_type :'', ['class' => 'form-control input']) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-sm-12 inputRow">
                             <div class="form-group">
-                                {{ Form::label('usa_military', 'Are you now or are you planning to be in the United States Active Military or Reserve?', ['class' => 'col-sm-9 control-label']) }}
-                                <div class="col-sm-3 toggle-radio-custom">
-                                    <div class="col-sm-6 radio-custom radio-primary">
-										{{ Form::radio('usa_military', '', true, ['class' => 'hidden']) }}
-                                        {{ Form::radio('usa_military', '1', $testosterone && $testosterone->usa_military == '1', ['id' => 'usa_military1']) }}
-                                        {{ Form::label('usa_military1', 'Yes') }}
-                                    </div>
-                                    <div class="col-sm-6 radio-custom radio-primary">
-                                        {{ Form::radio('usa_military', '0', $testosterone && $testosterone->usa_military == '0', ['id' => 'usa_military2']) }}
-                                        {{ Form::label('usa_military2', 'No') }}
-                                    </div>
+                                {{ Form::label('usa_military', 'Are you now or are you planning to be in the United States Active Military or Reserve?', ['class' => 'col-sm-12 control-label']) }}
+                                <div class="col-sm-12 toggle-radio-custom">
+                                    @if(isset($testosterone->usa_military)&& $testosterone->usa_military  == 1)
+                                    {{ 'Yes' }}
+                                    @elseif($testosterone->usa_military == 0)
+                                    {{'No'}}
+                                    @else
+                                    {{ 'N/A' }}
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-				
+
                     <div id="testo_treatment" class="tab-pane">
                         <div class="form-group">
                             {{ Form::label('liver_disease', 'Questions For Treatment: Please Check all Syptoms You Wish To Improve With Hormone Therapy.', ['class' => 'col-sm-12 control-label']) }}
                         </div>    
                         <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('lack_increment', null, $testosterone? $testosterone->lack_increment : null, ['id' => 'for-lack']) }}
-                                        {{ Form::label('for-lack', 'Increased Lack of Drive') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('increase_fat', null, $testosterone? $testosterone->increase_fat : null, ['id' => 'for-fat']) }}
-                                        {{ Form::label('for-fat', 'Increased Fat Deposits around the abdomen and / or Thighs') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('depression', null, $testosterone? $testosterone->depression : null, ['id' => 'for-depression']) }}
-                                        {{ Form::label('for-depression', 'Depression') }}                                         
-                                    </div>
-                                </div>
-                            </div>   
-                        <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('mood_increment', null, $testosterone? $testosterone->mood_increment : null, ['id' => 'for-mood']) }}
-                                        {{ Form::label('for-mood', 'Increasing Mood Swings') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sleep_difficulty', null, $testosterone? $testosterone->sleep_difficulty : null, ['id' => 'for-sleep']) }}
-                                        {{ Form::label('for-sleep', 'Difficulty Sleeping') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('wrinkle_increment', null, $testosterone? $testosterone->wrinkle_increment : null, ['id' => 'for-wrinkle']) }}
-                                        {{ Form::label('for-wrinkle', 'Increasing Wrinkles') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+
+                                {{ Form::label('for-lack', 'Increased Lack of Drive') }}     
+                                @if(isset($testosterone->lack_increment)&& $testosterone->lack_increment == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->lack_increment == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+
                             </div>
-                        <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sagging_increment', null, $testosterone? $testosterone->sagging_increment : null, ['id' => 'for-sagging']) }}
-                                        {{ Form::label('for-sagging', 'Increasing sagging muscles or breasts.') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('hot_flash', null, $testosterone? $testosterone->hot_flash : null, ['id' => 'for-flash']) }}
-                                        {{ Form::label('for-flash', 'Hot Flashes') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_activity', null, $testosterone? $testosterone->loss_activity : null, ['id' => 'for-loss_activity']) }}
-                                        {{ Form::label('for-loss_activity', 'Loss of concentration, sociability, and activity.') }}                                         
-                                    </div>
-                                </div>
-                                
+                            <div class="col-sm-4">
+                                {{ Form::label('for-fat', 'Increased Fat Deposits around the abdomen and / or Thighs') }}                                         
+                                @if(isset($testosterone->increase_fat)&& $testosterone->increase_fat == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->increase_fat == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
-                        <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('stess_increment', null, $testosterone? $testosterone->stess_increment : null, ['id' => 'for-stess']) }}
-                                        {{ Form::label('for-stess', 'Increasingly stessed') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_interest', null, $testosterone? $testosterone->loss_interest : null, ['id' => 'for-loss_interest']) }}
-                                        {{ Form::label('for-loss_interest', 'Loss of interest in Sex') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loose_skin', null, $testosterone? $testosterone->loose_skin : null, ['id' => 'for-loose_skin']) }}
-                                        {{ Form::label('for-loose_skin', 'Sagging or Loose Skin') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-depression', 'Depression') }}                                         
+                                @if(isset($testosterone->depression)&& $testosterone->depression == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->depression == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
+                        </div>   
                         <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('exercise_ability', null, $testosterone? $testosterone->exercise_ability : null, ['id' => 'for-ability']) }}
-                                        {{ Form::label('for-ability', 'Decreased desire and ability to exercise') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('memory_decrement', null, $testosterone? $testosterone->memory_decrement : null, ['id' => 'for-memory_decrement']) }}
-                                        {{ Form::label('for-memory_decrement', 'Decreasing memory') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_muscle', null, $testosterone? $testosterone->loss_muscle : null, ['id' => 'for-muscle']) }}
-                                        {{ Form::label('for-muscle', 'Muscle loss') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-mood', 'Increasing Mood Swings') }} 
+                                @if(isset($testosterone->mood_increment)&& $testosterone->mood_increment == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->mood_increment == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-sleep', 'Difficulty Sleeping') }} 
+                                @if(isset($testosterone->sleep_difficulty)&& $testosterone->sleep_difficulty == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->sleep_difficulty == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-wrinkle', 'Increasing Wrinkles') }}     
+                                @if(isset($testosterone->wrinkle_increment)&& $testosterone->wrinkle_increment == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->wrinkle_increment == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
                         <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('endurance', null, $testosterone? $testosterone->endurance : null, ['id' => 'for-endurance']) }}
-                                        {{ Form::label('for-endurance', 'Decreased energy or endurance') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('muscle_decrement', null, $testosterone? $testosterone->muscle_decrement : null, ['id' => 'for-muscle_decrement']) }}
-                                        {{ Form::label('for-muscle_decrement', 'Decreasing muscle strength') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('loss_hair', null, $testosterone? $testosterone->loss_hair : null, ['id' => 'for-loss_hair']) }}
-                                        {{ Form::label('for-loss_hair', 'Thinning or loss of hair') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-sagging', 'Increasing sagging muscles or breasts.') }}     
+                                @if(isset($testosterone->sagging_increment)&& $testosterone->sagging_increment == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->sagging_increment == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+
                             </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-flash', 'Hot Flashes') }}          
+                                @if(isset($testosterone->hot_flash)&& $testosterone->hot_flash == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->hot_flash == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-loss_activity', 'Loss of concentration, sociability, and activity.') }}     
+                                @if(isset($testosterone->loss_activity)&& $testosterone->loss_activity == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->loss_activity == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+
+                        </div>
                         <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('sense_decrement', null, $testosterone? $testosterone->sense_decrement : null, ['id' => 'for-sense_decrement']) }}
-                                        {{ Form::label('for-sense_decrement', 'Decreased sense of well-being') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('testicle_decrement', null, $testosterone? $testosterone->testicle_decrement : null, ['id' => 'for-testicle_decrement']) }}
-                                        {{ Form::label('for-testicle_decrement', 'Decreasing Size of Testicles') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('shrinkage', null, $testosterone? $testosterone->shrinkage : null, ['id' => 'for-shrinkage']) }}
-                                        {{ Form::label('for-shrinkage', 'Penis Shrinkage / Urogenital Atrophy') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-stess', 'Increasingly stessed') }}      
+                                @if(isset($testosterone->stess_increment)&& $testosterone->stess_increment == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->stess_increment == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                        </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-loss_interest', 'Loss of interest in Sex') }}            
+                                @if(isset($testosterone->loss_interest)&& $testosterone->loss_interest == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->loss_interest == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-loose_skin', 'Sagging or Loose Skin') }}       
+                                @if(isset($testosterone->loose_skin)&& $testosterone->loose_skin == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->loose_skin == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
                         <div class="col-sm-12">
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('osteoporosis', null, $testosterone? $testosterone->osteoporosis : null, ['id' => 'for-osteoporosis']) }}
-                                        {{ Form::label('for-osteoporosis', 'Progressive osteoporosis, decreasing bone mass or stooped posture') }}                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('intolerance', null, $testosterone ? $testosterone->intolerance : null, ['id' => 'for-intolerance']) }}
-                                        {{ Form::label('for-intolerance', 'Cold or Heat Intolerance') }}                                         
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="checkbox-custom chekbox-primary">
-                                        {{ Form::checkbox('unexplained_weight', null, $testosterone? $testosterone->unexplained_weight : null, ['id' => 'for-unexplained_weight']) }}
-                                        {{ Form::label('for-unexplained_weight', 'Unexplained Weight Gain or Weight Loss') }}                                         
-                                    </div>
-                                </div>
+                            <div class="col-sm-4">
+                             {{ Form::label('for-ability', 'Decreased desire and ability to exercise') }}     
+                                @if(isset($testosterone->exercise_ability)&& $testosterone->exercise_ability == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->exercise_ability == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                          </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-memory_decrement', 'Decreasing memory') }}      
+                                @if(isset($testosterone->memory_decrement)&& $testosterone->memory_decrement == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->memory_decrement == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
                             </div>
+                            <div class="col-sm-4">
+                               {{ Form::label('for-muscle', 'Muscle loss') }}               
+                                @if(isset($testosterone->loss_muscle)&& $testosterone->loss_muscle == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->loss_muscle == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                                {{ Form::label('for-endurance', 'Decreased energy or endurance') }}              
+                                @if(isset($testosterone->endurance)&& $testosterone->endurance == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->endurance == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-muscle_decrement', 'Decreasing muscle strength') }}            
+                                @if(isset($testosterone->muscle_decrement)&& $testosterone->muscle_decrement == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->muscle_decrement == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-loss_hair', 'Thinning or loss of hair') }}    
+                                @if(isset($testosterone->loss_hair)&& $testosterone->loss_hair == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->loss_hair == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                                 {{ Form::label('for-sense_decrement', 'Decreased sense of well-being') }} 
+                                @if(isset($testosterone->sense_decrement)&& $testosterone->sense_decrement == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->sense_decrement == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-testicle_decrement', 'Decreasing Size of Testicles') }}
+                                @if(isset($testosterone->testicle_decrement)&& $testosterone->testicle_decrement == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->testicle_decrement == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                  {{ Form::label('for-shrinkage', 'Penis Shrinkage / Urogenital Atrophy') }}   
+                                @if(isset($testosterone->shrinkage)&& $testosterone->shrinkage == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->shrinkage == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                                {{ Form::label('for-osteoporosis', 'Progressive osteoporosis, decreasing bone mass or stooped posture') }} 
+                                @if(isset($testosterone->osteoporosis)&& $testosterone->osteoporosis == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->osteoporosis == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                                </div>
+                            <div class="col-sm-4">
+                              {{ Form::label('for-intolerance', 'Cold or Heat Intolerance') }}  
+                                @if(isset($testosterone->intolerance)&& $testosterone->intolerance == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->intolerance == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::label('for-unexplained_weight', 'Unexplained Weight Gain or Weight Loss') }}  
+                                @if(isset($testosterone->unexplained_weight)&& $testosterone->unexplained_weight == 1)
+                                {{ 'Yes' }}
+                                @elseif($testosterone->unexplained_weight == 0)
+                                {{'No'}}
+                                @else
+                                {{ 'N/A' }}
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -240,10 +344,10 @@
 <script>
     $(document).ready(function() {
         $('.harmoneActive').hide();
-	    if($("input[name='harmone_therapy']:checked").val() == 1){
-		   $('.harmoneActive').show();
-	    }
-       /** 
+        if ($("input[name='harmone_therapy']:checked").val() == 1) {
+            $('.harmoneActive').show();
+        }
+        /** 
          * If Patient has the received harmone therapy then show the corresponding fields
          *  */
         $("input[name='harmone_therapy']").click(function() {
@@ -254,6 +358,6 @@
                 $('.harmoneActive').hide();
             }
         });
-        
+
     });
 </script>
