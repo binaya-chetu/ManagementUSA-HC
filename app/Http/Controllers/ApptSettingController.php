@@ -383,6 +383,7 @@ class ApptSettingController extends Controller {
      * @return \Illuminate\View\View
      */
     public function uniqueEmail() {
+        
         $appointment = User::where('email', $_GET['email'])->count();
         if ($appointment) {
             echo json_encode($this->error);

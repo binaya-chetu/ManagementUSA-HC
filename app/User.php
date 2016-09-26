@@ -10,6 +10,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Role;
 use App\Permission;
+use Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
@@ -283,5 +285,56 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     $user->userDetail()->delete();				
             }
         });
-    }	
+    }
+    
+    /**
+     * Set the user's first name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = Crypt::encrypt($value);
+    }
+    
+    /**
+     * Get the user's first name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getFirstNameAttribute($value)
+    { 
+       try {
+            return Crypt::decrypt($value);
+        } catch (DecryptException $e) {
+        }
+    }
+    
+    /**
+     * Set the user's last name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = Crypt::encrypt($value);
+    }
+    
+    /**
+     * Get the user's last name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getLastNameAttribute($value)
+    {
+       try {
+            return $last_name = Crypt::decrypt($value);
+        } catch (DecryptException $e) {
+        }
+    }
+   
 }

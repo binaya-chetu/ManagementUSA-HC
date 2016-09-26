@@ -14,7 +14,7 @@
             </div>
             <div class="panel-body">
                  @if(Session::has('flash_message'))
-                    <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div>
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-remove"></span><em> {!! session('flash_message') !!}</em></div>
                 @endif	
                 {{ Form::open(array('url' => '/login', 'method' => "post", 'class'=>'form-horizontal form-bordered', 'id' => 'login')) }}
                 {!! csrf_field() !!}
