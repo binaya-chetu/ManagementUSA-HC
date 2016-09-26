@@ -362,7 +362,9 @@ class PatientController extends Controller {
                'patientDetail',
                'PatientDetail.patientStateName',
                'roleName',
-               'adamsQuestionaires'
+               'adamsQuestionaires',
+               'medicalHistories'
+               
             )
             ->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
