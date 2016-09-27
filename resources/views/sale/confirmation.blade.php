@@ -197,7 +197,63 @@
                         <div class="col-sm-12">
                             <h3>Payment Details</h3>
                         </div>              
+                    </div>   
+                    
+                    
+            <?php $remaining = $total_cart_price;  ?>
+            @if(!empty($uncompletedPayment['data']))
+                <div class="table-responsive">   
+                    <table class="table table-bordered table-striped mb-none">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Payment Type</th>
+                                <th>Payment Time</th>                        
+                                <th>Paid Amount</th>                                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach($uncompletedPayment['data'] as $pay)     
+                            <tr>
+                                <td class="table-text"><div>{{ $i++ }}</div></td>
+                                <td class="table-text"><div>
+                                        @if($pay['payment_type'] == 0)
+                                        Cash in Hand
+                                        @elseif($pay['payment_type'] == 1)
+                                        Credit Card
+                                        @endif
+                                    </div></td>
+                                <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($pay['created_at'])) }}</div></td>   
+                                <td class="table-text"><div>${{ number_format($pay['paid_amount'], 2) }}</div></td>
+                            </tr>
+                            @endforeach                            
+                        </tbody>
+                    </table> 
+                </div>
+             <div class="row tablePad">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Paid Amount :</label>
                     </div>
+                    <div class="col-sm-7">
+                        ${{ number_format($uncompletedPayment['total'], 2) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Remaining Amount :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        $<?php 
+                            $remaining = $remaining - $uncompletedPayment['total'];
+                            echo number_format($remaining, 2);
+                        ?> 
+                    </div>
+                </div>
+            </div>  
+            @endif                    
+                                        
                     <div class="row">
                         <div class="col-md-6">
                             <div class="col-md-5">
@@ -223,7 +279,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="col-md-5">
-                                <label>Amt. Received:</label>
+                                <label>Amt. Entered:</label>
                             </div>
                             <div class="col-sm-7">
                                 ${{ $payment['paid_amount'] or '' }}                                
@@ -231,11 +287,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="col-md-5">
-                                <label>Remaining Amt:</label>
+                                <label>Balance Left:</label>
                             </div>
                             <div class="col-sm-7">
                                 $<?php 
-                                $remaining = $total_cart_price - $payment['paid_amount'];
+                                $remaining = $remaining - $payment['paid_amount'];
                                 echo number_format($remaining, 2);
                                 ?> 
                                 @if(isset($payment['selectemi']) && $remaining > 0)
@@ -310,10 +366,8 @@
                 <footer class="panel-footer">
                     {{ Form::open(['url' => '/sale/makePayment', 'method' => "post", 'class'=>'form-horizontal', 'id' =>'checkoutForm' ]) }}
                     {{ Form::hidden('patient_id',$patientCart['patient']->id) }}   
-                    {{ Form::hidden('agent_id',$patientCart['user']->id) }}   
-                    {{ Form::hidden('total_amount', $total_cart_price) }}      
-                    {{ Form::hidden('payment_type', $payment['payment_type']) }}  
-                    {{ Form::hidden('paid_amount', $payment['paid_amount']) }}
+                    {{ Form::hidden('agent_id',$patientCart['user']->id) }}       
+                    {{ Form::hidden('payment_type', $payment['payment_type']) }}                     
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
                             {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}

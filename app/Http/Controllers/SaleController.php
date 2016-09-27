@@ -93,11 +93,13 @@ class SaleController extends Controller
         $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')
                             ->where('patient_id', $patientId)->get()->first();             
         $payment = $request->all();
+        $paymentUncompleted = Payment::getUncompletedPayment($patientId);  
+        $payment['total_uncompleted'] = $paymentUncompleted['total'];
         Session::set('checkout_payment', $payment);		    
         return view('sale.confirmation', [
             'patientCart' => $patientCart, 'category_list' => $cart['category_list'], 'category_detail_list' => $cart['category_detail_list'], 
             'original_package_price' => $cart['original_package_price'], 'discouonted_package_price' => $cart['discouonted_package_price'], 
-            'package_discount' => $cart['package_discount'], 'total_cart_price' => $cart['total_cart_price'], 'payment' => $payment
+            'package_discount' => $cart['package_discount'], 'total_cart_price' => $cart['total_cart_price'], 'payment' => $payment, 'uncompletedPayment' => $paymentUncompleted
         ]);
     }
     /**
@@ -106,10 +108,10 @@ class SaleController extends Controller
      * @return \resource\view\sale\index.blade.php
      *  */
     public function makePayment(Request $request) {
-        $formData = $request->all();
+        $formData = $request->all();   
         $payment = Session::get('checkout_payment');
         if (($payment['paid_amount'] < $payment['total_amount']) && !isset($formData['emiType']) && isset($payment['selectemi'])) {
-            \Session::flash('error_message', 'Please select prefered EMI option.');
+            \Session::flash('error_message', 'Please select prefered EMI option or make complete payment again.');
             $url = 'sale/checkout/' . base64_encode($formData['patient_id']);
             return redirect()->to($url);
         }
@@ -126,15 +128,26 @@ class SaleController extends Controller
         $payments->payment_type = $formData['payment_type'];
         $payments->total_amount = $payment['total_amount'];
         $payments->paid_amount = $payment['paid_amount'];
+     
+        $total_uncompleted = Payment::totalUncompletedAmount($formData['patient_id']);
+        $total_pay =0;
+        $total_pay = $payment['paid_amount'] + $total_uncompleted;
+        if (($total_pay == $payment['total_amount']) || isset($formData['emiType'])) {
+            $payments->payment_status = 1;
+            // Make the function for the updating status for all uncompleted payments
+            Payment::changePaymentStatus($formData['patient_id']);
+        }
+        
         $payments->save();
         $payment_id = $payments->id;
-
-        if ($payment['paid_amount'] < $payment['total_amount'] && isset($formData['emiType'])) {
+        
+        if ($total_pay < $payment['total_amount'] && isset($formData['emiType'])) {
             // save emi data
             $formData['emiDate'] = explode(',', $formData['emiDate']);
             $emiStartDate = $formData['emiDate'][0];
-            $emiStartDate = DateTime::createFromFormat('m-d-Y', $emiStartDate);
+            $emiStartDate = DateTime::createFromFormat('m/d/Y', $emiStartDate);
             $today = new DateTime();
+
             if ($emiStartDate < $today || $emiStartDate > $today->modify('next month')) {
                 \Session::flash('error_message', 'Selected due date out of limit.');
                 return redirect()->back();
@@ -142,7 +155,7 @@ class SaleController extends Controller
             $amount_left = $payment['total_amount'] - $payment['paid_amount'];
             $emiType = $formData['emiType'];
             $emi_amount = $amount_left / $emiType;
-            for ($i = 0; $i < $emiType; $i++) {
+            for ($i = 0; $i < $emiType; $i++) {          
                 $emi = new Emi;
                 $emi->type = $formData['emiType'];
                 $emi->emi_amount = $emi_amount; // per installment amount
@@ -154,9 +167,8 @@ class SaleController extends Controller
                 $emiStartDate->modify('next month');
             }
         }
-
         /* -------- START::Call the function saveOrder to save the order data ------- */
-        if (($payment['paid_amount'] == $payment['total_amount']) || isset($formData['emiType'])) {
+        if (($total_pay == $payment['total_amount']) || isset($formData['emiType'])) {
             $cart = Cart::getCartDetails($formData['patient_id']);
             $this->saveOrder($cart, $payments->id);
          
@@ -165,6 +177,7 @@ class SaleController extends Controller
                 \Session::flash('flash_message', 'Your order placed successfully.');
                 return Redirect::action('SaleController@index');
             }
+          
          }else{
              \Session::flash('flash_message', 'Your payment received successfully, Please do the complete payment for this order.');
               $url = 'sale/checkout/' . base64_encode($formData['patient_id']);

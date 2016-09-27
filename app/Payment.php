@@ -65,16 +65,35 @@ class Payment extends Model
     }
 
     public static function getUncompletedPayment($patientId){
-        $paymentHistory = Payment::where(['patient_id' => $patientId, 'payment_emi_status' => 0])->get();
+        $paymentHistory = Payment::where(['patient_id' => $patientId, 'payment_emi_status' => 0, 'payment_status' =>0])->get();
         $paymentUncompleted = array();
         $paymentUncompleted['total'] = 0;
         $paymentUncompleted['data'] = [];
         foreach($paymentHistory as $i => $pay){
-           // echo '<pre>'; print_r($pay);
             $paymentUncompleted['data'][$i] = $pay->toArray();
             $paymentUncompleted['total'] += $pay->paid_amount;
         }
         return  $paymentUncompleted;
+    }
+    
+    /*
+     * Function for changing the payment Status
+     */
+    public static function changePaymentStatus($patientId){
+        Payment::where(['patient_id' => $patientId, 'payment_status' => 0])
+            ->update(['payment_status' => 1]);
+        return true;
+    }
+    
+     /*
+     * Function for changing the payment Status
+     */
+    public static function totalUncompletedAmount($patientId){
+        $totalUncompleted = Payment::where(['patient_id' => $patientId, 'payment_emi_status' => 0, 'payment_status' => 0])->sum('paid_amount');
+        if($totalUncompleted == NULL){
+            $totalUncompleted = 0;
+        }
+        return $totalUncompleted;
     }
 
     

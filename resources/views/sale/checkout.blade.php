@@ -42,7 +42,7 @@
                 <div class="col-sm-6 mt-md">
                     <p><span class="text-dark">Patient Detail:</span></p>
                     <p><span class="value">{{ $patientCart['patient']->first_name }} {{ $patientCart['patient']->last_name }}</span></p>
-                    <address>{{ isset($patientCart->patient->patientDetail->phone) ? 'Contact :'.$patientCart->patient->patientDetail->phone : ''  }} <br/> 
+                    <address>{{ isset($patientCart->patient->patientDetail->phone) ? 'Contact : '.$patientCart->patient->patientDetail->phone : ''  }} <br/> 
                         {{ $patientCart->patient->email }}</address>
                 </div>
                 <div class="col-sm-6 mt-md text-right">
@@ -152,7 +152,7 @@
                     </tr>				
 				</tfoot>
             </table>
-
+            <?php $remaining = 0; ?>
             <div id="rowDetails" style="display:none">
                 @foreach($category_detail_list as $ind => $val)	
                 <table class="table table-bordered table-striped mb-none datatable-details" data-details-src="{{ $ind }}">
@@ -237,20 +237,37 @@
                                         @endif
                                     </div></td>
                                 <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($pay['created_at'])) }}</div></td>   
-                                <td class="table-text"><div>${{ $pay['paid_amount'] }}</div></td>
+                                <td class="table-text"><div>${{ number_format($pay['paid_amount'], 2) }}</div></td>
                             </tr>
-                            @endforeach
-                            <tr>
-                                <td class="table-text"><div>Total</div></td>
-                                <td class="table-text"><div></div></td>
-                                <td class="table-text"><div></div></td>   
-                                <td class="table-text"><div>${{ $uncompletedPayment['total'] }}</div></td>
-                            </tr>
+                            @endforeach                            
                         </tbody>
                     </table> 
                 </div>
+             <div class="row tablePad">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Paid Amount :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        ${{ number_format($uncompletedPayment['total'], 2) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Remaining Amount :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        $<?php 
+                            $remaining = $total_cart_price - $uncompletedPayment['total'];
+                            echo number_format($remaining, 2);
+                        ?> 
+                    </div>
+                </div>
+            </div>  
             @endif
-
+            
+            <?php $total_price = $total_cart_price - $uncompletedPayment['total']; ?>
+           
             <div class="row tablePad">
                 <div class="form-group">
                     {{ Form::label('card', 'Payment Type', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -260,7 +277,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {{ Form::label('selectemi', 'Select EMI', array('class' => 'col-sm-3 control-label')) }}
+                    {{ Form::label('selectemiCheckbox', 'Select EMI', array('class' => 'col-sm-3 control-label')) }}
                     <div class="col-sm-6">                      
                         {{ Form::checkbox('selectemi', null, null) }}                     
                     </div>
@@ -268,12 +285,11 @@
                 <div class="form-group">
                     {{ Form::label('amount', 'Enter Amount($)', array('class' => 'col-sm-3 control-label mandatory')) }}
                     <div class="col-sm-6">
-                        {{ Form::text('paid_amount', number_format($total_cart_price, 2), ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                        {{ Form::text('paid_amount', $total_price, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
                     </div>                        
                 </div>      
                 <div class='creditCard'> 
-                    <div class="form-group">
-                        
+                    <div class="form-group">                        
                         {{ Form::label('cardholer', 'Cardholder Name', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-3">
                             {{ Form::text('first_name', null, ['class' => 'form-control required', 'placeholder' => 'First Name', 'id' => 'first_name']) }}
