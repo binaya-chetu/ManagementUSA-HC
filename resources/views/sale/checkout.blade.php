@@ -209,11 +209,49 @@
 
             <div class="row">                
                 <div class="col-sm-12">
-                    <h3>Payment Methods</h3>
+                    <h3>Payment Details</h3>
                 </div>              
             </div>
+            
+            @if(!empty($uncompletedPayment['data']))
+                <div class="table-responsive">   
+                    <table class="table table-bordered table-striped mb-none">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Payment Type</th>
+                                <th>Payment Time</th>                        
+                                <th>Paid Amount</th>                                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach($uncompletedPayment['data'] as $pay)
+                            <tr>
+                                <td class="table-text"><div>{{ $i++ }}</div></td>
+                                <td class="table-text"><div>
+                                        @if($pay['payment_type'] == 0)
+                                        Cash in Hand
+                                        @elseif($pay['payment_type'] == 1)
+                                        Credit Card
+                                        @endif
+                                    </div></td>
+                                <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($pay['created_at'])) }}</div></td>   
+                                <td class="table-text"><div>${{ $pay['paid_amount'] }}</div></td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td class="table-text"><div>Total</div></td>
+                                <td class="table-text"><div></div></td>
+                                <td class="table-text"><div></div></td>   
+                                <td class="table-text"><div>${{ $uncompletedPayment['total'] }}</div></td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+            @endif
 
-            <div class="row">
+            <div class="row tablePad">
                 <div class="form-group">
                     {{ Form::label('card', 'Payment Type', array('class' => 'col-sm-3 control-label mandatory')) }}
                     <div class="col-sm-6">
@@ -221,26 +259,48 @@
                         {{ Form::select('payment_type', ['' => 'Please Select Payment Method']+$method, null, ['class' => 'form-control required', 'id' => 'paymentMethod']) }}                     
                     </div>
                 </div>
+                <div class="form-group">
+                    {{ Form::label('selectemi', 'Select EMI', array('class' => 'col-sm-3 control-label')) }}
+                    <div class="col-sm-6">                      
+                        {{ Form::checkbox('selectemi', null, null) }}                     
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ Form::label('amount', 'Enter Amount($)', array('class' => 'col-sm-3 control-label mandatory')) }}
+                    <div class="col-sm-6">
+                        {{ Form::text('paid_amount', number_format($total_cart_price, 2), ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                    </div>                        
+                </div>      
                 <div class='creditCard'> 
                     <div class="form-group">
-                        {{ Form::label('cardholer', 'Cardholder Name', array('class' => 'col-sm-3 control-label')) }}
-                        <div class="col-sm-6">
-                            {{ Form::text('cardholder', null, ['class' => 'form-control required', 'placeholder' => 'Enter Cardholder Name', 'id' => 'address1', 'rows' => 3]) }}
+                        
+                        {{ Form::label('cardholer', 'Cardholder Name', array('class' => 'col-sm-3 control-label mandatory')) }}
+                        <div class="col-sm-3">
+                            {{ Form::text('first_name', null, ['class' => 'form-control required', 'placeholder' => 'First Name', 'id' => 'first_name']) }}
+                        </div>
+                         <div class="col-sm-3">
+                            {{ Form::text('last_name', null, ['class' => 'form-control required', 'placeholder' => 'Last Name', 'id' => 'last_name']) }}
                         </div>
                     </div>
 
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         {{ Form::label('card', 'Select Card', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
                             <?php $card = ['master' => 'Master Card', 'visa' => 'Visa']; ?>
                             {{ Form::select('card', ['' => 'Please Select Card']+$card, null, ['class' => 'form-control input required']) }}                     
                         </div>
+                    </div>-->
+                    <div class="form-group">
+                        {{ Form::label('card', 'Card Number', array('class' => 'col-sm-3 control-label mandatory')) }}
+                        <div class="col-sm-6">
+                            {{ Form::text('card_number', null, ['class' => 'form-control required', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');", 'maxlength' => '16']) }}                     
+                        </div>
                     </div>
                     <div class="form-group">
                         {{ Form::label('card', 'Expird On', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-3">
-                            <?php $expYear = ['2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019'] ?>
-                            {{ Form::select('year', ['' => 'Please Select Year']+$expYear,null, ['class' => 'form-control input required']) }}                     
+                           <?php $exp = cardYear(); ?>
+                            {{ Form::select('year', ['' => 'Please Select Year']+$exp,null, ['class' => 'form-control input required']) }}                     
                         </div>
                         <div class="col-sm-3">
                             <?php $expMonth = ['01' => '01', '02' => '02', '03' => '03', '4' => '04', '05' => '05', '06' => '06', '07' => '07', '08' => '08', '09' => '09', '10' => '10', '11' => '11', '12' => '12'] ?>
@@ -250,18 +310,18 @@
                     <div class="form-group">
                         {{ Form::label('cvv', 'Enter CVV', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
-                            {{ Form::text('cvv',null, ['class' => 'form-control input required', 'placeholder' => 'Enter CVV']) }}                     
+                            {{ Form::text('cvv',null, ['class' => 'form-control input required', 'placeholder' => 'Enter CVV', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');", 'maxlength' => '4']) }}                     
                         </div>
                     </div>
                 </div>
-                <div class='cashInHand'> 
+<!--                <div class='cashInHand'> 
                     <div class="form-group">
                         {{ Form::label('amount', 'Enter Amount', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
                             {{ Form::text('paid_amount', null, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
                         </div>                        
                     </div>                    
-                </div>
+                </div>-->
             </div>
         </div>
         <footer class="panel-footer">

@@ -63,7 +63,22 @@ class Payment extends Model
 
             return ['payment' => $payment, 'orders' => $orders, 'order_detail' => $order_detail];
     }
-	
+
+    public static function getUncompletedPayment($patientId){
+        $paymentHistory = Payment::where(['patient_id' => $patientId, 'payment_emi_status' => 0])->get();
+        $paymentUncompleted = array();
+        $paymentUncompleted['total'] = 0;
+        $paymentUncompleted['data'] = [];
+        foreach($paymentHistory as $i => $pay){
+           // echo '<pre>'; print_r($pay);
+            $paymentUncompleted['data'][$i] = $pay->toArray();
+            $paymentUncompleted['total'] += $pay->paid_amount;
+        }
+        return  $paymentUncompleted;
+    }
+
+    
+    
     public function order()
     {
         return $this->hasMany('App\Order', 'payment_id');

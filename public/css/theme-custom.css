@@ -75,3 +75,4 @@ a.saleAnchor:hover{ color:inherit; }
 #checkoutPopup{ max-width: 400px; }
 #checkoutPopup .panel .panel-heading { padding: 10px; }
 #checkoutPopup .panel .errorEMI { color:red; }
+.tablePad { padding-top: 20px;}
