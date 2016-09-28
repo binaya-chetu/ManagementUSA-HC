@@ -327,6 +327,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#search_location").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -405,6 +406,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#search_location").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -1391,8 +1393,8 @@ $(document).on("click", ".patientShowStatus", function() {
 });
 
 
-  /* --------------------------END: Functions for the Checkout page pop-up --------------  */
-  /* --------------------------START: Adding popup for patient feedback in trimix doses --------------  */  
+/* --------------------------END: Functions for the Checkout page pop-up --------------  */
+ /* --------------------------START: Adding popup for patient feedback in trimix doses --------------  */  
   
         $(document).on("click", ".add_feedback", function(ev) {
                         $.magnificPopup.open({
@@ -1417,7 +1419,7 @@ $(document).on("click", ".patientShowStatus", function() {
  
     $(document).on("change", "#search_location", function(ev) {
             var location_id = $(this).val(); 
-            //  var current_url = window.location.href;
+             //  var current_url = window.location.href;
             $.ajax({
             type: "POST",
             url: ajax_url + "/appointment/setSession",
@@ -1425,8 +1427,8 @@ $(document).on("click", ".patientShowStatus", function() {
                 "location_id": location_id
             },         
             success: function(data) {
-               // alert(data);
-               location.reload();
+                //alert(data);
+                location.reload();
             }
         });
     });

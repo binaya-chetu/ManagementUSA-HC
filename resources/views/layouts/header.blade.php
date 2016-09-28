@@ -9,18 +9,21 @@
     </div>
 	<!-- start: search & user box -->
         <div class="header-right">
-        
-        <div class="search nav-form">
-            <div class="input-group input-search">
-                <select  class="form-control" name="search_location" id="search_location">
-                 <?php   $locations = getLocations(); ?>
-                    <option value = "">Select Location</option>
-                     @foreach ($locations as $location)
-                        <option value="{{ $location->id }}">{{ $location->name }}</option>
-                     @endforeach
-                </select>
+            <div class="search nav-form">
+                <div class="input-group input-search">
+                    <select  class="form-control" name="search_location" id="search_location">
+                     <?php   $locations = getLocations(); ?>
+                        <option value = "">All Locations</option>
+                         @foreach ($locations as $location)
+                            <?php if(Session::get('location_id') == $location->id){?>
+                            <option selected ='{{ $location->id }}">{{ $location->name }}' value="{{ $location->id }}">{{ $location->name }}</option>
+                            <?php }else{ ?>
+                             <option value="{{ $location->id }}">{{ $location->name }}</option>
+                            <?php }?>
+                         @endforeach
+                    </select>
+                </div>
             </div>
-        </div>
 
         <span class="separator"></span>
 

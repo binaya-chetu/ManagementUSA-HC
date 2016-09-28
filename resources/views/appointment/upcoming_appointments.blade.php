@@ -6,7 +6,6 @@
         <h2>Upcoming Appointment</h2>
 
         <div class="right-wrapper pull-right">
-            
             @if(Request::segment(1) === 'appointmentApptSetting')
                 {!! Breadcrumbs::render('frontupcoming.upcomingappointments') !!}
             @else

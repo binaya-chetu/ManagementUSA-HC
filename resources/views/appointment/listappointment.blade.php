@@ -63,6 +63,7 @@
                 <tbody>
                     <?php $i=1; ?>
                     @foreach ($appointments as $appointment)
+                    @if($appointment->appointmentRequest != '')
                     <tr>
                         <td class="table-text table-text-id"><div>{{ $i++ }}</div></td>
                         <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($appointment->apptTime)) }}</div></td>
@@ -111,7 +112,11 @@
                                 ?>
                             </div>
                           </td>
-                        <td> @if(isset($appointment->appointmentRequest->locations->name)){{ $appointment->appointmentRequest->locations->name}} @else {{ 'N/A' }}@endif</td>
+                        <td> 
+                            @if(isset($appointment->appointmentRequest->locations))
+                             {{ $appointment->appointmentRequest->locations->name }}
+                            @endif
+                        </td>
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
@@ -124,7 +129,7 @@
                             <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->request_id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>
-            
+                    @endif
                     @endforeach
                 </tbody>
             </table>

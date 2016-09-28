@@ -6,7 +6,7 @@
     <section class="panel panel-primary">
         <header class="panel-heading">
             <h2 class="panel-title">Followup Appointment</h2>
-        </header>
+        </header>  
         <div class="panel-body">
             <div class="form-group">
                 
@@ -18,6 +18,7 @@
                         <label>
                             {{ Form::radio('action', $followup->id, false, ['id' => 'optionsRadios'.++$i, 'class' => 'required']) }}
                             {{ $followup->title }}
+                         
                         </label>
                     </div>
                     @endforeach
