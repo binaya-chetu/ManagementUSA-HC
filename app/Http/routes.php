@@ -885,4 +885,12 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+     /*
+     * To find the set the location value 
+     */
+    Route::match(['get', 'post'],'/appointment/setSession', [
+        'uses' => 'AppointmentController@setSession',
+       // 'middleware' => ['acl:appointment_write']
+    ]);
+    
 });

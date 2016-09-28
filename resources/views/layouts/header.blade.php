@@ -8,16 +8,19 @@
         </div>
     </div>
 	<!-- start: search & user box -->
-    <div class="header-right">
-
-        <form action="#" class="search nav-form">
+        <div class="header-right">
+        
+        <div class="search nav-form">
             <div class="input-group input-search">
-                <input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-                <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                </span>
+                <select  class="form-control" name="search_location" id="search_location">
+                 <?php   $locations = getLocations(); ?>
+                    <option value = "">Select Location</option>
+                     @foreach ($locations as $location)
+                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                     @endforeach
+                </select>
             </div>
-        </form>
+        </div>
 
         <span class="separator"></span>
 

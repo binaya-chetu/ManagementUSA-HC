@@ -574,5 +574,5 @@ class ApptSettingController extends Controller {
     public function pdfList() {
       return view('apptsetting.pdf_list');
     }
-
+    
 }

@@ -3,8 +3,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
     <header class="page-header">
-
-        <h2>
+        
+          <h2>
             @if(isset($type) && $type == 'followup')
                 Followup Appointments
             @else
@@ -20,7 +20,7 @@
             @else
                 {!! Breadcrumbs::render('appointment.listappointment') !!}
             @endif
-        
+         
         </div>
     </header>
 
@@ -55,7 +55,7 @@
                         <th>Patient</th>
                         <th>Reason for Visit</th>
                         <th>Source</th>      
-                        <th>Source</th>      
+                        <th>Followup Status</th>      
                         <th>Location</th>
                         <th>Actions</th>
                     </tr>
@@ -111,7 +111,7 @@
                                 ?>
                             </div>
                           </td>
-                          <td> {{$appointment->appointmentRequest->locations->name or 'N/A'}}</td>
+                        <td> @if(isset($appointment->appointmentRequest->locations->name)){{ $appointment->appointmentRequest->locations->name}} @else {{ 'N/A' }}@endif</td>
                         <td class="actions">
                             <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                             <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
@@ -124,6 +124,7 @@
                             <a href="javascript:void(0)" data-href="/appointment/delete/{{ base64_encode($appointment->request_id) }}" class="on-default remove-row confirmation-callback"><i class="fa fa-trash-o"></i></a> 
                         </td>
                     </tr>
+            
                     @endforeach
                 </tbody>
             </table>
