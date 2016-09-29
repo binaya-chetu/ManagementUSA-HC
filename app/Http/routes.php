@@ -892,5 +892,13 @@ Route::get('payment/status', 'PaymentController@getPaymentStatus');
 Route::post('payment/debit', 'PaymentController@debit');
 Route::get('payment/test', 'PaymentController@test');
 
+    /*
+     * Show the invoice after make payment
+     */
+    Route::get('/sale/generateInvoice/{id}', [
+       'uses' => 'SaleController@generateInvoice',
+        'as' => 'sales.generateInvoice',
+    ]);
+
     
 });

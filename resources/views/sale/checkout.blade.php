@@ -276,18 +276,6 @@
                         {{ Form::select('payment_type', ['' => 'Please Select Payment Method']+$method, null, ['class' => 'form-control required', 'id' => 'paymentMethod']) }}                     
                     </div>
                 </div>
-                <div class="form-group">
-                    {{ Form::label('selectemiCheckbox', 'Select EMI', array('class' => 'col-sm-3 control-label')) }}
-                    <div class="col-sm-6">                      
-                        {{ Form::checkbox('selectemi', null, null) }}                     
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ Form::label('amount', 'Enter Amount($)', array('class' => 'col-sm-3 control-label mandatory')) }}
-                    <div class="col-sm-6">
-                        {{ Form::text('paid_amount', $total_price, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
-                    </div>                        
-                </div>      
                 <div class='creditCard'> 
                     <div class="form-group">                        
                         {{ Form::label('cardholer', 'Cardholder Name', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -315,13 +303,14 @@
                     <div class="form-group">
                         {{ Form::label('card', 'Expird On', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-3">
-                           <?php $exp = cardYear(); ?>
-                            {{ Form::select('year', ['' => 'Please Select Year']+$exp,null, ['class' => 'form-control input required']) }}                     
-                        </div>
-                        <div class="col-sm-3">
                             <?php $expMonth = ['01' => '01', '02' => '02', '03' => '03', '4' => '04', '05' => '05', '06' => '06', '07' => '07', '08' => '08', '09' => '09', '10' => '10', '11' => '11', '12' => '12'] ?>
                             {{ Form::select('month', ['' => 'Please Select Month']+$expMonth, null, ['class' => 'form-control input required']) }}                     
                         </div>
+                        <div class="col-sm-3">
+                           <?php $exp = cardYear(); ?>
+                            {{ Form::select('year', ['' => 'Please Select Year']+$exp,null, ['class' => 'form-control input required']) }}                     
+                        </div>
+                        
                     </div>
                     <div class="form-group">
                         {{ Form::label('cvv', 'Enter CVV', array('class' => 'col-sm-3 control-label mandatory')) }}
@@ -330,6 +319,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group checkboxAlign">
+                    {{ Form::label('selectemiCheckbox', 'Select EMI', array('class' => 'col-sm-3 control-label')) }}
+                    <div class="col-sm-6">                      
+                        {{ Form::checkbox('selectemi', null, null, ['class' => 'checkboxAlign']) }}                     
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ Form::label('amount', 'Enter Amount($)', array('class' => 'col-sm-3 control-label mandatory')) }}
+                    <div class="col-sm-6">
+                        {{ Form::text('paid_amount', $total_price, ['class' => 'form-control required', 'placeholder' => 'Enter Amount', 'id' => 'paid_amount', 'onkeyup' => "this.value = this.value.replace(/[^0-9\.]/g,'');"]) }}
+                    </div>                        
+                </div>      
+                
 <!--                <div class='cashInHand'> 
                     <div class="form-group">
                         {{ Form::label('amount', 'Enter Amount', array('class' => 'col-sm-3 control-label mandatory')) }}

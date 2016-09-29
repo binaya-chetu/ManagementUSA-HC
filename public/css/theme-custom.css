@@ -76,3 +76,4 @@ a.saleAnchor:hover{ color:inherit; }
 #checkoutPopup .panel .panel-heading { padding: 10px; }
 #checkoutPopup .panel .errorEMI { color:red; }
 .tablePad { padding-top: 20px;}
+.checkboxAlign { margin-top: 10px !important; }

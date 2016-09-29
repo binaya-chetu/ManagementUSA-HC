@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Traits\CommonTrait;
+use App\Http\Controllers\PaymentController;
 
 use Illuminate\Http\Request;
 use App\Patient;
@@ -25,7 +26,7 @@ use Illuminate\Config\Repository;
 use Session;
 use App;
 use Auth;
-
+USE Exception;
 
 class SaleController extends Controller
 {
@@ -110,6 +111,16 @@ class SaleController extends Controller
     public function makePayment(Request $request) {
         $formData = $request->all();   
         $payment = Session::get('checkout_payment');
+        if($formData['payment_type'] == 1){
+            $controller = new PaymentController();
+            $paypalResponse = $controller->payment($payment);           
+            if ($paypalResponse['result'] == false) {                              
+                \Session::flash('error_message', $paypalResponse['error_data']);
+                $url = 'sale/checkout/' . base64_encode($formData['patient_id']);
+                return redirect()->to($url);
+            }          
+        }
+        
         if (($payment['paid_amount'] < $payment['total_amount']) && !isset($formData['emiType']) && isset($payment['selectemi'])) {
             \Session::flash('error_message', 'Please select prefered EMI option or make complete payment again.');
             $url = 'sale/checkout/' . base64_encode($formData['patient_id']);
@@ -150,7 +161,8 @@ class SaleController extends Controller
 
             if ($emiStartDate < $today || $emiStartDate > $today->modify('next month')) {
                 \Session::flash('error_message', 'Selected due date out of limit.');
-                return redirect()->back();
+                $url = 'sale/checkout/' . base64_encode($formData['patient_id']);
+                return redirect()->to($url);
             }
             $amount_left = $payment['total_amount'] - $payment['paid_amount'];
             $emiType = $formData['emiType'];
@@ -175,7 +187,8 @@ class SaleController extends Controller
             if (Cart::where('patient_id', $formData['patient_id'])->delete()) {
                 //Session::set('checkout_payment', '');
                 \Session::flash('flash_message', 'Your order placed successfully.');
-                return Redirect::action('SaleController@index');
+                $url = 'sale/generateInvoice/' . base64_encode($formData['patient_id']);
+                return redirect()->to($url);
             }
           
          }else{
@@ -187,17 +200,25 @@ class SaleController extends Controller
 
         
     }
-
-    /**
-	* paymentDetails: returns payment details of the patient with given id
-	* returns payment details page view
-	*/
-	
-	public function paymentDetails($id){
-		$patientId = base64_decode($id);
-		$paymentDetails = Payment::getPaymentHistory($patientId);
-
-		return view('sale.paymentDetails',['payment' => $paymentDetails['payment'], 'orders' => $paymentDetails['orders'], 'order_detail' => $paymentDetails['order_detail']]);	
-	}
     
+    /**
+    * paymentDetails: returns payment details of the patient with given id
+    * returns payment details page view
+    */
+
+    public function paymentDetails($id){
+        $patientId = base64_decode($id);
+        $paymentDetails = Payment::getPaymentHistory($patientId);
+
+        return view('sale.paymentDetails',['payment' => $paymentDetails['payment'], 'orders' => $paymentDetails['orders'], 'order_detail' => $paymentDetails['order_detail']]);	
+    }
+    
+    /**
+    * Function: Show the invoice after payment made successful
+    * returns payment details page view
+    */
+    public function generateInvoice($id){
+        $patientId = base64_decode($id);
+         return view('sale.generate_invoice');
+    }
 }

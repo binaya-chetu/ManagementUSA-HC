@@ -20,6 +20,10 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Api\CreditCard;
 use PayPal\Api\FundingInstrument;
+use Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+
 
 class PaymentController extends Controller {
 
@@ -127,6 +131,93 @@ class PaymentController extends Controller {
     
     public function test() {
         return view('payment.test');
+    }
+    
+     /**
+     * Save the order from the makePayment function
+     *
+     *  */
+    public function payment($paymentData ){
+        $cardNumber = urlencode($paymentData['card_number']);
+        $month = urlencode($paymentData['month']);
+        $year = urlencode($paymentData['year']);
+        $cvv = urlencode($paymentData['cvv']);
+        $first_name = urlencode($paymentData['first_name']);
+        $last_name = urlencode($paymentData['last_name']);
+        $total_amount = urlencode($paymentData['paid_amount']);
+        
+        $card = new CreditCard();
+        $card->setType("visa")
+                ->setNumber($cardNumber)
+                ->setExpireMonth($month)
+                ->setExpireYear($year)
+                ->setCvv2($cvv)
+                ->setFirstName($first_name)
+                ->setLastName($last_name);		
+
+        $fi = new FundingInstrument();
+        $fi->setCreditCard($card);		
+
+        $payer = new Payer();
+        $payer->setPaymentMethod("credit_card")
+                ->setFundingInstruments(array($fi));
+
+//        $item1 = new Item();
+//        $item1->setName(urlencode($request->item_name))
+//                ->setDescription(urlencode($request->description))
+//                ->setCurrency('USD')
+//                ->setQuantity(urlencode($request->quantity))
+//                ->setPrice(urlencode($request->price));
+//
+//        $itemList = new ItemList();
+//        $itemList->setItems(array($item1));
+
+        $amount = new Amount();
+        $amount->setCurrency("USD")
+                ->setTotal($total_amount);
+
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+                ->setDescription("Payment description")
+                ->setInvoiceNumber(uniqid());	
+
+        $payment = new Payment();
+        $payment->setIntent("sale")
+                ->setPayer($payer)
+		->setTransactions(array($transaction));	
+        //echo '<pre>'; print_r($paymentData);die;
+        try {
+            $pay = $payment->create($this->_api_context);         
+            return ['result' => true];
+        } catch (Exception $ex) {
+            //echo '<pre>'; print_r($ex->getData());
+            $data = ['result' => false];
+            $data['error_code'] = $ex->getCode();
+            $data['error_message'] = $ex->getMessage();  
+            //echo '<pre>'; print_r($ex->getMessage()); die;  
+            if($ex->getData()){
+                $data['error_data'] = $this->makeError(json_decode($ex->getData()));
+            }else{
+                $data['error_data'] = "* Some network issue generated errors";
+            }
+            
+            return $data;
+        }
+    }
+    
+    public function makeError($errorcode){
+        $msg = '';
+        foreach($errorcode->details as $i => $v){
+                    $f = explode('.', $v->field);
+                    if($f[sizeof($f)-2] == 'credit_card'){
+                        if($f[sizeof($f)-1] == 'number'){
+                            $msg .= 'Payment Error : Invalid credit card number <br>';
+                        }
+                    }else{
+                        $msg.='* Error occured in paypal Payment';
+                    }
+                }
+        return $msg;
     }
     
 }

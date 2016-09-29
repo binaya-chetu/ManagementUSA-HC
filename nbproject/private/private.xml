@@ -7,9 +7,9 @@
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/app/Http/Controllers/SaleController.php</file>
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/public/js/custom.js</file>
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/app/Http/Controllers/PaymentController.php</file>
-            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/app/Http/routes.php</file>
+            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/resources/views/sale/generate_invoice.blade.php</file>
             <file>file:/C:/xampp/htdocs/ManagementUSA-HC/resources/views/sale/confirmation.blade.php</file>
-            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/app/Http/helpers.php</file>
+            <file>file:/C:/xampp/htdocs/ManagementUSA-HC/public/css/theme-custom.css</file>
         </group>
     </open-files>
 </project-private>
