@@ -71,11 +71,11 @@
                                 </tr>									
                                 @endforeach
                             </tbody>
-							<tfoot>
+                            <tfoot>
                                 <tr class="noDetail">
                                     <td></td><td colspan="4">Total </td><td class="center">${{ number_format($total_cart_price, 2) }}</td>
                                 </tr>							
-							</tfoot>
+                            </tfoot>
                         </table>
                     </div>
                     <div id="rowDetails" style="display:none">
@@ -105,17 +105,17 @@
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Total price</strong></td>
-                                    <td>${{ number_format($original_package_price[$ind], 2) }}</td>
+                                    <td class="center">${{ number_format($original_package_price[$ind], 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Total discouont</strong></td>
-                                    <td>${{ number_format($package_discount[$ind], 2) }}</td>
+                                    <td class="center">${{ number_format($package_discount[$ind], 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td colspan="4"><strong>Discounted package price</strong></td>
-                                    <td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
+                                    <td class="center">${{ number_format($discouonted_package_price[$ind], 2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -125,9 +125,9 @@
                     <table class="table table-bordered">
                         <tr><td class="col-sm-8 col-md-6"><h5>Your Cart is empty.</h5></td>
                             <td class="col-sm-8 col-md-6" colspan=2><h5><a href="/sale/index"> <button type="button" class="btn btn-default">
-                                            <span class="fa fa-shopping-cart"></span> Continue Shopping
-                                        </button>
-                                    </a></h5></td>
+                                        <span class="fa fa-shopping-cart"></span> Continue Shopping
+                                    </button>
+                                </a></h5></td>
                         </tr>
                     </table>	
                     @endif

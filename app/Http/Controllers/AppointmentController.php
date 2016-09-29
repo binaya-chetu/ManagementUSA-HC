@@ -185,9 +185,10 @@ class AppointmentController extends Controller {
 
     public function listappointment() {
 
-        $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
+        $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
                 $query->where('reason_id', '>', 8);
             }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+     
         //echo '<pre>';print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
@@ -472,9 +473,6 @@ class AppointmentController extends Controller {
         $id = base64_decode($id);
         $hash = $hash;
         $patient = User::with('patientDetail')->find($id);
-        //$disease_id = DB::table('appointments')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->limit(1)->pluck('disease_id');
-        //$disease_id = !empty($disease_id) ? $disease_id[0] : '';
-
         $disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->pluck('reason_id');
         $diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason', 'id');
         $adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();

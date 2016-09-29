@@ -10,6 +10,7 @@ use App\Patient;
 use App\User;
 use App\Role;
 use App\State;
+use DB;
 use View;
 use App;
 
@@ -58,11 +59,13 @@ class PatientController extends Controller {
         if ($id == null) {
             $patients = User::with(
                 'patientDetail',
-                'PatientDetail.patientStateName'
+                'PatientDetail.patientStateName',
+                'PatientDetail.patientLocationName'
             )
             ->where('role', $this->role)
             ->orderBy('id', 'DESC')
             ->get();
+          
             return view('patient.patients', ['patients' => $patients]);
         } else {
             $patient = Patient::find($id);
@@ -361,12 +364,13 @@ class PatientController extends Controller {
        if (!($patient = User::with(
                'patientDetail',
                'PatientDetail.patientStateName',
-               'roleName',
-               'adamsQuestionaires'
+               'roleName'
+               
             )
             ->find(base64_decode($id)))) {
             App::abort(404, 'Page not found.');
         }
+         $id = base64_decode($id);
         //echo "<pre>";print_r($patient);die;
          $packageData = showCart($id);
          $catList = $packageData['category_list'];
@@ -374,10 +378,38 @@ class PatientController extends Controller {
          $originalPrice =  $packageData['original_package_price'];
          $discountPrice =  $packageData['discouonted_package_price'];
          $packageDiscount = $packageData['package_discount'];
-         
+         $disease_id = DB::table('appointment_reasons')->where('patient_id', $id)->orderBy('updated_at', 'DESC')->pluck('reason_id');
+        $diseases = DB::table('reason_codes')->where('type', 1)->pluck('reason', 'id');
+        $adamsQ = DB::table('adams_questionaires')->where('patient_id', $id)->first();
+        $medicalHistories = DB::table('medical_histories')->where('patient_id', $id)->first();
+        $erectileD = DB::table('erectile_dysfunctions')->where('patient_id', $id)->first();
+        $weightL = DB::table('weight_loss')->where('patient_id', $id)->first();
+        $priapus = DB::table('priapus')->where('patient_id', $id)->first();
+        $testosterone = DB::table('high_testosterone')->where('patient_id', $id)->first();
+        $vitamins = DB::table('vitamins')->where('patient_id', $id)->first();
+        $cosmetics = DB::table('cosmetics')->where('patient_id', $id)->first();
+        $labReports = DB::table('lab_reports')->where('patient_id', $id)->get();
+        
         return view('patient.view_patient', [
-            'patient' => $patient,'catList' => $catList,'cartDetailList' => $cartDetailList, 'originalPrice' => $originalPrice ,'discountPrice'=> $discountPrice,'packageDiscount'=>$packageDiscount
+            'patient' => $patient,
+            'catList' => $catList,
+            'cartDetailList' => $cartDetailList,
+            'originalPrice' => $originalPrice ,
+            'discountPrice'=> $discountPrice,
+            'packageDiscount'=>$packageDiscount,
+             'disease_id' => $disease_id,
+            'diseases' => $diseases,
+            'adamsQuestionaires' => $adamsQ,
+            'medicalHistories' => $medicalHistories,
+            'erectileD' => $erectileD,
+            'weightL' => $weightL,
+            'priapus' => $priapus,
+            'testosterone' => $testosterone,
+            'cosmetics' => $cosmetics,
+            'vitamins' => $vitamins,
+            'labReports' => $labReports
         ]);
     }
 
+   
 }

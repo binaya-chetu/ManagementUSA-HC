@@ -1355,7 +1355,8 @@ function showEmiDetails(emiType, totalEmiAmount) {
 
     for (var i = 1; i <= emiType; i++) {
         startDate.add(1, 'months');
-        tbody.append('<tr><td>' + i + '</td><td>' + emiAmount + '</td><td>' + startDate.format("DD-MMM-YYYY") + '</td><td>Unpaid</td></tr>');
+        //tbody.append('<tr><td>' + i + '</td><td>' + emiAmount + '</td><td>' + startDate.format("DD-MMM-YYYY") + '</td><td>Unpaid</td></tr>');
+        tbody.append('<tr><td>' + i + '</td><td>' + emiAmount + '</td><td>' + startDate.format("MM/DD/YYYY") + '</td><td>Unpaid</td></tr>');
     }
     $("#confirmPageBody").append(table);
     $("#confirmPageBody").find('#emiDetailTable').slideDown();
@@ -1369,12 +1370,12 @@ $(document).on("click", '#emiSubmit', function(ev) {
         $('.errorEMI').show();
     } else {
         $.magnificPopup.close();
-        var emiDate = $("input[name='emiDatepicker']").val() ? $("input[name='emiDatepicker']").val() : moment().add(1, 'months').format('MM-DD-YYYY');
-        emiDate = moment(emiDate);
-        emiDateArray = [emiDate.format("MM-DD-YYYY")];
+        var emiDate = $("input[name='emiDatepicker']").val() ? $("input[name='emiDatepicker']").val() : moment().add(1, 'months').format('MM/DD/YYYY');
+        emiDate = moment(new Date(emiDate));
+        emiDateArray = [emiDate.format("MM/DD/YYYY")];
         for (var i = 0; i < emiType; i++) {
             emiDate.add(1, 'months');
-            emiDateArray.push(emiDate.format("MM-DD-YYYY"));
+            emiDateArray.push(emiDate.format("MM/DD/YYYY"));
         }
         $("#checkoutForm").append('<input type="hidden" name="emiType" value="' + emiType + '"><input type="hidden" name="emiDate" value="' + emiDateArray + '">');
         showEmiDetails(emiType, totalEmiAmount);

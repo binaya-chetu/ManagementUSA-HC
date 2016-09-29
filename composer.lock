@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "350396a1daada28734474cee9bf1660a",
-    "content-hash": "e598d57a817951de8d5f1d3008e7a9cc",
+    "hash": "a1a93651b7752f0c3bc2f4e8109abc45",
+    "content-hash": "547b2e8757368136827326384ce34a53",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1880,6 +1880,55 @@
             "time": "2016-03-18 20:34:03"
         },
         {
+            "name": "paypal/rest-api-sdk-php",
+            "version": "1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/PayPal-PHP-SDK.git",
+                "reference": "d62e8db407827229c6c7aabfa54792d0113b99e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/PayPal-PHP-SDK/zipball/d62e8db407827229c6c7aabfa54792d0113b99e4",
+                "reference": "d62e8db407827229c6c7aabfa54792d0113b99e4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "psr/log": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PayPal": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/rest-api-sdk-php/contributors"
+                }
+            ],
+            "description": "PayPal's PHP SDK for REST APIs",
+            "homepage": "http://paypal.github.io/PayPal-PHP-SDK/",
+            "keywords": [
+                "payments",
+                "paypal",
+                "rest",
+                "sdk"
+            ],
+            "time": "2016-07-15 20:42:18"
+        },
+        {
             "name": "psr/http-message",
             "version": "1.0.1",
             "source": {
@@ -3652,12 +3701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bencarter78/odbc.git",
-                "reference": "e53678aac762a4e4ee6d7c3fcd6a70f75b7222d4"
+                "reference": "1bc2ca1628149b054cf13d528f40903be96d9829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bencarter78/odbc/zipball/e53678aac762a4e4ee6d7c3fcd6a70f75b7222d4",
-                "reference": "e53678aac762a4e4ee6d7c3fcd6a70f75b7222d4",
+                "url": "https://api.github.com/repos/bencarter78/odbc/zipball/1bc2ca1628149b054cf13d528f40903be96d9829",
+                "reference": "1bc2ca1628149b054cf13d528f40903be96d9829",
                 "shasum": ""
             },
             "require": {
@@ -3681,7 +3730,7 @@
                 }
             ],
             "description": "ODBC Connector for Laravel",
-            "time": "2016-02-13 09:32:19"
+            "time": "2016-09-18 08:35:46"
         },
         {
             "name": "vlucas/phpdotenv",

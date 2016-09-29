@@ -320,3 +320,20 @@ function dropDown16()
     $ddvalue = ['2'=>'2'];        
     return $ddvalue;
 }
+
+/**
+ * Function for card expiration
+ *
+ * @return array()
+ */           
+function cardYear()
+{
+    $currentYear = date('Y');
+    $upto = $currentYear + 20;
+    $expYear = array();
+    for($i=$currentYear; $i<=$upto; $i++){
+        $expYear[$i] = $i;
+    }
+    return $expYear;
+}
+

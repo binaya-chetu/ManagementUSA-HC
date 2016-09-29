@@ -21,18 +21,27 @@
                     <li>
                         <a href="#contact" data-toggle="tab">Contact Information</a>
                     </li>
+                       @if(!empty($patient['patientDetail']->payment_bill))
                     <li>
                         <a href="#attachment" data-toggle="tab">Attachments</a>
                     </li>
+                     @endif
                     @if(!empty($catList))
                      <li>
                         <a href="#package_details" data-toggle="tab">Package Details</a>
                     </li>
                     @endif
+                     @if(!empty($patient->adamsQuestionaires))
                     <li>
                         <a href="#adam_questionaires" data-toggle="tab">Adam Questionaires</a>
                     </li>
-                    
+                    @endif
+                     @if(!empty($patient->medicalHistories))
+                      <li>
+                        <a href="#medical_history" data-toggle="tab">Family Medical History</a>
+                       </li>
+                     @endif
+                 
                 </ul>
                
                 <div class="tab-content">
@@ -546,7 +555,13 @@
                             </div>
                         </div>
                     </div>
-
+                    
+                    @if(isset($patient->medicalHistories))
+                    <div id="medical_history" class="tab-pane" style="padding:0">
+                        @include('patient.medical_history')
+                    </div>
+                     @endif
+                   
                 </div>
                 <footer class="panel-footer">
                     <div class="row">

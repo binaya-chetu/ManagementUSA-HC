@@ -77,7 +77,22 @@
                                 ?>
                         {{ Form::hidden('appt_source', $appt_type)}}
                     </div>
-                  
+                    <div class="form-group {{ $errors->has('location_id') ? ' has-error' : '' }}" >
+                        {{ Form::label('location', 'Location', array('class' => 'col-sm-3 control-label mandatory')) }}
+                        <div class="col-md-3">
+                             <select  class="form-control" name="location_id" id="location_id">
+                                <option value="">Choose Any Location</option>
+                                @foreach ($locations as $location)
+                                <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('location_id'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('location_id') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group{{ $errors->has('patient_id') ? ' has-error' : '' }}">
                         {{ Form::label('patient_id', 'Patient', array('class' => 'col-sm-3 control-label mandatory')) }}
 <!--                        <div class="col-md-5 patient_id commentdiv" id="patientMainDiv">
