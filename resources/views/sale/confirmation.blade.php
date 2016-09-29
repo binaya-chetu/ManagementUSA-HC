@@ -175,17 +175,17 @@
                                     <tr>
                                         <td></td>
                                         <td colspan="4"><strong>Total price</strong></td>
-                                        <td>${{ number_format($original_package_price[$ind], 2) }}</td>
+                                        <td class="center">${{ number_format($original_package_price[$ind], 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td colspan="4"><strong>Total discouont</strong></td>
-                                        <td>${{ number_format($package_discount[$ind], 2) }}</td>
+                                        <td class="center">${{ number_format($package_discount[$ind], 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td colspan="4"><strong>Discounted package price</strong></td>
-                                        <td>${{ number_format($discouonted_package_price[$ind], 2) }}</td>
+                                        <td class="center">${{ number_format($discouonted_package_price[$ind], 2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
