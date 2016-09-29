@@ -29,7 +29,7 @@
          <div class="form-group"> 
           {{ Form::label('location', 'Location', array('class' => 'col-sm-4 control-label')) }}
              <div class="col-sm-6">
-                    <select  class="form-control" name="location" id="search_location">
+                    <select  class="form-control" name="location" id="location_id">
                      <?php   $locations = getLocations(); ?>
                         <option value = "">All Locations</option>
                          @foreach ($locations as $location)
@@ -122,10 +122,12 @@
 <script>
     $(function() {
         $('.confirmation-callback').confirmation({
-            onConfirm: function() {
-                var link = $('.confirmation-callback').data('href');
-                window.location = ajax_url + link;
-            }
+            alert("jdkjfkj");
+//            onConfirm: function() {
+//                var link = $('.confirmation-callback').data('href');
+//                window.location = ajax_url + link;
+//                alert("jdfk"+ajax_url);
+//            }
         });
     });   
 </script>

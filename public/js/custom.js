@@ -406,7 +406,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
-                $("#search_location").val(combine.patient.patient_detail.location_id);
+                $("#location_id").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -1419,6 +1419,15 @@ $(document).on("click", ".patientShowStatus", function() {
  
     $(document).on("change", "#search_location", function(ev) {
             var location_id = $(this).val(); 
+            if(location_id == ''){
+                    $.ajax({
+                type: "POST",
+                url: ajax_url + "/appointment/resetSession",         
+                success: function() {
+                    location.reload();
+                }
+        });
+            }
              //  var current_url = window.location.href;
             $.ajax({
             type: "POST",
@@ -1427,7 +1436,6 @@ $(document).on("click", ".patientShowStatus", function() {
                 "location_id": location_id
             },         
             success: function(data) {
-                //alert(data);
                 location.reload();
             }
         });

@@ -181,18 +181,25 @@ class AppointmentController extends Controller {
      */
 
         public function listappointment(Request $request) {
-            $location_id = Session::get('location_id');
-            if(isset($location_id)){
-                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
-                        $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
-                        $query->where('reason_id', '>', 8);
-                    }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
             
+            $location_id = Session::get('location_id');
+            if(isset($location_id) && $location_id > 0){
+               
+                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
+                    $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                    $query->where('reason_id', '>', 8);
+                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+//                echo "<pre>";print_r($appointments->toArray());
+//                $appointments = DB::table('appointments')
+//                    ->join('users', 'appointments.patient_id', '=', 'users.id')
+//                    ->get();
+//                    echo "<pre>";print_r($appointments);die;
            }
             else{
                    $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
                     $query->where('reason_id', '>', 8);
                 }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+         
            }
             $patients = User::where('role', $this->patient_role)->get();
             $doctors = User::where('role', $this->doctor_role)->get();
@@ -209,15 +216,16 @@ class AppointmentController extends Controller {
      */
 
     public function viewappointment() {
-        
-          $location_id = Session::get('location_id');
-            if(isset($location_id)){
+            
+            $location_id = Session::get('location_id');
+            if(isset($location_id) && $location_id > 0){ 
              $appointments = Appointment::with(['patient.patientDetail','appointmentRequest' => function($query1) {
                         $query1->where('location_id', '=', Session::get('location_id'));},'appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
             }
             else{
                  $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
             }
+
         $collevent = array();
         $i = 0;
         foreach ($appointments as $appointment) {
@@ -946,6 +954,7 @@ class AppointmentController extends Controller {
 
     public function todayVisits() {
         $location_id = Session::get('location_id');
+        
             if(isset($location_id)){
               $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
                         $query->where('reason_id', '>', 8);
