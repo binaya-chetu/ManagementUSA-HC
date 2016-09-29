@@ -3,58 +3,91 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use App\ApiData;
 
 class ClientapiController extends Controller
 {
-    public function getApiResponse(){
+   /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
+     /**
+     * This function is used to save the api data in api_data table.
+     *
+     * @param Request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {   $path = realpath('json.txt');
+        $json_data = file_get_contents($path);
+        $datas = json_decode($json_data, true);
+        $status = [];
+        
+        $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
+        foreach($datas['Data'] as $data)
+        {
+            $timestamp = preg_replace("/[^0-9]/","",$data['DateTime']);
+            
+            if($timestamp > $maxTimeStamp)
+            {
+                $apiData = new ApiData;
+                $datatime = date('Y-m-d h:i:s', ($timestamp/1000));
 
-		$url = 'cp2.nextiva.com';
-		
-		
-/* 		$client = new \GuzzleHttp\Client();
-		$res = $client->get('cp2.nextiva.com', ['auth' =>  ['amc201@nextiva.com', 'password']]);
-		echo $res->getStatusCode(); // 200
-		echo $res->getBody(); die;	
-		echo '<pre>'; print_r($response); die; */
-		
-		
-		
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    //'Authorization: Bearer '.$access_token,
-    'Accept: application/json',
-    'Content-Type: application/json',
-));
-curl_setopt($ch, CURLOPT_USERAGENT, 'sortitoutsi');
-curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+                $apiData->timestamp = $timestamp;
+                $apiData->date_time = $datatime;
+                $apiData->call_duration = $data['CallDuration'];
+                $apiData->phone_number = $data['PhoneNumber'];
+                $apiData->phone_number_name = $data['PhoneNumberName'];
+                $apiData->call_resolution = $data['CallResolution'];
+                $apiData->msg = $data['MSG'];
+                $apiData->caller_id = $data['CallerId'];
+                $apiData->first_name = $data['FirstName'];
+                $apiData->last_name = $data['LastName'];
+                $apiData->business = $data['Business'];
+                $apiData->address = $data['Address'];
+                $apiData->city = $data['City'];
+                $apiData->state = $data['State'];
+                $apiData->zipcode = $data['ZipCode'];
+                $apiData->phone_number_formatted = $data['PhoneNumberFormatted'];
+                $apiData->page_count = $data['PageCount'];
+                $apiData->group = $data['Group'];
+                $apiData->user = $data['User'];
+                $apiData->call_direction = $data['CallDirection'];
+                $apiData->access = $data['Access'];
+                $apiData->status = $data['Status'];
+                $apiData->npa = $data['NPA'];
+                $apiData->nxxx = $data['NXXX'];
+                $apiData->call_type = $data['CallType'];
+                $apiData->current_url = $data['CurrentURL'];
+                $apiData->widget_name = $data['WidgetName'];
+                $apiData->source_type = $data['SourceType'];
+                $apiData->category = $data['Category'];
 
-$json_response = curl_exec($ch);
-$info = curl_getinfo($ch);
-curl_close($ch);		
+                //$proUpdated = \DB::connection('mysql2')->table('api_data')->firstOrNew(array('timestamp' => $timestamp));
 
+                // save data in user table
+                if ($apiData->save()) {
 
-
-
-$postData = array(
-    'EnteredUserID' => 'amc201@nextiva.com',
-    'password' => 'password',
-    'testcookie' => '1'
-);
-$ch = curl_init();
-curl_setopt_array($ch, array(
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $postData,
-    CURLOPT_FOLLOWLOCATION => true
-));
-
-$output = curl_exec($ch);
-$info = curl_getinfo($ch);
-
-echo '<pre>'; print_r($info); die;		
+                } else {
+                   $status[] = $data;
+                }
+            }
+        }
+        if(count($status))
+        {
+            \Session::flash('error_message', 'Some thing went wrong please try again');
+            return redirect('/');
+        }
+        else
+        {
+            \Session::flash('flash_message', 'Api Data Save Successfully.');
+            return redirect('/');
+        }
     }
 }

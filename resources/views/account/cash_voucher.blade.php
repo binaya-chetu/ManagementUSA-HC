@@ -45,7 +45,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-dolor">$</i>
                                 </span>
-                                {{ Form::text('amount', null, ['class' => 'form-control required decimal_val', 'id' => 'amount']) }}
+                                {{ Form::text('amount', null, ['class' => 'form-control required decimal_val', 'id' => 'amount', 'maxlength' => '10']) }}
                                 @if ($errors->has('amount'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('amount') }}</strong>
@@ -83,23 +83,6 @@
                                 </span>
                                 @endif
                         </div>
-                        
-                        <!--<div class="col-sm-6 form-group{{ $errors->has('cash_in') ? ' has-error' : '' }}">
-                           {{ Form::label('cash_in', 'Cash In', array('class' => 'col-sm-3 control-label')) }}
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-dolor">$</i>
-                                </span>
-                                {{ Form::text('cash_in', null, ['class' => 'form-control decimal_val', 'id' => 'cash-in']) }}
-                                @if ($errors->has('cash_in'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('cash_in') }}</strong>
-                                </span>
-                                @endif
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
                 <footer class="panel-footer">
@@ -111,7 +94,7 @@
                                         'class'=>'mb-xs mt-xs mr-xs btn btn-primary',
                                         'type'=>'submit')) 
                                 }}                               
-                                <a href='/user/listUsers' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
+                                <a href='/accounting/listCashLogs' class = 'mb-xs mt-xs mr-xs btn btn-default'>Cancel</a>
                             </div>
                     </div>
                 </footer>
@@ -121,25 +104,7 @@
     </div>
 </section>
 <script>
-    // JQUERY ".Class" SELECTOR.
-    $(document).ready(function() {
-        $('.decimal_val').keypress(function (event) {
-            return isNumber(event, this)
-        });
-    });
-    // THE SCRIPT THAT CHECKS IF THE KEY PRESSED IS A NUMERIC OR DECIMAL VALUE.
-    function isNumber(evt, element) {
-
-        var charCode = (evt.which) ? evt.which : event.keyCode
-
-        if (
-            (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
-            (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-            (charCode < 48 || charCode > 57))
-            return false;
-
-        return true;
-    }    
+   
 </script>
 @endsection
 
