@@ -885,4 +885,20 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+    // You can use "get" or "post" method below for payment..
+Route::get('payment', 'PaymentController@postPayment');
+// This must be get method.
+Route::get('payment/status', 'PaymentController@getPaymentStatus');
+Route::post('payment/debit', 'PaymentController@debit');
+Route::get('payment/test', 'PaymentController@test');
+
+    /*
+     * Show the invoice after make payment
+     */
+    Route::get('/sale/generateInvoice/{id}', [
+       'uses' => 'SaleController@generateInvoice',
+        'as' => 'sales.generateInvoice',
+    ]);
+
+    
 });
