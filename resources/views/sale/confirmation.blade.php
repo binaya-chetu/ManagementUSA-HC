@@ -25,7 +25,7 @@
                         <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                         @endif
                         @if(Session::has('error_message'))
-                        <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
+                        <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">ï¿½</button><em> {!! session('error_message') !!}</em></div></div>
                         @endif						
                     </div>
                     <div class="row">
@@ -195,15 +195,71 @@
                     </div>
                     <div class="row">                
                         <div class="col-sm-12">
-                            <h3>Payment Method</h3>
+                            <h3>Payment Details</h3>
                         </div>              
+                    </div>   
+                    
+                    
+            <?php $remaining = $total_cart_price;  ?>
+            @if(!empty($uncompletedPayment['data']))
+                <div class="table-responsive">   
+                    <table class="table table-bordered table-striped mb-none">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Payment Type</th>
+                                <th>Payment Time</th>                        
+                                <th>Paid Amount</th>                                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach($uncompletedPayment['data'] as $pay)     
+                            <tr>
+                                <td class="table-text"><div>{{ $i++ }}</div></td>
+                                <td class="table-text"><div>
+                                        @if($pay['payment_type'] == 0)
+                                        Cash in Hand
+                                        @elseif($pay['payment_type'] == 1)
+                                        Credit Card
+                                        @endif
+                                    </div></td>
+                                <td class="table-text"><div>{{ date('d F Y H:ia', strtotime($pay['created_at'])) }}</div></td>   
+                                <td class="table-text"><div>${{ number_format($pay['paid_amount'], 2) }}</div></td>
+                            </tr>
+                            @endforeach                            
+                        </tbody>
+                    </table> 
+                </div>
+             <div class="row tablePad">
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Paid Amount :</label>
                     </div>
+                    <div class="col-sm-7">
+                        ${{ number_format($uncompletedPayment['total'], 2) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-5">
+                        <label>Remaining Amount :</label>
+                    </div>
+                    <div class="col-sm-7">
+                        $<?php 
+                            $remaining = $remaining - $uncompletedPayment['total'];
+                            echo number_format($remaining, 2);
+                        ?> 
+                    </div>
+                </div>
+            </div>  
+            @endif                    
+                                        
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <label>Method :</label>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 @if($payment['payment_type'] == 0)
                                 Cash in Hand
                                 @elseif($payment['payment_type'] == 1)
@@ -212,66 +268,106 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <label>Total Amt:</label>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 ${{ number_format($total_cart_price, 2) }}
                             </div>
                         </div>
                     </div>                     
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="col-md-4">
-                                <label>Amt. Received:</label>
+                            <div class="col-md-5">
+                                <label>Amt. Entered:</label>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 ${{ $payment['paid_amount'] or '' }}                                
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="col-md-4">
-                                <label>Remaining Amt:</label>
+                            <div class="col-md-5">
+                                <label>Balance Left:</label>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-7">
                                 $<?php 
-                                $remaining = $total_cart_price - $payment['paid_amount'];
+                                $remaining = $remaining - $payment['paid_amount'];
                                 echo number_format($remaining, 2);
-                                ?> <a href="javascript:void(0)" class="emi_popuup">EMI options</a>
+                                ?> 
+                                @if(isset($payment['selectemi']) && $remaining > 0)
+                                <a href="javascript:void(0)" class="emi_popuup">EMI options</a>
+                                @endif
                             </div>
                         </div>                        
                     </div>
-					<div id="emiDetailTable" style="display:none">
-						<div class="row">
-							<div class="col-md-12"><h3>EMI payment details</h3></div>
-						</div>	
-						<div>
-							<div class="table-responsive">
-								<table class="table table-striped mb-none">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Installment Amount</th>
-											<th>Due Date</th>
-											<th>Status</th>
-										</tr>
-									</thead>
-									<tbody>
-									
-									</tbody>
-								</table>
-							</div>	
-						</div>
-					</div>					
+                    <!-- If Payment Method is Credit Type -->
+                    @if($payment['payment_type'] == 1)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-5">
+                                <label>Card Holder Name:</label>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ $payment['first_name'].' '.$payment['last_name'] }} 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-5">
+                                <label>Card Number:</label>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ $payment['card_number'] }}
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-5">
+                                <label>Card Expiration :</label>
+                            </div>
+                            <div class="col-sm-7">
+                               {{ $payment['month'].' / '.$payment['year'] }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-5">
+                                <label>CVV :</label>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ $payment['cvv'] }}
+                            </div>
+                        </div>
+                    </div> 
+                    @endif
+                    <div id="emiDetailTable" style="display:none">
+                        <div class="row">
+                            <div class="col-md-12"><h3>EMI payment details</h3></div>
+                        </div>	
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-none">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Installment Amount</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>	
+                        </div>
+                    </div>					
                 </div>
 
                 <footer class="panel-footer">
                     {{ Form::open(['url' => '/sale/makePayment', 'method' => "post", 'class'=>'form-horizontal', 'id' =>'checkoutForm' ]) }}
                     {{ Form::hidden('patient_id',$patientCart['patient']->id) }}   
-                    {{ Form::hidden('agent_id',$patientCart['user']->id) }}   
-                    {{ Form::hidden('total_amount', $total_cart_price) }}      
-                    {{ Form::hidden('payment_type', $payment['payment_type']) }}  
-                    {{ Form::hidden('paid_amount', $payment['paid_amount']) }}
+                    {{ Form::hidden('agent_id',$patientCart['user']->id) }}       
+                    {{ Form::hidden('payment_type', $payment['payment_type']) }}                     
                     <div class="row">
                         <div class="col-md-12 col-md-offset-4">
                             {{ Form::button('<i class="fa fa-btn fa-user"></i>  Buy Now',['class'=>'mb-xs mt-xs mr-xs btn btn-primary', 'type'=>'submit']) }}
@@ -305,10 +401,10 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label class="col-sm-12 errorEMI">*Please select an EMI's option </label>
-								<label>Select prefered payment day</label>
-								<input class="emiDatepicker" name="emiDatepicker" placeholder="prefered payment day" data-date-format="mm/dd/yyyy">
-								<input type="hidden" name="totalEmiAmount" value="<?php echo $remaining; ?>">
-								<div class="radio">
+                                <label>Select prefered payment day</label>
+                                <input class="emiDatepicker" name="emiDatepicker" placeholder="prefered payment day" data-date-format="mm/dd/yyyy">
+                                <input type="hidden" name="totalEmiAmount" value="<?php echo $remaining; ?>">
+                                <div class="radio">
                                     <label>
                                         {{ Form::radio('emi', 3, false, ['class' => 'emiRadio', 'id' =>'radio1' ]) }}
                                         <span>$<?php echo number_format($quarter, 2); ?>/month for 3 EMIs</span>
