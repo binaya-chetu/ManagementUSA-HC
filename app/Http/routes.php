@@ -885,4 +885,9 @@ Route::group(['middleware' => 'web'], function () {
         //'middleware' => ['acl.doseManagement_read']
     ]);
     
+    Route::get('/api/store',[
+        'uses' => 'clientapiController@store',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
 });
