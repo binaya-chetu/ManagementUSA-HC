@@ -133,7 +133,6 @@ class SaleController extends Controller
             return redirect()->to($url);
         }
         $payments = new Payment;
-
         $payments->patient_id = $formData['patient_id'];
         $payments->agent_id = $formData['agent_id'];
         $payments->payment_type = $formData['payment_type'];
@@ -145,8 +144,10 @@ class SaleController extends Controller
         $total_pay = $payment['paid_amount'] + $total_uncompleted;
         if (($total_pay == $payment['total_amount']) || isset($formData['emiType'])) {
             $payments->payment_status = 1;
+            $order_unique_id = uniqid();
+            $payments->order_unique_id = $order_unique_id;
             // Make the function for the updating status for all uncompleted payments
-            Payment::changePaymentStatus($formData['patient_id']);
+            Payment::changePaymentStatus($formData['patient_id'], $order_unique_id);
         }
         
         $payments->save();
@@ -174,6 +175,7 @@ class SaleController extends Controller
                 $emi->patient_id = $formData['patient_id'];
                 $emi->agent_id = $formData['agent_id'];
                 $emi->payment_id = $payment_id;
+                $emi->order_unique_id = $order_unique_id;
                 $emi->due_date = $emiStartDate;
                 $emi->save();
                 $emiStartDate->modify('next month');
@@ -182,7 +184,7 @@ class SaleController extends Controller
         /* -------- START::Call the function saveOrder to save the order data ------- */
         if (($total_pay == $payment['total_amount']) || isset($formData['emiType'])) {
             $cart = Cart::getCartDetails($formData['patient_id']);
-            $this->saveOrder($cart, $payments->id);
+            $this->saveOrder($cart, $payments->id, $order_unique_id);
          
             if (Cart::where('patient_id', $formData['patient_id'])->delete()) {
                 //Session::set('checkout_payment', '');
