@@ -10,11 +10,12 @@ trait CommonTrait {
      * Save the order from the makePayment function
      *
      *  */
-    public function saveOrder($cart, $payment_id) {   
+    public function saveOrder($cart, $payment_id, $order_unique_id) {   
         
         foreach($cart['category_list'] as $key => $category){
             $order = new Order;
             $order->payment_id = $payment_id;
+            $order->order_unique_id = $order_unique_id;
             $order->category = $category['category'];
             $order->package_type = $category['category_type'];
             $order->price = $cart['original_package_price'][$key];
