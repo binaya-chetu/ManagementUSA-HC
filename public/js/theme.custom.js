@@ -72,6 +72,7 @@ $(function() {
     
     // common validation for add/edit roles.
     $('#addRole').validate();
+    $('#apiSetting').validate();
     
     // common validation for add/edit users.
     jQuery('#addUser').validate({

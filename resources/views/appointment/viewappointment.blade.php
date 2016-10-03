@@ -23,6 +23,9 @@
                 @if(Session::has('flash_message'))
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
+                 @if(Session::has('error_message'))
+                <div class="col-sm-12"><div class="alert alert-danger"><span class="glyphicon glyphicon-ok"></span><em> {!! session('error_message') !!}</em></div></div>
+                @endif
                 <div class="row">
                     <!--div class="col-md-12 text-left col-sm-offset-1">
                         <a href="javascript:void(0)"><button id="add-view-appointment" class="btn btn-primary">Add Appointment <i class="fa fa-plus"></i></button></a>

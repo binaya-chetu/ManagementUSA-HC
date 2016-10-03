@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
-use App\ApiData;
+use App\ApiSetting;
+use App\Http\Traits\CommonTrait;
+use Illuminate\Http\Request;
 
 class ClientapiController extends Controller
 {
+    use CommonTrait;
    /**
      * Create a new controller instance.
      *
@@ -14,6 +16,44 @@ class ClientapiController extends Controller
      */
     public function __construct() {
         $this->middleware('auth');
+    }
+    
+    /**
+     * This function is used to fetch the layout for API setting.
+     *
+     * @param Request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function setting() {
+        $data = ApiSetting::first();
+        return view('api.setting', [
+            'data' => $data
+        ]);
+    }
+    
+    /**
+     * This function is used to save the API setting details in database.
+     *
+     * @param Request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveSetting(Request $request) {
+        $saved = $this->saveApiSetting($request);
+        
+        if($saved)
+        {
+            // set the flash message for doctor creation success.
+            \Session::flash('flash_message', 'Setting Saved Successfully.');
+            return redirect('/api/setting');
+        }
+        else
+        {
+            // set the flash message for doctor creation success.
+            \Session::flash('error_message', 'Some Thing Went Wrong Please Try Again.');
+            return redirect('/api/setting');
+        }
     }
     
      /**
@@ -24,70 +64,26 @@ class ClientapiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store()
-    {   $path = realpath('json.txt');
-        $json_data = file_get_contents($path);
-        $datas = json_decode($json_data, true);
-        $status = [];
-        
-        $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
-        foreach($datas['Data'] as $data)
+    {   
+        $data = ApiSetting::first();
+        if(count($data))
         {
-            $timestamp = preg_replace("/[^0-9]/","",$data['DateTime']);
-            
-            if($timestamp > $maxTimeStamp)
+            $status = $this->saveApiData($data);
+            if($status)
             {
-                $apiData = new ApiData;
-                $datatime = date('Y-m-d h:i:s', ($timestamp/1000));
-
-                $apiData->timestamp = $timestamp;
-                $apiData->date_time = $datatime;
-                $apiData->call_duration = $data['CallDuration'];
-                $apiData->phone_number = $data['PhoneNumber'];
-                $apiData->phone_number_name = $data['PhoneNumberName'];
-                $apiData->call_resolution = $data['CallResolution'];
-                $apiData->msg = $data['MSG'];
-                $apiData->caller_id = $data['CallerId'];
-                $apiData->first_name = $data['FirstName'];
-                $apiData->last_name = $data['LastName'];
-                $apiData->business = $data['Business'];
-                $apiData->address = $data['Address'];
-                $apiData->city = $data['City'];
-                $apiData->state = $data['State'];
-                $apiData->zipcode = $data['ZipCode'];
-                $apiData->phone_number_formatted = $data['PhoneNumberFormatted'];
-                $apiData->page_count = $data['PageCount'];
-                $apiData->group = $data['Group'];
-                $apiData->user = $data['User'];
-                $apiData->call_direction = $data['CallDirection'];
-                $apiData->access = $data['Access'];
-                $apiData->status = $data['Status'];
-                $apiData->npa = $data['NPA'];
-                $apiData->nxxx = $data['NXXX'];
-                $apiData->call_type = $data['CallType'];
-                $apiData->current_url = $data['CurrentURL'];
-                $apiData->widget_name = $data['WidgetName'];
-                $apiData->source_type = $data['SourceType'];
-                $apiData->category = $data['Category'];
-
-                //$proUpdated = \DB::connection('mysql2')->table('api_data')->firstOrNew(array('timestamp' => $timestamp));
-
-                // save data in user table
-                if ($apiData->save()) {
-
-                } else {
-                   $status[] = $data;
-                }
+                \Session::flash('flash_message', 'Api Data Save Successfully.');
+                return redirect('/');
             }
-        }
-        if(count($status))
-        {
-            \Session::flash('error_message', 'Some thing went wrong please try again');
-            return redirect('/');
+            else
+            {
+                \Session::flash('error_message', 'Something went wrong please try again');
+                return redirect('/');
+            }
         }
         else
         {
-            \Session::flash('flash_message', 'Api Data Save Successfully.');
-            return redirect('/');
+            \Session::flash('error_message', 'Please set the valid authntication detail');
+            return redirect('/api/setting');
         }
     }
 }
