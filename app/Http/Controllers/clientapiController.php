@@ -69,21 +69,21 @@ class ClientapiController extends Controller
         if(count($data))
         {
             $status = $this->saveApiData($data);
-            if($status)
+            if(count($status))
             {
-                \Session::flash('flash_message', 'Api Data Save Successfully.');
+                \Session::flash('error_message', 'Some thing went wrong please try again');
                 return redirect('/');
             }
             else
             {
-                \Session::flash('error_message', 'Something went wrong please try again');
+                \Session::flash('flash_message', 'Api Data Save Successfully.');
                 return redirect('/');
             }
         }
         else
         {
-            \Session::flash('error_message', 'Please set the valid authntication detail');
-            return redirect('/api/setting');
+             \Session::flash('error_message', 'Please set the valid authntication detail');
+                return redirect('/api/setting');
         }
     }
 }

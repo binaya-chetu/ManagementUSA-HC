@@ -7,7 +7,7 @@ use App\ApiData;
 use App\ApiSetting;
 
 trait CommonTrait {
-      
+  
     /**
      * Save the order from the makePayment function
      *
@@ -48,65 +48,56 @@ trait CommonTrait {
         //$path = realpath('json.txt');
         //$json_data = file_get_contents($path);
         $json_data = $this->getResponse($data);
-        //echo "<pre>";print_r();die;
         $datas = json_decode($json_data, true);
         $status = [];
-        $saved = true;
-        if(isset($datas['Data']) && !empty($datas['Data']))
+        
+        $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
+        foreach($datas['Data'] as $data)
         {
-            $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
-            foreach($datas['Data'] as $data)
+            $timestamp = preg_replace("/[^0-9]/","",$data['DateTime']);
+            
+            if($timestamp > $maxTimeStamp)
             {
-                $timestamp = preg_replace("/[^0-9]/","",$data['DateTime']);
+                $apiData = new ApiData;
+                $datatime = date('Y-m-d h:i:s', ($timestamp/1000));
 
-                if($timestamp > $maxTimeStamp)
-                {
-                    $apiData = new ApiData;
-                    $datatime = date('Y-m-d h:i:s', ($timestamp/1000));
+                $apiData->timestamp = $timestamp;
+                $apiData->date_time = $datatime;
+                $apiData->call_duration = $data['CallDuration'];
+                $apiData->phone_number = $data['PhoneNumber'];
+                $apiData->phone_number_name = $data['PhoneNumberName'];
+                $apiData->call_resolution = $data['CallResolution'];
+                $apiData->msg = $data['MSG'];
+                $apiData->caller_id = $data['CallerId'];
+                $apiData->first_name = $data['FirstName'];
+                $apiData->last_name = $data['LastName'];
+                $apiData->business = $data['Business'];
+                $apiData->address = $data['Address'];
+                $apiData->city = $data['City'];
+                $apiData->state = $data['State'];
+                $apiData->zipcode = $data['ZipCode'];
+                $apiData->phone_number_formatted = $data['PhoneNumberFormatted'];
+                $apiData->page_count = $data['PageCount'];
+                $apiData->group = $data['Group'];
+                $apiData->user = $data['User'];
+                $apiData->call_direction = $data['CallDirection'];
+                $apiData->access = $data['Access'];
+                $apiData->status = $data['Status'];
+                $apiData->npa = $data['NPA'];
+                $apiData->nxxx = $data['NXXX'];
+                $apiData->call_type = $data['CallType'];
+                $apiData->current_url = $data['CurrentURL'];
+                $apiData->widget_name = $data['WidgetName'];
+                $apiData->source_type = $data['SourceType'];
+                $apiData->category = $data['Category'];
 
-                    $apiData->timestamp = $timestamp;
-                    $apiData->date_time = $datatime;
-                    $apiData->call_duration = $data['CallDuration'];
-                    $apiData->phone_number = $data['PhoneNumber'];
-                    $apiData->phone_number_name = $data['PhoneNumberName'];
-                    $apiData->call_resolution = $data['CallResolution'];
-                    $apiData->msg = $data['MSG'];
-                    $apiData->caller_id = $data['CallerId'];
-                    $apiData->first_name = $data['FirstName'];
-                    $apiData->last_name = $data['LastName'];
-                    $apiData->business = $data['Business'];
-                    $apiData->address = $data['Address'];
-                    $apiData->city = $data['City'];
-                    $apiData->state = $data['State'];
-                    $apiData->zipcode = $data['ZipCode'];
-                    $apiData->phone_number_formatted = $data['PhoneNumberFormatted'];
-                    $apiData->page_count = $data['PageCount'];
-                    $apiData->group = $data['Group'];
-                    $apiData->user = $data['User'];
-                    $apiData->call_direction = $data['CallDirection'];
-                    $apiData->access = $data['Access'];
-                    $apiData->status = $data['Status'];
-                    $apiData->npa = $data['NPA'];
-                    $apiData->nxxx = $data['NXXX'];
-                    $apiData->call_type = $data['CallType'];
-                    $apiData->current_url = $data['CurrentURL'];
-                    $apiData->widget_name = $data['WidgetName'];
-                    $apiData->source_type = $data['SourceType'];
-                    $apiData->category = $data['Category'];
-
-                    // save data in user table
-                    if (!($apiData->save())) {
-                        $status[] = $data;
-                        $saved = false;
-                    } 
-                }
+                // save data in user table
+                if (!($apiData->save())) {
+                    $status[] = $data;
+                } 
             }
         }
-        else
-        {
-            $saved = false;
-        }
-        return $saved;
+        return $status;
     }
     
     /**
@@ -160,16 +151,11 @@ trait CommonTrait {
         $curl_response = curl_exec($curl);
 
         if(!$curl_response){
-            
-            \Session::flash('error_message', 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
-            return redirect('/');
-            exit();
-            //die('Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
+            die('Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
         }
 
         curl_close($curl);
         var_dump($curl_response);die;
         return $curl_response;
-        
     }
 }
