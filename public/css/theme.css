@@ -17616,3 +17616,13 @@ html.dark .thumbnail {
 {
     color:red;
 }
+
+#calender-tabs li a{
+    background :#0088cc;
+    color:white;
+}
+
+#calender-tabs li.active a{
+    background :#abb4be;
+    color:black;
+}

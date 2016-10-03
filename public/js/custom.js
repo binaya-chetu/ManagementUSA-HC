@@ -22,6 +22,7 @@
     };
 })(jQuery);
 var initCalendarDragNDrop = function() {
+  
     $('#external-events div.external-event').each(function() {
         var eventObject = {
             title: $.trim($(this).text()) // use the element's text as the event title
@@ -36,8 +37,9 @@ var initCalendarDragNDrop = function() {
         });
     });
 };
-var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt = "00:00:00", inputDate = null, defaultView = "month") {
-    var $calendar = $('#calendar');
+var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt = "00:00:00",calender_id, inputDate = null, defaultView = "month") {
+    
+    var $calendar = $('#'+calender_id);
     var date = (inputDate == null) ? new Date() : new Date(inputDate);
     var d = date.getDate();
     var m = date.getMonth();
@@ -81,7 +83,7 @@ var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaul
             copiedEventObject.className = $externalEvent.attr('data-event-class');
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+            $('#'+calender_id).fullCalendar('renderEvent', copiedEventObject, true);
             // is the "remove after drop" checkbox checked?
             if ($('#RemoveAfterDrop').is(':checked')) {
                 // if so, remove the element from the "Draggable Events" list
@@ -91,7 +93,7 @@ var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaul
         events: events,
         viewRender: function(view, element) {
             if (view.start.isBefore(moment())) { //if view start is before now
-                $('#calendar').fullCalendar('gotoDate', moment().format('MM/DD/YYYY')); //go to now
+               $('#'+calender_id).fullCalendar('gotoDate', moment().format('MM/DD/YYYY')); //go to now
             }
         },
         eventRender: function(event, element) {
@@ -122,6 +124,8 @@ var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaul
             'class': 'btn btn-sm btn-default'
         });
 };
+
+
 var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes = 30, start = '00:00:00', end = '24:00:00') {
     var $calendar = $('#calendar');
     var date = (inputDate == null || inputDate == "" || inputDate == undefined) ? new Date() : new Date(inputDate);
@@ -192,8 +196,6 @@ var initDoctorSchedulrCalendar = function(events, inputDate = null, slotMinutes 
         });
 };
 $(document).ready(function() {
-
-
     $("#hidden-doses").hide();
     $('#patientdob').val('');
     $('#durationExample').on('blur', function() {
@@ -294,7 +296,6 @@ $(document).ready(function() {
         }
     });
     $(document).on("click", ".edit-row", function(ev) {
-     
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1413,3 +1414,19 @@ $(document).on("click", ".patientShowStatus", function() {
             //   alert("you have cancelled");
         }
     });
+    
+    
+ /* --------------------------START: Adding therapies dropdown for Appointment Calender --------------  */  
+
+   $("#trimix").click(function(){
+      var cat_id = $("#trimix_id").val();
+    
+      $.ajax({
+                url: ajax_url + "/home/index/",
+                data: {"id": cat_id },
+                success: function(response) {
+                var combine = JSON.parse(response);
+                }
+        });
+   });
+    

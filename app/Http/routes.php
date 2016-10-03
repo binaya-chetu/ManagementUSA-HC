@@ -857,7 +857,6 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'homes.user_profile',
         //'middleware' => ['acl.doseManagement_read']
     ]);
-    
     /*
      * To edit the profile details of User
      */
@@ -886,11 +885,11 @@ Route::group(['middleware' => 'web'], function () {
     ]);
     
     // You can use "get" or "post" method below for payment..
-Route::get('payment', 'PaymentController@postPayment');
-// This must be get method.
-Route::get('payment/status', 'PaymentController@getPaymentStatus');
-Route::post('payment/debit', 'PaymentController@debit');
-Route::get('payment/test', 'PaymentController@test');
+    Route::get('payment', 'PaymentController@postPayment');
+    // This must be get method.
+    Route::get('payment/status', 'PaymentController@getPaymentStatus');
+    Route::post('payment/debit', 'PaymentController@debit');
+    Route::get('payment/test', 'PaymentController@test');
 
     /*
      * Show the invoice after make payment
@@ -899,6 +898,14 @@ Route::get('payment/test', 'PaymentController@test');
        'uses' => 'SaleController@generateInvoice',
         'as' => 'sales.generateInvoice',
     ]);
-
+    /*
+     * To Show the profile details of User
+     */
+    Route::get('/home/index/{id}', [
+       'uses' => 'HomeController@index',
+        'as' => 'homes.viewappoinment',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+   
     
 });

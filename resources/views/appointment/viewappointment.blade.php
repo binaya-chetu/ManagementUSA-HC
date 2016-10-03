@@ -1,5 +1,4 @@
 @extends('layouts.common')
-
 @section('content')	
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <section role="main" class="content-body">
@@ -16,10 +15,42 @@
     </header>
 
     <!-- start: page -->
-
+ 
     <section class="panel">
         <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-12">	
+                    <div class="tabs">
+                        <ul class="nav nav-tabs" id = "calender-tabs">
+                            <li class="active">
+                                <a href="#calender"  data-toggle="tab"><i class="fa fa-star"></i>Appointment Calender</a>
+                            </li>
+                            <?php// echo "<pre>";print_r($categories);die;?>
+                            @foreach($categories AS $category)
+                            @if($category->id == 2)
+                            <li>
+                                <input type ="hidden" name="trimix_id" value="{{$category->id}}" />
+                                <a href="#trimix-calender" id ="trimix"  data-toggle="tab">Trimix Therapy Calender</a>
+                            </li>
+                            @endif
+                           @if($category->id == 12)
+                            <li>
+                                <input type ="hidden" name="siblingual_id" value="{{$category->id}}" />
+                                <a href="#siblingual-calender" id ="siblingual"  data-toggle="tab">Sublingual Troche Therapy Calender</a>
+                            </li>
+                            @endif
+                            @endforeach
+                        </ul>
+                        <div class="tab-content">
+                            <div id="calendar" class="tab-content active"> </div>
+                            <div id ="trimix-calender" class="tab-content" ></div>
+                            <div id ="siblingual-calender" class="tab-content"  ></div>
+                        </div>
+                    </div>
+                </div>
+             </div>
             <div class="row">
+        
                 @if(Session::has('flash_message'))
                 <div class="col-sm-12"><div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><em> {!! session('flash_message') !!}</em></div></div>
                 @endif
@@ -30,11 +61,8 @@
                     </div-->
                 </div>
                 <div class="col-md-12">
-
-                    <div id="calendar"></div>
+<!--                 <div id="calendar"></div>-->
                     <section class="panel">
-
-
                         <div class="panel-body">
                             <div id="dialog" class="modal-block mfp-hide">
                                 <section class="panel">
@@ -72,10 +100,7 @@
                              @include('appointment.followup_popup') 
                         </div>
                     </section>
-
                 </div>
-
-
             </div>
         </div>
     </section>
@@ -93,14 +118,13 @@
         'use strict';
 
         $(function() {
-            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt);
+            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt,  "calendar");
+            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "trimix-calender");
+            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "siblingual-calender");
             //initCalendarDragNDrop();
         });
 
     }).apply(this, [jQuery]);
 
 </script>
-
-
-
 @endsection	

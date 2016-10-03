@@ -11,6 +11,8 @@ use App\FollowupStatus;
 use Auth;
 use App\State;
 use App\UserDetail;
+use App\Categories;
+use DB;
 
 /**
  * This class is used to handle home page related action
@@ -64,7 +66,6 @@ class HomeController extends Controller {
                 $reasonList = array_column($reasonArray, 'reason');
                 $reason = implode(',', $reasonList);
             }
-
             $events ['title'] = $reason;
             if ($appointment->patient) {
                 $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
@@ -80,7 +81,6 @@ class HomeController extends Controller {
             $collevent[$i] = $events;
             $i++;
         }
-
         // get all patients list
         $patients = User::where('role', $this->patient_role)->get();
         // get all doctors list
@@ -88,18 +88,20 @@ class HomeController extends Controller {
         $followupStatus = FollowupStatus::select('id', 'title')
             ->where('status', 1)
             ->get();
-
+        $categories = Categories::get();
+        
         return view('appointment.viewappointment', [
             'appointments' => $collevent,
             'patients' => $patients,
             'doctors' => $doctors,
-            'followupStatus' => $followupStatus
+            'followupStatus' => $followupStatus,
+            'categories' => $categories      
         ]);
     }
     
     
    
-    /** Niwedita : to show the profile details of user
+    /** to show the profile details of user
     * This function is used to view the patient details.
     *
     * @return \Illuminate\Http\Response
@@ -152,7 +154,6 @@ class HomeController extends Controller {
         if (!($userData = User::find($id))) {
             App::abort(404, 'Page not found.');
         }
-
         // validation rule
         $this->validate($request, [
             'first_name' => 'required|max:255',

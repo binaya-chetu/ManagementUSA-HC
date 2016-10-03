@@ -411,5 +411,4 @@ class PatientController extends Controller {
         ]);
     }
 
-   
 }

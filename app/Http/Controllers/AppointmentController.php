@@ -44,7 +44,6 @@ class AppointmentController extends Controller {
      *  */
     public function index($id = null) {
         $patients = User::where('role', $this->patient_role)->where('patient_detail.never_treat_status')->get(['id', 'first_name', 'last_name']);
-
         $doctors = User::where('role', $this->doctor_role)->get(['id', 'first_name', 'last_name']);
         if (empty($id)) {
             $id = '';
@@ -1071,10 +1070,13 @@ class AppointmentController extends Controller {
      * @return \resource\view\Appointment\lab_appointment.php
      */
     public function checkAppointmentStatus($id) {
-        
         $appointment = Appointment::where('id', $id)->select('progress_status')->first();       
         echo json_encode($appointment);
         die;
     }
-
+     public function viewTherapyCalender($id) { 
+     
+        echo json_encode($categories);
+        die;
+    }
 }
