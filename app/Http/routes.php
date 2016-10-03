@@ -899,6 +899,13 @@ Route::get('payment/test', 'PaymentController@test');
        'uses' => 'SaleController@generateInvoice',
         'as' => 'sales.generateInvoice',
     ]);
+ /*
+    * Show the invoice after make payment
+    */
+    Route::get('/sale/paymentDocuments/{paymentid}', [
+      'uses' => 'SaleController@paymentDocuments',
+       'as' => 'sales.paymentDocuments',
+    ]);
 
     
 });

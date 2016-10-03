@@ -219,6 +219,15 @@ class SaleController extends Controller
     * Function: Show the invoice after payment made successful
     * returns payment details page view
     */
+    public function paymentDocuments($paymentid){
+        $patientId = base64_decode($paymentid);
+         return view('sale.payment_documents');
+    }
+    
+    /**
+    * Function: Show the invoice after payment made successful
+    * returns payment details page view
+    */
     public function generateInvoice($id){
         $patientId = base64_decode($id);
          return view('sale.generate_invoice');
