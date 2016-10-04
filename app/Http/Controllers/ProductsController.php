@@ -71,6 +71,7 @@ class ProductsController extends Controller {
                     return ['response' => false, 'msg' => 'Product with given sku value not found'];
             }
             $product->name = $data['pName'];
+            $product->unit_of_measurement = $data['pMeasurement'];
             $product->price = $data['price'];
             $product->count = $data['count'];
             $product->save();
@@ -105,7 +106,7 @@ class ProductsController extends Controller {
     */
     public function showInventory(){
         $products = DB::table('products')->orderBy('name', 'asc')->get();
-
+        //echo "<pre>";print_r($products);die;
         return view('products.products', [
             'products' => $products
         ]);
