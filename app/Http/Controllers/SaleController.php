@@ -70,7 +70,6 @@ class SaleController extends Controller
         $cart = Cart::getCartDetails($patientId);
         $patientCart = Cart::with('patient', 'patient.patientDetail', 'patient.patientDetail.patientStateName', 'user', 'user.userDetail')
                             ->where('patient_id', $patientId)->get()->first();
-        
         /* START: Show history of all the uncompleted payment */
         $paymentUncompleted = Payment::getUncompletedPayment($patientId);  
         /* END: Show history of all the uncompleted payment */
@@ -188,8 +187,8 @@ class SaleController extends Controller
          
             if (Cart::where('patient_id', $formData['patient_id'])->delete()) {
                 //Session::set('checkout_payment', '');
-                \Session::flash('flash_message', 'Your order placed successfully.');
-                $url = 'sale/generateInvoice/' . base64_encode($formData['patient_id']);
+                \Session::flash('flash_message', 'Your order placed successfully, Please print the listed forms.');
+                $url = 'sale/paymentDocuments/' . base64_encode($order_unique_id);
                 return redirect()->to($url);
             }
           
@@ -216,11 +215,25 @@ class SaleController extends Controller
     }
     
     /**
+    * Function: Show the PDF documents after payment made successful
+    * returns payment Documents page view
+    */
+    public function paymentDocuments($orderid){
+        $orderId = base64_decode($orderid);
+        return view('sale.payment_documents', ['order_id' => $orderId]);
+    }
+    
+    /**
     * Function: Show the invoice after payment made successful
     * returns payment details page view
     */
     public function generateInvoice($id){
-        $patientId = base64_decode($id);
+        $orderId = base64_decode($id);
+     
+        if(isset($orderId)){
+            $record = Order::getAllOrders($orderId);
+            echo '<pre>'; print_r($record->toArray());die;
+        }
          return view('sale.generate_invoice');
     }
 }
