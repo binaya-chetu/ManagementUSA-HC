@@ -49,6 +49,7 @@ trait CommonTrait {
         //$json_data = file_get_contents($path);
         $json_data = $this->getResponse($data);
         $datas = json_decode($json_data, true);
+        //echo "<pre>";print_r($datas);die;
         $status = [];
         
         $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
@@ -139,23 +140,80 @@ trait CommonTrait {
      * @return json data
      */
     protected function getResponse($data){
-        $service_url = $data->api_url;
-        $curl = curl_init($service_url);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, $data->user_name.":".$data->password); //Your credentials goes here
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); //IMP if the url has https and you don't want to verify source certificate
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //IMP if the url has https and you don't want to verify source certificate
-        curl_setopt($curl, CURLOPT_SSLVERSION,3);
+        $username = $data->user_name;
+        $password = $data->password;
 
-        $curl_response = curl_exec($curl);
+        $method = 'GET';
 
-        if(!$curl_response){
-            die('Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
+        $url = $data->api_url;
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch,CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 30);
+        if($method == 'POST')
+        {
+          $fieldsData = http_build_query($fields);
+          curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsData);
         }
 
-        curl_close($curl);
-        var_dump($curl_response);die;
-        return $curl_response;
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        $first_response = curl_exec($ch);
+        $info = curl_getinfo($ch);
+
+         preg_match('/WWW-Authenticate: Digest (.*)/', $first_response, $matches);
+
+        if(!empty($matches))
+        {
+            $auth_header = $matches[1];
+            $auth_header_array = explode(',', $auth_header);
+            $parsed = array();
+
+            foreach ($auth_header_array as $pair)
+            {
+                $vals = explode('=', $pair);
+                $parsed[trim($vals[0])] = trim($vals[1], '" ');
+            }
+
+            $response_realm     = (isset($parsed['realm'])) ? $parsed['realm'] : "";
+            $response_nonce     = (isset($parsed['nonce'])) ? $parsed['nonce'] : "";
+            $response_opaque    = (isset($parsed['opaque'])) ? $parsed['opaque'] : "";
+
+            $authenticate1 = md5($username.":".$response_realm.":".$password);
+            $authenticate2 = md5($method.":".$url);
+
+            $authenticate_response = md5($authenticate1.":".$response_nonce.":".$authenticate2);
+
+            $request = sprintf('Authorization: Digest username="%s", realm="%s", nonce="%s", opaque="%s", uri="%s", response="%s"',
+            $username, $response_realm, $response_nonce, $response_opaque, $url, $authenticate_response);
+
+            $request_header = array($request);
+
+            $ch = curl_init();
+            curl_setopt($ch,CURLOPT_URL, $url);
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch,CURLOPT_FOLLOWLOCATION, false);
+            curl_setopt($ch,CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 30);
+
+            if($method == 'POST')
+            {
+                $fieldsData = http_build_query($fields);
+                curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsData);
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $request_header);
+
+            $result['response']         = curl_exec($ch);
+            $result['info']             = curl_getinfo ($ch);
+            $result['info']['errno']    = curl_errno($ch);
+            $result['info']['errmsg']   = curl_error($ch); 
+            print_r($result['response']);die;
+        } 
     }
 }
