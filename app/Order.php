@@ -52,9 +52,7 @@ class Order extends Model
     
     public static function getAllOrders($orderId)
     {
-        $orderHistory = Order::with(['payment' => function($query) {
-                                            $query->select(['patient_id', 'agent_id']);
-                        }])->where('order_unique_id', $orderId)->get();
+        $orderHistory = Order::with(['payment'])->where('order_unique_id', $orderId)->get();
         return $orderHistory;
     }
 }

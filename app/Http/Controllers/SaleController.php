@@ -26,7 +26,8 @@ use Illuminate\Config\Repository;
 use Session;
 use App;
 use Auth;
-USE Exception;
+use Exception;
+use App\PdfForm;
 
 class SaleController extends Controller
 {
@@ -220,7 +221,10 @@ class SaleController extends Controller
     */
     public function paymentDocuments($orderid){
         $orderId = base64_decode($orderid);
-        return view('sale.payment_documents', ['order_id' => $orderId]);
+        if(isset($orderId)){
+            $packages = Order::getAllOrders($orderId);
+        }
+        return view('sale.payment_documents', ['order_id' => $orderId, 'packages' => $packages]);
     }
     
     /**
@@ -235,5 +239,23 @@ class SaleController extends Controller
             echo '<pre>'; print_r($record->toArray());die;
         }
          return view('sale.generate_invoice');
+    }
+    
+    /**
+    * Function: to view or print the document in pdf format. 
+    * returns 
+    */
+    public function printForm($patient_id, $category_id){
+        $patient_id = base64_decode($patient_id);
+        $category_id = base64_decode($category_id);
+        if(isset($patient_id)){
+            $patient = User::select('first_name', 'last_name')->where('id', $patient_id)->first();
+            $template = PdfForm::where('id', 1)->first();
+            //echo "<pre>";print_r($patient);die;
+        }
+         return view('sale.generate_pdf_form', [
+             'template' => $template,
+             'petient'  => $patient
+         ]);
     }
 }
