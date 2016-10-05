@@ -185,15 +185,16 @@ class AppointmentController extends Controller {
             $location_id = Session::get('location_id');
             if(isset($location_id) && $location_id > 0){
                
-                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
-                    $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
-                    $query->where('reason_id', '>', 8);
-                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
-//                echo "<pre>";print_r($appointments->toArray());
-//                $appointments = DB::table('appointments')
-//                    ->join('users', 'appointments.patient_id', '=', 'users.id')
-//                    ->get();
-//                    echo "<pre>";print_r($appointments);die;
+//                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
+//                    $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
+//                    $query->where('reason_id', '>', 8);
+//                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+//                echo "<pre>";print_r($appointments->toArray());die;
+                    $appointments = DB::table('appointments')
+                    ->join('users', 'appointments.patient_id', '=', 'users.id')
+                    ->join('appointment_requests')
+                    ->get();
+                    echo "<pre>";print_r($appointments);die;
            }
             else{
                    $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {

@@ -1426,9 +1426,8 @@ $(document).on("click", ".patientShowStatus", function() {
                 success: function() {
                     location.reload();
                 }
-        });
+                });
             }
-             //  var current_url = window.location.href;
             $.ajax({
             type: "POST",
             url: ajax_url + "/appointment/setSession",
