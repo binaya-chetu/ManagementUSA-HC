@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Appointment;
@@ -13,6 +11,7 @@ use App\State;
 use App\UserDetail;
 use App\Categories;
 use DB;
+use App\Cart;
 
 /**
  * This class is used to handle home page related action
@@ -42,14 +41,14 @@ class HomeController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
         // get all appointments which status is active
         $appointments = Appointment::with(
             'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'
         )
         ->whereIn('status', [1, 4])
         ->get();
-
+        
         $collevent = [];
         $i = 0;
         foreach ($appointments as $appointment) {
@@ -88,8 +87,7 @@ class HomeController extends Controller {
         $followupStatus = FollowupStatus::select('id', 'title')
             ->where('status', 1)
             ->get();
-        $categories = Categories::get();
-        
+        $categories = Categories::get();     
         return view('appointment.viewappointment', [
             'appointments' => $collevent,
             'patients' => $patients,
@@ -185,5 +183,88 @@ class HomeController extends Controller {
             return redirect('/home/editUserProfile');
         }
     }
+    /**
+     * Show the application dashboard according to selected Therapy.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    public function therapyCalendar(Request $request) {
+        //get all appointments        
+         $appointments = Appointment::with([
+            'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode']
+        )
+        ->whereIn('status', [1, 4])    
+        ->get();
+         
+        //get all appointments of trimix therapy
+             
+        if($request->id == 2)
+        {
+            $appointments = Appointment::with([
+            'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode',
+             'cart.categories'=> function($query) { $query->where('category_id','=',2);}]
+        )
+        ->whereIn('status', [1, 4])    
+        ->get();     
+        }
+        //get all appointments of sublingual therapy
+        elseif($request->id == 12)
+        {
+             $appointments = Appointment::with(['patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode',
+            'cart.categories' => function($query) { $query->where('category_id','=',12);}]
+        )
+        ->whereIn('status', [1, 4])
+        ->get();
+        }
+        // get all appointments which status is active
+        
+        $collevent = [];
+        $i = 0;
+        foreach ($appointments as $appointment) {
+            $events = [];
+            $events ['id'] = $appointment->id;
+            $reasonArr = $appointment->patient->reason->toArray();
+            $reasonArray = array_column($reasonArr, 'reason_code');
+            $reasonList = array_column($reasonArray, 'reason');
+            $reason = implode(',', $reasonList);
 
+            if ($appointment->patient && $appointment->patient->reason) {
+                $reasonArr = $appointment->patient->reason->toArray();
+                $reasonArray = array_column($reasonArr, 'reason_code');
+                $reasonList = array_column($reasonArray, 'reason');
+                $reason = implode(',', $reasonList);
+            }
+            $events ['title'] = $reason;
+            if ($appointment->patient) {
+                $events ['patientName'] = 'Patient: ' . $appointment->patient->first_name . " " . $appointment->patient->last_name;
+            } else {
+                $events ['patientName'] = '';
+            }
+            if ($appointment->patient && $appointment->patient->patientDetail) {
+                $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
+            }
+            $events ['start'] = $appointment->apptTime;
+            $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
+            $events ['color'] = '#0088cc';
+            $collevent[$i] = $events;
+            $i++;
+        }
+        // get all patients list
+        $patients = User::where('role', $this->patient_role)->get();
+        // get all doctors list
+        $doctors = User::where('role', $this->doctor_role)->get();
+        $followupStatus = FollowupStatus::select('id', 'title')
+            ->where('status', 1)
+            ->get();
+        $categories = Categories::get();  
+        return view('appointment.viewappointment', [
+            'appointments' => $collevent,
+            'patients' => $patients,
+            'doctors' => $doctors,
+            'followupStatus' => $followupStatus,
+            'categories' => $categories      
+        ]);
+     
+    }
 }

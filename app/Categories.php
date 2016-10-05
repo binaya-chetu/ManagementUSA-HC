@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Categories extends Model
 {
 	use SoftDeletes;
-    
     protected $table = 'categories'; 
     /**
      * Get all categories for listing.
@@ -28,7 +27,7 @@ class Categories extends Model
 	public function cart() {
         return $this->hasMany('App\Cart', 'category_id');
     }
-	
+       
 	public function packages() {
         return $this->hasMany('App\Packages', 'category_id');
     }
@@ -36,7 +35,8 @@ class Categories extends Model
     public function CategoryAddOns() {  
         return $this->belongsTo('App\CategoryAddOns', 'category_id');
     }
-    
-   
-    
+    public function categoryDetails (){
+         return $this->belongsTo('App\CategoryAddOns', 'category_id');
+    }
+   	    
 }

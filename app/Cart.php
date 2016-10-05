@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Cart extends Model
 {
 	use SoftDeletes;
-
 	public static function getCartDetails($patientId){
 		$category_list = [];
 		$category_detail_list = [];
-		
 		$original_package_price = [];
 		$discouonted_package_price = [];
 		$total_cart_price = 0;

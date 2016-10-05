@@ -23,28 +23,26 @@
                     <div class="tabs">
                         <ul class="nav nav-tabs" id = "calender-tabs">
                             <li class="active">
-                                <a href="#calender"  data-toggle="tab"><i class="fa fa-star"></i>Appointment Calender</a>
+                                <a href="#calender" id="default-calendar"  data-toggle="tab"><i class="fa fa-star"></i>Appointment Calender</a>
                             </li>
                             <?php// echo "<pre>";print_r($categories);die;?>
                             @foreach($categories AS $category)
                             @if($category->id == 2)
                             <li>
-                                <input type ="hidden" name="trimix_id" value="{{$category->id}}" />
-                                <a href="#trimix-calender" id ="trimix"  data-toggle="tab">Trimix Therapy Calender</a>
+                                <a href="#trimix-calender" rel = "{{$category->id}}" id ="trimix"  data-toggle="tab">Trimix Therapy Calender</a>
                             </li>
                             @endif
                            @if($category->id == 12)
                             <li>
-                                <input type ="hidden" name="siblingual_id" value="{{$category->id}}" />
-                                <a href="#siblingual-calender" id ="siblingual"  data-toggle="tab">Sublingual Troche Therapy Calender</a>
+                                 <a href="#siblingual-calender" rel = "{{$category->id}}" id ="siblingual"  data-toggle="tab">Sublingual Troche Therapy Calender</a>
                             </li>
                             @endif
                             @endforeach
                         </ul>
                         <div class="tab-content">
                             <div id="calendar" class="tab-content active"> </div>
-                            <div id ="trimix-calender" class="tab-content" ></div>
-                            <div id ="siblingual-calender" class="tab-content"  ></div>
+                             <!--     <div id ="trimix-calender" class="tab-content" ></div>
+                            <div id ="siblingual-calender" class="tab-content"  ></div>-->
                         </div>
                     </div>
                 </div>
@@ -109,6 +107,7 @@
 </section>
 
 <script>
+    
     (function($) {
 		var clinicOpenTime = "{{ @config('constants.CLINIC_OPEN_TIME') }}";
 		var clinicCloseTime = "{{ @config('constants.CLINIC_CLOSE_TIME') }}";
@@ -119,12 +118,13 @@
 
         $(function() {
             initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt,  "calendar");
-            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "trimix-calender");
-            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "siblingual-calender");
+//            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "trimix-calender");
+//            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "siblingual-calender");
             //initCalendarDragNDrop();
         });
 
     }).apply(this, [jQuery]);
+   
 
 </script>
 @endsection	

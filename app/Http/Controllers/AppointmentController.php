@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
@@ -468,7 +466,7 @@ class AppointmentController extends Controller {
      * @return \resource\view\appointment\patient_medical
      */
     public function patientMedical($id = null, $hash = null) {
-
+        
         $id = base64_decode($id);
         $hash = $hash;
         $patient = User::with('patientDetail')->find($id);
@@ -1075,7 +1073,6 @@ class AppointmentController extends Controller {
         die;
     }
      public function viewTherapyCalender($id) { 
-     
         echo json_encode($categories);
         die;
     }

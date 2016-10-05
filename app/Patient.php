@@ -39,11 +39,11 @@ class Patient extends Model {
         'hash'
     ];
 
-	public function user()
-	{
-		return $this->belongsTo('App\User', 'user_id');
-	}	
-	
+    public function user()
+    {
+            return $this->belongsTo('App\User', 'user_id');
+    }	
+
     public function appointment() {
         return $this->hasOne('App\Appointment', 'patient_id');
     }
@@ -55,7 +55,12 @@ class Patient extends Model {
     public function patientStateName() {
         return $this->belongsTo('App\State', 'state');
     }
-       public function patientLocationName() {
+    
+    public function patientLocationName() {
         return $this->belongsTo('App\Locations', 'location_id');
+    }
+    
+    public function category() {
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

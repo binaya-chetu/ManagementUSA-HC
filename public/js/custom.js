@@ -38,7 +38,7 @@ var initCalendarDragNDrop = function() {
     });
 };
 var initCalendar = function(events, start = "00:00:00", end = "24:00:00", defaultApptTime = "00:30:00", gapBetweenAppt = "00:00:00",calender_id, inputDate = null, defaultView = "month") {
-    
+ 
     var $calendar = $('#'+calender_id);
     var date = (inputDate == null) ? new Date() : new Date(inputDate);
     var d = date.getDate();
@@ -1416,17 +1416,53 @@ $(document).on("click", ".patientShowStatus", function() {
     });
     
     
- /* --------------------------START: Adding therapies dropdown for Appointment Calender --------------  */  
+ /* --------------------------START: getting therapies appointment for Appointment Calender --------------  */  
 
-   $("#trimix").click(function(){
-      var cat_id = $("#trimix_id").val();
-    
-      $.ajax({
-                url: ajax_url + "/home/index/",
-                data: {"id": cat_id },
+    $("#trimix").click(function(){
+       var id = $(this).attr('rel');
+       $.ajax({
+                url: ajax_url + "/home/therapyCalendar/" + id,
                 success: function(response) {
-                var combine = JSON.parse(response);
+                  console.log("response");
+               //var combine = JSON.parse(response);
+            ///therapyCalendar(response,"trimix") ;
+                }
+         });
+    });
+    
+    $("#siblingual").click(function(){
+         var id = $(this).attr('rel');
+         $.ajax({
+                url: ajax_url + "/home/therapyCalendar/" + id,
+                success: function(response) {
+                    console.log("response");
+         //         therapyCalendar(response) ;
                 }
         });
    });
+    $("#default-calendar").click(function(){
+          location.reload(); 
+    });
     
+///function for calling the calender for therepy
+// 
+//function therapyCalendar(var calendarData){
+//     var cdata = calendarData;
+//     console.log(cdata);
+//     (function($) {
+//		var clinicOpenTime = "{{ @config('constants.CLINIC_OPEN_TIME') }}";
+//		var clinicCloseTime = "{{ @config('constants.CLINIC_CLOSE_TIME') }}";
+//		var defaultApptTime = "{{ @config('constants.DEFAULT_APPOINTMENT_TIME_SPAN') }}";
+//		var gapBetweenAppt = "{{ @config('constants.GAP_BETWEEN_APPOINTMENTS') }}";
+//                
+//        'use strict';
+//
+//        $(function() {
+//            initCalendar(calendarData, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt,  "calendar");
+////            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "trimix-calender");
+////            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "siblingual-calender");
+//            //initCalendarDragNDrop();
+//        });
+//
+//    }).apply(this, [jQuery]);
+// }

@@ -34,17 +34,17 @@ class Appointment extends Model {
         return $this->belongsTo('App\User', 'patient_id');
     }	
 
-	public function appointmentRequest(){
-		return $this->belongsTo('App\AppointmentRequest', 'request_id');
-	}
+    public function appointmentRequest(){
+            return $this->belongsTo('App\AppointmentRequest', 'request_id');
+    }
 
-	public function followup(){
-		return $this->hasOne('App\FollowUp', 'appt_id');
-	}
-	
-	public function labReports(){
-		return $this->hasMany('App\LabReports', 'appointments_id');
-	}
+    public function followup(){
+            return $this->hasOne('App\FollowUp', 'appt_id');
+    }
+
+    public function labReports(){
+            return $this->hasMany('App\LabReports', 'appointments_id');
+    }
     /**
      * Get the user that set the appointment.
      */
@@ -63,16 +63,19 @@ class Appointment extends Model {
         return $this->belongsTo('App\User', 'doctor_id');
     }
 
-	public function sale() {
-		return $this->hasMany('App\Sale', 'appt');
-	}
+    public function sale() {
+            return $this->hasMany('App\Sale', 'appt');
+    }
 	
-	protected static function boot() {
-		parent::boot();
-		static::deleting(function($appointment) {		
-			$appointment->followup()->delete();
-			$appointment->labReports()->delete();
-			$appointment->sale()->delete();
-		});
-	}	
+    protected static function boot() {
+            parent::boot();
+            static::deleting(function($appointment) {		
+                    $appointment->followup()->delete();
+                    $appointment->labReports()->delete();
+                    $appointment->sale()->delete();
+            });
+    } 
+    public function category() {
+        return $this->belongsTo('App\Cart', 'category_id');
+    }	
 }

@@ -12,9 +12,7 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    
-    Route::auth();
-    
+    Route::auth();   
     // Route for HomeController
     Route::get('/home', [
         'uses' => 'HomeController@index',
@@ -886,7 +884,6 @@ Route::group(['middleware' => 'web'], function () {
     
     // You can use "get" or "post" method below for payment..
     Route::get('payment', 'PaymentController@postPayment');
-    // This must be get method.
     Route::get('payment/status', 'PaymentController@getPaymentStatus');
     Route::post('payment/debit', 'PaymentController@debit');
     Route::get('payment/test', 'PaymentController@test');
@@ -898,14 +895,14 @@ Route::group(['middleware' => 'web'], function () {
        'uses' => 'SaleController@generateInvoice',
         'as' => 'sales.generateInvoice',
     ]);
+    
     /*
-     * To Show the profile details of User
+     * To return the selected therapy callander details of User
      */
-    Route::get('/home/index/{id}', [
-       'uses' => 'HomeController@index',
-        'as' => 'homes.viewappoinment',
+    
+    Route::get('/home/therapyCalendar/{id}', [
+       'uses' => 'HomeController@therapyCalendar',
+        'as' => 'appointment.viewappointment',
         //'middleware' => ['acl.doseManagement_read']
     ]);
-   
-    
 });
