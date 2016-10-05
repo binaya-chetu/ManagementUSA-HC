@@ -229,11 +229,16 @@ class SaleController extends Controller
     */
     public function generateInvoice($id){
         $orderId = base64_decode($id);
-     
+        $allOrders = [];
         if(isset($orderId)){
-            $record = Order::getAllOrders($orderId);
-            echo '<pre>'; print_r($record->toArray());die;
+            $allOrders = Order::getAllOrders($orderId);
+            if(empty($allOrders['orderHistory'])){
+                \Session::flash('flash_message', "Your orders didn't find in the application .");
+                $url = 'sale/paymentDocuments/' . $id;
+                return redirect()->to($url);
+            }
         }
-         return view('sale.generate_invoice');
+        //echo '<pre>';print_r($allOrders);die;
+         return view('sale.generate_invoice', ['orders' => $allOrders]);
     }
 }
