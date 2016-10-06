@@ -36,6 +36,7 @@ class Patient extends Model {
         'payment_bill',
         'never_treat_status',
         'form_status',
+        'location_id',
         'hash'
     ];
 
