@@ -11,6 +11,8 @@ use App\FollowupStatus;
 use Auth;
 use App\State;
 use App\UserDetail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 /**
  * This class is used to handle home page related action
@@ -42,11 +44,23 @@ class HomeController extends Controller {
      */
     public function index() {
         // get all appointments which status is active
-        $appointments = Appointment::with(
-            'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'
-        )
-        ->whereIn('status', [1, 4])
-        ->get();
+        
+        $location_id = Session::get('location_id');
+        if (isset($location_id) && $location_id > 0) {
+            $location = DB::table('appointments')
+                    ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                    ->where('location_id', '=', Session::get('location_id'))
+                    ->select('appointments.id')
+                    ->get();
+            $appt_id = array();
+            foreach ($location as $loc) {
+                $appt_id[] = $loc->id;
+            }
+            $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
+
+        } else {
+           $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+        } 
 
         $collevent = [];
         $i = 0;
