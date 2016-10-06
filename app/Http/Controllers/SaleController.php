@@ -188,7 +188,7 @@ class SaleController extends Controller
             if (Cart::where('patient_id', $formData['patient_id'])->delete()) {
                 //Session::set('checkout_payment', '');
                 \Session::flash('flash_message', 'Your order placed successfully, Please print the listed forms.');
-                $url = 'sale/paymentDocuments/' . base64_encode($order_unique_id);
+                $url = 'sale/generateInvoice/' . base64_encode($order_unique_id);
                 return redirect()->to($url);
             }
           

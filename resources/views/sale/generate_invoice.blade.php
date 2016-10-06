@@ -19,6 +19,18 @@
                 <div class="col-sm-12"><div class="alert alert-danger"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><em> {!! session('error_message') !!}</em></div></div>
                 @endif
             </div>
+            @if(Request::segment(2) == "generateInvoice")
+            <div class="tabs tabs-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#followupTab" data-toggle="tab"><i class="fa fa-star"></i> Payment Invoice</a>
+                    </li>
+                    <li>
+                        <a href="" >PDF Forms</a>
+                    </li>
+                </ul>
+            </div>
+            @endif
             <div class="invoice">
                 <header class="clearfix">
                     <div class="row">
