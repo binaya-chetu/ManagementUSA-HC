@@ -15,6 +15,7 @@ trait CommonTrait {
         foreach($cart['category_list'] as $key => $category){
             $order = new Order;
             $order->payment_id = $payment_id;
+            $order->category_id = $category['category_id'];
             $order->order_unique_id = $order_unique_id;
             $order->category = $category['category'];
             $order->package_type = $category['category_type'];

@@ -1413,3 +1413,19 @@ $(document).on("click", ".patientShowStatus", function() {
             //   alert("you have cancelled");
         }
     });
+    
+    //email inovice to patient email
+    $(document).on("click", "#email_invoice", function(ev) {
+      if(this.checked){
+          var order_id = $(this).val();
+            $.ajax({
+                url: ajax_url + "/sale/emailInvoice/" + order_id,
+                success: function(response) {              
+                    if(response == '1'){
+                        alert('Invoice sent to the patient email id successfully');
+                    }
+                }
+            });
+            $(this).attr('disabled', 'true');
+      }  
+    });
