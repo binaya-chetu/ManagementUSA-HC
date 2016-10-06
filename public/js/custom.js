@@ -1415,7 +1415,7 @@ $(document).on("click", ".patientShowStatus", function() {
             //   alert("you have cancelled");
         }
     });
-
+   
     //email inovice to patient email
     $(document).on("click", "#email_invoice", function(ev) {
       if(this.checked){
@@ -1430,7 +1430,7 @@ $(document).on("click", ".patientShowStatus", function() {
             });
             $(this).attr('disabled', 'true');
       }  
-
+  });
  /* --------------------------START: Adding Location Search for Appointments --------------  */  
  
     $(document).on("change", "#search_location", function(ev) {
