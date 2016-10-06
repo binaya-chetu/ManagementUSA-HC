@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Traits\CommonTrait;
 
 use Illuminate\Http\Request;
 use App\Patient;
@@ -25,7 +26,7 @@ use Auth;
 
 
 class AppointmentController extends Controller {
-
+    use CommonTrait;
     protected $patient_role = 6;
     protected $doctor_role = 5;
     public $success = true;
@@ -185,16 +186,20 @@ class AppointmentController extends Controller {
             $location_id = Session::get('location_id');
             if(isset($location_id) && $location_id > 0){
                
-//                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
-//                    $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
-//                    $query->where('reason_id', '>', 8);
-//                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
-//                echo "<pre>";print_r($appointments->toArray());die;
-                    $appointments = DB::table('appointments')
-                    ->join('users', 'appointments.patient_id', '=', 'users.id')
-                    ->join('appointment_requests')
-                    ->get();
-                    echo "<pre>";print_r($appointments);die;
+                $appointments = Appointment::with(['patient','appointmentRequest', 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                    $query->where('reason_id', '>', 8);
+                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+                  
+                    $location_appointments = DB::table('appointments')
+                                       
+                                        ->leftjoin('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                                        ->leftjoin('locations', 'locations.id', '=', 'appointment_requests.location_id')                   
+                                        ->select('appointments.id', 'appointments.request_id', 'appointments.apptTime', 'appointment_requests.location_id', 'locations.name')                                                                  
+                                        ->where([['appointment_requests.location_id', '=', Session::get('location_id') ], ['appointments.deleted_at', '=', NULL  ]])
+                                        ->orderBy('id', 'desc')
+                                        ->get();
+                    
+                //$appointments = $this->searchByLocation($appointments);
            }
             else{
                    $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
