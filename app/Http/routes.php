@@ -922,4 +922,18 @@ Route::group(['middleware' => 'web'], function () {
     ]);
 
     
+     /*
+     * To find the set the location value 
+     */
+    Route::match(['get', 'post'],'/appointment/setSession', [
+        'uses' => 'AppointmentController@setSession',
+       // 'middleware' => ['acl:appointment_write']
+    ]);
+    /*
+     * To reset the location value 
+     */
+    Route::match(['get', 'post'],'/appointment/resetSession', [
+        'uses' => 'AppointmentController@resetSession',
+       // 'middleware' => ['acl:appointment_write']
+    ]);
 });

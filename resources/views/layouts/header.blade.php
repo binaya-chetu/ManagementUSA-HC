@@ -8,16 +8,22 @@
         </div>
     </div>
 	<!-- start: search & user box -->
-    <div class="header-right">
-
-        <form action="#" class="search nav-form">
-            <div class="input-group input-search">
-                <input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-                <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                </span>
+        <div class="header-right">
+            <div class="search nav-form">
+                <div class="input-group input-search">
+                    <select  class="form-control" name="search_location" id="search_location">
+                     <?php   $locations = getLocations(); ?>
+                        <option value = "">All Locations</option>
+                         @foreach ($locations as $location)
+                            <?php if(Session::get('location_id') == $location->id){?>
+                            <option selected ='{{ $location->id }}">{{ $location->name }}' value="{{ $location->id }}">{{ $location->name }}</option>
+                            <?php }else{ ?>
+                             <option value="{{ $location->id }}">{{ $location->name }}</option>
+                            <?php }?>
+                         @endforeach
+                    </select>
+                </div>
             </div>
-        </form>
 
         <span class="separator"></span>
 
