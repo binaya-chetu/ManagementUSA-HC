@@ -261,7 +261,7 @@ class ApptSettingController extends Controller {
         $this->user = $user;
         $url = 'appointment/patientMedical/' . base64_encode($user->id) . '/hash/' . $user->hash;
         $url = App::make('url')->to($url);
-        \Mail::send('emails.pateintprofileaccess', ['url' => $url], function($message) {
+        \Mail::send('emails.patientInvoice', ['url' => $url], function($message) {
             $message->to($this->user->email, 'Azmens Clinic')->subject('Welcome!');
         });
         return ['response' => true, 'msg' => $url];
