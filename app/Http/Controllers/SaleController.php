@@ -229,6 +229,8 @@ class SaleController extends Controller
     */
     public function generateInvoice($id){
         $orderId = base64_decode($id);
+        $loginUser = User::with('userDetail', 'userDetail.userStateName')->find(Auth::user()->id);
+
         $allOrders = [];
         if(isset($orderId)){
             $allOrders = Order::getAllOrders($orderId);
@@ -239,6 +241,46 @@ class SaleController extends Controller
             }
         }
         //echo '<pre>';print_r($allOrders);die;
-         return view('sale.generate_invoice', ['orders' => $allOrders]);
+         return view('sale.generate_invoice', ['orders' => $allOrders, 'order_id' => $orderId, 'loginUser' => $loginUser]);
+    }
+    
+    /**
+    * Function: Email the invoice after checkout
+    * returns generate invoice page
+    */
+    public function emailInvoice($id){
+        if(isset($id)){
+            $user = Payment::with('user')->where(['order_unique_id' => $id])->get()->first();
+            $this->user = $user->user;
+            $url = 'sale/sendInvoice/' . base64_encode($id);
+            $url = App::make('url')->to($url);
+            \Mail::send('emails.patientInvoice', ['url' => $url, 'patient' => $this->user->first_name], function($message) {
+                $message->to($this->user->email, 'Azmens Clinic')->subject('Welcome!');
+            });
+            echo $this->success; die;
+        }  else{
+            echo $this->error; die;
+        }      
+    }
+    
+    /**
+    * Function: Email the invoice after checkout
+    * returns generate invoice page
+    */
+    public function sendInvoice($id){
+        if(isset($id)){
+            $loginUser = User::with('userDetail', 'userDetail.userStateName')->find(Auth::user()->id);
+            $orderId = base64_decode($id);
+            $allOrders = [];
+            if(isset($orderId)){
+                $allOrders = Order::getAllOrders($orderId);
+                if(empty($allOrders['orderHistory'])){
+                    App::abort(404, 'The url seeme to be expired or invalid.');
+                }
+            }
+             return view('sale.generate_invoice', ['orders' => $allOrders, 'order_id' => $orderId, 'loginUser' => $loginUser]);
+        }else{
+            App::abort(404, 'The url seeme to be expired or invalid.');
+        }        
     }
 }

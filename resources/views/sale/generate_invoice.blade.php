@@ -1,12 +1,13 @@
-@extends('layouts.common')
+@extends( (Request::segment(2) == "sendInvoice") ? 'layouts.medical' : 'layouts.common')
 
 @section('content')
 
+@if(Request::segment(2) == "generateInvoice")
 <section role="main" class="content-body" id = "printable">
     <header class="page-header">
         <h2>Invoice</h2>
     </header>
-
+@endif
     <!-- start: page -->
     <section class="panel">
         <div class="panel-body">
@@ -27,12 +28,12 @@
                             </div>
                         </div>
                         <div class="col-sm-6 text-right mt-md mb-md">
-                            <address class="ib mr-xlg">
-                                4415 S. Harvard Ave. Suite 201                              
+                            <address class="ib mr-xlg">                      
+                                {{ $loginUser->userDetail->address1.' '.$loginUser->userDetail->address2 }}                              
                                 <br/>
-                                Tulsa, OK  74135
+                                {{ $loginUser->userDetail->city }} {{ $loginUser->userDetail->userStateName->name }}
                                 <br/>
-                                PH: 918.895.8900
+                                PH: {{ $loginUser->userDetail->phone }}
                             </address>
                             <div class="ib">
                                 <img src="{{ URL::asset('images/invoice logo.png')}}"  height="35" alt="Porto Admin" />
@@ -157,25 +158,27 @@
                     </div>
                 </div>
             </div>
-            {{ Form::open(array('url' => '#', 'method' => "post", 'class'=>'form-horizontal', 'id' => 'callStatus')) }}
+            @if(Request::segment(2) == "generateInvoice")
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-6" id="email_invoice_container">
-                        {{ Form::checkbox('email_envoice',null, false, ['class' => 'email_invoice','id' =>'email_invoice','value' => 'sureshc@chetu.com' ]) }}
-                        {{ Form::label('email_envoice', 'Email envoice', array('class' => 'col-sm-4')) }}
-                        {{ Form::hidden('invoice_id' , null ,['id' => 'invoice_id']) }}
+                        {{ Form::checkbox('email_invoice', $order_id, false, ['class' => 'email_invoice','id' =>'email_invoice','value' => 'sureshc@chetu.com' ]) }}
+                        {{ Form::label('email_invoice', 'Email Invoice', array('class' => 'col-sm-4')) }}
+<!--                        {{ Form::hidden('invoice_id' , null ,['id' => 'invoice_id']) }} -->
                         
                     </div>
                 </div>
             </div>
-            {{ Form::close() }}
+            @endif
             <div class="text-right mr-lg" id = "print-button">
                 <a href="#" id ="print_invoice" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
             </div>
         </div>
     </section>
+   
+@if(Request::segment(2) == "generateInvoice")
 </section>
-
+@endif
 
 @endsection
 

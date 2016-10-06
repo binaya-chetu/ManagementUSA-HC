@@ -657,9 +657,9 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * for sending email with invoice
      */ 
-    Route::get('/products/emailInvoice/{invoice_id}', [
-        'uses' => 'ProductsController@emailInvoice',
-        'as' => 'products.emailInvoice',
+    Route::get('/sale/emailInvoice/{invoice_id}', [
+        'uses' => 'SaleController@emailInvoice',
+        'as' => 'sale.emailInvoice',
         //'middleware' => ['acl:save_categories']	
     ]);
     
@@ -905,6 +905,15 @@ Route::get('payment/test', 'PaymentController@test');
     Route::get('/sale/paymentDocuments/{orderid}', [
       'uses' => 'SaleController@paymentDocuments',
        'as' => 'sales.paymentDocuments',
+    ]);
+    
+    /*
+     * for sending email with invoice
+     */ 
+    Route::get('/sale/sendInvoice/{invoice_id}', [
+        'uses' => 'SaleController@sendInvoice',
+        'as' => 'sale.sendInvoice',
+        //'middleware' => ['acl:save_categories']	
     ]);
 
     
