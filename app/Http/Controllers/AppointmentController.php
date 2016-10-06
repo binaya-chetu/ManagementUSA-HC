@@ -183,26 +183,28 @@ class AppointmentController extends Controller {
         public function listappointment(Request $request) {
             
             $location_id = Session::get('location_id');
-            if(isset($location_id) && $location_id > 0){
-               
-//                $appointments = Appointment::with(['patient','appointmentRequest' => function($query1) {
-//                    $query1->where('location_id', '=', Session::get('location_id'));}, 'appointmentRequest.locations', 'patient.reason' => function($query) {
-//                    $query->where('reason_id', '>', 8);
-//                  }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
-//                echo "<pre>";print_r($appointments->toArray());die;
-                    $appointments = DB::table('appointments')
-                    ->join('users', 'appointments.patient_id', '=', 'users.id')
-                    ->join('appointment_requests')
-                    ->get();
-                    echo "<pre>";print_r($appointments);die;
-           }
-            else{
-                   $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
-                    $query->where('reason_id', '>', 8);
-                }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
-         
-           }
-            $patients = User::where('role', $this->patient_role)->get();
+            if (isset($location_id) && $location_id > 0) {
+
+                $location = DB::table('appointments')
+                        ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                        ->where('location_id', '=', Session::get('location_id'))
+                        ->select('appointments.id')
+                        ->get();
+                $appt_id = array();
+                foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+                $appointments = Appointment::with(['patient', 'appointmentRequest', 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                            $query->where('reason_id', '>', 8);
+                        }, 'patient.reason.reasonCode'])
+                            ->orderBy('id', 'desc')
+                            ->whereIn('id', $appt_id)->get();
+            } else {
+                $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                        $query->where('reason_id', '>', 8);
+                    }, 'patient.reason.reasonCode'])->orderBy('id', 'desc')->get();
+            }
+        $patients = User::where('role', $this->patient_role)->get();
             $doctors = User::where('role', $this->doctor_role)->get();
             $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
             return view('appointment.listappointment', [
@@ -217,15 +219,32 @@ class AppointmentController extends Controller {
      */
 
     public function viewappointment() {
+        
+          $location_id = Session::get('location_id');
+            if (isset($location_id) && $location_id > 0) {
+                $location = DB::table('appointments')
+                        ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                        ->where('location_id', '=', Session::get('location_id'))
+                        ->select('appointments.id')
+                        ->get();
+                $appt_id = array();
+                foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+                $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
+                         
+            } else {
+               $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+            }       
             
-            $location_id = Session::get('location_id');
-            if(isset($location_id) && $location_id > 0){ 
-             $appointments = Appointment::with(['patient.patientDetail','appointmentRequest' => function($query1) {
-                        $query1->where('location_id', '=', Session::get('location_id'));},'appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
-            }
-            else{
-                 $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
-            }
+//            $location_id = Session::get('location_id');
+//            if(isset($location_id) && $location_id > 0){ 
+//             $appointments = Appointment::with(['patient.patientDetail','appointmentRequest' => function($query1) {
+//                        $query1->where('location_id', '=', Session::get('location_id'));},'appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+//            }
+//            else{
+//                 $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+//            }
 
         $collevent = array();
         $i = 0;
@@ -589,11 +608,9 @@ class AppointmentController extends Controller {
 
     public function followup() {
         $appointments = Appointment::with('patient', 'appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode')->whereDate('apptTime', '<=', date('Y-m-d', strtotime("+3 day")))->whereNotIn('status', [ 2, 6])->orderBy('id', 'DESC')->get();
-        //echo '<pre>'; print_r($appointments->toArray());die;
         $patients = User::where('role', $this->patient_role)->get();
         $doctors = User::where('role', $this->doctor_role)->get();
         $followupStatus = FollowupStatus::select('id', 'title')->where('status', 1)->get();
-        //echo "<pre>";print_r($appointments->toArray());die;
         return view('appointment.listappointment', [
             'appointments' => $appointments, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus, 'type' => 'followup'
         ]);
@@ -954,26 +971,35 @@ class AppointmentController extends Controller {
      */
 
     public function todayVisits() {
-        $location_id = Session::get('location_id');
         
-            if(isset($location_id)){
-              $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
+         $location_id = Session::get('location_id');
+            if (isset($location_id) && $location_id > 0) {
+                $location = DB::table('appointments')
+                        ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                        ->where('location_id', '=', Session::get('location_id'))
+                        ->select('appointments.id')
+                        ->get();
+                $appt_id = array();
+                foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+                $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
                         $query->where('reason_id', '>', 8);
-                    },'appointmentRequest' => function($query1) {
-                        $query1->where('location_id', '=', Session::get('location_id'));},
-                         'patient.reason.reasonCode'])
+                    }, 'patient.reason.reasonCode'])
+                        ->whereIn('id', $appt_id)
                         ->whereIn('status', [4, 5])
                         ->whereDate('apptTime', '=', date('Y-m-d'))
-                        ->orderBy('id', 'DESC')->get();  
-            }
-            else{
-                $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
+                        ->orderBy('id', 'DESC')->get();                
+                         
+            } else {
+               $appointments = Appointment::with(['patient', 'patient.reason' => function($query) {
                         $query->where('reason_id', '>', 8);
                     }, 'patient.reason.reasonCode'])
                         ->whereIn('status', [4, 5])
                         ->whereDate('apptTime', '=', date('Y-m-d'))
                         ->orderBy('id', 'DESC')->get();
-            }
+            }  
+        
         
         $patients = User::where('role', $this->patient_role)->get();
         return view('appointment.today_visits', [
@@ -1052,10 +1078,47 @@ class AppointmentController extends Controller {
                 return redirect('/home');
         }
         $appointment = array();
-        $appointments = Appointment::count();
+        
+         $location_id = Session::get('location_id');
+            if (isset($location_id) && $location_id > 0) {
+
+                $location = DB::table('appointments')
+                        ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                        ->where('location_id', '=', Session::get('location_id'))
+                        ->select('appointments.id')
+                        ->get();
+                $appt_id = array();
+                foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+                $appointments = Appointment::with(['patient', 'appointmentRequest', 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                            $query->where('reason_id', '>', 8);
+                        }, 'patient.reason.reasonCode'])
+                            ->orderBy('id', 'desc')
+                            ->whereIn('id', $appt_id)->count();
+                $visitAppointment = Appointment::with(['patient', 'patient.reason' => function($query) {
+                        $query->where('reason_id', '>', 8);
+                    }, 'patient.reason.reasonCode'])
+                        ->whereIn('id', $appt_id)
+                        ->whereIn('status', [4, 5])
+                        ->whereDate('apptTime', '=', date('Y-m-d'))
+                        ->count(); 
+            } else {
+                $appointments = Appointment::with(['patient', 'appointmentRequest.locations', 'patient.reason' => function($query) {
+                        $query->where('reason_id', '>', 8);
+                    }, 'patient.reason.reasonCode'])->count();
+                    
+                $visitAppointment = Appointment::with(['patient', 'patient.reason' => function($query) {
+                        $query->where('reason_id', '>', 8);}, 'patient.reason.reasonCode'])
+                        ->whereIn('status', [4, 5])
+                        ->whereDate('apptTime', '=', date('Y-m-d'))
+                        ->count();       
+            }
+        
+       
         $labAppointment = Appointment::whereIn('progress_status', [1, 2])->count();      
         $upcomingAppointment = Appointment::whereDate('apptTime', '<=', date('Y-m-d', strtotime("+3 day")))->whereNotIn('status', [ 2, 6])->count();
-        $visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
+        //$visitAppointment = Appointment::where('status', '4')->whereDate('apptTime', '=', date('Y-m-d'))->count();
         $readyappointments = Appointment::where('progress_status', '3')->count();
         $anotherAppointments = Appointment::where('relative_id', '!=', '0')->count();
         $followup = FollowUp::count();
