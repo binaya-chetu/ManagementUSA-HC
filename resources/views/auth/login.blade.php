@@ -7,7 +7,6 @@
         <a href="/" class="logo pull-left">
             <img src="{{ URL::asset('images/logo.jpg')}}" height="54" alt="Porto Admin" />
         </a>
-
         <div class="panel panel-sign">
             <div class="panel-title-sign mt-xl text-right">
                 <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>

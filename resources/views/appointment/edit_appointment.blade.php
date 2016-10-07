@@ -25,8 +25,23 @@
             </div>
             {{ Form::hidden('appointment_id', 1,['id' => 'appointment_id']) }}   
             {{ Form::hidden('lastUpdatedBy', Auth::user()->id) }}
-        </div>   
-        <!-- Patient Edited Details -->
+        </div>  
+         <div class="form-group"> 
+          {{ Form::label('location', 'Location', array('class' => 'col-sm-4 control-label')) }}
+             <div class="col-sm-6">
+                    <select  class="form-control" name="location" id="location_id">
+                     <?php   $locations = getLocations(); ?>
+                        <option value = "">All Locations</option>
+                         @foreach ($locations as $location)
+                            
+                             <option value="{{ $location->id }}">{{ $location->name }}</option>
+                            
+                         @endforeach
+                    </select>
+                </div>
+            
+         </div>
+          <!-- Patient Edited Details -->
         <div class="form-group"> 
             {{ Form::label('first_name', 'First Name', array('class' => 'col-sm-4 control-label mandatory')) }}
             <div class="col-sm-4"> 
@@ -107,10 +122,12 @@
 <script>
     $(function() {
         $('.confirmation-callback').confirmation({
-            onConfirm: function() {
-                var link = $('.confirmation-callback').data('href');
-                window.location = ajax_url + link;
-            }
+            alert("jdkjfkj");
+//            onConfirm: function() {
+//                var link = $('.confirmation-callback').data('href');
+//                window.location = ajax_url + link;
+//                alert("jdfk"+ajax_url);
+//            }
         });
     });   
 </script>

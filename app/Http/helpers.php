@@ -322,6 +322,7 @@ function dropDown16()
 }
 
 /**
+<<<<<<< HEAD
  * Function for card expiration
  *
  * @return array()
@@ -348,3 +349,16 @@ function setReason()
     
         return $setReasonCode;
 }
+
+ /* Function to find the location data
+ *
+ * @return array()
+ */           
+function getLocations()
+{
+     session(['key' => 'value']);
+     $locations = App\Locations::get();
+     return $locations;
+}
+
+

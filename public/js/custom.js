@@ -328,6 +328,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#search_location").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -406,6 +407,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#location_id").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -1415,6 +1417,7 @@ $(document).on("click", ".patientShowStatus", function() {
         }
     });
     
+<<<<<<< HEAD
     
  /* --------------------------START: getting therapies appointment for Appointment Calender --------------  */  
 
@@ -1492,4 +1495,28 @@ $(document).on("click", ".patientShowStatus", function() {
          }); 
        }
      
+
+ /* --------------------------START: Adding Location Search for Appointments --------------  */  
+ 
+    $(document).on("change", "#search_location", function(ev) {
+            var location_id = $(this).val(); 
+            if(location_id == ''){
+                    $.ajax({
+                type: "POST",
+                url: ajax_url + "/appointment/resetSession",         
+                success: function() {
+                    location.reload();
+                }
+                });
+            }
+            $.ajax({
+            type: "POST",
+            url: ajax_url + "/appointment/setSession",
+            data: {
+                "location_id": location_id
+            },         
+            success: function(data) {
+                location.reload();
+            }
+        });
     });
