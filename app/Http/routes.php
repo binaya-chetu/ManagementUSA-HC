@@ -912,14 +912,4 @@ Route::group(['middleware' => 'web'], function () {
       'uses' => 'SaleController@paymentDocuments',
        'as' => 'sales.paymentDocuments',
     ]);
-
-    
-     /*
-    * Show the invoice after make payment
-    */
-    Route::get('/sale/printForm/{patient_id}/{category_id}', [
-      'uses' => 'SaleController@printForm',
-       'as' => 'sales.printForm',
-    ]);
-    
 });

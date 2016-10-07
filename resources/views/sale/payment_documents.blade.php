@@ -29,9 +29,7 @@
                 @endif
                     <div class="col-md-12">
                         <li><a target="_blank" href="/sale/generateInvoice/{{ base64_encode($order_id) }}">Generate Invoice</a></li>
-                        @foreach($packages as $package)
-                        <li><a target="_blank" href="/sale/printForm/{{ base64_encode($package->payment->patient_id) }}/{{base64_encode($package->category_id)}}">HGH Consent Tulsa</a></li>                                               
-                        @endforeach
+                        
                     </div>
                 </div>
             </section>
