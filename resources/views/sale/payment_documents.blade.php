@@ -29,7 +29,7 @@
                 @endif
                     <div class="col-md-12">
                         <li><a target="_blank" href="/sale/generateInvoice/{{ base64_encode($order_id) }}">Generate Invoice</a></li>
-                        <li><a target="_blank" href="/sale/viewForm/{{ base64_encode($order_id) }}">HGH Consent Tulsa</a></li>                                               
+                        
                     </div>
                 </div>
             </section>
