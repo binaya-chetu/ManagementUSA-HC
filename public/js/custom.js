@@ -1396,6 +1396,7 @@ $(document).on("click", ".patientShowStatus", function() {
 
 
 /* --------------------------END: Functions for the Checkout page pop-up --------------  */
+
  /* --------------------------START: Adding popup for patient feedback in trimix doses --------------  */  
   
         $(document).on("click", ".add_feedback", function(ev) {
@@ -1416,6 +1417,7 @@ $(document).on("click", ".patientShowStatus", function() {
             //   alert("you have cancelled");
         }
     });
+
     
     
  /* --------------------------START: getting therapies appointment for Appointment Calender --------------  */  
@@ -1446,29 +1448,6 @@ $(document).on("click", ".patientShowStatus", function() {
           location.reload(); 
     });
     
-///function for calling the calender for therepy
-// 
-//function therapyCalendar(var calendarData){
-//     var cdata = calendarData;
-//     console.log(cdata);
-//     (function($) {
-//		var clinicOpenTime = "{{ @config('constants.CLINIC_OPEN_TIME') }}";
-//		var clinicCloseTime = "{{ @config('constants.CLINIC_CLOSE_TIME') }}";
-//		var defaultApptTime = "{{ @config('constants.DEFAULT_APPOINTMENT_TIME_SPAN') }}";
-//		var gapBetweenAppt = "{{ @config('constants.GAP_BETWEEN_APPOINTMENTS') }}";
-//                
-//        'use strict';
-//
-//        $(function() {
-//            initCalendar(calendarData, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt,  "calendar");
-////            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "trimix-calender");
-////            initCalendar(<?php echo json_encode($appointments, true); ?>, clinicOpenTime, clinicCloseTime, defaultApptTime, gapBetweenAppt, "siblingual-calender");
-//            //initCalendarDragNDrop();
-//        });
-//
-//    }).apply(this, [jQuery]);
-// }
-
 
 /************************************Adding function to choose reason into view Appointment************************/
 
@@ -1480,7 +1459,6 @@ $(document).on("click", ".patientShowStatus", function() {
                 url: ajax_url + "/home/setReason/"+id,
                 success: function(data) {
                     location.reload();
-                    //console.log(data);
                 }
          });
        }
@@ -1488,13 +1466,30 @@ $(document).on("click", ".patientShowStatus", function() {
               $.ajax({
                 url: ajax_url + "/home/resetReason/",
                 success: function(data) {
-                    console.log(data);
-            
+                   location.reload();
                 }
          }); 
        }
    });
      
+
+
+   
+    //email inovice to patient email
+    $(document).on("click", "#email_invoice", function(ev) {
+      if(this.checked){
+          var order_id = $(this).val();
+            $.ajax({
+                url: ajax_url + "/sale/emailInvoice/" + order_id,
+                success: function(response) {              
+                    if(response == '1'){
+                        alert('Invoice sent to the patient email id successfully');
+                    }
+                }
+            });
+            $(this).attr('disabled', 'true');
+      }  
+  });
 
  /* --------------------------START: Adding Location Search for Appointments --------------  */  
  

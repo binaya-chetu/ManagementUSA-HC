@@ -322,7 +322,6 @@ function dropDown16()
 }
 
 /**
-<<<<<<< HEAD
  * Function for card expiration
  *
  * @return array()
@@ -338,6 +337,7 @@ function cardYear()
     return $expYear;
 }
 
+
 /**
  * Function for appointment  set reason list
  *
@@ -349,6 +349,7 @@ function setReason()
     
         return $setReasonCode;
 }
+
 
  /* Function to find the location data
  *

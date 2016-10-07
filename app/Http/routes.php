@@ -655,9 +655,9 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * for sending email with invoice
      */ 
-    Route::get('/products/emailInvoice/{invoice_id}', [
-        'uses' => 'ProductsController@emailInvoice',
-        'as' => 'products.emailInvoice',
+    Route::get('/sale/emailInvoice/{invoice_id}', [
+        'uses' => 'SaleController@emailInvoice',
+        'as' => 'sale.emailInvoice',
         //'middleware' => ['acl:save_categories']	
     ]);
     
@@ -883,8 +883,16 @@ Route::group(['middleware' => 'web'], function () {
     ]);
     
 
+
+    Route::get('/api/store',[
+        'uses' => 'clientapiController@store',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+
+   
     // You can use "get" or "post" method below for payment..
     Route::get('payment', 'PaymentController@postPayment');
+    // This must be get method.
     Route::get('payment/status', 'PaymentController@getPaymentStatus');
     Route::post('payment/debit', 'PaymentController@debit');
     Route::get('payment/test', 'PaymentController@test');
@@ -892,10 +900,11 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * Show the invoice after make payment
      */
-    Route::get('/sale/generateInvoice/{id}', [
+    Route::get('/sale/generateInvoice/{orderid}', [
        'uses' => 'SaleController@generateInvoice',
         'as' => 'sales.generateInvoice',
     ]);
+
     
     /*
      * To return the selected therapy callander details of User
@@ -926,6 +935,25 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'appointment.viewappointment',
         //'middleware' => ['acl.doseManagement_read']
     ]);
+    
+
+ /*
+    * Show the invoice after make payment
+    */
+    Route::get('/sale/paymentDocuments/{orderid}', [
+      'uses' => 'SaleController@paymentDocuments',
+       'as' => 'sales.paymentDocuments',
+    ]);
+    
+    /*
+     * for sending email with invoice
+     */ 
+    Route::get('/sale/sendInvoice/{invoice_id}', [
+        'uses' => 'SaleController@sendInvoice',
+        'as' => 'sale.sendInvoice',
+        //'middleware' => ['acl:save_categories']	
+    ]);
+
     
 
      /*

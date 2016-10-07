@@ -79,9 +79,9 @@ class Payment extends Model
     /*
      * Function for changing the payment Status
      */
-    public static function changePaymentStatus($patientId){
-        Payment::where(['patient_id' => $patientId, 'payment_status' => 0])
-            ->update(['payment_status' => 1]);
+    public static function changePaymentStatus($patientId, $uniqueId){
+        Payment::where([['patient_id', '=',  $patientId], ['payment_status', '=', 0], ['order_unique_id', '=', '']])
+            ->update(['payment_status' => 1, 'order_unique_id' => $uniqueId]);
         return true;
     }
     

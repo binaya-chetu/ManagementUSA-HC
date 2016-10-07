@@ -190,7 +190,7 @@ class PaymentController extends Controller {
             $pay = $payment->create($this->_api_context);         
             return ['result' => true];
         } catch (Exception $ex) {
-            //echo '<pre>'; print_r($ex->getData());
+            //echo '<pre>';print_r(json_decode($ex->getData()));
             $data = ['result' => false];
             $data['error_code'] = $ex->getCode();
             $data['error_message'] = $ex->getMessage();  
@@ -200,7 +200,7 @@ class PaymentController extends Controller {
             }else{
                 $data['error_data'] = "* Some network issue generated errors";
             }
-            
+            //echo '<pre>';print_r($data);die;
             return $data;
         }
     }
@@ -208,13 +208,18 @@ class PaymentController extends Controller {
     public function makeError($errorcode){
         $msg = '';
         foreach($errorcode->details as $i => $v){
-                    $f = explode('.', $v->field);
-                    if($f[sizeof($f)-2] == 'credit_card'){
-                        if($f[sizeof($f)-1] == 'number'){
-                            $msg .= 'Payment Error : Invalid credit card number <br>';
+//                    $f = explode('.', $v->field);
+//                    if($f[sizeof($f)-2] == 'credit_card'){
+//                        if($f[sizeof($f)-1] == 'number'){
+//                            $msg .= 'Payment Error : Invalid credit card number <br>';
+//                        }
+//                    }else{
+//                        $msg.='* Error occured in paypal Payment';
+//                    }
+                    if($v->field){
+                        if($v->issue){
+                            $msg.= '* '.$v->issue.'<br/>';
                         }
-                    }else{
-                        $msg.='* Error occured in paypal Payment';
                     }
                 }
         return $msg;

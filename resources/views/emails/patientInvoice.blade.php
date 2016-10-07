@@ -4,11 +4,16 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Hi User...</h2>
-<h3>Here is your Invoice</h3>
+<h2>Hi {{ $patient }}</h2>
+<h3>Arizona Mens Clinic has sent you payment Invoice</h3>
 
     <div>
-        Download it from the attachment.
+       To view the invoice, click on the link <a href="{{ $url }}">Invoice</a>
+    </div></br>
+	<div>
+       Thanks,</br>
+	   Arizona Mens Clinic,</br>
+	   America
     </div>
 
 </body>

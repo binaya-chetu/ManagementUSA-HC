@@ -14,6 +14,7 @@ use DB;
 use Session;
 use App\Cart;
 
+
 /**
  * This class is used to handle home page related action
  *
@@ -42,32 +43,26 @@ class HomeController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
+
     
-    public function index(Request $request) {
+  
              
-        //for location 
+   
+    public function index() {
+        
+        // get all appointments for location
         $location_id = Session::get('location_id');
+        $reason = Session::get('reasonToVisit');  
+        echo $location_id;
+        
         if (isset($location_id) && $location_id > 0) {
-            $location = DB::table('appointments')
+                if (isset($reason) && $reason > 0) {
+                     $location = DB::table('appointments')
                     ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
                     ->where('location_id', '=', Session::get('location_id'))
                     ->select('appointments.id')
                     ->get();
-            $appt_id = array();
-            foreach ($location as $loc) {
-                $appt_id[] = $loc->id;
-            }
-            $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
-
-        } else {
-           $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
-        }
-
-        
-        //for set reason 
-             $reason = Session::get('reasonToVisit');  
-            if (isset($reason) && $reason > 0) {
-                $appointment = DB::table('appointment_reasons')
+                 $appointment = DB::table('appointment_reasons')
                         ->where('reason_id', '=', Session::get('reasonToVisit'))
                         ->where('request_id','!=',0)
                         ->where('deleted_at','=',NULL)
@@ -78,20 +73,51 @@ class HomeController extends Controller {
                 foreach ($appointment as $appt) {
                     $appointment_request[] = $appt->request_id;
                 }
-                //echo "<pre>"; print_r($appointment_request);die; 
-                $appointments = Appointment::with(['patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('request_id', $appointment_request)->get();
-              //  echo "<pre>"; print_r($appointments->toArray());die;          
-             } 
-             else {
-               $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
-            }       
-        
-  
-        // getting all appointments where status is set  into $reason
-       
+                $appt_id = array();
+                foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+            $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->whereIn('request_id', $appointment_request)->get();
+            }
+            else {
+               
+                 $location = DB::table('appointments')
+                    ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                    ->where('location_id', '=', Session::get('location_id'))
+                    ->select('appointments.id')
+                    ->get();
+                  $appt_id = array();
+                    foreach ($location as $loc) {
+                    $appt_id[] = $loc->id;
+                }
+                 $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
+            }
+           
+        }
+        else if(isset($reason) && $reason > 0){
+           
+             $appointment = DB::table('appointment_reasons')
+                        ->where('reason_id', '=', Session::get('reasonToVisit'))
+                        ->where('request_id','!=',0)
+                        ->where('deleted_at','=',NULL)
+                        ->select('request_id')
+                        ->get();
+                  
+                $appointment_request = array();
+                foreach ($appointment as $appt) {
+                    $appointment_request[] = $appt->request_id;
+                }
+             $appointments = Appointment::with(['patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('request_id', $appointment_request)->where('deleted_at', '=', NULL )->get();
+        }
+         else
+         {             
+             $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->where('deleted_at', '=', NULL )->get();
+         }
+         
+         
         $collevent = [];
         $i = 0;
-        foreach ($appointments as $appointment) {
+        foreach ($appointments as $appointment) {            
             $events = [];
             $events ['id'] = $appointment->id;
             $reasonArr = $appointment->patient->reason->toArray();
@@ -136,7 +162,6 @@ class HomeController extends Controller {
             'categories' => $categories      
         ]);
     }
-    
     
    
     /** to show the profile details of user
@@ -316,6 +341,7 @@ class HomeController extends Controller {
          Session::set('reasonToVisit',$request->id); 
          Session::save();
          echo  Session::get('reasonToVisit');
+       
     }
      /**
      * Function to reset the rereason into sesssion 
@@ -324,6 +350,7 @@ class HomeController extends Controller {
      */
     public function resetReason(Request $request) {
          Session::forget('reasonToVisit');
-        echo  Session::get('reasonToVisit');
+          echo  Session::get('reasonToVisit');
+       
     }
 }

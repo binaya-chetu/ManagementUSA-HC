@@ -168,7 +168,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     
     public function reason() 
     {
-        return $this->hasMany('App\AppointmentReasons', 'patient_id');
+        return $this->hasMany('App\AppointmentReasons', 'patient_id')->where('request_id', '>', 0);
     }
     
     public function appointments()
