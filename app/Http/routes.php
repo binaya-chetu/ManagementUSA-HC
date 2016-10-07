@@ -936,4 +936,12 @@ Route::group(['middleware' => 'web'], function () {
         'uses' => 'AppointmentController@resetSession',
        // 'middleware' => ['acl:appointment_write']
     ]);
+    
+    /*
+    * Show the PDF Form after make payment
+    */
+    Route::get('/sale/printForm/{patient_id}/{category_id}', [
+      'uses' => 'SaleController@printForm',
+       'as' => 'sales.printForm',
+    ]);
 });

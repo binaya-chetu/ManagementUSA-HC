@@ -27,6 +27,7 @@ use Session;
 use App;
 use Auth;
 USE Exception;
+use App\PdfForm;
 
 class SaleController extends Controller
 {
@@ -239,6 +240,7 @@ class SaleController extends Controller
                 $url = 'sale/paymentDocuments/' . $id;
                 return redirect()->to($url);
             }
+            //echo "<pre>";print_r($allOrders);die;
         }
         //echo '<pre>';print_r($allOrders);die;
          return view('sale.generate_invoice', ['orders' => $allOrders, 'order_id' => $orderId, 'loginUser' => $loginUser]);
@@ -282,5 +284,23 @@ class SaleController extends Controller
         }else{
             App::abort(404, 'The url seeme to be expired or invalid.');
         }        
+    }
+    
+    /**
+    * Function: to view or print the document in pdf format. 
+    * returns 
+    */
+    public function printForm($patient_id, $category_id){
+        $patient_id = base64_decode($patient_id);
+        $category_id = base64_decode($category_id);
+        if(isset($patient_id)){
+            $patient = User::select('first_name', 'last_name')->where('id', $patient_id)->first();
+            $template = PdfForm::where('id', 1)->first();
+            //echo "<pre>";print_r($patient);die;
+        }
+         return view('sale.generate_pdf_form', [
+             'template' => $template,
+             'petient'  => $patient
+         ]);
     }
 }

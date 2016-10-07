@@ -25,9 +25,11 @@
                     <li class="active">
                         <a href="#followupTab" data-toggle="tab"><i class="fa fa-star"></i> Payment Invoice</a>
                     </li>
+                    @foreach($orders['orderHistory'] as $package)
                     <li>
-                        <a href="" >PDF Forms</a>
+                        <a target="_blank" href="/sale/printForm/{{ base64_encode($package['payment']['patient_id']) }}/{{base64_encode($package['category_id'])}}">HGH Consent Tulsa</a>
                     </li>
+                    @endforeach
                 </ul>
             </div>
             @endif
