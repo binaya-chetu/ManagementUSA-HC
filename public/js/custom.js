@@ -1059,11 +1059,12 @@ var data = $(this).serializeArray();
                                 } else{
                                 $('.followButton').hide();
                                 }
-                                if (combine.patient.patient_detail.patient_status == 0){
-                                $('#patientSaleStatus').val('0');
-                                } else{
+//                                if (combine.patient.patient_detail.patient_status == 0){
+//                                $('#patientSaleStatus').val('0');
+//                                } else{
+//                                $('#patientSaleStatus').val('1');
+//                                }
                                 $('#patientSaleStatus').val('1');
-                                }
                                 $('input[name=appointment_id]').val(combine.appointment.id);
                                         $('input[name=appointment_request_id]').val(combine.appointment.request_id);
                                         $('input[name=patient_id]').val(combine.patient.id);

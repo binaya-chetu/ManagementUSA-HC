@@ -480,8 +480,9 @@ class ApptSettingController extends Controller {
         $patient = Patient::where('user_id', $id)->first();
         $patient->phone = $formData['phone'];
         $patient->dob = date('Y-m-d', strtotime($formData['dob']));
+        $patient->patient_status= 1;
         $patient->save();
-
+   
         $relative_appointment = Appointment::where('id', $formData['appointment_id'])->first();
 
         $relative_appointment->progress_status = config("constants.APPOINTMENT_AFTER_REPORT_FLAG");
@@ -504,6 +505,7 @@ class ApptSettingController extends Controller {
             $appointment_requests->followup_date = date('Y-m-d', strtotime($formData['followup_date']));
             $appointment_requests->followup_status = 0;
         }
+        $appointment_requests->location_id = $exist_request['location_id'];
         $appointment_requests->save();
         if(isset($formData['reason_id'])){
         $reason = new App\AppointmentReasons;

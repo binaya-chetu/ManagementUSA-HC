@@ -122,7 +122,6 @@
 <script>
     $(function() {
         $('.confirmation-callback').confirmation({
-            alert("jdkjfkj");
 //            onConfirm: function() {
 //                var link = $('.confirmation-callback').data('href');
 //                window.location = ajax_url + link;

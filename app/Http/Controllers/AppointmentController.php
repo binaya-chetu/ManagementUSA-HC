@@ -260,7 +260,12 @@ class AppointmentController extends Controller {
             $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
             $events ['start'] = $appointment->apptTime;
             $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
-            $events ['color'] = '#0088cc';
+            if($appointment->patient->patientDetail->patient_status == 1){
+                $events ['color'] = '#47a447';
+            }else{
+                $events ['color'] = '#0088cc';
+            }
+            
             $collevent[$i] = $events;
             $i++;
         }
