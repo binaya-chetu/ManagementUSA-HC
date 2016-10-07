@@ -54,8 +54,7 @@ class ApptSettingController extends Controller {
             App::abort(404, 'Role patient not found.');
         }
 
-        $patients = DB::table('users')
-                ->where(['users.role' => $patientRoleId, 'users.deleted_at' => null])
+        $patients = User::where(['users.role' => $patientRoleId, 'users.deleted_at' => null])
                 ->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                 ->get();
         $locations = DB::table('locations')->get();
