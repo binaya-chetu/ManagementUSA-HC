@@ -5,10 +5,6 @@ use App\Http\Traits\CommonTrait;
 use App\Http\Controllers\PaymentController;
 
 use Illuminate\Http\Request;
-use App\Patient;
-use App\Appointment;
-use App\AppointmentRequest;
-use App\Doctor;
 use App\User;
 use App\State;
 use App\Categories;
@@ -17,16 +13,9 @@ use App\Payment;
 use App\Emi;
 use App\Order;
 use DateTime;
-use App\OrderDetail;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Config\Repository;
 use Session;
 use App;
 use Auth;
-USE Exception;
 use App\PdfForm;
 
 class SaleController extends Controller
@@ -221,7 +210,10 @@ class SaleController extends Controller
     */
     public function paymentDocuments($orderid){
         $orderId = base64_decode($orderid);
-        return view('sale.payment_documents', ['order_id' => $orderId]);
+        if(isset($orderId)){
+            $packages = Order::getAllOrders($orderId);
+        }
+        return view('sale.payment_documents', ['order_id' => $orderId, 'packages' => $packages]);
     }
     
     /**
@@ -240,9 +232,7 @@ class SaleController extends Controller
                 $url = 'sale/paymentDocuments/' . $id;
                 return redirect()->to($url);
             }
-            //echo "<pre>";print_r($allOrders);die;
         }
-        //echo '<pre>';print_r($allOrders);die;
          return view('sale.generate_invoice', ['orders' => $allOrders, 'order_id' => $orderId, 'loginUser' => $loginUser]);
     }
     
@@ -288,7 +278,7 @@ class SaleController extends Controller
     
     /**
     * Function: to view or print the document in pdf format. 
-    * returns 
+    * returns view file
     */
     public function printForm($patient_id, $category_id){
         $patient_id = base64_decode($patient_id);

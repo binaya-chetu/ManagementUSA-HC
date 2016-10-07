@@ -76,6 +76,5 @@ class Order extends Model
            
             return ['orderHistory' => $orders, 'user' => $user, 'agent' => $agent, 'total_package_price' => $total_price, 'discount_price' => $discount_price];
         }
-        
     }
 }

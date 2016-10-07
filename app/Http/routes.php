@@ -904,13 +904,15 @@ Route::group(['middleware' => 'web'], function () {
        'uses' => 'SaleController@generateInvoice',
         'as' => 'sales.generateInvoice',
     ]);
- /*
+    
+    /*
     * Show the invoice after make payment
     */
     Route::get('/sale/paymentDocuments/{orderid}', [
       'uses' => 'SaleController@paymentDocuments',
        'as' => 'sales.paymentDocuments',
     ]);
+
     
     /*
      * for sending email with invoice
@@ -920,15 +922,15 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'sale.sendInvoice',
         //'middleware' => ['acl:save_categories']	
     ]);
-
     
-     /*
-     * To find the set the location value 
-     */
+    /*
+    * To find the set the location value 
+    */
     Route::match(['get', 'post'],'/appointment/setSession', [
         'uses' => 'AppointmentController@setSession',
        // 'middleware' => ['acl:appointment_write']
     ]);
+    
     /*
      * To reset the location value 
      */
@@ -944,4 +946,5 @@ Route::group(['middleware' => 'web'], function () {
       'uses' => 'SaleController@printForm',
        'as' => 'sales.printForm',
     ]);
+
 });
