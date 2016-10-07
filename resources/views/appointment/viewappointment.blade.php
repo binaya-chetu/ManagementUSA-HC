@@ -4,7 +4,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
         <h2>Appointment Calendar</h2>
-
         <div class="right-wrapper pull-right">
             @if(!empty(Request::segment(2)))
             {!! Breadcrumbs::render('appointment.viewappointment') !!}
@@ -20,31 +19,15 @@
         <div class="panel-body">
               <div class="row">
                 <div class="col-lg-12">	
-                    <div class="tabs">
-                        <ul class="nav nav-tabs" id = "calender-tabs">
-                            <li class="active">
-                                <a href="#calender" id="default-calendar"  data-toggle="tab"><i class="fa fa-star"></i>Appointment Calender</a>
-                            </li>
-                            <?php// echo "<pre>";print_r($categories);die;?>
-                            @foreach($categories AS $category)
-                            @if($category->id == 2)
-                            <li>
-                                <a href="#trimix-calender" rel = "{{$category->id}}" id ="trimix"  data-toggle="tab">Trimix Therapy Calender</a>
-                            </li>
-                            @endif
-                           @if($category->id == 12)
-                            <li>
-                                 <a href="#siblingual-calender" rel = "{{$category->id}}" id ="siblingual"  data-toggle="tab">Sublingual Troche Therapy Calender</a>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
-                        <div class="tab-content">
-                            <div id="calendar" class="tab-content active"> </div>
-                             <!--     <div id ="trimix-calender" class="tab-content" ></div>
-                            <div id ="siblingual-calender" class="tab-content"  ></div>-->
+                     <div class="form-group">
+                            {{ Form::label('reason_id', 'Select Reason', array('class' => 'col-sm-3 control-label mandatory')) }}
+                            <div class="col-md-6">
+                                <?php $setReasonCode = setReason();?>
+                                {{ Form::select('reason_id', ['' => 'Choose the Reason'] + $setReasonCode, null, ['class' => 'form-control required','id' => 'set_reason_id']) }}
+                            </div>
                         </div>
-                    </div>
+                       <div id="calendar" class="tab-content active"> </div>
+                       
                 </div>
              </div>
             <div class="row">

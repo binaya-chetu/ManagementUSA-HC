@@ -905,4 +905,25 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'appointment.viewappointment',
         //'middleware' => ['acl.doseManagement_read']
     ]);
+    
+     /*
+     * To return the method to set Session Reason
+     */
+    
+    Route::get('/home/setReason/{id}', [
+       'uses' => 'HomeController@setReason',
+        'as' => 'appointment.viewappointment',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
+    /*
+     * To return the method to reset Session Reason
+     */
+    
+    Route::get('/home/resetReason/', [
+       'uses' => 'HomeController@resetReason',
+        'as' => 'appointment.viewappointment',
+        //'middleware' => ['acl.doseManagement_read']
+    ]);
+    
 });

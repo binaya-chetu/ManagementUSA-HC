@@ -1466,3 +1466,30 @@ $(document).on("click", ".patientShowStatus", function() {
 //
 //    }).apply(this, [jQuery]);
 // }
+
+
+/************************************Adding function to choose reason into view Appointment************************/
+
+ $("#set_reason_id").change(function(){
+       var id = $(this).val();
+       if(id > 0 && id !='')
+       {
+                 $.ajax({
+                url: ajax_url + "/home/setReason/"+id,
+                success: function(data) {
+                    location.reload();
+                    //console.log(data);
+                }
+         });
+       }
+       else{
+              $.ajax({
+                url: ajax_url + "/home/resetReason/",
+                success: function(data) {
+                    console.log(data);
+            
+                }
+         }); 
+       }
+     
+    });

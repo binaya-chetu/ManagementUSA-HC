@@ -11,6 +11,7 @@ use App\State;
 use App\UserDetail;
 use App\Categories;
 use DB;
+use Session;
 use App\Cart;
 
 /**
@@ -41,14 +42,53 @@ class HomeController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request) {
-        // get all appointments which status is active
-        $appointments = Appointment::with(
-            'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'
-        )
-        ->whereIn('status', [1, 4])
-        ->get();
+             
+        //for location 
+        $location_id = Session::get('location_id');
+        if (isset($location_id) && $location_id > 0) {
+            $location = DB::table('appointments')
+                    ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                    ->where('location_id', '=', Session::get('location_id'))
+                    ->select('appointments.id')
+                    ->get();
+            $appt_id = array();
+            foreach ($location as $loc) {
+                $appt_id[] = $loc->id;
+            }
+            $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
+
+        } else {
+           $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+        }
+
         
+        //for set reason 
+             $reason = Session::get('reasonToVisit');  
+            if (isset($reason) && $reason > 0) {
+                $appointment = DB::table('appointment_reasons')
+                        ->where('reason_id', '=', Session::get('reasonToVisit'))
+                        ->where('request_id','!=',0)
+                        ->where('deleted_at','=',NULL)
+                        ->select('request_id')
+                        ->get();
+                 //  echo "<pre>"; print_r($appointment);die; 
+                $appointment_request = array();
+                foreach ($appointment as $appt) {
+                    $appointment_request[] = $appt->request_id;
+                }
+                //echo "<pre>"; print_r($appointment_request);die; 
+                $appointments = Appointment::with(['patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('request_id', $appointment_request)->get();
+              //  echo "<pre>"; print_r($appointments->toArray());die;          
+             } 
+             else {
+               $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+            }       
+        
+  
+        // getting all appointments where status is set  into $reason
+       
         $collevent = [];
         $i = 0;
         foreach ($appointments as $appointment) {
@@ -266,5 +306,24 @@ class HomeController extends Controller {
             'categories' => $categories      
         ]);
      
+    }
+    /**
+     * Function to set the reason into sesssion 
+     *
+     * @return \resource\view\Appointment\viewappointment.php
+     */
+    public function setReason(Request $request) {
+         Session::set('reasonToVisit',$request->id); 
+         Session::save();
+         echo  Session::get('reasonToVisit');
+    }
+     /**
+     * Function to reset the rereason into sesssion 
+     *
+     * @return \resource\view\Appointment\viewappointment.php
+     */
+    public function resetReason(Request $request) {
+         Session::forget('reasonToVisit');
+        echo  Session::get('reasonToVisit');
     }
 }

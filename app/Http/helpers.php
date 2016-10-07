@@ -337,3 +337,14 @@ function cardYear()
     return $expYear;
 }
 
+/**
+ * Function for appointment  set reason list
+ *
+ * @return array()
+ */           
+function setReason()
+{
+        $setReasonCode = App\ReasonCode::where('type', '1')->lists('reason', 'id')->toArray();
+    
+        return $setReasonCode;
+}

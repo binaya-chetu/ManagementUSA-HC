@@ -154,6 +154,7 @@ class AppointmentController extends Controller {
      */
 
     public function show() {
+        
         $appointment = new Appointment;
         $appointments = $appointment->get();
 
@@ -203,6 +204,7 @@ class AppointmentController extends Controller {
      */
 
     public function viewappointment() {
+
         $appointments = Appointment::with('patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode')->whereIn('status', [1, 4])->get();
         $collevent = array();
         $i = 0;
@@ -229,6 +231,7 @@ class AppointmentController extends Controller {
         return view('appointment.viewappointment', [
             'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
+        
     }
 
     /*
@@ -1062,7 +1065,7 @@ class AppointmentController extends Controller {
         ]);
     }
     
-	/**
+    /**
      * Function find the current status of Appointment
      *
      * @return \resource\view\Appointment\lab_appointment.php
@@ -1072,8 +1075,10 @@ class AppointmentController extends Controller {
         echo json_encode($appointment);
         die;
     }
+    
      public function viewTherapyCalender($id) { 
         echo json_encode($categories);
         die;
     }
+      
 }
