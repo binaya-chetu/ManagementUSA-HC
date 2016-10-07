@@ -43,7 +43,7 @@
                             <address class="ib mr-xlg">                      
                                 {{ $loginUser->userDetail->address1.' '.$loginUser->userDetail->address2 }}                              
                                 <br/>
-                                {{ $loginUser->userDetail->city }} {{ $loginUser->userDetail->userStateName->name }}
+                                {{ $loginUser->userDetail->city }} {{ $loginUser->userDetail->userStateName->name or '' }}
                                 <br/>
                                 PH: {{ $loginUser->userDetail->phone }}
                             </address>
