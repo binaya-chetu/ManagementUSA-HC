@@ -640,13 +640,13 @@ $('#setAppointment').hide();
          */
         $('.showSellMessage').hide();
         $(".addPackageToCart").on('click', function(){
-var patientId = $('select[name="patient_id"]').val();
+        var patientId = $('select[name="patient_id"]').val();
         if (patientId == ''){
-showMessage('Please select patient from Select Patient drop down.', 'error');
+        showMessage('Please select patient from Select Patient drop down.', 'error');
         //notifyUser('Please select patient from Select Patient drop down.', 'error');
         return false;
         }
-var catId = $(this).data('cat-value');
+        var catId = $(this).data('cat-value');
         var pkgId = $(this).data('pkg-val');
         $.ajax({
         method: 'post',
@@ -674,22 +674,22 @@ var catId = $(this).data('cat-value');
          * count the cart if the patient will change by drop down in the front office sale
          */
         $('#front_sale_patient').on('change', function(){
-var patient_id = $(this).val();
+        var patient_id = $(this).val();
         if (patient_id != ''){
-$.ajax({
-method: 'post',
-        dataType: 'json',
-        url: ajax_url + '/cart/countCartItem/' + patient_id,
-        success: function(data){
-        $('.cartLink .badge').text(data);
-                // make the cart icon as anchor tag if item > 0
-                if (parseInt(data) > 0){
-        $('.saleAnchor').attr('href', ajax_url + '/cart/cart/' + btoa(patient_id));
-        } else{
-        $('.saleAnchor').removeAttr('href');
-        }
-        }
-});
+        $.ajax({
+        method: 'post',
+                dataType: 'json',
+                url: ajax_url + '/cart/countCartItem/' + patient_id,
+                success: function(data){
+                $('.cartLink .badge').text(data);
+                        // make the cart icon as anchor tag if item > 0
+                        if (parseInt(data) > 0){
+                $('.saleAnchor').attr('href', ajax_url + '/cart/cart/' + btoa(patient_id));
+                } else{
+                $('.saleAnchor').removeAttr('href');
+                }
+                }
+        });
         } else{
 $('.cartLink .badge').text(0);
         $('.saleAnchor').removeAttr('href');
@@ -1034,10 +1034,10 @@ var data = $(this).serializeArray();
                         var select_date = $('#calendarDate').val();
                         var day = new Date(select_date);
                         if (day.getDate() == nowtime.getDate()){
-                if (hours <= nowtime.getHours()){
-                alert('Please make the appointment for the upcoming time');
-                        $('#durationExample').val('');
-                }
+                    if (hours <= nowtime.getHours()){
+                    alert('Please make the appointment for the upcoming time');
+                            $('#durationExample').val('');
+                    }
                 }
                 }
                 }
@@ -1417,7 +1417,6 @@ $(document).on("click", ".patientShowStatus", function() {
         }
     });
     
-<<<<<<< HEAD
     
  /* --------------------------START: getting therapies appointment for Appointment Calender --------------  */  
 
@@ -1494,6 +1493,7 @@ $(document).on("click", ".patientShowStatus", function() {
                 }
          }); 
        }
+   });
      
 
  /* --------------------------START: Adding Location Search for Appointments --------------  */  

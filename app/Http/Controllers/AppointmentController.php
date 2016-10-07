@@ -1,9 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Http\Traits\CommonTrait;
-
->>>>>>> features-location
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Appointment;
@@ -261,7 +258,7 @@ class AppointmentController extends Controller {
             'appointments' => $collevent, 'patients' => $patients, 'doctors' => $doctors, 'followupStatus' => $followupStatus
         ]);
 
-
+    }
     /*
      * Find the Appointment details with patient & doctor
      * 

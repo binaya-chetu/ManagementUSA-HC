@@ -37,23 +37,6 @@ trait CommonTrait {
         }        
     }
     
-    /**
-     * Save the order from the makePayment function
-     *
-     *  */
-    public function searchByLocation($appointment) {  
-        echo '<pre>'; print_r($appointment);
-        $appt = [];
-        foreach($appointment as $appointment){
-            if($appointment->appointmentRequest->location_id == 1){
-                $appt[] = $appointment;
-            }
-        }
-        echo '<pre>';print_r($appt[]->toArray());
-        die;
-      
-               
-    }
-	
+    
   
 }
