@@ -22,6 +22,7 @@ use Session;
 use App;
 use Auth;
 use App\Locations;
+use App\ApiData;
 
 class ApptSettingController extends Controller {
 
@@ -75,7 +76,10 @@ class ApptSettingController extends Controller {
      * @return \resource\view\apptsetting\call_list
      */
     public function missedCall() {
-        return view('apptsetting.missed_call');
+        $missedData = ApiData::where('type',1)->get();
+        return view('apptsetting.missed_call',[
+            'missedData' => $missedData,
+        ]);
     }
 
     /**

@@ -50,7 +50,7 @@ trait CommonTrait {
         //$json_data = file_get_contents($path);
         $json_data = $this->getResponse($data);
         $datas = json_decode($json_data, true);
-        echo "<pre>";print_r($datas);die;
+        //echo "<pre>";print_r($datas);die;
         $error_row = [];
         if(isset($datas['Data']) && !empty($datas['Data']))
         {
@@ -92,9 +92,9 @@ trait CommonTrait {
                     $apiData->call_type = $data['CallType'];
                     $apiData->current_url = $data['CurrentURL'];
                     $apiData->widget_name = $data['WidgetName'];
-                    $apiData->source_type = $data['SourceType'];
+                    $apiData->source_type = 2;
                     $apiData->category = $data['Category'];
-                    $apiData->type = ($data['CallDuration'] == '0:00' || '') ? 1 : 0;
+                    $apiData->type = ($data['CallDuration'] == '0:00' || $data['CallDuration'] == '') ? 1 : 0;
 
                     // save data in user table
                     if (!($apiData->save())) {
@@ -132,7 +132,6 @@ trait CommonTrait {
             $apiSetting->password =  $request->password;
             $saved = $apiSetting->save();
         }
-        
         else {
             $this->validate($request, [
                 'api_url' => 'required',
@@ -169,15 +168,15 @@ trait CommonTrait {
         curl_setopt($ch,CURLOPT_CONNECTTIMEOUT, 30);
         if($method == 'POST')
         {
-          $fieldsData = http_build_query($fields);
-          curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsData);
+            $fieldsData = http_build_query($fields);
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsData);
         }
 
         curl_setopt($ch, CURLOPT_HEADER, 1);
         $first_response = curl_exec($ch);
         $info = curl_getinfo($ch);
 
-         preg_match('/WWW-Authenticate: Digest (.*)/', $first_response, $matches);
+        preg_match('/WWW-Authenticate: Digest (.*)/', $first_response, $matches);
 
         if(!empty($matches))
         {

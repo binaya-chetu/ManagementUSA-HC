@@ -31,25 +31,42 @@
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Sr.</th>
                         <th>Phone No.</th>
                         <th>Call Time</th>
+                        <th>Caller Id</th>
+                        <th>Phone Name</th>
                         <th>Source</th>
-                    
-                        <!--  <th>Actions</th>-->
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{--*/ $inc = 0  /*--}}
+                    @foreach($missedData as $missed)
                     <tr>
+                        <td class="table-text table-text-id"><div>{{ ++$inc }}</div></td>
+                        <td class="table-text">{{ $missed->phone_number }}</td>
+
+                        <td class="table-text"> {{ $missed->date_time }}</td>
+                        <td class="table-text">{{ $missed->caller_id }}</td>
+                        <td class="table-text">{{ $missed->phone_number_name }}</td>
+                        <td class="table-text">Tele-marketing Calls</td>
+                               <td class="actions">
+                            <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
+                            <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
+                        </td>
+                    </tr>
+                    @endforeach
+<!--                    <tr>
                         <td class="table-text table-text-id"><div>1</div></td>
                         <td class="table-text">+120-964644</td>
 
                         <td class="table-text"> 31-05-2016 11:00am</td>
                         <td class="table-text">Advertisement</td>
-                            <!--   <td class="actions">
+                               <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>-->
+                        </td>
                     </tr>
                     <tr>
                         <td class="table-text table-text-id"><div>2</div></td>
@@ -57,10 +74,10 @@
 
                         <td class="table-text"> 31-05-2016 12:00am</td>
                         <td class="table-text">Newsletter</td>
-                        <!--  <td class="actions">
+                          <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>-->
+                        </td>
                     </tr>
                     <tr>
                         <td class="table-text table-text-id"><div>3</div></td>
@@ -68,10 +85,10 @@
 
                         <td class="table-text"> 31-05-2016 11:00am</td>
                         <td class="table-text">Digital Media</td>
-                        <!--  <td class="actions">
+                          <td class="actions">
                             <a href="#modalCall" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>-->
+                        </td>
                     </tr>
                     <tr>
                         <td class="table-text table-text-id"><div>4</div></td>
@@ -79,11 +96,11 @@
 
                         <td class="table-text"> 30-05-2016 4:00pm</td>
                         <td class="table-text">Advertisement</td>
-                        <!--  <td class="actions">
+                          <td class="actions">
                             <a href="#" class="on-editing save-row missedcall_popup" title="Edit"><i class="fa fa-pencil"></i></a>
                             <a href="#" class="on-editing cancel-row"><i class="fa fa-times"></i></a>                            
-                        </td>-->
-                    </tr>
+                        </td>
+                    </tr>-->
 
 
                 </tbody>
