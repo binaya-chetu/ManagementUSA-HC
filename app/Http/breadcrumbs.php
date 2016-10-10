@@ -288,3 +288,8 @@ Breadcrumbs::register('products.showInventory', function ($breadcrumbs) {
 Breadcrumbs::register('doses.doseManagement', function ($breadcrumbs) {
     $breadcrumbs->push('Dose Management / Manage Dose', route('doses.doseManagement'));
 });
+
+// Home / API Integration
+Breadcrumbs::register('api.setting', function ($breadcrumbs) {
+    $breadcrumbs->push('API Integration', route('api.setting'));
+});

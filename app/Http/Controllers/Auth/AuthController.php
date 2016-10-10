@@ -107,5 +107,5 @@ class AuthController extends Controller
         $this->create($request->all());
         return redirect()->route('/login');
     }
-
+    
 }

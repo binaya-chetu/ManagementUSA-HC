@@ -37,7 +37,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group{{ $errors->has('cat_name') ? ' has-error' : '' }}">
+                    <div class="form-group{{ $errors->has('duration_months') ? ' has-error' : '' }}">
                         {{ Form::label('duration_months', 'Duration', array('class' => 'col-sm-3 control-label mandatory')) }}
                         <div class="col-sm-6">
                             <?php $duration = durationInMonths(); ?>
