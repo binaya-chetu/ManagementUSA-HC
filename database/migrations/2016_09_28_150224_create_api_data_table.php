@@ -43,6 +43,7 @@ class CreateApiDataTable extends Migration
             $table->string('widget_name')->nullable();
             $table->integer('source_type');
             $table->string('category')->nullable();
+            $table->boolean('type');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -50,11 +50,13 @@ trait CommonTrait {
         //$json_data = file_get_contents($path);
         $json_data = $this->getResponse($data);
         $datas = json_decode($json_data, true);
+        echo "<pre>";print_r($datas);die;
         $error_row = [];
         if(isset($datas['Data']) && !empty($datas['Data']))
         {
+            $arr = $datas['Data'];
             $maxTimeStamp = \DB::connection('mysql2')->table('api_data')->max('timestamp');
-            foreach($datas['Data'] as $data)
+            foreach($arr as $data)
             {
                 $timestamp = preg_replace("/[^0-9]/","",$data['DateTime']);
 
@@ -92,6 +94,7 @@ trait CommonTrait {
                     $apiData->widget_name = $data['WidgetName'];
                     $apiData->source_type = $data['SourceType'];
                     $apiData->category = $data['Category'];
+                    $apiData->type = ($data['CallDuration'] == '0:00' || '') ? 1 : 0;
 
                     // save data in user table
                     if (!($apiData->save())) {
