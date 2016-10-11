@@ -11,6 +11,8 @@ use App\FollowupStatus;
 use Auth;
 use App\State;
 use App\UserDetail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 /**
  * This class is used to handle home page related action
@@ -42,15 +44,28 @@ class HomeController extends Controller {
      */
     public function index() {
         // get all appointments which status is active
-        $appointments = Appointment::with(
-            'patient.patientDetail', 'patient.reason', 'patient.reason.reasonCode'
-        )
-        ->whereIn('status', [1, 4])
-        ->get();
+        
+        $location_id = Session::get('location_id');
+        if (isset($location_id) && $location_id > 0) {
+            $location = DB::table('appointments')
+                    ->join('appointment_requests', 'appointment_requests.id', '=', 'appointments.request_id')
+                    ->where('location_id', '=', Session::get('location_id'))
+                    ->select('appointments.id')
+                    ->get();
+            $appt_id = array();
+            foreach ($location as $loc) {
+                $appt_id[] = $loc->id;
+            }
+            $appointments = $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->whereIn('id', $appt_id)->get();
+
+        } else {
+           $appointments = Appointment::with(['patient.patientDetail','appointmentRequest.locations', 'patient.reason', 'patient.reason.reasonCode'])->whereIn('status', [1, 4])->get();
+        } 
 
         $collevent = [];
         $i = 0;
         foreach ($appointments as $appointment) {
+            //echo '<pre>'; print_r($appointment->toArray());
             $events = [];
             $events ['id'] = $appointment->id;
             $reasonArr = $appointment->patient->reason->toArray();
@@ -73,14 +88,19 @@ class HomeController extends Controller {
             }
             if ($appointment->patient && $appointment->patient->patientDetail) {
                 $events ['mobile'] = 'Phone: ' . $appointment->patient->patientDetail->phone;
+                if($appointment->patient->patientDetail->patient_status == 1){
+                    $events ['color'] = '#47a447';
+                }else{
+                    $events ['color'] = '#0088cc';
+                }
+                
             }
             $events ['start'] = $appointment->apptTime;
             $events ['end'] = date('Y-m-d H:i:s', strtotime($appointment->apptTime . '+ 30 minute'));
-            $events ['color'] = '#0088cc';
             $collevent[$i] = $events;
             $i++;
         }
-
+   
         // get all patients list
         $patients = User::where('role', $this->patient_role)->get();
         // get all doctors list

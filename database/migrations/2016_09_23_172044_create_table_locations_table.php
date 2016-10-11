@@ -17,8 +17,6 @@ class CreateTableLocationsTable extends Migration
             $table->string('name');
             $table->string('city');
 			$table->string('state');
-			$table->integer('patient_id');
-			$table->integer('appt_request_id');
 			$table->timestamps();
 			$table->softDeletes();
 		});

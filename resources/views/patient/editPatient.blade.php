@@ -225,8 +225,17 @@
                                 {{ Form::text('occupation', $patient['patientDetail']->occupation, ['class' => 'form-control', 'placeholder' => 'Occupation', 'id' => 'occupation']) }}
                             </div>
                         </div>
+                        
                     </div>
-                    
+<!--                    <div class="row">
+                    <div class="col-sm-6 form-group">
+                            {{ Form::label('location', 'Location', array('class' => 'col-sm-3 control-label')) }}
+                            <div class="col-sm-9">
+                            <?php $getLocation = getLocation();?>
+                                {{ Form::select('location_id', array_merge(['0' => 'Please Select Location'], $getLocation), $patient['patientDetail']->location_id, ['class' => 'form-control input', 'id' => 'location_id']) }}
+                            </div>
+                        </div>
+                </div>-->
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             {{ Form::label('height', 'Height', array('class' => 'col-sm-3 control-label')) }}

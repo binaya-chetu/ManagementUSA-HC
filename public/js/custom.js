@@ -327,6 +327,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#search_location").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -405,6 +406,7 @@ $(document).ready(function() {
                 $('#appointmentComment').val(combine.appointment.comment);
                 $('#first-name').val(combine.patient.first_name);
                 $('#last-name').val(combine.patient.last_name);
+                $("#location_id").val(combine.patient.patient_detail.location_id);
                 if (combine.patient.email == '') {
                     $('#email').val(combine.patient.email).prop('disabled', false);
                 } else {
@@ -1057,11 +1059,12 @@ var data = $(this).serializeArray();
                                 } else{
                                 $('.followButton').hide();
                                 }
-                                if (combine.patient.patient_detail.patient_status == 0){
-                                $('#patientSaleStatus').val('0');
-                                } else{
+//                                if (combine.patient.patient_detail.patient_status == 0){
+//                                $('#patientSaleStatus').val('0');
+//                                } else{
+//                                $('#patientSaleStatus').val('1');
+//                                }
                                 $('#patientSaleStatus').val('1');
-                                }
                                 $('input[name=appointment_id]').val(combine.appointment.id);
                                         $('input[name=appointment_request_id]').val(combine.appointment.request_id);
                                         $('input[name=patient_id]').val(combine.patient.id);
@@ -1412,4 +1415,44 @@ $(document).on("click", ".patientShowStatus", function() {
         else{
             //   alert("you have cancelled");
         }
+    });
+   
+    //email inovice to patient email
+    $(document).on("click", "#email_invoice", function(ev) {
+      if(this.checked){
+          var order_id = $(this).val();
+            $.ajax({
+                url: ajax_url + "/sale/emailInvoice/" + order_id,
+                success: function(response) {              
+                    if(response == '1'){
+                        alert('Invoice sent to the patient email id successfully');
+                    }
+                }
+            });
+            $(this).attr('disabled', 'true');
+      }  
+  });
+ /* --------------------------START: Adding Location Search for Appointments --------------  */  
+ 
+    $(document).on("change", "#search_location", function(ev) {
+            var location_id = $(this).val(); 
+            if(location_id == ''){
+                    $.ajax({
+                type: "POST",
+                url: ajax_url + "/appointment/resetSession",         
+                success: function() {
+                    location.reload();
+                }
+                });
+            }
+            $.ajax({
+            type: "POST",
+            url: ajax_url + "/appointment/setSession",
+            data: {
+                "location_id": location_id
+            },         
+            success: function(data) {
+                location.reload();
+            }
+        });
     });

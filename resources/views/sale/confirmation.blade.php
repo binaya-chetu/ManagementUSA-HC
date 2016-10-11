@@ -179,7 +179,7 @@
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td colspan="4"><strong>Total discouont</strong></td>
+                                        <td colspan="4"><strong>Total discount</strong></td>
                                         <td class="center">${{ number_format($package_discount[$ind], 2) }}</td>
                                     </tr>
                                     <tr>

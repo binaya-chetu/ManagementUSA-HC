@@ -15,7 +15,7 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'HGH Consent OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>Human Growth Hormone Bio-Identical Hormone Therapy</p>
                                             <p>Patient Authorization Agreement</p>
@@ -62,46 +62,46 @@ class PDFFormTableSeeder extends Seeder
                                             Liability Waiver and Hold Harmless: I voluntarily choose to undergo hormone replacement therapy. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of hormone therapy outweighs the risks (including the possibility of raised prostate levels which some physicians think could possibly lead to prostate cancer). I hereby release and agrees to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic and the prescribing Physician associated with my hormone replacement therapy. I have had adequate time to consider all options and research hormone replacement therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
-                                            <input type="text" /> I understand that the medications I have purchased are prescribed for me based on diagnosis derived from my submitted medical history, blood and lab report, and physical examination. They are to be based exclusively for treatment of this diagnosis. 
+                                            <b><u class="name"></u></b> I understand that the medications I have purchased are prescribed for me based on diagnosis derived from my submitted medical history, blood and lab report, and physical examination. They are to be based exclusively for treatment of this diagnosis. 
                                         </p>
                                         <p>
-                                            <input type="text" />  I will immediately report any adverse side effects related to the use of my medication to Oklahoma Men’s Clinic and discontinue use until advised to resume usage by Oklahoma Men’s Clinic.
+                                            <b><u class="name"></u></b>  I will immediately report any adverse side effects related to the use of my medication to Oklahoma Men’s Clinic and discontinue use until advised to resume usage by Oklahoma Men’s Clinic.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will safeguard my medications from loss or theft.
+                                            <b><u class="name"></u></b> I will safeguard my medications from loss or theft.
                                         </p>
                                         <p>
-                                            <input type="text" /> I understand that Oklahoma Men’s Clinic does not cooperate with any insurance companies. If any part of my prescription from Oklahoma Men’s Clinic Provider is to be picked up at the clinic location and I agree to pay cash for that medication, I will not request that it be processed through my insurance.
+                                            <b><u class="name"></u></b> I understand that Oklahoma Men’s Clinic does not cooperate with any insurance companies. If any part of my prescription from Oklahoma Men’s Clinic Provider is to be picked up at the clinic location and I agree to pay cash for that medication, I will not request that it be processed through my insurance.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will not sell, share or trade my medications for money, goods or services.
+                                            <b><u class="name"></u></b> I will not sell, share or trade my medications for money, goods or services.
                                         </p>
                                         <p>
-                                            <input type="text" /> I agree that I will use my medications at the prescribed rate and dosage and I will keep the medications in its respective container.
+                                            <b><u class="name"></u></b> I agree that I will use my medications at the prescribed rate and dosage and I will keep the medications in its respective container.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will not attempt to obtain “scheduled” hormone replacement therapy medication illegally or from any other health care practitioner without disclosing my current medication usage. I understand that it is illegal to do so.
+                                            <b><u class="name"></u></b> I will not attempt to obtain “scheduled” hormone replacement therapy medication illegally or from any other health care practitioner without disclosing my current medication usage. I understand that it is illegal to do so.
                                         </p>
                                         <p>
-                                            <input type="text" /> I attest I am not seeking medical treatment for body enhancement, body building or performance enhancement or cosmetic enhancement of any kind.
+                                            <b><u class="name"></u></b> I attest I am not seeking medical treatment for body enhancement, body building or performance enhancement or cosmetic enhancement of any kind.
                                         </p>
                                         <p>
-                                            <input type="text" /> I attest I am not currently in any branch of the military service as either active duty or reserve capacity. I will not enter military service while I am undergoing this course of therapy, if one is prescribed for me.
+                                            <b><u class="name"></u></b> I attest I am not currently in any branch of the military service as either active duty or reserve capacity. I will not enter military service while I am undergoing this course of therapy, if one is prescribed for me.
                                         </p>
                                         <p>
-                                            <input type="text" /> I am seeking this treatment for legitimate medical purposes.
+                                            <b><u class="name"></u></b> I am seeking this treatment for legitimate medical purposes.
                                         </p>
                                         <p>
-                                            <input type="text" /> I have read the test above, and I agree to the terms and conditions disclosed herein. 
+                                            <b><u class="name"></u></b> I have read the test above, and I agree to the terms and conditions disclosed herein. 
                                         </p>
                                         <p>
-                                            <input type="text" /> Patient Name
+                                            <b><u class="name"></u></b> Patient Name
                                         </p>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                    <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Patient Signature</div>
-                                    <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                    <div class="col-sm-6" style="padding-left:0;"><b><u class="sign"></u></b> Patient Signature</div>
+                                    <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -109,7 +109,7 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'HGH Consent Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>Human Growth Hormone Bio-Identical Hormone Therapy</p>
                                             <p>Patient Authorization Agreement</p>
@@ -156,46 +156,46 @@ class PDFFormTableSeeder extends Seeder
                                             Liability Waiver and Hold Harmless: I voluntarily choose to undergo hormone replacement therapy. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of hormone therapy outweighs the risks (including the possibility of raised prostate levels which some physicians think could possibly lead to prostate cancer). I hereby release and agrees to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic and the prescribing Physician associated with my hormone replacement therapy. I have had adequate time to consider all options and research hormone replacement therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
-                                            <input type="text" /> I understand that the medications I have purchased are prescribed for me based on diagnosis derived from my submitted medical history, blood and lab report, and physical examination. They are to be based exclusively for treatment of this diagnosis. 
+                                           <b><u class="name"></u></b> I understand that the medications I have purchased are prescribed for me based on diagnosis derived from my submitted medical history, blood and lab report, and physical examination. They are to be based exclusively for treatment of this diagnosis. 
                                         </p>
                                         <p>
-                                            <input type="text" />  I will immediately report any adverse side effects related to the use of my medication to Oklahoma Men’s Clinic and discontinue use until advised to resume usage by Oklahoma Men’s Clinic.
+                                            <b><u class="name"></u></b>  I will immediately report any adverse side effects related to the use of my medication to Oklahoma Men’s Clinic and discontinue use until advised to resume usage by Oklahoma Men’s Clinic.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will safeguard my medications from loss or theft.
+                                            <b><u class="name"></u></b> I will safeguard my medications from loss or theft.
                                          </p>
                                         <p>
-                                            <input type="text" /> I understand that Oklahoma Men’s Clinic does not cooperate with any insurance companies. If any part of my prescription from Oklahoma Men’s Clinic Provider is to be picked up at the clinic location and I agree to pay cash for that medication, I will not request that it be processed through my insurance.
+                                            <b><u class="name"></u></b> I understand that Oklahoma Men’s Clinic does not cooperate with any insurance companies. If any part of my prescription from Oklahoma Men’s Clinic Provider is to be picked up at the clinic location and I agree to pay cash for that medication, I will not request that it be processed through my insurance.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will not sell, share or trade my medications for money, goods or services.
+                                            <b><u class="name"></u></b> I will not sell, share or trade my medications for money, goods or services.
                                         </p>
                                         <p>
-                                            <input type="text" /> I agree that I will use my medications at the prescribed rate and dosage and I will keep the medications in its respective container.
+                                            <b><u class="name"></u></b> I agree that I will use my medications at the prescribed rate and dosage and I will keep the medications in its respective container.
                                         </p>
                                         <p>
-                                            <input type="text" /> I will not attempt to obtain “scheduled” hormone replacement therapy medication illegally or from any other health care practitioner without disclosing my current medication usage. I understand that it is illegal to do so.
+                                            <b><u class="name"></u></b> I will not attempt to obtain “scheduled” hormone replacement therapy medication illegally or from any other health care practitioner without disclosing my current medication usage. I understand that it is illegal to do so.
                                         </p>
                                         <p>
-                                            <input type="text" /> I attest I am not seeking medical treatment for body enhancement, body building or performance enhancement or cosmetic enhancement of any kind.
+                                            <b><u class="name"></u></b> I attest I am not seeking medical treatment for body enhancement, body building or performance enhancement or cosmetic enhancement of any kind.
                                         </p>
                                         <p>
-                                            <input type="text" /> I attest I am not currently in any branch of the military service as either active duty or reserve capacity. I will not enter military service while I am undergoing this course of therapy, if one is prescribed for me.
+                                            <b><u class="name"></u></b> I attest I am not currently in any branch of the military service as either active duty or reserve capacity. I will not enter military service while I am undergoing this course of therapy, if one is prescribed for me.
                                         </p>
                                         <p>
-                                            <input type="text" /> I am seeking this treatment for legitimate medical purposes.
+                                            <b><u class="name"></u></b> I am seeking this treatment for legitimate medical purposes.
                                         </p>
                                         <p>
-                                            <input type="text" /> I have read the test above, and I agree to the terms and conditions disclosed herein. 
+                                            <b><u class="name"></u></b> I have read the test above, and I agree to the terms and conditions disclosed herein. 
                                         </p>
                                         <p>
-                                            <input type="text" /> Patient Name
+                                            <b><u class="name"></u></b> Patient Name
                                         </p>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                    <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Patient Signature</div>
-                                    <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                    <div class="col-sm-6" style="padding-left:0;"><b><u class="sign"></u></b> Patient Signature</div>
+                                    <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -203,14 +203,14 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Implied Consent Prolific OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
 						<p>IMPLIED CONSENT FOR THE PROLIFIC SHOCKWAVE THERAPY</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street, Suite 205 Oklahoma City, OK 73116) to provide medical care to me, including but not limited to the treatment of Erectile Dysfunction using Shockwave Therapy/PFRM/Stem Cell Therapy and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent to Prolific Shockwave Therapy as ordered by the Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street, Suite 205 Oklahoma City, OK 73116) to provide medical care to me, including but not limited to the treatment of Erectile Dysfunction using Shockwave Therapy/PFRM/Stem Cell Therapy and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent to Prolific Shockwave Therapy as ordered by the Oklahoma Men’s Clinic provider.
                                         </p>
                                         <div class="mar-10 head subhead">
                                             <p>PURPOSE</p>
@@ -275,22 +275,22 @@ class PDFFormTableSeeder extends Seeder
                                             <p>HOLD HARMLESS</p>
                                         </div>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo the Prolific Shockwave Therapy to include all its components. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of the Prolific Shockwave Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff of the Oklahoma Men’s Clinic, and the prescribing provider associated with my Prolific Shockwave Therapy. I have had adequate time to consider all options and research Prolific Shockwave Therapy. This agreement shall serve as a release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo the Prolific Shockwave Therapy to include all its components. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of the Prolific Shockwave Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff of the Oklahoma Men’s Clinic, and the prescribing provider associated with my Prolific Shockwave Therapy. I have had adequate time to consider all options and research Prolific Shockwave Therapy. This agreement shall serve as a release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees and personal representatives.
                                         </p>
                                         <p>
-                                            <input type="text" /> Patient Name
+                                            <b><u class="name"></u></b> Patient Name
                                         </p>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                    <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Signature</div>
-                                    <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                    <div class="col-sm-6" style="padding-left:0;"><b><u class="sign"></u></b> Signature</div>
+                                    <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                     </div>
 
                                     <p>
                                         <div class="col-sm-12" style="padding-top:10px;">
-                                        <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Witnessed</div>
-                                        <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                        <div class="col-sm-6" style="padding-left:0;"><b><u class="witness"></u></b> Witnessed</div>
+                                        <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                         </div>
                                     </p>',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -299,47 +299,47 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Implied Consent Weight Loss OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>Patient Consent for Treatment for Medical Weight Loss</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCOKC, LLC (Hereafter referred to as Oklahoma Men’s Clinic 3727 NW 63rd Ste 205 Oklahoma City, OK 74116) to provide medical care to me, including but not limited to the treatment of my weight problem and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing and physical examination, additional laboratory testing.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCOKC, LLC (Hereafter referred to as Oklahoma Men’s Clinic 3727 NW 63rd Ste 205 Oklahoma City, OK 74116) to provide medical care to me, including but not limited to the treatment of my weight problem and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing and physical examination, additional laboratory testing.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that my weight management treatment may consist of specific diet plans, for example a balanced deficit diet, very low calorie diet, a protein supplemented diet; recommendations for behavior modification techniques, including prescribed regular exercise regimens; and possibly the use of over-the-counter and prescription medications, e.g. appetite suppressants. I understand that I may be prescribed medications for medical conditions other than those relating to my weight management according to general medical practice standards.
+                                            Initial Here <b><u class="name"></u></b> I understand that my weight management treatment may consist of specific diet plans, for example a balanced deficit diet, very low calorie diet, a protein supplemented diet; recommendations for behavior modification techniques, including prescribed regular exercise regimens; and possibly the use of over-the-counter and prescription medications, e.g. appetite suppressants. I understand that I may be prescribed medications for medical conditions other than those relating to my weight management according to general medical practice standards.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that if medications are prescribed, especially medications for weight control, their duration of use and prescribed dosage and frequency may exceed or vary with those indicated in the package insert or those set forth by the FDA. It has been explained to me that these medications have been used safely and successfully in private and academic medical practice with appropriate monitoring for periods and at dosing and frequency regimens exceeding or at variance with those recommended in the product literature.
+                                            Initial Here <b><u class="name"></u></b> I understand that if medications are prescribed, especially medications for weight control, their duration of use and prescribed dosage and frequency may exceed or vary with those indicated in the package insert or those set forth by the FDA. It has been explained to me that these medications have been used safely and successfully in private and academic medical practice with appropriate monitoring for periods and at dosing and frequency regimens exceeding or at variance with those recommended in the product literature.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that any medical intervention has associated potential risks and benefits. Risks of this program may include but are not limited to tiredness, weakness, sleep disturbances, headaches, dry mouth, gastrointestinal disturbances, nervousness, psychological problems, high blood pressure, rapid heartbeat, and heart irregularities. In rare instances these and other possible risks could be serious or even fatal. The benefits of successful weight management may include but not be limited to improved overall health, lower risk of developing serious diseases with at times fatal complications, such as diabetes, breathing problems, joint degeneration, high blood pressure, heart disease, circulation problems, heart attack, stroke, et al.
+                                            Initial Here <b><u class="name"></u></b> I understand that any medical intervention has associated potential risks and benefits. Risks of this program may include but are not limited to tiredness, weakness, sleep disturbances, headaches, dry mouth, gastrointestinal disturbances, nervousness, psychological problems, high blood pressure, rapid heartbeat, and heart irregularities. In rare instances these and other possible risks could be serious or even fatal. The benefits of successful weight management may include but not be limited to improved overall health, lower risk of developing serious diseases with at times fatal complications, such as diabetes, breathing problems, joint degeneration, high blood pressure, heart disease, circulation problems, heart attack, stroke, et al.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that I have alternative treatment options, including but not limited to no treatment at all and weight management programs not supervised by a physician. I also understand that remaining overweight or obese puts me at greater risk for ill health. Some of the complications that may develop as a consequence of prolonged abnormal body weight are arthritis of the joints, especially weight-bearing joints such as hips, knees, feet and back, high cholesterol and triglycerides, high blood pressure, diabetes, vascular disease complicated by stroke, heart attack and abnormal heart rhythms, gallstones, sleep apnea, and sudden death. I understand that these risks may be modest if I am not significantly overweight, but will increase with additional weight gain.
+                                            Initial Here <b><u class="name"></u></b> I understand that I have alternative treatment options, including but not limited to no treatment at all and weight management programs not supervised by a physician. I also understand that remaining overweight or obese puts me at greater risk for ill health. Some of the complications that may develop as a consequence of prolonged abnormal body weight are arthritis of the joints, especially weight-bearing joints such as hips, knees, feet and back, high cholesterol and triglycerides, high blood pressure, diabetes, vascular disease complicated by stroke, heart attack and abnormal heart rhythms, gallstones, sleep apnea, and sudden death. I understand that these risks may be modest if I am not significantly overweight, but will increase with additional weight gain.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that the success of weight management treatment depends on my active participation. Oklahoma Men’s Clinic cannot guarantee or assure treatment success or any definite outcome. I understand that obesity is considered a chronic condition that may require permanent changes in my eating habits and behavior to attempt success at treatment. I further understand that there are no refunds on products or packages purchased, any medication received or not received to include any products ordered on my behalf, or service not yet rendered but agreed to at time of purchase.
+                                            Initial Here <b><u class="name"></u></b> I understand that the success of weight management treatment depends on my active participation. Oklahoma Men’s Clinic cannot guarantee or assure treatment success or any definite outcome. I understand that obesity is considered a chronic condition that may require permanent changes in my eating habits and behavior to attempt success at treatment. I further understand that there are no refunds on products or packages purchased, any medication received or not received to include any products ordered on my behalf, or service not yet rendered but agreed to at time of purchase.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> Liability Waiver and Hold Harmless: I voluntarily choose to undergo medical weight loss. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of medical weight loss outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic, and the prescribing Provider associated with my weight loss program. I have had adequate time to consider all options and research weight loss programs. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives
+                                            Initial Here <b><u class="name"></u></b> Liability Waiver and Hold Harmless: I voluntarily choose to undergo medical weight loss. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of medical weight loss outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic, and the prescribing Provider associated with my weight loss program. I have had adequate time to consider all options and research weight loss programs. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I have read and fully understand this consent form and I realize I should not sign this form if all items have not been satisfactorily explained to me. With my signature I acknowledge that my questions have been answered fully, and that I have been requested to read this form and have been given ample time to understand all its contents.
+                                            Initial Here <b><u class="name"></u></b> I have read and fully understand this consent form and I realize I should not sign this form if all items have not been satisfactorily explained to me. With my signature I acknowledge that my questions have been answered fully, and that I have been requested to read this form and have been given ample time to understand all its contents.
                                         </p>
                                         <p>
                                             If at this time you have any questions regarding the risks or dangers of the proposed treatment, or would like further explanations concerning the proposed treatment or any alternative options, ask your provider now before signing this consent form.
                                         </p>
                                         <div class="clearfix"></div>
                                         <div class="col-sm-12">
-                                            <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> (Patient Name – Please Print)</div>
+                                            <div class="col-sm-6" style="margin-left:0px;"><b><u class="name"></u></b> (Patient Name – Please Print)</div>
                                         </div>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> (Patient Signature or Signature of Authorized Patient Representative)</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> (Date and Time)</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="sign"></u></b> (Patient Signature or Signature of Authorized Patient Representative)</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="datetime"></u></b> (Date and Time)</div>
                                             </div>
                                         </p>
                                     </div>',
@@ -349,47 +349,47 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Implied Consent Weight Loss Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>Patient Consent for Treatment for Medical Weight Loss</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCT, LLC (Hereafter referred to as Oklahoma Men’s Clinic 4415 S. Harvard Ave Ste 201, OK 74135) to provide medical care to me, including but not limited to the treatment of my weight problem and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing and physical examination, additional laboratory testing.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCT, LLC (Hereafter referred to as Oklahoma Men’s Clinic 4415 S. Harvard Ave Ste 201, OK 74135) to provide medical care to me, including but not limited to the treatment of my weight problem and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing and physical examination, additional laboratory testing.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that my weight management treatment may consist of specific diet plans, for example a balanced deficit diet, very low calorie diet, a protein supplemented diet; recommendations for behavior modification techniques, including prescribed regular exercise regimens; and possibly the use of over-the-counter and prescription medications, e.g. appetite suppressants. I understand that I may be prescribed medications for medical conditions other than those relating to my weight management according to general medical practice standards.
+                                            Initial Here <b><u class="name"></u></b> I understand that my weight management treatment may consist of specific diet plans, for example a balanced deficit diet, very low calorie diet, a protein supplemented diet; recommendations for behavior modification techniques, including prescribed regular exercise regimens; and possibly the use of over-the-counter and prescription medications, e.g. appetite suppressants. I understand that I may be prescribed medications for medical conditions other than those relating to my weight management according to general medical practice standards.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that if medications are prescribed, especially medications for weight control, their duration of use and prescribed dosage and frequency may exceed or vary with those indicated in the package insert or those set forth by the FDA. It has been explained to me that these medications have been used safely and successfully in private and academic medical practice with appropriate monitoring for periods and at dosing and frequency regimens exceeding or at variance with those recommended in the product literature.
+                                            Initial Here <b><u class="name"></u></b> I understand that if medications are prescribed, especially medications for weight control, their duration of use and prescribed dosage and frequency may exceed or vary with those indicated in the package insert or those set forth by the FDA. It has been explained to me that these medications have been used safely and successfully in private and academic medical practice with appropriate monitoring for periods and at dosing and frequency regimens exceeding or at variance with those recommended in the product literature.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that any medical intervention has associated potential risks and benefits. Risks of this program may include but are not limited to tiredness, weakness, sleep disturbances, headaches, dry mouth, gastrointestinal disturbances, nervousness, psychological problems, high blood pressure, rapid heartbeat, and heart irregularities. In rare instances these and other possible risks could be serious or even fatal. The benefits of successful weight management may include but not be limited to improved overall health, lower risk of developing serious diseases with at times fatal complications, such as diabetes, breathing problems, joint degeneration, high blood pressure, heart disease, circulation problems, heart attack, stroke, et al.
+                                            Initial Here <b><u class="name"></u></b> I understand that any medical intervention has associated potential risks and benefits. Risks of this program may include but are not limited to tiredness, weakness, sleep disturbances, headaches, dry mouth, gastrointestinal disturbances, nervousness, psychological problems, high blood pressure, rapid heartbeat, and heart irregularities. In rare instances these and other possible risks could be serious or even fatal. The benefits of successful weight management may include but not be limited to improved overall health, lower risk of developing serious diseases with at times fatal complications, such as diabetes, breathing problems, joint degeneration, high blood pressure, heart disease, circulation problems, heart attack, stroke, et al.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that I have alternative treatment options, including but not limited to no treatment at all and weight management programs not supervised by a physician. I also understand that remaining overweight or obese puts me at greater risk for ill health. Some of the complications that may develop as a consequence of prolonged abnormal body weight are arthritis of the joints, especially weight-bearing joints such as hips, knees, feet and back, high cholesterol and triglycerides, high blood pressure, diabetes, vascular disease complicated by stroke, heart attack and abnormal heart rhythms, gallstones, sleep apnea, and sudden death. I understand that these risks may be modest if I am not significantly overweight, but will increase with additional weight gain.
+                                            Initial Here <b><u class="name"></u></b> I understand that I have alternative treatment options, including but not limited to no treatment at all and weight management programs not supervised by a physician. I also understand that remaining overweight or obese puts me at greater risk for ill health. Some of the complications that may develop as a consequence of prolonged abnormal body weight are arthritis of the joints, especially weight-bearing joints such as hips, knees, feet and back, high cholesterol and triglycerides, high blood pressure, diabetes, vascular disease complicated by stroke, heart attack and abnormal heart rhythms, gallstones, sleep apnea, and sudden death. I understand that these risks may be modest if I am not significantly overweight, but will increase with additional weight gain.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I understand that the success of weight management treatment depends on my active participation. Oklahoma Men’s Clinic cannot guarantee or assure treatment success or any definite outcome. I understand that obesity is considered a chronic condition that may require permanent changes in my eating habits and behavior to attempt success at treatment. I further understand that there are no refunds on products or packages purchased, any medication received or not received to include any products ordered on my behalf, or service not yet rendered but agreed to at time of purchase.
+                                            Initial Here <b><u class="name"></u></b> I understand that the success of weight management treatment depends on my active participation. Oklahoma Men’s Clinic cannot guarantee or assure treatment success or any definite outcome. I understand that obesity is considered a chronic condition that may require permanent changes in my eating habits and behavior to attempt success at treatment. I further understand that there are no refunds on products or packages purchased, any medication received or not received to include any products ordered on my behalf, or service not yet rendered but agreed to at time of purchase.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> Liability Waiver and Hold Harmless: I voluntarily choose to undergo medical weight loss. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of medical weight loss outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic, and the prescribing Provider associated with my weight loss program. I have had adequate time to consider all options and research weight loss programs. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
+                                            Initial Here <b><u class="name"></u></b> Liability Waiver and Hold Harmless: I voluntarily choose to undergo medical weight loss. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of medical weight loss outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire Staff at Oklahoma Men’s Clinic, and the prescribing Provider associated with my weight loss program. I have had adequate time to consider all options and research weight loss programs. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
-                                            Initial Here <input type="text" /> I have read and fully understand this consent form and I realize I should not sign this form if all items have not been satisfactorily explained to me. With my signature I acknowledge that my questions have been answered fully, and that I have been requested to read this form and have been given ample time to understand all its contents.
+                                            Initial Here <b><u class="name"></u></b> I have read and fully understand this consent form and I realize I should not sign this form if all items have not been satisfactorily explained to me. With my signature I acknowledge that my questions have been answered fully, and that I have been requested to read this form and have been given ample time to understand all its contents.
                                         </p>
                                         <p>
                                             If at this time you have any questions regarding the risks or dangers of the proposed treatment, or would like further explanations concerning the proposed treatment or any alternative options, ask your provider now before signing this consent form.
                                         </p>
                                         <div class="clearfix"></div>
                                         <div class="col-sm-12">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> (Patient Name – Please Print)</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="name"></u></b> (Patient Name – Please Print)</div>
                                         </div>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> (Patient Signature or Signature of Authorized Patient Representative)</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> (Date and Time)</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="sign"></u></b> (Patient Signature or Signature of Authorized Patient Representative)</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="datetime"></u></b> (Date and Time)</div>
                                             </div>
                                         </p>
                                     </div>',
@@ -399,20 +399,20 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'IV Drip Implied Consent OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
 						<p>INFORMED CONSENT FOR INTRAVENOUS (IV) THERAPY & CHELATION</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street Suite 205 Oklahoma City, OK 74116) to provide medical care to me, including but not limited to the treatment of a vitamin deficiency and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for IV therapy and/or chelation as ordered by an Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street Suite 205 Oklahoma City, OK 74116) to provide medical care to me, including but not limited to the treatment of a vitamin deficiency and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for IV therapy and/or chelation as ordered by an Oklahoma Men’s Clinic provider.
                                         </p>
                                         <p>
-                                            <input type="text" /> Initial I have informed the provider of any known allergies to drugs or other substances that may be included in the ingredients of my solutions, or of any past reactions to anesthetics. 
+                                            <b><u class="name"></u></b> Initial I have informed the provider of any known allergies to drugs or other substances that may be included in the ingredients of my solutions, or of any past reactions to anesthetics. 
                                         </p>
                                         <p>
-                                            <input type="text" /> Initial I have informed the provider of all current medications and supplements.
+                                            <b><u class="name"></u></b> Initial I have informed the provider of all current medications and supplements.
                                         </p>
                                         <p>
                                             I understand that I have the right to be informed during the procedure, the risks, and the benefits. Except in emergencies, procedures are not performed until I have had an opportunity to receive such information and to give my informed consent.
@@ -444,7 +444,7 @@ class PDFFormTableSeeder extends Seeder
                                             I understand the information provided on this form and agree to the foregoing. I understand that there is no implied or stated guarantee of success or effectiveness of any treatment. The procedures set forth above have been adequately explained to me by my Oklahoma Men’s Clinic provider(s). I understand that I am free to withdraw my consent and to discontinue participation in their treatment at any time. I understand that, there are no refunds on products or packages purchased, on any medication received or not received to include any products ordered on my behalf, or service(s) not rendered by agreed to at the time of purchase.
                                         </p>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo Intravenous (IV) Vitamin Therapy and Chelation. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is that the benefits of IV Vitamin and Chelation Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic, and the prescribing provider(s) associated with my IV Vitamin and Chelation Therapy. I have had adequate time to consider all options and research IV Vitamin and Chelation Therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo Intravenous (IV) Vitamin Therapy and Chelation. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is that the benefits of IV Vitamin and Chelation Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic, and the prescribing provider(s) associated with my IV Vitamin and Chelation Therapy. I have had adequate time to consider all options and research IV Vitamin and Chelation Therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
                                             My signature below confirms that:
@@ -456,13 +456,13 @@ class PDFFormTableSeeder extends Seeder
                                             2. I authorize and consent to the performance of the procedure(s).
                                         </p>
                                         <p>
-                                            <input type="text" /> Patient Name
+                                            <b><u class="name"></u></b> Patient Name
                                         </p>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                    <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Signature</div>
-                                    <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                    <div class="col-sm-6" style="padding-left:0;"><b><u class="sign"></u></b> Signature</div>
+                                    <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -470,20 +470,20 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'IV Drip Implied Consent Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
 						<p>INFORMED CONSENT FOR INTRAVENOUS (IV) THERAPY & CHELATION</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S. Harvard Ave. Tulsa OK 74135) to provide medical care to me, including but not limited to the treatment of a vitamin deficiency and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for IV therapy and/or chelation as ordered by an Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S. Harvard Ave. Tulsa OK 74135) to provide medical care to me, including but not limited to the treatment of a vitamin deficiency and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for IV therapy and/or chelation as ordered by an Oklahoma Men’s Clinic provider.
                                         </p>
                                         <p>
-                                            <input type="text" /> Initial I have informed the provider of any known allergies to drugs or other substances that may be included in the ingredients of my solutions, or of any past reactions to anesthetics.
+                                            <b><u class="name"></u></b> Initial I have informed the provider of any known allergies to drugs or other substances that may be included in the ingredients of my solutions, or of any past reactions to anesthetics.
                                         </p>
                                         <p>
-                                            <input type="text" /> Initial I have informed the provider of all current medications and supplements.
+                                            <b><u class="name"></u></b> Initial I have informed the provider of all current medications and supplements.
                                         </p>
                                         <p>
                                             I understand that I have the right to be informed during the procedure, the risks, and the benefits. Except in emergencies, procedures are not performed until I have had an opportunity to receive such information and to give my informed consent.
@@ -515,7 +515,7 @@ class PDFFormTableSeeder extends Seeder
                                             I understand the information provided on this form and agree to the foregoing. I understand that there is no implied or stated guarantee of success or effectiveness of any treatment. The procedures set forth above have been adequately explained to me by my Oklahoma Men’s Clinic provider(s). I understand that I am free to withdraw my consent and to discontinue participation in their treatment at any time. I understand that, there are no refunds on products or packages purchased, on any medication received or not received to include any products ordered on my behalf, or service(s) not rendered by agreed to at the time of purchase.
                                         </p>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo Intravenous (IV) Vitamin Therapy and Chelation. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is that the benefits of IV Vitamin and Chelation Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic, and the prescribing provider(s) associated with my IV Vitamin and Chelation Therapy. I have had adequate time to consider all options and research IV Vitamin and Chelation Therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo Intravenous (IV) Vitamin Therapy and Chelation. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is that the benefits of IV Vitamin and Chelation Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic, and the prescribing provider(s) associated with my IV Vitamin and Chelation Therapy. I have had adequate time to consider all options and research IV Vitamin and Chelation Therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
                                             My signature below confirms that:
@@ -527,13 +527,13 @@ class PDFFormTableSeeder extends Seeder
                                             2. I authorize and consent to the performance of the procedure(s).
                                         </p>
                                         <p>
-                                            <input type="text" /> Patient Name
+                                            <b><u class="name"></u></b> Patient Name
                                         </p>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                    <div class="col-sm-6" style="padding-left:0;"><input type="text" /> Signature</div>
-                                    <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                    <div class="col-sm-6" style="padding-left:0;"><b><u class="sign"></u></b> Signature</div>
+                                    <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -541,7 +541,7 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Patient Treatment OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>New Patient Informed Consent and Authorization Agreement</p>
 					</div>
@@ -560,16 +560,16 @@ class PDFFormTableSeeder extends Seeder
                                             <strong>Erectile Dysfunction & Premature Ejaculation:</strong> The Medical Provider(s) will perform some diagnostic tests. The first test is a Vascular Doppler Diagnostic. This test measures the blood flow through the penis. The doctor will locate the cavernosal artery in the penis and measure “passive” blood flow (when you are not sexually excited). The Medical Provider will then apply a test dose of medication designed for your specific problem to the spongy tissue of the penis using an auto-applicator. The test dose of medication contains a combination of commonly use vasodilators including Papaverine, Phentolamine and Prostaglandin E1. This medication will dilate the arteries so that the “active” blood flow (as when you are sexually excited) through the penis can be measured. A partial or full erection lasting 40-60 minutes usually results from this application. Other rare effects of this procedure include some mild discomfort or light-headedness mostly due to nervousness. This reaction is generally normal. Rarely, this application may produce a full erection lasting longer than two hours. Such prolonged erection is unusual and only occurs in those who are overly sensitive to the combination used. Should this possibility occur, you will be advised on what procedures to follow. These recommended procedures are safe and there is no additional cost to you if these procedures are needed. Rarely, long term and/or frequent use of this medication can cause scarring from the micro-injection. All of these tests are required for the Medical Provider(s) to properly and effectively diagnose and treat your complaint. Both the Vascular Diagnostic test and this application are painless and safe. The Medical Provider will then prescribe a unique treatment designed to treat the cause of your Erectile Dysfunction on the very first visit.
                                         </p>
                                         <p>
-                                            X <input type="text" />(initial here) I understand and have been advsied that I should nto receive a test dose if I have the following conditons: Sickle Cell Anemia or trait, Leukemia, Tumor of the Bone Marrow(multiple myeloma), Penile Implant, Peyronie’s Disease, Fabry Disease, Malaria, Liver Disease (Hepatitis A,B,C). By initial above, I am acknowledging that I am not presently suffereing from any of the above conditions. I further acknowledge that I have not used marijuana, or recreational drugs such as cocain, heroin, or ecstasy within the last 24 hours. I further acknowledge that I have not used Viagra, Levitra, Cialis or any simila oral erectile medcations within the last 24 hours.
+                                            X <b><u class="name"></u></b>(initial here) I understand and have been advsied that I should nto receive a test dose if I have the following conditons: Sickle Cell Anemia or trait, Leukemia, Tumor of the Bone Marrow(multiple myeloma), Penile Implant, Peyronie’s Disease, Fabry Disease, Malaria, Liver Disease (Hepatitis A,B,C). By initial above, I am acknowledging that I am not presently suffereing from any of the above conditions. I further acknowledge that I have not used marijuana, or recreational drugs such as cocain, heroin, or ecstasy within the last 24 hours. I further acknowledge that I have not used Viagra, Levitra, Cialis or any simila oral erectile medcations within the last 24 hours.
                                         </p>
                                         <p>
                                             **I understand that Oklahoma Men’s Clinic guarantees that in the event I fail to achieve an erection during the initial office visit, there will be no charge for the office visit. However, in the event that I complete the office visit having achieved an erection, the cost of the office visit, and/or other services or products, shall be non-refundable and the no-cost GUARANTEE shall terminate at the time the office visit has ended.
                                         </p>
                                         <p>
-                                            X <input type="text" />(initial here) <strong>Testosterone & HGH Hormone Therapy:</strong> I understand that initial blood tests will be performed to establish my baseline hormone levels. I agree to comply with reasonable requested for follow-up testing to assure proper monitoring of my hormone levels. I agree to report to the Medical Provider(s) any adverse reaction or problem that might be releated to my horone terhapy. I understand that with testosterone/HGH replacement therapy, as with any other therapy, there may be side effects. Side effects of Testosterone/HGH replacement therapy may include any or all of the following: mood changes, acne, hari loss, prostate enlargement, prostate cancer (as believed by some doctors), breast enlargement or testicular shrinkage. I agree to reprot to the Meidcal Provider(s) any of these side effects. I understand that with hormone supplementation there are possible risks and complications if I do not comply with the recommended dosages. I undersatnd that I will be in charge of administering the hormone and supplements prescribed to me. I will conform and comply with the recommended dosages and methods of administration. I understadn that the role of Oklahoma Men’s Clinic is for the management of my hormone replacement only. I agree that I will be under the care of another health care provier for all other meidcal conditions. I agree that the Medical Provider(s) of Oklahoma Men’s Clinic will not take the place of my personal medical provdier in this regard.
+                                            X <b><u class="name"></u></b>(initial here) <strong>Testosterone & HGH Hormone Therapy:</strong> I understand that initial blood tests will be performed to establish my baseline hormone levels. I agree to comply with reasonable requested for follow-up testing to assure proper monitoring of my hormone levels. I agree to report to the Medical Provider(s) any adverse reaction or problem that might be releated to my horone terhapy. I understand that with testosterone/HGH replacement therapy, as with any other therapy, there may be side effects. Side effects of Testosterone/HGH replacement therapy may include any or all of the following: mood changes, acne, hari loss, prostate enlargement, prostate cancer (as believed by some doctors), breast enlargement or testicular shrinkage. I agree to reprot to the Meidcal Provider(s) any of these side effects. I understand that with hormone supplementation there are possible risks and complications if I do not comply with the recommended dosages. I undersatnd that I will be in charge of administering the hormone and supplements prescribed to me. I will conform and comply with the recommended dosages and methods of administration. I understadn that the role of Oklahoma Men’s Clinic is for the management of my hormone replacement only. I agree that I will be under the care of another health care provier for all other meidcal conditions. I agree that the Medical Provider(s) of Oklahoma Men’s Clinic will not take the place of my personal medical provdier in this regard.
                                         </p>
                                         <p>
-                                            I, <input type="text" />, fully understand the nature of the above tests, therapy and the possible side effects. I consent to a medical consultation fee of $199 upon completion of the visit, and understand that the charges paid for any other medication(s) which I may elect to purchase are final. I consent to treatment by my treating provider should I experience any inopportune symptoms. I also understand that these services are considered elective treatment and are not covered by Medicare, and that any medications ordered by me are by law non-refundable.
+                                            I, <b><u class="name"></u></b>, fully understand the nature of the above tests, therapy and the possible side effects. I consent to a medical consultation fee of $199 upon completion of the visit, and understand that the charges paid for any other medication(s) which I may elect to purchase are final. I consent to treatment by my treating provider should I experience any inopportune symptoms. I also understand that these services are considered elective treatment and are not covered by Medicare, and that any medications ordered by me are by law non-refundable.
                                         </p>
                                         <p>
                                             I have been informed that I have the right to choose the pharmacy for filling any prescription written. I understand that medication orders are non-refundable after the office visit has ended.
@@ -581,10 +581,10 @@ class PDFFormTableSeeder extends Seeder
                                             Liability and Hold Harmless: I voluntarily choose to undergo Erectile Dysfunction Therapy. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of Erectile Dysfunction Therapy outweighs the risks (including an extended erection known as a Priapism). I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic and the prescribing Medical Provider(s) associated with my Erectile Dysfunction therapy. I have had adequate time to consider all options and research Erectile Dysfunction therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
-                                            Signed this <input type="text" /> day of <input type="text" />, 20<input type="text" />
+                                            Signed this <b><u class="day"></u></b> day of <b><u class="month"></u></b>, 20<b><u class="year"></u></b>
                                         </p>
                                         <p>
-                                            Patients Signature: <input type="text" />
+                                            Patients Signature: <b><u class="name"></u></b>
                                         </p>
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -593,7 +593,7 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Patient Treatment Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>New Patient Informed Consent and Authorization Agreement</p>
 					</div>
@@ -612,16 +612,16 @@ class PDFFormTableSeeder extends Seeder
                                             <strong>Erectile Dysfunction & Premature Ejaculation:</strong> The Medical Provider(s) will perform some diagnostic tests. The first test is a Vascular Doppler Diagnostic. This test measures the blood flow through the penis. The doctor will locate the cavernosal artery in the penis and measure “passive” blood flow (when you are not sexually excited). The Medical Provider will then apply a test dose of medication designed for your specific problem to the spongy tissue of the penis using an auto-applicator. The test dose of medication contains a combination of commonly use vasodilators including Papaverine, Phentolamine and Prostaglandin E1. This medication will dilate the arteries so that the “active” blood flow (as when you are sexually excited) through the penis can be measured. A partial or full erection lasting 40-60 minutes usually results from this application. Other rare effects of this procedure include some mild discomfort or light-headedness mostly due to nervousness. This reaction is generally normal. Rarely, this application may produce a full erection lasting longer than two hours. Such prolonged erection is unusual and only occurs in those who are overly sensitive to the combination used. Should this possibility occur, you will be advised on what procedures to follow. These recommended procedures are safe and there is no additional cost to you if these procedures are needed. Rarely, long term and/or frequent use of this medication can cause scarring from the micro-injection. All of these tests are required for the Medical Provider(s) to properly and effectively diagnose and treat your complaint. Both the Vascular Diagnostic test and this application are painless and safe. The Medical Provider will then prescribe a unique treatment designed to treat the cause of your Erectile Dysfunction on the very first visit.
                                         </p>
                                         <p>
-                                            X <input type="text" />(initial here) I understand and have been advsied that I should nto receive a test dose if I have the following conditons: Sickle Cell Anemia or trait, Leukemia, Tumor of the Bone Marrow(multiple myeloma), Penile Implant, Peyronie’s Disease, Fabry Disease, Malaria, Liver Disease (Hepatitis A,B,C). By initial above, I am acknowledging that I am not presently suffereing from any of the above conditions. I further acknowledge that I have not used marijuana, or recreational drugs such as cocain, heroin, or ecstasy within the last 24 hours. I further acknowledge that I have not used Viagra, Levitra, Cialis or any simila oral erectile medcations within the last 24 hours.
+                                            X <b><u class="name"></u></b>(initial here) I understand and have been advsied that I should nto receive a test dose if I have the following conditons: Sickle Cell Anemia or trait, Leukemia, Tumor of the Bone Marrow(multiple myeloma), Penile Implant, Peyronie’s Disease, Fabry Disease, Malaria, Liver Disease (Hepatitis A,B,C). By initial above, I am acknowledging that I am not presently suffereing from any of the above conditions. I further acknowledge that I have not used marijuana, or recreational drugs such as cocain, heroin, or ecstasy within the last 24 hours. I further acknowledge that I have not used Viagra, Levitra, Cialis or any simila oral erectile medcations within the last 24 hours.
                                         </p>
                                         <p>
                                             **I understand that Oklahoma Men’s Clinic guarantees that in the event I fail to achieve an erection during the initial office visit, there will be no charge for the office visit. However, in the event that I complete the office visit having achieved an erection, the cost of the office visit, and/or other services or products, shall be non-refundable and the no-cost GUARANTEE shall terminate at the time the office visit has ended.
                                         </p>
                                         <p>
-                                            X <input type="text" />(initial here) <strong>Testosterone & HGH Hormone Therapy:</strong> I understand that initial blood tests will be performed to establish my baseline hormone levels. I agree to comply with reasonable requested for follow-up testing to assure proper monitoring of my hormone levels. I agree to report to the Medical Provider(s) any adverse reaction or problem that might be releated to my horone terhapy. I understand that with testosterone/HGH replacement therapy, as with any other therapy, there may be side effects. Side effects of Testosterone/HGH replacement therapy may include any or all of the following: mood changes, acne, hari loss, prostate enlargement, prostate cancer (as believed by some doctors), breast enlargement or testicular shrinkage. I agree to reprot to the Meidcal Provider(s) any of these side effects. I understand that with hormone supplementation there are possible risks and complications if I do not comply with the recommended dosages. I undersatnd that I will be in charge of administering the hormone and supplements prescribed to me. I will conform and comply with the recommended dosages and methods of administration. I understadn that the role of Oklahoma Men’s Clinic is for the management of my hormone replacement only. I agree that I will be under the care of another health care provier for all other meidcal conditions. I agree that the Medical Provider(s) of Oklahoma Men’s Clinic will not take the place of my personal medical provdier in this regard.
+                                            X <b><u class="name"></u></b>(initial here) <strong>Testosterone & HGH Hormone Therapy:</strong> I understand that initial blood tests will be performed to establish my baseline hormone levels. I agree to comply with reasonable requested for follow-up testing to assure proper monitoring of my hormone levels. I agree to report to the Medical Provider(s) any adverse reaction or problem that might be releated to my horone terhapy. I understand that with testosterone/HGH replacement therapy, as with any other therapy, there may be side effects. Side effects of Testosterone/HGH replacement therapy may include any or all of the following: mood changes, acne, hari loss, prostate enlargement, prostate cancer (as believed by some doctors), breast enlargement or testicular shrinkage. I agree to reprot to the Meidcal Provider(s) any of these side effects. I understand that with hormone supplementation there are possible risks and complications if I do not comply with the recommended dosages. I undersatnd that I will be in charge of administering the hormone and supplements prescribed to me. I will conform and comply with the recommended dosages and methods of administration. I understadn that the role of Oklahoma Men’s Clinic is for the management of my hormone replacement only. I agree that I will be under the care of another health care provier for all other meidcal conditions. I agree that the Medical Provider(s) of Oklahoma Men’s Clinic will not take the place of my personal medical provdier in this regard.
                                         </p>
                                         <p>
-                                            I, <input type="text" />, fully understand the nature of the above tests, therapy and the possible side effects. I consent to a medical consultation fee of $199 upon completion of the visit, and understand that the charges paid for any other medication(s) which I may elect to purchase are final. I consent to treatment by my treating provider should I experience any inopportune symptoms. I also understand that these services are considered elective treatment and are not covered by Medicare, and that any medications ordered by me are by law non-refundable.
+                                            I, <b><u class="name"></u></b>, fully understand the nature of the above tests, therapy and the possible side effects. I consent to a medical consultation fee of $199 upon completion of the visit, and understand that the charges paid for any other medication(s) which I may elect to purchase are final. I consent to treatment by my treating provider should I experience any inopportune symptoms. I also understand that these services are considered elective treatment and are not covered by Medicare, and that any medications ordered by me are by law non-refundable.
                                         </p>
                                         <p>
                                             I have been informed that I have the right to choose the pharmacy for filling any prescription written. I understand that medication orders are non-refundable after the office visit has ended.
@@ -633,10 +633,10 @@ class PDFFormTableSeeder extends Seeder
                                             Liability and Hold Harmless: I voluntarily choose to undergo Erectile Dysfunction Therapy. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of Erectile Dysfunction Therapy outweighs the risks (including an extended erection known as a Priapism). I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at Oklahoma Men’s Clinic and the prescribing Medical Provider(s) associated with my Erectile Dysfunction therapy. I have had adequate time to consider all options and research Erectile Dysfunction therapies. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <p>
-                                            Signed this <input type="text" /> day of <input type="text" />, 20<input type="text" />
+                                            Signed this <b><u class="day"></u></b> day of <b><u class="month"></u></b>, 20<b><u class="year"></u></b>
                                         </p>
                                         <p>
-                                            Patients Signature: <input type="text" />
+                                            Patients Signature: <b><u class="sign"></u></b>
                                         </p
                                     </div>',
                 'created_at' => date('Y-m-d H:i:s'),
@@ -645,14 +645,14 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Priapus Consent OKC',
                 'description' => '<div class="col-sm-12 text-center head">
-                                        <div class="logo"><img src="images/logo.png" alt="Logo"></div>
+                                        <div class="logo"><img src="" alt="Logo"></div>
                                         <div class="mar-10">
                                             <p>PRIAPUS SHOT™ TREATMENT INFORMED CONSENT</p>
                                         </div>
                                         </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street Suite 205 Oklahoma City, Ok 74116) to provide medical care to me, including but not limited to the treatment of The Priapus Shot and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for The Priapus Shot as ordered by Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCOKC, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 3727 NW 63rd Street Suite 205 Oklahoma City, Ok 74116) to provide medical care to me, including but not limited to the treatment of The Priapus Shot and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for The Priapus Shot as ordered by Oklahoma Men’s Clinic provider.
                                         </p>
                                         <div class="mar-10 head subhead">
                                             <p>PURPOSE:</p>
@@ -733,23 +733,23 @@ class PDFFormTableSeeder extends Seeder
                                             <p>HOLD HARMLESS</p>
                                         </div>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo The Priapus Shot. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of The Priapus Shot outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at the Oklahoma Men’s Clinic, and the prescribing provider associated with my Priapus Shot. I have had adequate time to consider all options and research The Priapus Shot. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo The Priapus Shot. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of The Priapus Shot outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at the Oklahoma Men’s Clinic, and the prescribing provider associated with my Priapus Shot. I have had adequate time to consider all options and research The Priapus Shot. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <div class="clearfix"></div>
                                         <div class="col-sm-12">
-                                            <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Name (Printed)</div>
+                                            <div class="col-sm-6" style="margin-left:0px;"><b><u class="name"></u></b> Name (Printed)</div>
                                         </div>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Signed</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="sign"></u></b> Signed</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
 
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Witness</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="witness"></u></b> Witness</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
                                     </div>',
@@ -759,14 +759,14 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Priapus Consent Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>PRIAPUS SHOT™ TREATMENT INFORMED CONSENT</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S Harvard Suite 201, Tulsa, OK 74135) to provide medical care to me, including but not limited to the treatment of The Priapus Shot and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for The Priapus Shot as ordered by Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S Harvard Suite 201, Tulsa, OK 74135) to provide medical care to me, including but not limited to the treatment of The Priapus Shot and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent for The Priapus Shot as ordered by Oklahoma Men’s Clinic provider.
                                         </p>
                                         <div class="mar-10 head subhead">
                                             <p>PURPOSE:</p>
@@ -847,22 +847,22 @@ class PDFFormTableSeeder extends Seeder
                                             <p>HOLD HARMLESS</p>
                                         </div>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo The Priapus Shot. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of The Priapus Shot outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at the Oklahoma Men’s Clinic, and the prescribing provider associated with my Priapus Shot. I have had adequate time to consider all options and research The Priapus Shot. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo The Priapus Shot. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of The Priapus Shot outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff at the Oklahoma Men’s Clinic, and the prescribing provider associated with my Priapus Shot. I have had adequate time to consider all options and research The Priapus Shot. This agreement shall serve as release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees, and personal representatives.
                                         </p>
                                         <div class="clearfix"></div>
                                         <div class="col-sm-12">
-                                            <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Name (Printed)</div>
+                                            <div class="col-sm-6" style="margin-left:0px;"><b><u class="name"></u></b> Name (Printed)</div>
                                         </div>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Signed</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="sign"></u></b> Signed</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Witness</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"<b><u class="witness"></u></b> Witness</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
                                     </div>',
@@ -872,14 +872,14 @@ class PDFFormTableSeeder extends Seeder
             [
                 'name' => 'Prolific Implied Consent Tulsa',
                 'description' => '<div class="col-sm-12 text-center head">
-					<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+					<div class="logo"><img src="" alt="Logo"></div>
 					<div class="mar-10">
                                             <p>IMPLIED CONSENT FOR THE PROLIFIC SHOCKWAVE THERAPY</p>
 					</div>
                                     </div>
                                     <div class="col-sm-12 main-container">
                                         <p>
-                                            I, <input type="text" />, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S Harvard, Suite 201, Tulsa, OK 74135) to provide medical care to me, including but not limited to the treatment of Erectile Dysfunction using Shockwave Therapy/PFRM/Stem Cell Therapy and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent to Prolific Shockwave Therapy as ordered by the Oklahoma Men’s Clinic provider.
+                                            I, <b><u class="name"></u></b>, hereby authorize OMCT, LLC (hereafter referred to as Oklahoma Men’s Clinic located at 4415 S Harvard, Suite 201, Tulsa, OK 74135) to provide medical care to me, including but not limited to the treatment of Erectile Dysfunction using Shockwave Therapy/PFRM/Stem Cell Therapy and any coexisting medical conditions. This may involve but not be limited to history taking, in-office testing, physical examination, and additional laboratory testing. This document is intended to serve as confirmation of informed consent to Prolific Shockwave Therapy as ordered by the Oklahoma Men’s Clinic provider.
                                         </p>
                                         <div class="mar-10 head subhead">
                                             <p>PURPOSE:</p>
@@ -944,22 +944,22 @@ class PDFFormTableSeeder extends Seeder
                                             <p>HOLD HARMLESS</p>
                                         </div>
                                         <p>
-                                            Initial <input type="text" />: I voluntarily choose to undergo the Prolific Shockwave Therapy to include all its components. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of the Prolific Shockwave Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff of the Oklahoma Men’s Clinic, and the prescribing provider associated with my Prolific Shockwave Therapy. I have had adequate time to consider all options and research Prolific Shockwave Therapy. This agreement shall serve as a release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees and personal representatives.
+                                            Initial <b><u class="name"></u></b>: I voluntarily choose to undergo the Prolific Shockwave Therapy to include all its components. All potential risks and side effects have been fully explained to me. I acknowledge and understand those risks. I have assessed the risk on a personal basis, and my personal belief is the benefits of the Prolific Shockwave Therapy outweighs the risks. I hereby release and agree to hold harmless Oklahoma Men’s Clinic, the entire staff of the Oklahoma Men’s Clinic, and the prescribing provider associated with my Prolific Shockwave Therapy. I have had adequate time to consider all options and research Prolific Shockwave Therapy. This agreement shall serve as a release and hold harmless and is binding on behalf of myself, my heirs, assignees, designees and personal representatives.
                                         </p>
                                         <div class="clearfix"></div>
                                         <div class="col-sm-12">
-                                            <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Printed Name</div>
+                                            <div class="col-sm-6" style="margin-left:0px;"><b><u class="name"></u></b> Printed Name</div>
                                         </div>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Signature</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="sign"></u></b> Signature</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
                                         <p>
                                             <div class="col-sm-12" style="padding-top:10px;">
-                                                <div class="col-sm-6" style="margin-left:0px;"><input type="text" /> Witnessed</div>
-                                                <div class="col-sm-6 text-right" style="padding-right:0;"><input type="text" /> Date</div>
+                                                <div class="col-sm-6" style="margin-left:0px;"><b><u class="witness"></u></b> Witnessed</div>
+                                                <div class="col-sm-6 text-right" style="padding-right:0;"><b><u class="date"></u></b> Date</div>
                                             </div>
                                         </p>
                                     </div>',
