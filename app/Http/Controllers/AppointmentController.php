@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Session;
 use App;
 use Auth;
 
+/*
+ * AppointmentController for all the request handle regarding the Appointment moodule in the system 
+ */
 
 class AppointmentController extends Controller {
 
