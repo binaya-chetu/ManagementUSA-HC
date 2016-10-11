@@ -21,8 +21,8 @@ class Locations extends Model
         
     ];
     
-     public function patientLocation()
-    {
-        return $this->hasMany('App/Patient', 'id');
-    }
+//     public function AppointmentRequest()
+//    {
+//        return $this->belongsTo('App/AppointmentRequest', 'id');
+//    }
 }

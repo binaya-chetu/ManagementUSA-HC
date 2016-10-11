@@ -1,0 +1,55 @@
+@charset "utf-8";
+/* CSS Document */
+body{ margin:10px;}
+.head p{margin: 0 0 0px; font-weight: bold;}
+.main-container p{ text-align:justify;}
+.mar-10{ margin:10px;}
+.subhead { margin-left:0px; }
+
+
+
+
+
+
+
+
+  /* Smaller than standard 960 (devices and browsers) */
+  
+@media only screen and (min-width:768px) and (max-width:991px)
+{
+	
+}
+
+/* Smaller than standard 768 (devices and browsers) */
+
+@media only screen and (min-width: 768px) {
+   
+}
+
+
+/* Smaller than standard 480 (devices and browsers) */
+
+@media screen and (max-width: 480px) {
+	
+    
+}
+
+/* Smaller than standard 767 (devices and browsers) */
+
+  @media screen and (max-width: 767px) {
+    
+  }
+
+/* Smaller than standard 340 (devices and browsers) */
+
+@media only screen and (max-width: 340px) {
+	
+    
+}
+
+/* Smaller than standard 321 (devices and browsers) */
+
+@media only screen and (max-width: 321px) {
+	
+	
+  }

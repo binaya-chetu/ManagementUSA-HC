@@ -36,6 +36,7 @@
                     <tr>
                         <th>sku</th>
                         <th>Name</th>
+                        <th>Unit</th>
                         <th>Price</th>
                         <th>Count</th>						
                         <th>Action</th>						
@@ -46,6 +47,7 @@
                     <tr data-product="{{ $product->id }}">
                         <td class="table-text table-text-id product_sku">{{ $product->sku }}</td>
                         <td class="table-text product_name">{{ $product->name }}</td>
+                        <td class="table-text product_measurement">{{ $product->unit_of_measurement }}</td>
                         <td class="table-text product_price">{{ $product->price }}</td>
                         <td class="table-text product_count {{ ($product->count == 0)? 'alert-danger' : '' }}">{{ $product->count }}</td>
                         <td class="actions">
@@ -78,6 +80,12 @@
 				{{ Form::label('pName', 'Product Name', array('class' => 'col-sm-4 control-label mandatory')) }}			
 				<div class="input-group">
 					{{ Form::text('pName', null, ['class' => 'form-control required']) }}
+				</div>
+			</div>
+                        <div class="form-group"> 
+				{{ Form::label('pMeasurement', 'Unit Of Measurement', array('class' => 'col-sm-4 control-label mandatory')) }}			
+				<div class="input-group">
+					{{ Form::text('pMeasurement', null, ['class' => 'form-control required']) }}
 				</div>
 			</div>
 			<div class="form-group"> 
@@ -123,6 +131,7 @@
 		var form = $("#editProductInventoryForm");
 		form.find('input[name=sku]').val($.trim(tr.find('.product_sku').html())); 
 		form.find('input[name=pName]').val($.trim(tr.find('.product_name').html())); 
+                form.find('input[name=pMeasurement]').val($.trim(tr.find('.product_measurement').html())); 
 		form.find('input[name=price]').val($.trim(tr.find('.product_price').html())); 
 		form.find('input[name=count]').val($.trim(tr.find('.product_count').html())); 
         $.magnificPopup.open({

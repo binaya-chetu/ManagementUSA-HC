@@ -71,6 +71,7 @@ class ProductsController extends Controller {
                     return ['response' => false, 'msg' => 'Product with given sku value not found'];
             }
             $product->name = $data['pName'];
+            $product->unit_of_measurement = $data['pMeasurement'];
             $product->price = $data['price'];
             $product->count = $data['count'];
             $product->save();
@@ -91,12 +92,6 @@ class ProductsController extends Controller {
         return view('products.payment');     
 
     }
-    public function emailInvoice($id){
-        \Mail::send('emails.patientInvoice', ['first_name' => $first_name],['last_name' => $last_name], function($message) {
-            $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!')->attachment();
-        });
-        return ['response' => true, 'msg' => $url];
-    }
 	
     /**
     * showInventory: shows product inventory details
@@ -105,7 +100,7 @@ class ProductsController extends Controller {
     */
     public function showInventory(){
         $products = DB::table('products')->orderBy('name', 'asc')->get();
-
+        //echo "<pre>";print_r($products);die;
         return view('products.products', [
             'products' => $products
         ]);

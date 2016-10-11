@@ -337,3 +337,14 @@ function cardYear()
     return $expYear;
 }
 
+ /* Function to find the location data
+ *
+ * @return array()
+ */           
+function getLocations()
+{
+     session(['key' => 'value']);
+     $locations = App\Locations::get();
+     return $locations;
+}
+
