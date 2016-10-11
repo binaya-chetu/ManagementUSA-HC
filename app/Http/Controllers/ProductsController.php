@@ -91,12 +91,6 @@ class ProductsController extends Controller {
         return view('products.payment');     
 
     }
-    public function emailInvoice($id){
-        \Mail::send('emails.patientInvoice', ['first_name' => $first_name],['last_name' => $last_name], function($message) {
-            $message->to($this->user->email, 'Azmens Clinic')->subject('Here is your envoice!')->attachment();
-        });
-        return ['response' => true, 'msg' => $url];
-    }
 	
     /**
     * showInventory: shows product inventory details

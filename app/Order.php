@@ -49,4 +49,32 @@ class Order extends Model
     {
         return $this->belongsTo('App\Payment', 'payment_id');
     }
+    
+    public static function getAllOrders($orderId)
+    {
+        $orders = [];
+        $user = [];
+        $agent = [];
+        $total_price = '';
+        $discount_price = '';
+        $orderHistory = Order::with('payment','orderDetail', 'payment.user', 'payment.user.patientDetail', 'payment.user.patientDetail.patientStateName',  'payment.agent')->where('order_unique_id', $orderId)->get();
+        
+        $orders = $orderHistory->toArray();
+        if(empty($orders)){
+            return ['orderHistory' => $orders, 'user' => $user, 'agent' => $agent];
+        }else{            
+            $firstOrder  = $orderHistory->first()->toArray();
+            foreach($orders as $main=>$order){
+                foreach($order['order_detail'] as $key => $value){
+                    $orders[$main]['order_detail'][$key]['total_price'] = $value['quantity'] * $value['unit_price'];
+                }
+                $total_price += $order['price'];  
+                $discount_price += $order['discount_price'];  
+            }            
+            $user = $firstOrder['payment']['user'];
+            $agent = $firstOrder['payment']['agent'];
+           
+            return ['orderHistory' => $orders, 'user' => $user, 'agent' => $agent, 'total_package_price' => $total_price, 'discount_price' => $discount_price];
+        }
+    }
 }
